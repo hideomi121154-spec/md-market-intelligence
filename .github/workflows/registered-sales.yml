@@ -1,0 +1,39 @@
+name: Official registered passenger nameplate sales
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '51 1 * * *'
+  push:
+    paths:
+      - 'scripts/fetch_registered_sales.py'
+      - 'tests/test_registered_sales.py'
+      - '.github/workflows/registered-sales.yml'
+permissions:
+  contents: write
+concurrency:
+  group: official-jada-registered-sales
+  cancel-in-progress: false
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned PDF text parser
+        run: pip install --disable-pip-version-check pymupdf==1.26.5
+      - name: Validate registered passenger ranking parser
+        run: python -m unittest discover -s tests -v
+      - name: Read JADA official PDF (single-month only)
+        run: python scripts/fetch_registered_sales.py
+      - name: Commit verified monthly registered new-car statistics
+        run: |
+          git add data/registered_sales.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: update JADA official registered passenger rankings"
+          git pull --rebase origin main
+          git push origin HEAD:main
