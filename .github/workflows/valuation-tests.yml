@@ -1,0 +1,34 @@
+name: MD Market valuation tests
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'valuation.js'
+      - 'test_valuation.js'
+      - 'index.html'
+      - '.github/workflows/valuation-tests.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check browser script syntax
+        run: node --check valuation.js
+      - name: Verify purchase ceiling math and guardrails
+        run: node test_valuation.js
+      - name: Verify all valuation inputs are present in iPhone HTML
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html=Path("index.html").read_text(encoding="utf-8")
+          ids=['retail','discount','fee','transport','recondition','advertising','holding','reserve','profit','downside','bid']
+          missing=[s for s in ids if f'id="valuation-{s}"' not in html]
+          assert not missing, f"Missing iPhone controls: {missing}"
+          assert 'valuation.js?v=1.5' in html
+          print("UI inputs and loaded script verified")
+          PY
