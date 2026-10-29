@@ -86,7 +86,7 @@ async function restoreReviewBundle(raw){
   const notes=String(item.notes||'').slice(0,500);
   if(item.status==='user_checked'&&(!eligibleForManualCheck(original)||notes.trim().length<10))continue;
   if(item.status==='flagged'&&notes.trim().length<5)continue;
-  if(typeof item.checked_at!=='string'||!/^20\\d\\d-/.test(item.checked_at)||
+  if(typeof item.checked_at!=='string'||!/^20\d\d-/.test(item.checked_at)||
      !Number.isFinite(Date.parse(item.checked_at)))continue;
   candidates.push({id:item.id,status:item.status,notes,checked_at:item.checked_at,source_url:original.source_url});
  }
