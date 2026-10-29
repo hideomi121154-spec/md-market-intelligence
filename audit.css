@@ -1,0 +1,28 @@
+/* v1.6: provenance review, evidence-gated price summaries, local manual entry */
+.audit-overview{margin:14px 0 18px;padding:12px 15px;border:1px solid #315c73;border-radius:12px;background:#11243b;color:#a8d9e6;font-size:13px;line-height:1.7}
+.audit-filter{display:flex;align-items:flex-start;gap:10px;margin:14px 0 10px;color:#d5eef2;font-size:13px;line-height:1.7}
+.audit-filter input{width:18px;height:18px;accent-color:var(--accent);flex-shrink:0;margin:2px 0 0}
+.audit-reviewed{background:#154738!important;color:#b4f7d3!important}
+.audit-flagged{background:#503128!important;color:#ffd6b9!important}
+.audit-review-open{margin:11px 0 0;font-size:12px;padding:9px 12px;align-self:start}
+.audit-editor{margin:0 0 16px;padding:20px;border:1px solid #42738a}
+.audit-editor[hidden]{display:none}
+.audit-editor h3{margin:0 0 10px}
+.audit-editor p{line-height:1.7;overflow-wrap:anywhere}
+#audit-target{font-weight:600;line-height:1.7;font-size:14px}
+#audit-source-link{color:#6fe0d1;text-decoration:underline;overflow-wrap:anywhere}
+.audit-editor .field{margin:14px 0}
+.audit-editor textarea{width:100%;min-height:85px;border:1px solid #365472;border-radius:10px;background:#0b192c;color:#fff;padding:12px;font:inherit}
+.audit-confirm{display:flex;align-items:start;gap:10px;padding:10px 0 16px;line-height:1.7;font-size:13px;color:#d2deeb}
+.audit-confirm input{margin-top:4px;accent-color:var(--accent);width:19px;height:19px;flex-shrink:0}
+.audit-editor .button-row{display:flex;flex-wrap:wrap;gap:8px}
+.audit-editor .button-row .button{font-size:13px;padding:11px 12px}
+.audit-editor button:disabled{opacity:.45;cursor:not-allowed}
+.audit-manual-panel{margin:16px 0;padding:20px}
+.audit-manual-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.audit-manual-fields label{display:flex;min-width:0;flex-direction:column;gap:6px;color:var(--muted);font-size:12px}
+.audit-manual-fields input,.audit-manual-fields select{width:100%;min-width:0;border:1px solid var(--stroke);background:#0c1a2f;color:#fff;border-radius:9px;padding:10px 9px;font-size:16px;line-height:1.4}
+.audit-manual-fields input:focus,.audit-editor textarea:focus{outline:2px solid #59d7cf}
+.audit-manual-fields label:has(#manual-source-url){grid-column:1/-1}
+.audit-manual-panel .hint{line-height:1.8}
+@media(max-width:390px){.audit-editor,.audit-manual-panel{padding:14px}.audit-manual-fields{gap:9px}.audit-manual-fields input,.audit-manual-fields select{padding:9px 7px}.audit-editor .button-row .button{flex:1 1 46%}}
