@@ -136,6 +136,9 @@
     try{
       const input=manualEntry({month:$('demand-entry-month').value,platform:$('demand-entry-platform').value,rank:Number($('demand-entry-rank').value),make:$('demand-entry-make').value,model:$('demand-entry-model').value});
       if(locals.length>=MAX_MANUAL)throw Error('端末の記録は300件までです');
+      const base=snapshots.find(x=>x.month===input.month&&x.platform===input.platform);
+      if(base?.models.some(x=>x.rank===input.rank&&API.key(x)!==API.key(input)))throw Error('この順位には公式ページから確認した別の車種が登録されています');
+      if(base?.models.some(x=>API.key(x)===API.key(input)&&x.rank!==input.rank))throw Error('この車種は初期の確認済み順位と異なります。対象月と車種を再確認してください');
       const duplicate=locals.find(x=>x.month===input.month&&x.platform===input.platform&&x.rank===input.rank&&API.key(x)!==API.key(input));
       if(duplicate)throw Error('同じ月・同じサイトの順位がすでに他の車種に割り当てられています');
       locals=locals.filter(x=>!(x.month===input.month&&x.platform===input.platform&&(x.rank===input.rank||API.key(x)===API.key(input))));
