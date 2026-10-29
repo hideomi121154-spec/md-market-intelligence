@@ -4,7 +4,7 @@ const $=id=>document.getElementById(id);
 const fmt=n=>n==null?'—': '¥'+Number(n).toLocaleString('ja-JP',{maximumFractionDigits:0});
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const marketName={dealer_auction:'業者間AA',consumer_auction:'消費者向けAA',unspecified_auction:'AA種別未特定',retail_listing:'小売掲載'};
-const titles={overview:['中古車市場の現在地','実際の取引データを、出典と市場区分を分けて分析'],records:['車両データ検索','車種・年式・走行距離・価格を確認'],import:['データを管理','ファイルから取り込み・バックアップ'],plan:['開発ロードマップ','短期・中期・長期分析へ段階的に拡張']};
+const titles={overview:['中古車市場の現在地','実際の取引データを、出典と市場区分を分けて分析'],records:['車両データ検索','車種・年式・走行距離・価格を確認'],import:['データを管理','CSVまたは貼り付けで登録・バックアップ'],plan:['開発ロードマップ','短期・中期・長期分析へ段階的に拡張']};
 let records=[],visible=[],shown=0;const PAGE_SIZE=20;
 function currentFilters(){return {make:$('make').value.trim(),model:$('model').value.trim(),grade:$('grade').value.trim(),yearMin:$('year-min').value.trim(),yearMax:$('year-max').value.trim(),mileageMax:$('mileage-max').value.trim(),color:$('color').value,equipment:$('equipment').value.trim(),channel:$('channel').value,market:$('market').value}}
 function switchTab(){const hash=location.hash.substring(1);const tab=Object.hasOwn(titles,hash)?hash:'overview';for(const s of document.querySelectorAll('section.screen'))s.classList.toggle('active',s.id===tab);for(const a of document.querySelectorAll('nav a[data-tab]')){const on=a.dataset.tab===tab;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}const title=titles[tab];$('page-title').textContent=title[0];$('page-subtitle').textContent=title[1];window.scrollTo({top:0,behavior:'instant'})}
@@ -20,8 +20,36 @@ $('channel').addEventListener('change',()=>{if($('channel').value==='retail')$('
 $('market').addEventListener('change',()=>{if($('market').value==='retail_listing')$('channel').value='retail';else if($('market').value)$('channel').value='auction';render()});
 $('search-button').addEventListener('click',render);$('quick-search').addEventListener('keydown',e=>{if(e.key==='Enter')render()});$('show-more').addEventListener('click',renderMore);
 $('csv').addEventListener('change',e=>{$('filename').textContent=e.target.files[0]?.name||'ファイル未選択'});
-$('upload').addEventListener('click',async()=>{const target=$('upload-status');const file=$('csv').files[0];if(!file){target.textContent='CSVファイルを選択してください。';return;}if(file.size>5*1024*1024){target.textContent='5MB以下のCSVを選択してください。';return;}
-$('upload').disabled=true;try{const parsed=MDStore.readRecords(await file.text());if(!parsed.records.length)throw new Error('有効なデータがありません。'+parsed.errors.slice(0,3).join('\n'));if(!confirm(`有効な${parsed.records.length}件をこのiPhoneに保存しますか？（不正行${parsed.rejected}件）\n未検証データとして扱います。`)){target.textContent='取り込みをキャンセルしました。';return;}const out=await MDStore.insert(parsed.records);target.textContent=`${out.inserted}件を追加 / ${out.duplicates}件重複 / ${parsed.rejected}件除外${parsed.errors.length?'\n'+parsed.errors.slice(0,5).join('\n'):''}`;await reload();}catch(err){console.error(err);target.textContent='取り込みエラー：'+err.message;}finally{$('upload').disabled=false}});
+async function importText(text,target,button){
+ button.disabled=true;
+ try{
+  const parsed=MDStore.readRecords(text);
+  if(!parsed.records.length)throw new Error('有効なデータがありません。'+parsed.errors.slice(0,3).join('\n'));
+  if(!confirm(`有効な${parsed.records.length}件をこのiPhoneに保存しますか？（不正行${parsed.rejected}件）\n未検証データとして扱います。`)){target.textContent='取り込みをキャンセルしました。';return;}
+  const out=await MDStore.insert(parsed.records);
+  target.textContent=`${out.inserted}件を追加 / ${out.duplicates}件重複 / ${parsed.rejected}件除外${parsed.errors.length?'\n'+parsed.errors.slice(0,5).join('\n'):''}`;
+  await reload();
+ }catch(err){console.error(err);target.textContent='取り込みエラー：'+err.message;}
+ finally{button.disabled=false;}
+}
+$('upload').addEventListener('click',async()=>{
+ const target=$('upload-status'),file=$('csv').files[0];
+ if(!file){target.textContent='CSVファイルを選択してください。';return;}
+ if(file.size>5*1024*1024){target.textContent='5MB以下のCSVを選択してください。';return;}
+ await importText(await file.text(),target,$('upload'));
+});
+$('paste-import').addEventListener('click',async()=>{
+ const target=$('paste-status'),button=$('paste-import'),value=$('paste-data').value.trim();
+ if(!value){target.textContent='先にChatGPTからコードをコピーして、この欄に貼り付けてください。';return;}
+ button.disabled=true;
+ try{
+  const csv=await MDStore.decodeImportText(value);
+  if(new TextEncoder().encode(csv).length>5*1024*1024)throw new Error('5MB以下のCSVを入力してください');
+  await importText(csv,target,button);
+  if(target.textContent.includes('件を追加'))$('paste-data').value='';
+ }catch(err){console.error(err);target.textContent='貼り付けエラー：'+err.message;}
+ finally{button.disabled=false;}
+});
 $('export').addEventListener('click',async()=>{try{const a=await MDStore.all();download(`MD_MARKET_backup_${new Date().toISOString().slice(0,10)}.csv`,MDStore.exportCSV(a));$('backup-status').textContent=`${a.length}件のCSV書き出しを開始しました。iPhoneのファイルに保存してください。`;}catch(e){$('backup-status').textContent=e.message}});
 $('template').addEventListener('click',()=>{download('MD_MARKET_template.csv','date,make,model,grade,year,mileage_km,price_jpy,channel,market_type,source_url,color,equipment\r\n')});
 $('clear').addEventListener('click',async()=>{if(!confirm('本当にこの端末の全レコードを削除しますか？バックアップがないと元に戻せません。'))return;if(!confirm('最終確認：全件削除しますか？'))return;await MDStore.clear();await reload();$('backup-status').textContent='この端末に保存していたデータを削除しました。'});
