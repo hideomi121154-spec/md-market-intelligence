@@ -174,6 +174,15 @@
           <p class="hint">取り込むデータはこの端末内で処理・保存します。入力したコードは外部サーバーに送信しません。出典が未確認の情報は「未検証」で登録します。</p>
         </div>
         <div class="panel backup-panel"><h3>バックアップ</h3><p>iPhoneのデータが消える可能性に備え、定期的にCSVを書き出してください。Safari版とホーム画面版では保存領域が別になる場合があります。</p><div class="button-row"><button class="button secondary" id="export">CSVをバックアップ</button><button class="button ghost" id="template">CSVのひな形</button></div><p id="backup-status" class="hint" aria-live="polite"></p></div>
+        <div class="panel audit-backup-panel">
+          <h3>原本照合メモのバックアップ</h3>
+          <p class="hint">照合結果はこのiPhone内に保存されています。ここでバックアップ文を生成し、全文をiPhoneのメモ等に保管できます。元の車両データのCSVとは別です。</p>
+          <div class="button-row"><button class="button secondary" id="audit-backup-generate" type="button">照合メモを書き出す</button><button class="button primary" id="audit-backup-restore" type="button">貼り付けた照合メモを復元</button></div>
+          <label class="paste-label" for="audit-backup-text">照合メモのバックアップ文（コピー・貼り付け用）</label>
+          <textarea id="audit-backup-text" rows="4" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="書き出すボタンを押すか、保管していたバックアップ文を貼り付けてください"></textarea>
+          <p id="audit-backup-status" class="result-message" aria-live="polite"></p>
+          <p class="hint">復元には先に元の車両データを取り込んでください。車両・出典URLが一致した照合記録だけが復元されます。バックアップ内容には出典URLと照合メモが含まれるため、第三者に公開しないでください。</p>
+        </div>
         <div class="panel backup-panel danger-panel"><h3>データの全削除</h3><p>この端末に保存したレコードだけを消去します。復元にはバックアップCSVが必要です。</p><button class="button danger" id="clear">全件削除</button></div>
       </section>
       <section class="screen" id="plan">
