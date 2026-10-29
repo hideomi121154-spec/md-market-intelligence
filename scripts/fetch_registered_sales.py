@@ -119,10 +119,11 @@ def parse_pdf(document: bytes, source_url: str) -> dict:
         if period:
             year, mon = map(int, period.groups())
             month = f'{year}-{mon:02d}'
-            monthly.append((month, parse_ranked_text(txt, month), page.number + 1))
+            monthly.append((month, txt, page.number + 1))
     if not monthly:
         raise ValueError('No single-month JADA ranking in official PDF')
-    month, rows, page_num = max(monthly, key=lambda t: t[0])
+    month, monthly_text, page_num = max(monthly, key=lambda t: t[0])
+    rows = parse_ranked_text(monthly_text, month)
     if month > datetime.now(timezone.utc).strftime('%Y-%m'):
         raise ValueError('Ranking month appears to be in the future')
     return {
