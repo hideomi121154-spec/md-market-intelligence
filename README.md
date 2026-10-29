@@ -1,4 +1,4 @@
-# MD MARKET | iPhone単独PWA v1.0
+# MD MARKET | iPhone単独PWA v1.1
 
 **Windowsなし・同一Wi-Fi不要のiPhone向けアプリ**を作るための静的Web/PWAソースです。MAMO BOATと同じ GitHub Pages + PWA 方式を想定します。
 
@@ -41,3 +41,11 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 ## 将来のクラウド版
 
 共有・同期したい場合は専用Supabaseプロジェクト＋認証/RLSで別途実装する。既存MAMO BOATの本番DBとは分離すること。データ利用許可のないソースを自動収集しない。
+
+
+## v1.1 — iPhoneのダウンロード失敗への代替経路
+- `データ` タブにテキスト/MDGZ1圧縮コードの貼り付け登録を追加。
+- ChatGPTで渡されたコードをクリップボードから貼り付けるだけでCSVと同様に検証・保存する。
+- コード・CSV内容は公開GitHubリポジトリに登録せず、端末内だけで展開する。
+- 未検証ソースの車両レコードは未検証のまま保持する。
+- Safariの旧版キャッシュ対策としてクエリ付き静的ファイルとService Workerキャッシュを更新。
