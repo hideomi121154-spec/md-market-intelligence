@@ -1,0 +1,16 @@
+{
+  "name": "MD MARKET 中古車分析",
+  "short_name": "MD MARKET",
+  "description": "iPhone単独で使える中古車相場・車両データ分析アプリ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#091326",
+  "theme_color": "#091326",
+  "orientation": "any",
+  "lang": "ja",
+  "icons": [
+    {"src":"./icons/icon-192.png", "sizes":"192x192", "type":"image/png", "purpose":"any maskable"},
+    {"src":"./icons/icon-512.png", "sizes":"512x512", "type":"image/png", "purpose":"any maskable"}
+  ]
+}
