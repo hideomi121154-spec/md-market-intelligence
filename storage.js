@@ -1,7 +1,7 @@
 /* MD MARKET – offline IndexedDB store & CSV parser, no third-party libraries. */
 (function(global){
 'use strict';
-const DB_NAME='md_market_pwa_v1', VERSION=1, STORE='records';
+const DB_NAME='md_market_pwa_v1', VERSION=2, STORE='records', AUDITS='audits';
 const FIELDS=['date','make','model','grade','year','mileage_km','price_jpy','channel','market_type','region','source_url','color','equipment','repair_history','source_name','vendor_record_id','evidence_status'];
 const REQUIRED=['date','make','model','price_jpy','channel','source_url'];
 const MARKET=['dealer_auction','consumer_auction','unspecified_auction','retail_listing'];
@@ -31,15 +31,59 @@ async function decodeImportText(input){
  }catch(err){if(err?.message?.includes('5MB'))throw err;throw new Error('貼り付けコードを復元できません。途中で欠けていないか確認してください');}
 }
 function idFor(r){const keys=['date','make','model','grade','year','mileage_km','price_jpy','channel','market_type','source_url','vendor_record_id'];return keys.map(k=>String(r[k]??'')).join('\u001f')}
-function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,VERSION);req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,VERSION);req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'});if(!d.objectStoreNames.contains(AUDITS))d.createObjectStore(AUDITS,{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function all(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);tx.oncomplete=()=>db.close();tx.onerror=()=>reject(tx.error);})}
 async function insert(rows){const db=await openDb();return new Promise((resolve,reject)=>{let inserted=0,duplicates=0;const tx=db.transaction(STORE,'readwrite'),store=tx.objectStore(STORE);const seen=new Set();for(const row of rows){const r={...row,id:idFor(row)};if(seen.has(r.id)){duplicates++;continue;}seen.add(r.id);const lookup=store.get(r.id);lookup.onsuccess=()=>{if(lookup.result){duplicates++;return;}const add=store.add(r);add.onsuccess=()=>inserted++;};}tx.oncomplete=()=>{db.close();resolve({inserted,duplicates})};tx.onerror=()=>{db.close();reject(tx.error||Error('DB保存失敗'))};tx.onabort=()=>{db.close();reject(tx.error||Error('DB保存中断'))};})}
-async function clear(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+async function clear(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction([STORE,AUDITS],'readwrite');tx.objectStore(STORE).clear();tx.objectStore(AUDITS).clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
+
+function eligibleForManualCheck(row){
+ const url=String(row.source_url||'');
+ let host='';
+ try{host=new URL(url).hostname.toLowerCase()}catch{return false;}
+ const prohibited=['example.com','example.org','example.net','example.test','localhost','127.0.0.1'];
+ if(prohibited.includes(host)||host.endsWith('.test')||!host.includes('.'))return false;
+ return ['dealer_auction','consumer_auction','retail_listing'].includes(row.market_type)&&
+  Number.isSafeInteger(row.price_jpy)&&row.price_jpy>=0;
+}
+function validateReviewInput(record,action,notes,confirmed){
+ if(!record?.id)throw new Error('照合対象のレコードがありません');
+ if(!['user_checked','flagged','unverified'].includes(action))throw new Error('照合状況が不正です');
+ if(action==='user_checked'){
+  if(!eligibleForManualCheck(record))throw new Error('出典URLが例示用、または市場種別が未特定です。照合済みにできません');
+  if(!confirmed)throw new Error('原本の金額・日付・車両情報・市場区分の照合確認が必要です');
+  if(String(notes||'').trim().length<10)throw new Error('原本の確認内容・相違のない点を10文字以上で記録してください');
+ }
+ if(action==='flagged'&&String(notes||'').trim().length<5)throw new Error('問題点を5文字以上で記録してください');
+ return {id:record.id,status:action,notes:action==='unverified'?'':String(notes||'').trim().slice(0,500),
+   checked_at:action==='unverified'?'':new Date().toISOString(),source_url:record.source_url};
+}
+async function getReviews(){const db=await openDb();return new Promise((resolve,reject)=>{
+ const tx=db.transaction(AUDITS,'readonly'),q=tx.objectStore(AUDITS).getAll();
+ q.onsuccess=()=>resolve(q.result||[]);q.onerror=()=>reject(q.error);
+ tx.oncomplete=()=>db.close();tx.onerror=()=>reject(tx.error);
+});}
+async function saveReview(record,action,notes,confirmed){
+ const audit=validateReviewInput(record,action,notes,confirmed);
+ const db=await openDb();
+ return new Promise((resolve,reject)=>{
+ const tx=db.transaction([STORE,AUDITS],'readwrite');
+ const rq=tx.objectStore(STORE).get(record.id);
+ rq.onsuccess=()=>{
+  if(!rq.result){tx.abort();return;}
+  if(action==='unverified')tx.objectStore(AUDITS).delete(record.id);
+  else tx.objectStore(AUDITS).put(audit);
+ };
+ tx.oncomplete=()=>{db.close();resolve(audit)};
+ tx.onabort=()=>{db.close();reject(new Error('照合対象がない、または保存処理に失敗しました'))};
+ tx.onerror=()=>{db.close();reject(tx.error)};
+ });
+}
+
 function median(values){if(!values.length)return null;const x=[...values].sort((a,b)=>a-b),m=Math.floor(x.length/2);return x.length%2?x[m]:(x[m-1]+x[m])/2}
 function filter(rows,f){const make=canonicalMake(f.make||''),model=canonicalModel(f.model||''),grade=normalize(f.grade||'');const equipment=normalize(f.equipment||'');return rows.filter(r=>{
  if(f.channel&&r.channel!==f.channel)return false;if(f.market&&r.market_type!==f.market)return false;if(make&&!canonicalMake(r.make).includes(make))return false;if(model&&!canonicalModel(r.model).toUpperCase().includes(model.toUpperCase()))return false;if(grade&&!normalize(r.grade).includes(grade))return false;if(f.yearMin&&(r.year==null||r.year<Number(f.yearMin)))return false;if(f.yearMax&&(r.year==null||r.year>Number(f.yearMax)))return false;if(f.mileageMax!==(undefined)&&f.mileageMax!==''&&(r.mileage_km==null||r.mileage_km>Number(f.mileageMax)))return false;if(f.color&&r.color_group!==f.color)return false;if(equipment&&!tokens(r.equipment).includes(equipment))return false;return true})}
 function summarize(rows){const types=[...new Set(rows.map(r=>r.market_type))];const mixed=types.length>1;const byMonth=new Map();if(!mixed)for(const r of rows){const key=r.date.slice(0,7);if(!byMonth.has(key))byMonth.set(key,[]);byMonth.get(key).push(r.price_jpy)}const series=[...byMonth.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([month,prices])=>({month,median_price_jpy:median(prices),count:prices.length}));return {count:rows.length,median_price_jpy:mixed?null:median(rows.map(r=>r.price_jpy)),mixed,markets:types,series}}
 function safeCSV(v){let s=String(v==null?'':v);if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
 function exportCSV(rows){return '\uFEFF'+FIELDS.filter(f=>f!=='evidence_status').join(',')+'\r\n'+rows.map(row=>FIELDS.filter(f=>f!=='evidence_status').map(k=>safeCSV(row[k])).join(',')).join('\r\n')+'\r\n'}
-global.MDStore={openDb,all,insert,clear,readRecords,decodeImportText,filter,summarize,median,exportCSV,parseCSV,colorGroup,canonicalMake,canonicalModel};
+global.MDStore={openDb,all,insert,clear,getReviews,saveReview,eligibleForManualCheck,validateReviewInput,readRecords,decodeImportText,filter,summarize,median,exportCSV,parseCSV,colorGroup,canonicalMake,canonicalModel};
 })(window);
