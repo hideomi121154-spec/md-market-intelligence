@@ -18,7 +18,7 @@ result.push({...src,price_jpy:p,year,mileage_km:mileage,date:src.date,market_typ
 }return {records:result,rejected:rows.length-1-result.length,errors};}
 async function decodeImportText(input){
  const raw=String(input||'').trim();
- if(!raw.startsWith('MDGZ1:'))return raw;
+ if(!/^MDGZ1:/i.test(raw))return raw;
  const encoded=raw.slice(6).replace(/\s+/g,'');
  if(!encoded||encoded.length>1000000||!/^[A-Za-z0-9_-]+$/.test(encoded))throw new Error('貼り付けコードの形式が正しくありません');
  if(typeof DecompressionStream==='undefined')throw new Error('このSafariは圧縮データの展開に対応していません。iOSを更新してください');
