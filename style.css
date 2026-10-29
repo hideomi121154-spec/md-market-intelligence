@@ -11,3 +11,32 @@
 #paste-data::placeholder{color:#8aa6bf}
 #paste-data:focus-visible{outline:2px solid #55eee0;outline-offset:2px}
 .paste-panel .button{max-width:420px}
+/* Public USS aggregate dashboard: visually and semantically separate from private vehicle data. */
+.uss-panel{margin:28px 0 34px;padding:clamp(18px,3vw,29px)}
+.uss-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.uss-head h2{font-size:clamp(19px,2vw,24px);margin:0 0 7px}
+.uss-head p{color:var(--muted);font-size:13px;margin:0;line-height:1.7}
+.uss-head .button{flex-shrink:0}
+.uss-source{font-size:12px;color:#9ad8d0;line-height:1.7}
+.uss-source a{color:#88e1d6;text-underline-offset:3px}
+.uss-status{color:var(--muted);font-size:12px;min-height:20px;line-height:1.7}
+.uss-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.uss-stat{background:#0b192c;border:1px solid var(--stroke);border-radius:15px;padding:16px 14px}
+.uss-stat small{color:var(--muted);display:block;font-size:12px;margin-bottom:8px}
+.uss-stat strong{font-size:clamp(19px,2vw,26px);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.uss-stat .unit{color:var(--muted);font-size:12px;margin-left:4px}
+.uss-yoy{color:#b5c9db;font-size:12px;margin-bottom:18px;line-height:1.8}
+.uss-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.uss-chart{background:#0a1627;border:1px solid #263a57;border-radius:12px;padding:12px}
+.uss-chart h4{margin:0 0 8px;font-size:13px}
+.uss-svg{width:100%;height:auto;display:block}
+.uss-table-container{overflow-x:auto;max-width:100%;margin-top:20px;border:1px solid var(--stroke);border-radius:12px}
+.uss-table{border-collapse:collapse;width:100%;min-width:580px;font-size:13px}
+.uss-table th,.uss-table td{padding:12px 11px;border-bottom:1px solid #263850;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.uss-table th{background:#1d3451;color:#c9dcf0;font-weight:650;font-size:12px}
+.uss-table td:first-child,.uss-table th:first-child{text-align:left}
+.uss-table tr:last-child td{border-bottom:0}
+.uss-note{font-size:12px;line-height:1.8;color:var(--muted);margin:14px 0 0}
+[hidden]{display:none!important}
+@media(max-width:950px){.uss-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:610px){.uss-charts{grid-template-columns:1fr}.uss-panel{margin:20px 0 28px}.uss-head .button{width:auto}.uss-stat{padding:14px 12px}}
