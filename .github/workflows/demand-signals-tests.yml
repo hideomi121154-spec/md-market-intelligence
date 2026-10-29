@@ -1,0 +1,48 @@
+name: Demand signal ranking validation
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'demand-signals.js'
+      - 'demand-signals.css'
+      - 'data/demand_rankings.json'
+      - 'tests/test_demand_signals.js'
+      - 'index.html'
+      - '.github/workflows/demand-signals-tests.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check browser JS syntax
+        run: node --check demand-signals.js
+      - name: Check September ranking provenance and matching
+        run: node tests/test_demand_signals.js
+      - name: Verify demand screen controls
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          html=Path('index.html').read_text(encoding='utf-8')
+          ids=[
+            'demand-signals-panel','demand-refresh','demand-period','demand-overlap',
+            'demand-covered','demand-source-carsensor','demand-source-goonet',
+            'demand-month','demand-common-only','demand-status','demand-list',
+            'demand-entry-month','demand-entry-platform','demand-entry-rank',
+            'demand-entry-make','demand-entry-model','demand-add','demand-manual-status'
+          ]
+          missing=[i for i in ids if f'id="{i}"' not in html]
+          assert not missing, f'Missing UI controls: {missing}'
+          assert '<b>v1.7</b>' in html
+          assert 'demand-signals.js?v=1.7' in html
+          assert 'demand-signals.css?v=1.7' in html
+          data=json.loads(Path('data/demand_rankings.json').read_text(encoding='utf-8'))
+          assert data['snapshots'][0]['month']==data['snapshots'][1]['month']=='2026-09'
+          print('Demand UI and same-period source data verified')
+          PY
