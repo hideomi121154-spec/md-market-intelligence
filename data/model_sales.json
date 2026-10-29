@@ -1,0 +1,102 @@
+{
+  "month": "2026-09",
+  "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-14172",
+  "models": [
+    {
+      "make": "ホンダ",
+      "model": "Ｎ-ＢＯＸ",
+      "units": 19105,
+      "yoy_pct": 88.0
+    },
+    {
+      "make": "スズキ",
+      "model": "スペーシア",
+      "units": 16088,
+      "yoy_pct": 98.1
+    },
+    {
+      "make": "ダイハツ",
+      "model": "タント",
+      "units": 12158,
+      "yoy_pct": 106.1
+    },
+    {
+      "make": "ダイハツ",
+      "model": "ムーヴ",
+      "units": 12119,
+      "yoy_pct": 89.7
+    },
+    {
+      "make": "日産",
+      "model": "ルークス",
+      "units": 10332,
+      "yoy_pct": 214.2
+    },
+    {
+      "make": "スズキ",
+      "model": "ハスラー",
+      "units": 8158,
+      "yoy_pct": 102.1
+    },
+    {
+      "make": "三菱",
+      "model": "デリカミニ／ｅＫ",
+      "units": 7505,
+      "yoy_pct": 149.5
+    },
+    {
+      "make": "スズキ",
+      "model": "ワゴンＲ",
+      "units": 5308,
+      "yoy_pct": 78.7
+    },
+    {
+      "make": "ダイハツ",
+      "model": "ミラ",
+      "units": 4647,
+      "yoy_pct": 109.1
+    },
+    {
+      "make": "ダイハツ",
+      "model": "タフト",
+      "units": 4491,
+      "yoy_pct": 111.8
+    },
+    {
+      "make": "スズキ",
+      "model": "アルト",
+      "units": 4441,
+      "yoy_pct": 82.3
+    },
+    {
+      "make": "日産",
+      "model": "デイズ",
+      "units": 4260,
+      "yoy_pct": 81.0
+    },
+    {
+      "make": "スズキ",
+      "model": "ジムニー",
+      "units": 2497,
+      "yoy_pct": 53.0
+    },
+    {
+      "make": "ホンダ",
+      "model": "Ｎ-ＷＧＮ",
+      "units": 2146,
+      "yoy_pct": 75.7
+    },
+    {
+      "make": "ホンダ",
+      "model": "Ｎ-ＯＮＥ",
+      "units": 2018,
+      "yoy_pct": 46.5
+    }
+  ],
+  "schema_version": 1,
+  "dataset": "Japan mini vehicle NEW-CAR passenger nameplate ranking",
+  "source_name": "Japan Mini Vehicles Association (Zenkeijikyo)",
+  "checked_at_utc": "2026-10-29T13:28:08.874138+00:00",
+  "scope": "top 15 light passenger nameplates; excludes other vehicle classes",
+  "caution": "NEW registrations, not used car sales, auction prices, model years or grades. Not a direct demand or price proxy."
+}
