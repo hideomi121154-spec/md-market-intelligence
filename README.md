@@ -1,4 +1,4 @@
-# MD MARKET | iPhone単独PWA v1.1
+# MD MARKET | iPhone単独PWA v1.2
 
 **Windowsなし・同一Wi-Fi不要のiPhone向けアプリ**を作るための静的Web/PWAソースです。MAMO BOATと同じ GitHub Pages + PWA 方式を想定します。
 
@@ -13,10 +13,11 @@
 - Service Workerによる画面のオフラインキャッシュ
 
 ## 現時点でできないこと
-- 自動取得・外部サイトの巡回、カーセンサー掲載日数の計算
+- 車種別落札実績の自動取得、カーセンサー掲載日数の計算
 - 複数端末のデータ同期
 - サーバーでの共同共有、SNSログイン
 - iPhoneネイティブアプリとしてApp Storeから配布
+- USS月次集計を個別車両データと結び付けた車種別仕入れ判断
 
 **重要:** データはiPhoneのWebアプリ専用保存領域。Safariやホーム画面版の削除・ストレージ整理でデータが消える場合があるため、定期CSVバックアップが必要です。Safariとホーム画面版は保存領域が別になる場合があります。CSVはホーム画面から起動後に取り込むのを推奨します。
 
@@ -49,3 +50,10 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - コード・CSV内容は公開GitHubリポジトリに登録せず、端末内だけで展開する。
 - 未検証ソースの車両レコードは未検証のまま保持する。
 - Safariの旧版キャッシュ対策としてクエリ付き静的ファイルとService Workerキャッシュを更新。
+## v1.2 — USS公式月次統計の自動更新
+- GitHub Actionsが毎日10:17 JST付近に USS公式IR（https://www.ussnet.co.jp/ir/library/monthly/index.html）を確認し、公式表の月次統計を `data/uss_monthly.json` へ保存。GitHub Actionsの実際の起動時刻は変動します。
+- 出品台数・成約台数・成約率・成約車両単価の前年同月比を検証し、表構造や数値が不正な場合は更新を中断。`tests/test_uss_monthly.py` で parser regression test を実行。
+- iPhone相場画面のUSS公式統計パネルはこの公開JSONだけを使用し、ローカル109件の未検証レコードと絶対に混ぜない。
+- ブラウザがオフラインの場合は最終取得済みのUSSデータを明示して表示。未取得・初回失敗時は統計を表示せず、エラーを説明する。
+- USS公式統計は業者間オークションの**全体の集計**であり、特定車種の落札価格データやカーセンサー小売価格ではない。平均単価は千円単位を万円換算で表示。
+- データ利用条件・掲載方式が変わった場合は取得処理を再確認する。公式公開が遅れた月を推測して埋めない。
