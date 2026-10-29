@@ -60,6 +60,26 @@ $('paste-import').addEventListener('click',async()=>{
 });
 $('export').addEventListener('click',async()=>{try{const a=await MDStore.all();download(`MD_MARKET_backup_${new Date().toISOString().slice(0,10)}.csv`,MDStore.exportCSV(a));$('backup-status').textContent=`${a.length}件のCSV書き出しを開始しました。iPhoneのファイルに保存してください。`;}catch(e){$('backup-status').textContent=e.message}});
 $('template').addEventListener('click',()=>{download('MD_MARKET_template.csv','date,make,model,grade,year,mileage_km,price_jpy,channel,market_type,source_url,color,equipment\r\n')});
+$('audit-backup-generate').addEventListener('click',async()=>{
+ const status=$('audit-backup-status');
+ try{
+  const json=await MDStore.exportReviewBundle();
+  const area=$('audit-backup-text');area.value=json;area.focus();area.select();
+  const count=JSON.parse(json).reviews.length;
+  status.textContent=`${count}件の照合記録を書き出しました。選択されたテキストをコピーして、iPhoneのメモ等に保存してください。`;
+ }catch(err){status.textContent='書き出しエラー：'+err.message}
+});
+$('audit-backup-restore').addEventListener('click',async()=>{
+ const status=$('audit-backup-status'),raw=$('audit-backup-text').value.trim();
+ if(!raw){status.textContent='先にバックアップ文を貼り付けてください。';return}
+ if(!confirm('このiPhoneの車両データに一致する照合履歴を復元しますか？以前の照合メモが上書きされる場合があります。'))return;
+ try{
+  const result=await MDStore.restoreReviewBundle(raw);
+  await reload();
+  status.textContent=`${result.restored}件の照合記録を復元、${result.skipped}件は対象不一致・形式不適合のため除外しました。`;
+ }catch(err){status.textContent='復元エラー：'+err.message}
+});
+
 $('clear').addEventListener('click',async()=>{if(!confirm('本当にこの端末の全レコードを削除しますか？バックアップがないと元に戻せません。'))return;if(!confirm('最終確認：全件削除しますか？'))return;await MDStore.clear();await reload();$('backup-status').textContent='この端末に保存していたデータを削除しました。'});
 
 function openAuditEditor(id){
