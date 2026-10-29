@@ -1,0 +1,26 @@
+name: Inspect official JADA ranking PDF
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/inspect_jada_pdf.py'
+      - '.github/workflows/jada-pdf-inspect.yml'
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --disable-pip-version-check pymupdf==1.26.5
+      - run: python scripts/inspect_jada_pdf.py
+      - run: |
+          git add data/jada_pdf_inspect.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test: inspect JADA official PDF table format" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
