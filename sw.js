@@ -1,5 +1,5 @@
-const CACHE_NAME = 'md-market-pwa-v1-5-20261029';
-const SHELL = ['./','./index.html','./style.css?v=1.2','./storage.js?v=1.1','./app.js?v=1.1','./uss.js?v=1.2','./model-sales.css?v=1.4','./model-sales.js?v=1.3','./registered-sales.js?v=1.4','./valuation.css?v=1.5','./valuation.js?v=1.5','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png'];
+const CACHE_NAME = 'md-market-pwa-v1-6-20261029';
+const SHELL = ['./','./index.html','./style.css?v=1.2','./storage.js?v=1.6','./app.js?v=1.6','./uss.js?v=1.2','./model-sales.css?v=1.4','./model-sales.js?v=1.3','./registered-sales.js?v=1.4','./audit.css?v=1.6','./valuation.css?v=1.5','./valuation.js?v=1.5','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)).then(()=>self.skipWaiting()));
 });
