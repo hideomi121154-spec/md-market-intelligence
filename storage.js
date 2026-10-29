@@ -16,6 +16,20 @@ function validUrl(s){try{const u=new URL(String(s));return ['https:','http:'].in
 function readRecords(text){const rows=parseCSV(text);if(!rows.length)throw new Error('CSVにデータがありません');const heads=rows[0].map(s=>ALIASES[normalize(s)]||normalize(s));const missing=REQUIRED.filter(x=>!heads.includes(x));if(missing.length)throw new Error('必須列が不足しています: '+missing.join(', '));if(rows.length>20001)throw new Error('一度に読み込めるのは20,000行までです');const result=[],errors=[];for(let j=1;j<rows.length;j++){const src={};heads.forEach((h,i)=>{if(FIELDS.includes(h))src[h]=String(rows[j][i]||'').trim()});const err=[];for(const k of REQUIRED)if(!src[k])err.push(k+' が空');const p=Number(src.price_jpy);if(!Number.isSafeInteger(p)||p<0)err.push('price_jpy が正しくありません');if(!/^\d{4}-\d{2}-\d{2}$/.test(src.date||'')||!Number.isFinite(Date.parse(src.date)))err.push('date はYYYY-MM-DDにしてください');if(!['auction','retail'].includes(src.channel))err.push('channelはauctionまたはretail');if(!validUrl(src.source_url))err.push('source_urlがHTTP(S)ではありません');let market=src.market_type|| (src.channel==='retail'?'retail_listing':'unspecified_auction');if(!MARKET.includes(market)||(src.channel==='retail')!==(market==='retail_listing'))err.push('market_typeとchannelが一致しません');const year=src.year?Number(src.year):null;if(src.year&&(!Number.isInteger(year)||year<1900||year>2100))err.push('yearが範囲外');const mileage=src.mileage_km?Number(src.mileage_km):null;if(src.mileage_km&&(!Number.isFinite(mileage)||mileage<0||mileage>2000000))err.push('mileage_kmが範囲外');if(err.length){if(errors.length<20)errors.push(`${j+1}行目: ${err.join(' / ')}`);continue;}
 result.push({...src,price_jpy:p,year,mileage_km:mileage,date:src.date,market_type:market,make_norm:canonicalMake(src.make),model_norm:canonicalModel(src.model),grade_norm:normalize(src.grade),color_group:colorGroup(src.color),equipment_tokens:tokens(src.equipment),evidence_status:'unverified'});
 }return {records:result,rejected:rows.length-1-result.length,errors};}
+async function decodeImportText(input){
+ const raw=String(input||'').trim();
+ if(!raw.startsWith('MDGZ1:'))return raw;
+ const encoded=raw.slice(6).replace(/\s+/g,'');
+ if(!encoded||encoded.length>1000000||!/^[A-Za-z0-9_-]+$/.test(encoded))throw new Error('貼り付けコードの形式が正しくありません');
+ if(typeof DecompressionStream==='undefined')throw new Error('このSafariは圧縮データの展開に対応していません。iOSを更新してください');
+ try{
+  const base64=encoded.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-encoded.length%4)%4);
+  const bytes=Uint8Array.from(atob(base64),c=>c.charCodeAt(0));
+  const decoded=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+  if(new TextEncoder().encode(decoded).length>5*1024*1024)throw new Error('展開されたデータが5MBを超えています');
+  return decoded;
+ }catch(err){if(err?.message?.includes('5MB'))throw err;throw new Error('貼り付けコードを復元できません。途中で欠けていないか確認してください');}
+}
 function idFor(r){const keys=['date','make','model','grade','year','mileage_km','price_jpy','channel','market_type','source_url','vendor_record_id'];return keys.map(k=>String(r[k]??'')).join('\u001f')}
 function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,VERSION);req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function all(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);tx.oncomplete=()=>db.close();tx.onerror=()=>reject(tx.error);})}
@@ -27,5 +41,5 @@ function filter(rows,f){const make=canonicalMake(f.make||''),model=canonicalMode
 function summarize(rows){const types=[...new Set(rows.map(r=>r.market_type))];const mixed=types.length>1;const byMonth=new Map();if(!mixed)for(const r of rows){const key=r.date.slice(0,7);if(!byMonth.has(key))byMonth.set(key,[]);byMonth.get(key).push(r.price_jpy)}const series=[...byMonth.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([month,prices])=>({month,median_price_jpy:median(prices),count:prices.length}));return {count:rows.length,median_price_jpy:mixed?null:median(rows.map(r=>r.price_jpy)),mixed,markets:types,series}}
 function safeCSV(v){let s=String(v==null?'':v);if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
 function exportCSV(rows){return '\uFEFF'+FIELDS.filter(f=>f!=='evidence_status').join(',')+'\r\n'+rows.map(row=>FIELDS.filter(f=>f!=='evidence_status').map(k=>safeCSV(row[k])).join(',')).join('\r\n')+'\r\n'}
-global.MDStore={openDb,all,insert,clear,readRecords,filter,summarize,median,exportCSV,parseCSV,colorGroup,canonicalMake,canonicalModel};
+global.MDStore={openDb,all,insert,clear,readRecords,decodeImportText,filter,summarize,median,exportCSV,parseCSV,colorGroup,canonicalMake,canonicalModel};
 })(window);
