@@ -109,7 +109,7 @@ $('manual-save').addEventListener('click',async()=>{
  ];
  button.disabled=true;
  try{
-  const csv=fields.join(',')+'\\n'+row.map(csvCell).join(',')+'\\n';
+  const csv=fields.join(',')+'\n'+row.map(csvCell).join(',')+'\n';
   const parsed=MDStore.readRecords(csv);
   if(!parsed.records.length)throw Error(parsed.errors.slice(0,4).join(' ／ ')||'入力内容が正しくありません');
   if(!confirm('この価格を未検証データとして1件登録しますか？原本を後で照合してください。'))return;
