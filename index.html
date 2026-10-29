@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./model-sales.css?v=1.4">
   <link rel="stylesheet" href="./valuation.css?v=1.5">
   <link rel="stylesheet" href="./audit.css?v=1.6">
+  <link rel="stylesheet" href="./demand-signals.css?v=1.7">
   <title>MD MARKET | 中古車分析</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.6</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.7</b></span></div>
       </header>
       <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
@@ -46,6 +47,51 @@
         </div>
         <p class="coverage" id="coverage"></p>
         <div class="audit-overview" id="audit-overview" aria-live="polite">個別価格の出典照合状況を確認中…</div>
+        <article class="panel demand-panel" id="demand-signals-panel">
+          <div class="demand-heading">
+            <div>
+              <h2>中古車の需要シグナル比較</h2>
+              <p class="hint" id="demand-period">2026年9月・全国ランキングを準備中</p>
+            </div>
+            <button class="button secondary" type="button" id="demand-refresh">保存済み情報を再確認</button>
+          </div>
+          <p class="demand-scope">カーセンサーの<strong>問い合わせを基にした順位</strong>とグーネットの<strong>月間アクセスを基にした順位</strong>を、同じ月で並べて比較します。問い合わせ件数・アクセス件数・購入率は公開順位からは計算できません。収録範囲は一部です。</p>
+          <div class="demand-stats">
+            <div class="demand-summary-item"><small>両サイトに記録がある車種</small><strong id="demand-overlap">—</strong></div>
+            <div class="demand-summary-item"><small>記録された車種（合計）</small><strong id="demand-covered">—</strong></div>
+          </div>
+          <div class="demand-source-list">
+            <div class="demand-source-entry" id="demand-source-carsensor"></div>
+            <div class="demand-source-entry" id="demand-source-goonet"></div>
+          </div>
+          <div class="demand-controls">
+            <label for="demand-month">比較対象月
+              <select id="demand-month" aria-label="比較対象月"></select>
+            </label>
+            <label for="demand-common-only"><input type="checkbox" id="demand-common-only" checked>両サイトに載る車種のみ</label>
+          </div>
+          <p id="demand-status" class="hint" aria-live="polite">データを読み込み中…</p>
+          <div id="demand-list" class="demand-list"></div>
+          <p class="demand-scope">注意：片方に表示されない車種は「ランキング圏外」ではなく、<strong>今回の収録範囲にないだけ</strong>の場合があります。「N-BOX」と「N-BOXカスタム」など分類が異なる車名は合算していません。各サイトの利用者構成も異なるため、順位差だけで購入率や仕入れ優位性を判定しません。</p>
+          <details class="demand-entry">
+            <summary>公式ページで確認した順位を手入力で追加</summary>
+            <p class="hint">公開元のランキングを自分で確認し、月・順位・メーカー・車名を登録します。情報はこのiPhone内だけに保存され、公式データとは別に表示されます。各サイトから自動スクレイピングは行いません。</p>
+            <div class="demand-inputs">
+              <label>対象月 <input type="month" id="demand-entry-month" min="2020-01" max="2035-12"></label>
+              <label>参照元
+                <select id="demand-entry-platform">
+                  <option value="carsensor">カーセンサー：問い合わせ順位</option>
+                  <option value="goonet">グーネット：閲覧順位</option>
+                </select>
+              </label>
+              <label>順位 <input type="number" id="demand-entry-rank" inputmode="numeric" min="1" max="100" placeholder="例：6"></label>
+              <label>メーカー <input id="demand-entry-make" autocomplete="off" placeholder="例：トヨタ"></label>
+              <label>車名 <input id="demand-entry-model" autocomplete="off" placeholder="例：シエンタ"></label>
+            </div>
+            <button class="button primary" type="button" id="demand-add">この端末に順位を記録する</button>
+            <p id="demand-manual-status" class="hint" aria-live="polite"></p>
+          </details>
+        </article>
         <article class="panel uss-panel" id="uss-aggregate">
           <div class="uss-head">
             <div><h2>USS公式市場統計</h2><p id="uss-period">公開データを確認中</p></div>
@@ -236,5 +282,6 @@
   <script src="./model-sales.js?v=1.3" defer></script>
   <script src="./registered-sales.js?v=1.4" defer></script>
   <script src="./valuation.js?v=1.5" defer></script>
+  <script src="./demand-signals.js?v=1.7" defer></script>
 </body>
 </html>
