@@ -11,7 +11,7 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css?v=1.1">
   <title>MD MARKET | 中古車分析</title>
 </head>
 <body>
@@ -30,7 +30,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.0</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.1</b></span></div>
       </header>
       <div class="notice" role="note">実績データは自動取得しません。利用権限のあるCSVを読み込みます。掲載価格と実落札価格は別管理し、取り込んだ情報は原則「未検証」として扱います。</div>
       <section class="screen" id="overview">
@@ -69,6 +69,15 @@
       <section class="screen" id="import">
         <div class="section-heading"><h2>データの取り込み・保存</h2><span>iPhoneの「ファイル」からCSVを選択</span></div>
         <div class="panel upload-panel"><div class="upload-icon">↥</div><h3>CSVを読み込む</h3><p>CSVは端末内のデータベースに保存されます。Windowsや同じWi-Fiは不要です。</p><label for="csv" class="file-label">CSVファイルを選ぶ</label><input id="csv" type="file" accept=".csv,text/csv,text/plain"><span id="filename">ファイル未選択</span><button class="button primary full" id="upload">検証して保存する</button><p id="upload-status" class="result-message" aria-live="polite"></p><p class="hint">最大5MB・20,000行。必須: date, make, model, price_jpy, channel, source_url。任意: market_type, grade, year, mileage_km, color, equipment など。</p></div>
+        <div class="panel paste-panel">
+          <h3>ファイルなしでデータを登録</h3>
+          <p>ChatGPTで「データをコピー」を押し、ここに貼り付けるだけで登録できます。CSVをダウンロードする必要はありません。</p>
+          <label class="paste-label" for="paste-data">CSVまたはMDGZ1コードを貼り付け</label>
+          <textarea id="paste-data" rows="4" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="ここを長押しして「ペースト」"></textarea>
+          <button class="button primary full" id="paste-import">貼り付けたデータを検証・登録</button>
+          <p id="paste-status" class="result-message" aria-live="polite"></p>
+          <p class="hint">取り込むデータはこの端末内で処理・保存します。入力したコードは外部サーバーに送信しません。出典が未確認の情報は「未検証」で登録します。</p>
+        </div>
         <div class="panel backup-panel"><h3>バックアップ</h3><p>iPhoneのデータが消える可能性に備え、定期的にCSVを書き出してください。Safari版とホーム画面版では保存領域が別になる場合があります。</p><div class="button-row"><button class="button secondary" id="export">CSVをバックアップ</button><button class="button ghost" id="template">CSVのひな形</button></div><p id="backup-status" class="hint" aria-live="polite"></p></div>
         <div class="panel backup-panel danger-panel"><h3>データの全削除</h3><p>この端末に保存したレコードだけを消去します。復元にはバックアップCSVが必要です。</p><button class="button danger" id="clear">全件削除</button></div>
       </section>
@@ -86,7 +95,7 @@
       <footer class="footer">MD MARKET · iPhone単独PWA · 出典未検証は取引判断に使用しない</footer>
     </main>
   </div>
-  <script src="./storage.js" defer></script>
-  <script src="./app.js" defer></script>
+  <script src="./storage.js?v=1.1" defer></script>
+  <script src="./app.js?v=1.1" defer></script>
 </body>
 </html>
