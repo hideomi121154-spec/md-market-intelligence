@@ -3,23 +3,35 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '17 1 * * *'
+  push:
+    paths:
+      - 'scripts/fetch_uss_monthly.py'
+      - 'tests/test_uss_monthly.py'
+      - '.github/workflows/uss-monthly.yml'
 permissions:
   contents: write
+concurrency:
+  group: uss-official-monthly
+  cancel-in-progress: false
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Fetch official USS source and verify
+      - name: Unit test official monthly parser
+        run: python -m unittest discover -s tests -v
+      - name: Fetch and parse monthly figures from USS official IR
         run: python scripts/fetch_uss_monthly.py
-      - name: Commit verified metadata only
+      - name: Commit verified monthly aggregates and provenance
         run: |
-          git add data/uss_source_status.json
+          git add data/uss_source_status.json data/uss_monthly.json
           if git diff --cached --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "data: check official USS monthly source"
-          git push
+          git commit -m "data: update verified USS monthly aggregates"
+          git pull --rebase origin main
+          git push origin HEAD:main
