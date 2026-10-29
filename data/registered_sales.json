@@ -1,0 +1,364 @@
+{
+  "month": "2026-09",
+  "source_url": "https://www.jada.or.jp/files/libs/7724/202610051041269611.pdf",
+  "source_page": 2,
+  "models": [
+    {
+      "rank": 1,
+      "make": "トヨタ",
+      "model": "ヤリス",
+      "units": 14230,
+      "yoy_pct": 104.1
+    },
+    {
+      "rank": 2,
+      "make": "トヨタ",
+      "model": "カローラ",
+      "units": 11321,
+      "yoy_pct": 98.2
+    },
+    {
+      "rank": 3,
+      "make": "トヨタ",
+      "model": "シエンタ",
+      "units": 10468,
+      "yoy_pct": 140.2
+    },
+    {
+      "rank": 4,
+      "make": "ホンダ",
+      "model": "フリード",
+      "units": 7566,
+      "yoy_pct": 100.9
+    },
+    {
+      "rank": 5,
+      "make": "トヨタ",
+      "model": "ランドクルーザー",
+      "units": 7362,
+      "yoy_pct": 167.0
+    },
+    {
+      "rank": 6,
+      "make": "トヨタ",
+      "model": "ルーミー",
+      "units": 7202,
+      "yoy_pct": 84.1
+    },
+    {
+      "rank": 7,
+      "make": "トヨタ",
+      "model": "ヴォクシー",
+      "units": 6939,
+      "yoy_pct": 104.8
+    },
+    {
+      "rank": 8,
+      "make": "ホンダ",
+      "model": "ヴェゼル",
+      "units": 6918,
+      "yoy_pct": 93.5
+    },
+    {
+      "rank": 9,
+      "make": "スズキ",
+      "model": "ジムニー",
+      "units": 6887,
+      "yoy_pct": 142.5
+    },
+    {
+      "rank": 10,
+      "make": "トヨタ",
+      "model": "アルファード",
+      "units": 6879,
+      "yoy_pct": 93.3
+    },
+    {
+      "rank": 11,
+      "make": "日産",
+      "model": "セレナ",
+      "units": 6559,
+      "yoy_pct": 94.7
+    },
+    {
+      "rank": 12,
+      "make": "日産",
+      "model": "ノート",
+      "units": 6432,
+      "yoy_pct": 86.9
+    },
+    {
+      "rank": 13,
+      "make": "トヨタ",
+      "model": "ノア",
+      "units": 6293,
+      "yoy_pct": 93.6
+    },
+    {
+      "rank": 14,
+      "make": "トヨタ",
+      "model": "アクア",
+      "units": 5324,
+      "yoy_pct": 116.1
+    },
+    {
+      "rank": 15,
+      "make": "ホンダ",
+      "model": "ステップワゴン",
+      "units": 5287,
+      "yoy_pct": 115.6
+    },
+    {
+      "rank": 16,
+      "make": "トヨタ",
+      "model": "RAV4",
+      "units": 5120,
+      "yoy_pct": 235.5
+    },
+    {
+      "rank": 17,
+      "make": "スズキ",
+      "model": "ソリオ",
+      "units": 5066,
+      "yoy_pct": 123.7
+    },
+    {
+      "rank": 18,
+      "make": "ホンダ",
+      "model": "フィット",
+      "units": 4723,
+      "yoy_pct": 113.9
+    },
+    {
+      "rank": 19,
+      "make": "マツダ",
+      "model": "CX-5",
+      "units": 4394,
+      "yoy_pct": 186.2
+    },
+    {
+      "rank": 20,
+      "make": "SUBARU",
+      "model": "フォレスター",
+      "units": 4360,
+      "yoy_pct": 87.6
+    },
+    {
+      "rank": 21,
+      "make": "トヨタ",
+      "model": "ライズ",
+      "units": 4066,
+      "yoy_pct": 43.2
+    },
+    {
+      "rank": 22,
+      "make": "トヨタ",
+      "model": "プリウス",
+      "units": 3931,
+      "yoy_pct": 99.3
+    },
+    {
+      "rank": 23,
+      "make": "日産",
+      "model": "キックス",
+      "units": 3690,
+      "yoy_pct": 401.1
+    },
+    {
+      "rank": 24,
+      "make": "トヨタ",
+      "model": "ヴェルファイア",
+      "units": 3367,
+      "yoy_pct": 102.5
+    },
+    {
+      "rank": 25,
+      "make": "トヨタ",
+      "model": "bZ4X",
+      "units": 3231,
+      "yoy_pct": 8284.6
+    },
+    {
+      "rank": 26,
+      "make": "三菱",
+      "model": "デリカD5",
+      "units": 3105,
+      "yoy_pct": 108.0
+    },
+    {
+      "rank": 27,
+      "make": "トヨタ",
+      "model": "ハリアー",
+      "units": 2884,
+      "yoy_pct": 75.7
+    },
+    {
+      "rank": 28,
+      "make": "トヨタ",
+      "model": "クラウン",
+      "units": 2509,
+      "yoy_pct": 46.9
+    },
+    {
+      "rank": 29,
+      "make": "スズキ",
+      "model": "クロスビー",
+      "units": 2502,
+      "yoy_pct": 273.7
+    },
+    {
+      "rank": 30,
+      "make": "SUBARU",
+      "model": "レヴォーグ",
+      "units": 2489,
+      "yoy_pct": 140.3
+    },
+    {
+      "rank": 31,
+      "make": "日産",
+      "model": "リーフ",
+      "units": 2013,
+      "yoy_pct": 906.8
+    },
+    {
+      "rank": 32,
+      "make": "SUBARU",
+      "model": "インプレッサ",
+      "units": 1954,
+      "yoy_pct": 56.0
+    },
+    {
+      "rank": 33,
+      "make": "マツダ",
+      "model": "MAZDA2",
+      "units": 1764,
+      "yoy_pct": 86.3
+    },
+    {
+      "rank": 34,
+      "make": "レクサス",
+      "model": "NX350H",
+      "units": 1582,
+      "yoy_pct": 105.8
+    },
+    {
+      "rank": 35,
+      "make": "日産",
+      "model": "エルグランド",
+      "units": 1568,
+      "yoy_pct": 927.8
+    },
+    {
+      "rank": 36,
+      "make": "マツダ",
+      "model": "CX-30",
+      "units": 1535,
+      "yoy_pct": 128.0
+    },
+    {
+      "rank": 37,
+      "make": "トヨタ",
+      "model": "ハイエースワゴン",
+      "units": 1487,
+      "yoy_pct": 128.7
+    },
+    {
+      "rank": 38,
+      "make": "レクサス",
+      "model": "LBX",
+      "units": 1450,
+      "yoy_pct": 79.3
+    },
+    {
+      "rank": 39,
+      "make": "ホンダ",
+      "model": "シビック",
+      "units": 1379,
+      "yoy_pct": 90.3
+    },
+    {
+      "rank": 40,
+      "make": "マツダ",
+      "model": "ロードスター",
+      "units": 1374,
+      "yoy_pct": 168.6
+    },
+    {
+      "rank": 41,
+      "make": "スズキ",
+      "model": "スイフト",
+      "units": 1356,
+      "yoy_pct": 43.6
+    },
+    {
+      "rank": 42,
+      "make": "ホンダ",
+      "model": "WR-V",
+      "units": 1297,
+      "yoy_pct": 48.8
+    },
+    {
+      "rank": 43,
+      "make": "スズキ",
+      "model": "フロンクス",
+      "units": 1219,
+      "yoy_pct": 60.1
+    },
+    {
+      "rank": 44,
+      "make": "日産",
+      "model": "エクストレイル",
+      "units": 1108,
+      "yoy_pct": 36.8
+    },
+    {
+      "rank": 45,
+      "make": "ホンダ",
+      "model": "スーパーワン",
+      "units": 1055,
+      "yoy_pct": null
+    },
+    {
+      "rank": 46,
+      "make": "ダイハツ",
+      "model": "ロッキー",
+      "units": 977,
+      "yoy_pct": 80.9
+    },
+    {
+      "rank": 47,
+      "make": "マツダ",
+      "model": "MAZDA3",
+      "units": 954,
+      "yoy_pct": 88.7
+    },
+    {
+      "rank": 48,
+      "make": "ホンダ",
+      "model": "ZR-V",
+      "units": 901,
+      "yoy_pct": 48.2
+    },
+    {
+      "rank": 49,
+      "make": "レクサス",
+      "model": "RX350",
+      "units": 783,
+      "yoy_pct": 89.6
+    },
+    {
+      "rank": 50,
+      "make": "三菱",
+      "model": "アウトランダー",
+      "units": 777,
+      "yoy_pct": 98.2
+    }
+  ],
+  "dataset": "JADA domestic brand registered new passenger nameplate sales",
+  "period_type": "single_month",
+  "schema_version": 1,
+  "source_name": "Japan Automobile Dealers Association (JADA)",
+  "scope": "top 50 registered passenger nameplates; excludes kei vehicles and foreign brands; nameplate families aggregated",
+  "caution": "NEW registrations; not used-car sales or auction prices. Includes small/compact cars. Some nameplates aggregate multiple models.",
+  "checked_at_utc": "2026-10-29T13:51:27.164668+00:00"
+}
