@@ -1,0 +1,8 @@
+{
+  "source": "USS official investor relations monthly data",
+  "source_url": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
+  "checked_at_utc": "2026-10-29T12:35:40.436458+00:00",
+  "source_sha256": "84ab1801dc8ae68c68a8b2e41e73569e239490e981c3a8cb2aedd1539d28085b",
+  "status": "source_reachable_not_yet_parsed",
+  "warning": "Aggregate market data only; individual vehicle sale prices are not available from this source."
+}
