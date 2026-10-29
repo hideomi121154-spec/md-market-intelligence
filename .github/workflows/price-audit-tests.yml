@@ -1,0 +1,44 @@
+name: Used-car price provenance and iPhone tests
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'app.js'
+      - 'storage.js'
+      - 'index.html'
+      - 'audit.css'
+      - 'test_audit.js'
+      - 'test_store.js'
+      - '.github/workflows/price-audit-tests.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check storage.js
+      - run: node --check app.js
+      - run: node test_store.js
+      - run: node test_audit.js
+      - name: Check iPhone audit screen controls exist
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('index.html').read_text('utf-8')
+          ids=['include-unverified','audit-overview','audit-editor','audit-target','audit-source-link',
+               'audit-notes','audit-confirm','audit-approve','audit-flag','audit-reset','audit-cancel',
+               'manual-date','manual-make','manual-model','manual-grade','manual-year',
+               'manual-mileage','manual-price','manual-market','manual-source-name',
+               'manual-source-url','manual-save','manual-status']
+          missing=[i for i in ids if 'id="'+i+'"' not in html]
+          assert not missing, f'Missing controls: {missing}'
+          assert './storage.js?v=1.6' in html
+          assert './app.js?v=1.6' in html
+          assert './audit.css?v=1.6' in html
+          print('iPhone price audit UI controls passed')
+          PY
