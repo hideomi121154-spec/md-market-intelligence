@@ -62,6 +62,44 @@ async function getReviews(){const db=await openDb();return new Promise((resolve,
  q.onsuccess=()=>resolve(q.result||[]);q.onerror=()=>reject(q.error);
  tx.oncomplete=()=>db.close();tx.onerror=()=>reject(tx.error);
 });}
+
+async function exportReviewBundle(){
+ const reviews=await getReviews();
+ return JSON.stringify({schema:'MD_MARKET_REVIEW_V1',created_at:new Date().toISOString(),
+   description:'Local user-attested reviews, not third-party verification',reviews},null,2);
+}
+async function restoreReviewBundle(raw){
+ const input=String(raw||'').trim();
+ if(input.length>5*1024*1024)throw new Error('照合履歴は5MB以下にしてください');
+ let data;
+ try{data=JSON.parse(input)}catch{throw new Error('バックアップのJSONを読み取れません');}
+ if(data?.schema!=='MD_MARKET_REVIEW_V1'||!Array.isArray(data.reviews)||data.reviews.length>20000)
+   throw new Error('MD MARKET照合履歴の形式ではありません');
+ const rows=await all(),map=new Map(rows.map(r=>[r.id,r]));
+ const candidates=[],seen=new Set();
+ for(const item of data.reviews){
+  if(!item||typeof item.id!=='string'||seen.has(item.id))continue;
+  seen.add(item.id);
+  const original=map.get(item.id);
+  if(!original||original.source_url!==item.source_url)continue;
+  if(!['user_checked','flagged'].includes(item.status))continue;
+  const notes=String(item.notes||'').slice(0,500);
+  if(item.status==='user_checked'&&(!eligibleForManualCheck(original)||notes.trim().length<10))continue;
+  if(item.status==='flagged'&&notes.trim().length<5)continue;
+  if(typeof item.checked_at!=='string'||!/^20\\d\\d-/.test(item.checked_at)||
+     !Number.isFinite(Date.parse(item.checked_at)))continue;
+  candidates.push({id:item.id,status:item.status,notes,checked_at:item.checked_at,source_url:original.source_url});
+ }
+ if(!candidates.length)return {restored:0,skipped:data.reviews.length};
+ const db=await openDb();
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(AUDITS,'readwrite'),store=tx.objectStore(AUDITS);
+  for(const item of candidates)store.put(item);
+  tx.oncomplete=()=>{db.close();resolve({restored:candidates.length,skipped:data.reviews.length-candidates.length})};
+  tx.onerror=()=>{db.close();reject(tx.error)};
+ });
+}
+
 async function saveReview(record,action,notes,confirmed){
  const audit=validateReviewInput(record,action,notes,confirmed);
  const db=await openDb();
@@ -85,5 +123,5 @@ function filter(rows,f){const make=canonicalMake(f.make||''),model=canonicalMode
 function summarize(rows){const types=[...new Set(rows.map(r=>r.market_type))];const mixed=types.length>1;const byMonth=new Map();if(!mixed)for(const r of rows){const key=r.date.slice(0,7);if(!byMonth.has(key))byMonth.set(key,[]);byMonth.get(key).push(r.price_jpy)}const series=[...byMonth.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([month,prices])=>({month,median_price_jpy:median(prices),count:prices.length}));return {count:rows.length,median_price_jpy:mixed?null:median(rows.map(r=>r.price_jpy)),mixed,markets:types,series}}
 function safeCSV(v){let s=String(v==null?'':v);if(/^[\s]*[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'}
 function exportCSV(rows){return '\uFEFF'+FIELDS.filter(f=>f!=='evidence_status').join(',')+'\r\n'+rows.map(row=>FIELDS.filter(f=>f!=='evidence_status').map(k=>safeCSV(row[k])).join(',')).join('\r\n')+'\r\n'}
-global.MDStore={openDb,all,insert,clear,getReviews,saveReview,eligibleForManualCheck,validateReviewInput,readRecords,decodeImportText,filter,summarize,median,exportCSV,parseCSV,colorGroup,canonicalMake,canonicalModel};
+global.MDStore={openDb,all,insert,clear,getReviews,saveReview,exportReviewBundle,restoreReviewBundle,eligibleForManualCheck,validateReviewInput,readRecords,decodeImportText,filter,summarize,median,exportCSV,parseCSV,colorGroup,canonicalMake,canonicalModel};
 })(window);
