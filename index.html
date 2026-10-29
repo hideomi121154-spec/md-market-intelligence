@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#091326">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MD MARKET">
+  <meta name="description" content="iPhone単体で使える中古車相場分析・車両データ管理アプリ">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./style.css">
+  <title>MD MARKET | 中古車分析</title>
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <a href="#overview" class="brand"><span class="logo">MD</span><span><strong>MD MARKET</strong><small>中古車市場分析</small></span></a>
+      <div class="side-label">MARKET INTELLIGENCE</div>
+      <nav aria-label="画面の切り替え">
+        <a href="#overview" data-tab="overview"><span class="nav-icon">▥</span><span>相場</span></a>
+        <a href="#records" data-tab="records"><span class="nav-icon">▤</span><span>車両</span></a>
+        <a href="#import" data-tab="import"><span class="nav-icon">↥</span><span>データ</span></a>
+        <a href="#plan" data-tab="plan"><span class="nav-icon">◷</span><span>計画</span></a>
+      </nav>
+      <div class="side-footer"><span class="live-dot"></span> iPhone単体動作<br><small>データはこの端末に保存</small></div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.0</b></span></div>
+      </header>
+      <div class="notice" role="note">実績データは自動取得しません。利用権限のあるCSVを読み込みます。掲載価格と実落札価格は別管理し、取り込んだ情報は原則「未検証」として扱います。</div>
+      <section class="screen" id="overview">
+        <div class="section-heading"><h2>市場サマリー</h2><span>端末内の保存データ</span></div>
+        <div class="stat-grid">
+          <div class="stat"><small>登録レコード</small><strong id="count-all">0</strong><span>件</span></div>
+          <div class="stat"><small>対応車種</small><strong id="count-models">0</strong><span>車種</span></div>
+          <div class="stat"><small>オークション実績</small><strong id="count-auction">0</strong><span>件</span></div>
+          <div class="stat"><small>小売掲載価格</small><strong id="count-retail">0</strong><span>件</span></div>
+        </div>
+        <p class="coverage" id="coverage"></p>
+        <div class="content-grid">
+          <article class="panel filters"><div class="panel-head"><h3>分析条件</h3><span>車種別に比較</span></div>
+            <div class="field"><label for="make">メーカー</label><input id="make" autocomplete="off" placeholder="例：トヨタ"></div>
+            <div class="field"><label for="model">車種</label><input id="model" autocomplete="off" placeholder="例：プリウス、N-BOX"></div>
+            <div class="field"><label for="grade">グレード</label><input id="grade" autocomplete="off" placeholder="例：Z"></div>
+            <div class="field-cols"><div class="field"><label for="year-min">年式（下限）</label><input id="year-min" inputmode="numeric" type="number" placeholder="2018"></div><div class="field"><label for="year-max">年式（上限）</label><input id="year-max" inputmode="numeric" type="number" placeholder="2026"></div></div>
+            <div class="field-cols"><div class="field"><label for="mileage-max">走行距離（km以下）</label><input id="mileage-max" inputmode="numeric" type="number" placeholder="50000"></div><div class="field"><label for="color">ボディカラー</label><select id="color"><option value="">すべて</option><option>白系</option><option>黒系</option><option>銀系</option><option>灰系</option><option>青系</option><option>赤系</option><option>その他</option><option>不明</option></select></div></div>
+            <div class="field"><label for="equipment">装備名（完全一致）</label><input id="equipment" placeholder="例：サンルーフ"></div>
+            <div class="field-cols"><div class="field"><label for="channel">価格区分</label><select id="channel"><option value="auction">実落札価格</option><option value="retail">小売掲載価格</option></select></div><div class="field"><label for="market">市場区分</label><select id="market"><option value="">すべて（混在時は価格非表示）</option><option value="dealer_auction">業者間AA</option><option value="consumer_auction">消費者向けAA</option><option value="unspecified_auction">AA種別未特定</option><option value="retail_listing">小売掲載</option></select></div></div>
+            <button class="button primary full" id="apply">この条件で分析する</button>
+          </article>
+          <article class="panel result"><div class="panel-head"><h3>条件別の分析</h3><span id="filter-caption">市場指定なし</span></div>
+            <div class="price-summary"><div><small>条件一致件数</small><strong id="matching">0件</strong></div><div><small>価格中央値</small><strong id="median">—</strong></div></div>
+            <p class="warning" id="market-warning"></p>
+            <h4>月別価格中央値</h4>
+            <div id="trend" class="chart-empty">データを登録するとグラフを表示します。</div>
+            <p class="footnote">少数件数・条件差・取得元の偏りによる誤差を考慮してください。相場推定ではなく参考集計です。</p>
+          </article>
+        </div>
+      </section>
+      <section class="screen" id="records">
+        <div class="section-heading"><h2>車両データ</h2><span id="records-caption">登録済みレコードを表示</span></div>
+        <div class="panel records-panel"><div class="search-row"><input type="search" id="quick-search" placeholder="車種名で検索（例：ライズ）" aria-label="車種検索"><button class="button primary" id="search-button">検索</button></div><p class="hint">分析条件の年式や色も適用されます。出典の確認状況に注意してください。</p><div id="record-cards" class="cards"></div><button class="button more" id="show-more" hidden>さらに20件表示</button></div>
+      </section>
+      <section class="screen" id="import">
+        <div class="section-heading"><h2>データの取り込み・保存</h2><span>iPhoneの「ファイル」からCSVを選択</span></div>
+        <div class="panel upload-panel"><div class="upload-icon">↥</div><h3>CSVを読み込む</h3><p>CSVは端末内のデータベースに保存されます。Windowsや同じWi-Fiは不要です。</p><label for="csv" class="file-label">CSVファイルを選ぶ</label><input id="csv" type="file" accept=".csv,text/csv,text/plain"><span id="filename">ファイル未選択</span><button class="button primary full" id="upload">検証して保存する</button><p id="upload-status" class="result-message" aria-live="polite"></p><p class="hint">最大5MB・20,000行。必須: date, make, model, price_jpy, channel, source_url。任意: market_type, grade, year, mileage_km, color, equipment など。</p></div>
+        <div class="panel backup-panel"><h3>バックアップ</h3><p>iPhoneのデータが消える可能性に備え、定期的にCSVを書き出してください。Safari版とホーム画面版では保存領域が別になる場合があります。</p><div class="button-row"><button class="button secondary" id="export">CSVをバックアップ</button><button class="button ghost" id="template">CSVのひな形</button></div><p id="backup-status" class="hint" aria-live="polite"></p></div>
+        <div class="panel backup-panel danger-panel"><h3>データの全削除</h3><p>この端末に保存したレコードだけを消去します。復元にはバックアップCSVが必要です。</p><button class="button danger" id="clear">全件削除</button></div>
+      </section>
+      <section class="screen" id="plan">
+        <div class="section-heading"><h2>開発ロードマップ</h2><span>MAMO BOATと同じWebアプリ方式</span></div>
+        <div class="roadmap">
+          <div class="step complete"><small>PHASE 0 — 実装済み</small><h3>iPhone単独PWA</h3><p>ホーム画面アプリ、CSV取込、端末保存、価格分析、オフライン表示</p></div>
+          <div class="step"><small>PHASE 1</small><h3>実データの信頼性と充実</h3><p>車両ごとの原本照合、グレード・色・装備、正規のデータソース</p></div>
+          <div class="step"><small>PHASE 2</small><h3>売れ筋と掲載終了日数</h3><p>利用許可のある掲載履歴、掲載終了率、価格帯別の滞留期間</p></div>
+          <div class="step"><small>PHASE 3</small><h3>需要と供給の先行指標</h3><p>5年前の新車販売、納期、新型、求人、レンタカー、災害・保険</p></div>
+          <div class="step"><small>PHASE 4</small><h3>予測とMD仕入れ判断</h3><p>予想販売日数、仕入れ上限、地域間の在庫配分、予測の検証</p></div>
+        </div>
+        <p class="roadmap-note">複数端末での自動同期や公式データ自動更新は、今後バックエンド（例：独立したSupabaseプロジェクト）を接続して実装します。</p>
+      </section>
+      <footer class="footer">MD MARKET · iPhone単独PWA · 出典未検証は取引判断に使用しない</footer>
+    </main>
+  </div>
+  <script src="./storage.js" defer></script>
+  <script src="./app.js" defer></script>
+</body>
+</html>
