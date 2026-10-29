@@ -11,7 +11,7 @@
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./style.css?v=1.1">
+  <link rel="stylesheet" href="./style.css?v=1.2">
   <title>MD MARKET | 中古車分析</title>
 </head>
 <body>
@@ -30,9 +30,9 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.1</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.2</b></span></div>
       </header>
-      <div class="notice" role="note">実績データは自動取得しません。利用権限のあるCSVを読み込みます。掲載価格と実落札価格は別管理し、取り込んだ情報は原則「未検証」として扱います。</div>
+      <div class="notice" role="note">USSの公式月次集計は自動取得します。車種別の実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
         <div class="section-heading"><h2>市場サマリー</h2><span>端末内の保存データ</span></div>
         <div class="stat-grid">
@@ -42,6 +42,34 @@
           <div class="stat"><small>小売掲載価格</small><strong id="count-retail">0</strong><span>件</span></div>
         </div>
         <p class="coverage" id="coverage"></p>
+        <article class="panel uss-panel" id="uss-aggregate">
+          <div class="uss-head">
+            <div><h2>USS公式市場統計</h2><p id="uss-period">公開データを確認中</p></div>
+            <button class="button secondary" type="button" id="uss-reload">最新情報を確認</button>
+          </div>
+          <div class="uss-source">出典：<a href="https://www.ussnet.co.jp/ir/library/monthly/index.html" target="_blank" rel="noopener noreferrer">USS IR 月次オークションデータ（公式）</a></div>
+          <p class="uss-status" id="uss-status" aria-live="polite">読み込み中…</p>
+          <div id="uss-data" hidden>
+            <div class="uss-stat-grid">
+              <div class="uss-stat"><small>出品台数</small><strong id="uss-offered">—</strong><span class="unit">台</span></div>
+              <div class="uss-stat"><small>成約台数</small><strong id="uss-sold">—</strong><span class="unit">台</span></div>
+              <div class="uss-stat"><small>成約率</small><strong id="uss-rate">—</strong></div>
+              <div class="uss-stat"><small>平均成約単価</small><strong id="uss-price">—</strong></div>
+            </div>
+            <p class="uss-yoy" id="uss-yoy"></p>
+            <div class="uss-charts">
+              <div class="uss-chart"><h4>平均成約単価の推移</h4><div id="uss-chart-price"></div></div>
+              <div class="uss-chart"><h4>成約率の推移</h4><div id="uss-chart-rate"></div></div>
+            </div>
+            <div class="uss-table-container">
+              <table class="uss-table" aria-label="USS公式月次市場統計">
+                <thead><tr><th>月</th><th>出品台数</th><th>成約台数</th><th>成約率</th><th>平均単価<br>千円</th></tr></thead>
+                <tbody id="uss-rows"></tbody>
+              </table>
+            </div>
+          </div>
+          <p class="uss-note">USSのオークション全体の集計です。特定車種の落札相場・仕入れ上限ではありません。平均単価の元データは千円単位。USSの公表状況により最新月は実際の暦月より前になることがあります。</p>
+        </article>
         <div class="content-grid">
           <article class="panel filters"><div class="panel-head"><h3>分析条件</h3><span>車種別に比較</span></div>
             <div class="field"><label for="make">メーカー</label><input id="make" autocomplete="off" placeholder="例：トヨタ"></div>
@@ -97,5 +125,6 @@
   </div>
   <script src="./storage.js?v=1.1" defer></script>
   <script src="./app.js?v=1.1" defer></script>
+  <script src="./uss.js?v=1.2" defer></script>
 </body>
 </html>
