@@ -24,8 +24,13 @@ on:
       - '.github/workflows/browser-smoke.yml'
 jobs:
   browser:
+    name: E2E / ${{ matrix.engine }}
     runs-on: ubuntu-latest
     timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -34,8 +39,10 @@ jobs:
       - name: Install isolated browser test dependency
         run: npm install --no-save --no-package-lock playwright@1.56.1
       - name: Install browser
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps ${{ matrix.engine }}
       - name: Validate browser test syntax
         run: node --check tests/browser-smoke.cjs
       - name: Run browser smoke
         run: node tests/browser-smoke.cjs
+        env:
+          BROWSER_ENGINE: ${{ matrix.engine }}
