@@ -37,7 +37,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.0（開発版）</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.0.2</b></span></div>
       </header>
       <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
@@ -317,7 +317,21 @@
           <p id="paste-status" class="result-message" aria-live="polite"></p>
           <p class="hint">取り込むデータはこの端末内で処理・保存します。入力したコードは外部サーバーに送信しません。出典が未確認の情報は「未検証」で登録します。</p>
         </div>
-        <div class="panel backup-panel"><h3>バックアップ</h3><p>iPhoneのデータが消える可能性に備え、定期的にCSVを書き出してください。Safari版とホーム画面版では保存領域が別になる場合があります。</p><div class="button-row"><button class="button secondary" id="export">CSVをバックアップ</button><button class="button ghost" id="template">CSVのひな形</button></div><p id="backup-status" class="hint" aria-live="polite"></p></div>
+        <div class="panel backup-panel" id="backup-panel">
+          <h3>車両データのバックアップ</h3>
+          <p>CSVの通常ダウンロードがiPhoneで使えない場合は「バックアップ文を表示」から共有・コピーできます。元の記録は変更しません。</p>
+          <div class="button-row">
+            <button class="button secondary" type="button" id="backup-text-generate">バックアップ文を表示</button>
+            <button class="button primary" type="button" id="backup-share">共有して「ファイル」に保存</button>
+            <button class="button secondary" type="button" id="backup-copy">全文をコピー</button>
+            <button class="button ghost" type="button" id="export">CSVをダウンロード（従来方式）</button>
+            <button class="button ghost" type="button" id="template">CSVのひな形</button>
+          </div>
+          <label class="paste-label" for="backup-text">CSVバックアップ全文（ここを長押ししてコピーも可能）</label>
+          <textarea id="backup-text" rows="5" readonly spellcheck="false" autocorrect="off" autocapitalize="off" style="display:block;width:100%;font-size:14px;line-height:1.5;padding:12px;background:#0a192b;color:#f5f8ff;border:1px solid #416285;border-radius:12px" placeholder="「バックアップ文を表示」を押すと、ここにCSV全文が出ます。"></textarea>
+          <p id="backup-status" class="result-message" role="status" aria-live="polite"></p>
+          <p class="hint">「共有して保存」の後は、iPhoneの「ファイル」で保存したCSVを開いて内容を確認してください。登録件数が0件の場合は、Safari版とホーム画面版で保存先が異なる可能性があります。<strong>バックアップ確認前にアプリ削除・Webサイトデータ消去をしないでください。</strong></p>
+        </div>
         <div class="panel audit-backup-panel">
           <h3>原本照合メモのバックアップ</h3>
           <p class="hint">照合結果はこのiPhone内に保存されています。ここでバックアップ文を生成し、全文をiPhoneのメモ等に保管できます。元の車両データのCSVとは別です。</p>
@@ -375,7 +389,7 @@
     </main>
   </div>
   <script src="./storage.js?v=2.0.1" defer></script>
-  <script src="./app.js?v=2.0.1" defer></script>
+  <script src="./app.js?v=2.0.2" defer></script>
   <script src="./uss.js?v=1.2" defer></script>
   <script src="./model-sales.js?v=1.3" defer></script>
   <script src="./registered-sales.js?v=1.4" defer></script>
