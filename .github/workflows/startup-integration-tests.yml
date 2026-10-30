@@ -21,6 +21,14 @@ on:
   pull_request:
     paths:
       - 'storage.js'
+      - 'offline-data.js'
+      - 'uss.js'
+      - 'model-sales.js'
+      - 'registered-sales.js'
+      - 'demand-signals.js'
+      - 'kei-history.js'
+      - 'registered-history.js'
+      - 'tests/test_offline_data.cjs'
       - 'app.js'
       - 'sw.js'
       - 'index.html'
