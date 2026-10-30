@@ -37,4 +37,4 @@ jobs:
       - name: Run backup test
         run: node tests/test_iphone_backup.cjs
         env:
-          BROWSER_${{ matrix.engine }}: ${{ matrix.engine }}
+          BROWSER_ENGINE: ${{ matrix.engine }}
