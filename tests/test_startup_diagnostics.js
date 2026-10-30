@@ -98,7 +98,7 @@ async function workerChecks(){
 function linkageChecks(){
   const sw=read('sw.js');
   for(const asset of [
-    './storage.js?v=2.0.1','./app.js?v=2.0.1',
+    './storage.js?v=2.0.1','./app.js?v=2.0.2',
     './inventory-observations.js?v=2.0','./inventory-observations.css?v=2.0'
   ]){
     assert.ok(html.includes(asset),'HTML missing '+asset);
