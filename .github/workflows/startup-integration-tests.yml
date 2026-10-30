@@ -3,6 +3,14 @@ on:
   push:
     paths:
       - 'storage.js'
+      - 'offline-data.js'
+      - 'uss.js'
+      - 'model-sales.js'
+      - 'registered-sales.js'
+      - 'demand-signals.js'
+      - 'kei-history.js'
+      - 'registered-history.js'
+      - 'tests/test_offline_data.cjs'
       - 'app.js'
       - 'sw.js'
       - 'index.html'
@@ -13,6 +21,14 @@ on:
   pull_request:
     paths:
       - 'storage.js'
+      - 'offline-data.js'
+      - 'uss.js'
+      - 'model-sales.js'
+      - 'registered-sales.js'
+      - 'demand-signals.js'
+      - 'kei-history.js'
+      - 'registered-history.js'
+      - 'tests/test_offline_data.cjs'
       - 'app.js'
       - 'sw.js'
       - 'index.html'
@@ -28,6 +44,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --check storage.js && node --check app.js && node --check sw.js && node --check inventory-observations.js
+      - run: node --check storage.js && node --check app.js && node --check sw.js && node --check inventory-observations.js && node --check offline-data.js && node --check tests/test_offline_data.cjs
       - run: node tests/test_startup_diagnostics.js
       - run: node tests/test_inventory_observations.js
+      - run: node tests/test_offline_data.cjs

@@ -54,9 +54,9 @@
    const status=el('uss-status'),button=el('uss-reload');button.disabled=true;
    status.textContent='公式月次データを確認しています…';
    try{
-     const response=await fetch('./data/uss_monthly.json?refresh='+Date.now(),{cache:'no-store'});
+     const response=await MDOffline.read('./data/uss_monthly.json?refresh='+Date.now(),{cache:'no-store'});
      if(!response.ok)throw Error('公開データがまだ生成されていません（HTTP '+response.status+'）');
-     const data=validate(await response.json());render(data,'fresh');
+     const data=validate(await response.json());render(data,navigator.onLine===false?'cached':'fresh');
      try{localStorage.setItem(fallbackKey,JSON.stringify(data))}catch(_ignored){}
    }catch(error){
      let recovered=false;

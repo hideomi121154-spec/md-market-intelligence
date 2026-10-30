@@ -85,7 +85,7 @@
     if(loading)return;loading=true;
     status.textContent='年別の新車販売統計を読み込み中…';
     try{
-      const r=await fetch('./data/kei_annual_history.json',{cache:'no-store'});
+      const r=await MDOffline.read('./data/kei_annual_history.json',{cache:'no-store'});
       if(!r.ok)throw Error('HTTP '+r.status);
       years=validate(await r.json());
       const models=listModels(years),oldPrimary=select.value,oldSecond=compare.value;

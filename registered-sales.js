@@ -77,10 +77,10 @@
     if(busy)return;
     busy=true;button.disabled=true;status.textContent='自販連の公式月次ランキングを確認しています…';
     try{
-      const res=await fetch(url+'?cb='+Date.now(),{cache:'no-store'});
+      const res=await MDOffline.read(url+'?cb='+Date.now(),{cache:'no-store'});
       if(!res.ok)throw Error('HTTP '+res.status);
       const data=await res.json();
-      await display(data,false);
+      await display(data,navigator.onLine===false);
       try{localStorage.setItem(cacheKey,JSON.stringify(data))}catch{}
     }catch(error){
       console.warn('JADA monthly stats:',error);

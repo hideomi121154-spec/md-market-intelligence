@@ -49,10 +49,10 @@
     if(loading)return;loading=true;reload.disabled=true;
     status.textContent='公式公開データを確認しています…';
     try {
-      const resp=await fetch(original(),{cache:'no-store'});
+      const resp=await MDOffline.read(original(),{cache:'no-store'});
       if(!resp.ok)throw Error('HTTP '+resp.status);
       const data=await resp.json();
-      await render(data,false);
+      await render(data,navigator.onLine===false);
       try{localStorage.setItem('md-market-newcar-stats-v1',JSON.stringify(data))}catch{}
     } catch(err){
       console.warn('Model sales source unavailable:',err);
