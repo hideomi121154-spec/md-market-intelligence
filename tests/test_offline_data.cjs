@@ -9,7 +9,7 @@ async function testReader(){
   let networkCalls=0, cacheCalls=[];
   const cached={ok:true,json:async()=>({year:2025})};
   const context={
-    module:{exports:{}},console,
+    module:{exports:{}},console,URL,
     navigator:{onLine:false},
     location:{href:'https://example.org/md-market-intelligence/',origin:'https://example.org'},
     caches:{match:async(url,opts)=>{cacheCalls.push({url,opts});return cached}},
