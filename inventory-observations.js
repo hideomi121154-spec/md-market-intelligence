@@ -16,7 +16,7 @@ function validateEntry(r){
  if(r.count===''||r.count==null||!Number.isSafeInteger(o.count)||o.count<0||o.count>1000000)throw Error('掲載台数は0〜100万台の整数で入力してください');
  return o;
 }
-function seriesKey(r){return [canon(r.make),canon(r.model),canon(r.region),canon(r.grade),canon(r.color),canon(r.conditions),host(r.source_url)].join('|')}
+function seriesKey(r){return JSON.stringify([canon(r.make),canon(r.model),canon(r.region),canon(r.grade),canon(r.color),canon(r.conditions),r.source_url])}
 function validateRows(rows){
  if(!Array.isArray(rows)||rows.length>LIMIT)throw Error('記録形式または500件の上限を確認してください');
  const seen=new Set();
@@ -52,9 +52,9 @@ let records=[],healthy=true;
 const fmt=n=>Number(n).toLocaleString('ja-JP');
 function node(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el}
 function load(){
- const raw=localStorage.getItem(KEY);
- try{records=validateRows(raw?JSON.parse(raw):[])}
- catch(e){healthy=false;backup.value=raw||'';status.textContent='保存記録を読み込めません。上書きせず元データを控えてください：'+e.message}
+ let raw='';
+ try{raw=localStorage.getItem(KEY)||'';records=validateRows(raw?JSON.parse(raw):[])}
+ catch(e){healthy=false;backup.value=raw;status.textContent='保存記録を読み込めません。上書きせず元データを控えてください：'+e.message}
  $('inventory-save').disabled=!healthy;$('inventory-restore').disabled=!healthy;
 }
 function persist(updated){localStorage.setItem(KEY,JSON.stringify(updated));records=updated;}
