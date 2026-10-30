@@ -70,7 +70,8 @@ def extract_rows(text,year):
                 continue
             match=re.search(r'(?m)^'+str(rank)+r'\s+'+re.escape(model)+r'(?=\s|$)',t)
             if match is None:
-                raise ValueError(f'2023 PDF missing known wrapped model {rank}: {model}')
+                pos=t.find(model)
+                raise ValueError(f'2023 PDF missing wrapped model {rank}: {model}; excerpt={t[max(0,pos-55):pos+130]!r}')
             excerpt=t[match.start():match.start()+110]
             if f'{units:,}' not in excerpt or 'SUBAR' not in excerpt:
                 raise ValueError(f'2023 PDF wrapped model or units unconfirmed: {model}')
