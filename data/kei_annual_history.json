@@ -2,7 +2,7 @@
   "schema_version": 1,
   "dataset": "Official kei passenger NEW-CAR nameplate annual top15, calendar year",
   "source_name": "Japan Mini Vehicles Association (Zenkeijikyo)",
-  "checked_at_utc": "2026-10-30T11:20:46.270339+00:00",
+  "checked_at_utc": "2026-10-30T11:21:55.181520+00:00",
   "years": [
     {
       "year": 2021,
