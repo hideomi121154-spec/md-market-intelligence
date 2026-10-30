@@ -13,6 +13,7 @@ assert.equal(I.summarize([one,{...two,region:'愛知県'}],I.seriesKey(one)).dat
 assert.equal(I.summarize([one,{...two,grade:'ハイウェイスター'}],I.seriesKey(one)).data.length,1);
 assert.equal(I.summarize([one,{...two,conditions:'2020-2023年、10万km以下'}],I.seriesKey(one)).data.length,1);
 assert.equal(I.summarize([one,{...two,source_url:'https://different.example.jp/search'}],I.seriesKey(one)).data.length,1);
+assert.equal(I.summarize([one,{...two,source_url:'https://carsensor.net/used/search?model=note'}],I.seriesKey(one)).data.length,1,'even the same site with a different search URL is not automatically comparable');
 assert.equal(I.summarize([one,{...two,color:'黒'}],I.seriesKey(one)).data.length,1);
 assert.equal(I.importBundle(I.exportBundle(same)).length,2);
 assert.equal(I.importBundle(I.exportBundle([])).length,0);
