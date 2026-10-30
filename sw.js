@@ -8,10 +8,13 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if(event.request.method!=='GET' || new URL(event.request.url).origin!==self.location.origin) return;
+  const cached=()=>caches.match(event.request).then(x=>x||(event.request.mode==='navigate'?caches.match('./index.html'):Response.error()));
+  // A known-offline iPhone must not try network fetch before its cached app shell.
+  if(self.navigator && self.navigator.onLine===false){event.respondWith(cached());return;}
   event.respondWith(fetch(event.request).then(response=>{
     if(response.ok && new URL(event.request.url).pathname.startsWith(new URL(self.registration.scope).pathname)) {
       const clone=response.clone();caches.open(CACHE_NAME).then(cache=>cache.put(event.request,clone));
     }
     return response;
-  }).catch(()=>caches.match(event.request).then(x=>x||(event.request.mode==='navigate'?caches.match('./index.html'):Response.error()))));
+  }).catch(cached));
 });
