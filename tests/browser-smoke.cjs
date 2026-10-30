@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const http=require('node:http');
-const {chromium}=require('playwright');
+const {chromium,webkit}=require('playwright');
 
 const ROOT=path.resolve(__dirname,'..');
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8',
@@ -28,7 +28,8 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function run(){
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  const origin='http://127.0.0.1:'+server.address().port;
- const browser=await chromium.launch({headless:true});
+ const engine=process.env.BROWSER_ENGINE==='webkit'?'webkit':'chromium';
+ const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true});
  const context=await browser.newContext({
   viewport:{width:390,height:844},deviceScaleFactor:3,
   hasTouch:true,isMobile:true,acceptDownloads:true,serviceWorkers:'allow'
@@ -115,7 +116,7 @@ async function run(){
   assert.equal(await page.locator('#inventory-series option').count(),2);
   await context.setOffline(false);
   assert.deepEqual(pageErrors,[],'page should have no uncaught JavaScript errors');
-  console.log('PASS: mobile viewport form, multi-date trend, IndexedDB persistence, JSON backup, strict region scope, offline PWA reload');
+  console.log('PASS ['+engine+']: mobile viewport form, multi-date trend, IndexedDB persistence, JSON backup, strict region scope, offline PWA reload');
  } finally {
   await context.setOffline(false).catch(()=>{});
   await browser.close();
