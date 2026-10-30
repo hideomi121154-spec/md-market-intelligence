@@ -1,4 +1,4 @@
-# MD MARKET | iPhone単独PWA v1.8
+# MD MARKET | iPhone単独PWA v1.9
 
 **Windowsなし・同一Wi-Fi不要のiPhone向けアプリ**を作るための静的Web/PWAソースです。MAMO BOATと同じ GitHub Pages + PWA 方式を想定します。
 
@@ -119,3 +119,14 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - `scripts/fetch_kei_history.py` が年次集計表を月次表から厳密に識別。5年分・各年15車種・降順・重複・公式ホストの条件を検証。 `.github/workflows/kei-annual-history.yml` に1月10日（UTC 02:16）の年次資料確認を設定。現在の取得対象は**固定2021〜2025年**であり、2026年分への自動ロールオーバーは未対応。
 - `tests/test_kei_history.py` と `tests/test_kei_history.js`、`.github/workflows/kei-history-tests.yml` で取得元の構造・年次の欠測・車名正規化を検証。
 - 登録乗用車（普通車・小型車）の過去年次ランキングは資料様式が異なるため今回の履歴機能には含まない。今後原本検証のうえ追加する。
+
+## v1.9 — 登録乗用車（普通車・小型車）の過去年間販売数（2021〜2025年）
+
+- 乗用車**新車登録台数**を車名・年別に表示する機能。2021〜2025年の各年50車種、延べ250行。データファイル `data/registered_annual_history.json`。
+- 2022・2023年は自販連の過去PDF（左右二段組）の**最終ページ右側「1〜12月」年間表**から抽出。2024・2025年は公式PDFの**先頭ページの1〜12月年間表**から抽出。各年50位まで、順位・販売台数・重複・降順・年度区分を検査し、年計以外を受け付けない。PDFの一部メーカー名が折り返される箇所は原本の車名・順位・数字を確認してから限定的に補正。
+- **2021年だけ出典の水準が異なる。** 自販連公式PDF https://www.jada.or.jp/files/libs/6127/202509241143583379.pdf が2026-10-30の実行環境ではPDFを返さずGIFになったため、2022年2月12日に公開された同年の順位記録 https://minkara.carview.co.jp/userid/245500/blog/45865484/ を二次資料として採録。上位10位は複数の当時の記事と照合。直接公式原本を検証したデータとは表示・保存の両方で区別する。`data/registered_annual_2021_reference.json`。
+- 2022〜2025年の一次資料PDFの出典URLは各年度の `source_url`、PDFの参照ページは `source_page` に格納。原本の再検証には `python scripts/fetch_registered_annual.py` または `.github/workflows/registered-annual-history.yml` を使用。
+- UIの「注目車種」と「比較車種」でプリウス・ヤリス・カローラ・ノート・シエンタなどを比較可能。対象年のランキング外は0台とみなさず、「上位50位外・不明」として明記。
+- **これは中古車在庫・業者間AA出品台数・中古車価格ではない。** 新車の販売台数から数年後に中古車へ流入する台数を直接推定したものではなく、保有期間・廃車・輸出・リース・生産供給・モデルチェンジなどが未反映。ヤリスやカローラの通称名には派生車が含まれる。2021年ランドクルーザーWのような分類変更も自動統合しない。
+- JavaScriptのデータ・UIの検証：`tests/test_registered_history.js` と `.github/workflows/registered-history-tests.yml`。PDF抽出・出典保護の検証：`tests/test_registered_annual.py`。
+- **取得対象は固定2021〜2025年。** 2026年の年次統計が公開された後に対象期間をずらす仕組みは未実装。今回はまず検証済みの5年間を表示する。
