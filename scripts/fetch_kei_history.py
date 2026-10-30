@@ -11,7 +11,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
-from scripts.fetch_model_sales import Page, MAKERS, fetch
+try:
+    from .fetch_model_sales import Page, MAKERS, fetch
+except ImportError:  # direct script execution by GitHub Actions
+    from fetch_model_sales import Page, MAKERS, fetch
 
 SOURCE_URLS = {
     2021: 'https://www.zenkeijikyo.or.jp/statistics/tushokaku-7359',
