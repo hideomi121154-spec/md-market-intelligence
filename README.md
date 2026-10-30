@@ -137,4 +137,4 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - `データ` → `バックアップ文を表示` で IndexedDB の車両記録をCSVテキストとして表示。さらに `共有して「ファイル」に保存`（Web Share APIのファイル共有が利用可能な場合）または `全文をコピー` で退避可能。端末に保存できたかどうかは自動判定できないため、保存先で確認する。
 - CSV内容の生成は既存の `MDStore.exportCSV()` と同一。新機能は読み取りのみで、IndexedDBスキーマ変更やレコードの削除・移行はしない。
 - データが0件なら別のSafari/ホーム画面版の保存領域の可能性を案内。照合メモは従来どおり別途バックアップすること。
-- `test_backup_export.js` と `.github/workflows/iphone-backup-tests.yml` でバックアップ処理を回帰検査。
+- `tests/test_iphone_backup.cjs` と `.github/workflows/iphone-backup-tests.yml` でバックアップ処理を回帰検査。
