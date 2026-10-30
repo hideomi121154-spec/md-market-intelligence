@@ -18,7 +18,8 @@
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
   <link rel="stylesheet" href="./registered-history.css?v=1.9">
-  <link rel="stylesheet" href="./inventory-observations.css?v=2.0">
+  <link rel="stylesheet" href="./inventory-observations.css?v=2.1.0">
+  <link rel="stylesheet" href="./md-evidence.css?v=2.1.0">
   <title>MD MARKET | 中古車分析</title>
 </head>
 <body>
@@ -37,7 +38,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.0.3</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.1.0</b></span></div>
       </header>
       <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
@@ -242,6 +243,31 @@
             <textarea id="inventory-backup" spellcheck="false" aria-label="在庫観測バックアップJSON" placeholder="ここにバックアップJSONを表示、または貼り付けて復元"></textarea>
           </details>
         </article>
+        <article class="panel md-evidence-panel" id="md-evidence-panel">
+          <h2>MD仕入れ判断｜証拠の確認</h2>
+          <p class="md-evidence-intro">在庫観測の1条件を選び、掲載台数・需要順位・自己照合済み小売掲載価格を別々に確認します。<strong>仕入れ推奨や実売価格の予測ではありません。</strong>端末データは読み取り専用で使用します。</p>
+          <div class="md-evidence-head">
+            <label class="md-evidence-pick" for="md-evidence-series">確認する車種・検索条件
+              <select id="md-evidence-series" aria-label="MD判断の対象となる在庫観測条件"></select>
+            </label>
+            <button type="button" class="button secondary" id="md-evidence-refresh">根拠を再確認</button>
+          </div>
+          <p class="md-evidence-scope" id="md-evidence-scope">保存済み観測データを確認中…</p>
+          <div class="md-evidence-verdict" role="status" aria-live="polite">
+            <strong id="md-evidence-verdict">検証待ち</strong>
+            <small>仕入れ可否を判断するには、同一仕様の実売価格・成約履歴・売約率・経費の検証が必要です。</small>
+          </div>
+          <div class="md-evidence-metrics">
+            <div class="md-evidence-metric"><small>掲載台数の変化（供給面の観測）</small><strong id="md-evidence-supply">—</strong></div>
+            <div class="md-evidence-metric"><small>中古車への関心（全国・収録上位10位）</small><strong id="md-evidence-demand">—</strong></div>
+            <div class="md-evidence-metric"><small>自己照合済み小売掲載情報（成約価格ではない）</small><strong id="md-evidence-price">—</strong></div>
+          </div>
+          <h3>次に確認すべき項目</h3>
+          <ol id="md-evidence-tasks" class="md-evidence-tasks"><li>観測データを確認中…</li></ol>
+          <p class="md-evidence-note">掲載台数の減少は売約を意味しません。全国の需要順位を特定地域・グレードの需要とはみなしません。自己照合済み価格も独立保証ではありません。順位未収録を不人気や圏外と判定しません。</p>
+          <p class="md-evidence-note"><a id="md-evidence-source" href="#" target="_blank" rel="noopener noreferrer" hidden>この観測の参照元を開く</a>　<a href="#plan">目標利益から仕入れ上限を試算する</a></p>
+          <p id="md-evidence-status" role="status" aria-live="polite"></p>
+        </article>
         <div class="content-grid">
           <article class="panel filters"><div class="panel-head"><h3>分析条件</h3><span>車種別に比較</span></div>
             <div class="field"><label for="make">メーカー</label><input id="make" autocomplete="off" placeholder="例：トヨタ"></div>
@@ -398,6 +424,7 @@
   <script src="./demand-signals.js?v=2.0.3" defer></script>
   <script src="./kei-history.js?v=2.0.3" defer></script>
   <script src="./registered-history.js?v=2.0.3" defer></script>
-  <script src="./inventory-observations.js?v=2.0" defer></script>
+  <script src="./inventory-observations.js?v=2.1.0" defer></script>
+  <script src="./md-evidence.js?v=2.1.0" defer></script>
 </body>
 </html>
