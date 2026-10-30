@@ -1,4 +1,6 @@
-Traceback (most recent call last):
-  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_kei_history.py", line 14, in <module>
-    from scripts.fetch_model_sales import Page, MAKERS, fetch
-ModuleNotFoundError: No module named 'scripts'
+Validated official KEI annual passenger new-car top15 for 5 years, 2021,2022,2023,2024,2025
+2021 Ｎ-ＢＯＸ 188940 デイズ: 53773
+2022 Ｎ-ＢＯＸ 202197 デイズ: 43864
+2023 Ｎ-ＢＯＸ 231385 デイズ: 38687
+2024 Ｎ-ＢＯＸ 206272 デイズ: 50432
+2025 Ｎ-ＢＯＸ 201354 デイズ: 43939

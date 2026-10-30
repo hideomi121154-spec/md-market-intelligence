@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "dataset": "Official kei passenger NEW-CAR nameplate annual top15, calendar year",
+  "source_name": "Japan Mini Vehicles Association (Zenkeijikyo)",
+  "checked_at_utc": "2026-10-30T11:20:46.270339+00:00",
+  "years": [
+    {
+      "year": 2021,
+      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-7359",
+      "scope": "calendar year January-December, kei passenger top15",
+      "models": [
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "Ｎ-ＢＯＸ",
+          "units": 188940
+        },
+        {
+          "rank": 2,
+          "make": "スズキ",
+          "model": "スペーシア",
+          "units": 128881
+        },
+        {
+          "rank": 3,
+          "make": "ダイハツ",
+          "model": "タント",
+          "units": 116912
+        },
+        {
+          "rank": 4,
+          "make": "ダイハツ",
+          "model": "ムーヴ",
+          "units": 95840
+        },
+        {
+          "rank": 5,
+          "make": "日産",
+          "model": "ルークス",
+          "units": 84748
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "ハスラー",
+          "units": 82486
+        },
+        {
+          "rank": 7,
+          "make": "スズキ",
+          "model": "ワゴンＲ",
+          "units": 68970
+        },
+        {
+          "rank": 8,
+          "make": "ダイハツ",
+          "model": "ミラ",
+          "units": 65803
+        },
+        {
+          "rank": 9,
+          "make": "ダイハツ",
+          "model": "タフト",
+          "units": 62278
+        },
+        {
+          "rank": 10,
+          "make": "スズキ",
+          "model": "アルト",
+          "units": 60919
+        },
+        {
+          "rank": 11,
+          "make": "日産",
+          "model": "デイズ",
+          "units": 53773
+        },
+        {
+          "rank": 12,
+          "make": "ホンダ",
+          "model": "Ｎ-ＷＧＮ",
+          "units": 50728
+        },
+        {
+          "rank": 13,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 39422
+        },
+        {
+          "rank": 14,
+          "make": "三菱",
+          "model": "ｅＫ",
+          "units": 34100
+        },
+        {
+          "rank": 15,
+          "make": "ホンダ",
+          "model": "Ｎ-ＯＮＥ",
+          "units": 20930
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-8837",
+      "scope": "calendar year January-December, kei passenger top15",
+      "models": [
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "Ｎ-ＢＯＸ",
+          "units": 202197
+        },
+        {
+          "rank": 2,
+          "make": "ダイハツ",
+          "model": "タント",
+          "units": 107810
+        },
+        {
+          "rank": 3,
+          "make": "スズキ",
+          "model": "スペーシア",
+          "units": 100206
+        },
+        {
+          "rank": 4,
+          "make": "ダイハツ",
+          "model": "ムーヴ",
+          "units": 94837
+        },
+        {
+          "rank": 5,
+          "make": "スズキ",
+          "model": "ワゴンＲ",
+          "units": 82213
+        },
+        {
+          "rank": 6,
+          "make": "日産",
+          "model": "ルークス",
+          "units": 72600
+        },
+        {
+          "rank": 7,
+          "make": "スズキ",
+          "model": "ハスラー",
+          "units": 70373
+        },
+        {
+          "rank": 8,
+          "make": "スズキ",
+          "model": "アルト",
+          "units": 67204
+        },
+        {
+          "rank": 9,
+          "make": "ダイハツ",
+          "model": "ミラ",
+          "units": 65317
+        },
+        {
+          "rank": 10,
+          "make": "ダイハツ",
+          "model": "タフト",
+          "units": 56861
+        },
+        {
+          "rank": 11,
+          "make": "日産",
+          "model": "デイズ",
+          "units": 43864
+        },
+        {
+          "rank": 12,
+          "make": "ホンダ",
+          "model": "Ｎ-ＷＧＮ",
+          "units": 42330
+        },
+        {
+          "rank": 13,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 41405
+        },
+        {
+          "rank": 14,
+          "make": "三菱",
+          "model": "ｅＫ",
+          "units": 27145
+        },
+        {
+          "rank": 15,
+          "make": "日産",
+          "model": "サクラ",
+          "units": 21887
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-9859",
+      "scope": "calendar year January-December, kei passenger top15",
+      "models": [
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "Ｎ-ＢＯＸ",
+          "units": 231385
+        },
+        {
+          "rank": 2,
+          "make": "ダイハツ",
+          "model": "タント",
+          "units": 159392
+        },
+        {
+          "rank": 3,
+          "make": "スズキ",
+          "model": "スペーシア",
+          "units": 122275
+        },
+        {
+          "rank": 4,
+          "make": "ダイハツ",
+          "model": "ムーヴ",
+          "units": 104557
+        },
+        {
+          "rank": 5,
+          "make": "スズキ",
+          "model": "ハスラー",
+          "units": 82720
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "ワゴンＲ",
+          "units": 72235
+        },
+        {
+          "rank": 7,
+          "make": "日産",
+          "model": "ルークス",
+          "units": 70536
+        },
+        {
+          "rank": 8,
+          "make": "スズキ",
+          "model": "アルト",
+          "units": 67719
+        },
+        {
+          "rank": 9,
+          "make": "ダイハツ",
+          "model": "ミラ",
+          "units": 64080
+        },
+        {
+          "rank": 10,
+          "make": "ダイハツ",
+          "model": "タフト",
+          "units": 59330
+        },
+        {
+          "rank": 11,
+          "make": "三菱",
+          "model": "デリカミニ／ｅＫ",
+          "units": 40573
+        },
+        {
+          "rank": 12,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 39910
+        },
+        {
+          "rank": 13,
+          "make": "日産",
+          "model": "デイズ",
+          "units": 38687
+        },
+        {
+          "rank": 14,
+          "make": "ホンダ",
+          "model": "Ｎ-ＷＧＮ",
+          "units": 37779
+        },
+        {
+          "rank": 15,
+          "make": "日産",
+          "model": "サクラ",
+          "units": 37140
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-11351",
+      "scope": "calendar year January-December, kei passenger top15",
+      "models": [
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "Ｎ-ＢＯＸ",
+          "units": 206272
+        },
+        {
+          "rank": 2,
+          "make": "スズキ",
+          "model": "スペーシア",
+          "units": 165679
+        },
+        {
+          "rank": 3,
+          "make": "ダイハツ",
+          "model": "タント",
+          "units": 93759
+        },
+        {
+          "rank": 4,
+          "make": "スズキ",
+          "model": "ハスラー",
+          "units": 92818
+        },
+        {
+          "rank": 5,
+          "make": "スズキ",
+          "model": "ワゴンＲ",
+          "units": 79718
+        },
+        {
+          "rank": 6,
+          "make": "日産",
+          "model": "ルークス",
+          "units": 70697
+        },
+        {
+          "rank": 7,
+          "make": "スズキ",
+          "model": "アルト",
+          "units": 68139
+        },
+        {
+          "rank": 8,
+          "make": "三菱",
+          "model": "デリカミニ／ｅＫ",
+          "units": 60001
+        },
+        {
+          "rank": 9,
+          "make": "日産",
+          "model": "デイズ",
+          "units": 50432
+        },
+        {
+          "rank": 10,
+          "make": "ダイハツ",
+          "model": "ミラ",
+          "units": 42758
+        },
+        {
+          "rank": 11,
+          "make": "ダイハツ",
+          "model": "ムーヴ",
+          "units": 41997
+        },
+        {
+          "rank": 12,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 41406
+        },
+        {
+          "rank": 13,
+          "make": "ダイハツ",
+          "model": "タフト",
+          "units": 38204
+        },
+        {
+          "rank": 14,
+          "make": "ホンダ",
+          "model": "Ｎ-ＷＧＮ",
+          "units": 33537
+        },
+        {
+          "rank": 15,
+          "make": "日産",
+          "model": "サクラ",
+          "units": 22926
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-12926",
+      "scope": "calendar year January-December, kei passenger top15",
+      "models": [
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "Ｎ-ＢＯＸ",
+          "units": 201354
+        },
+        {
+          "rank": 2,
+          "make": "スズキ",
+          "model": "スペーシア",
+          "units": 165589
+        },
+        {
+          "rank": 3,
+          "make": "ダイハツ",
+          "model": "タント",
+          "units": 124619
+        },
+        {
+          "rank": 4,
+          "make": "ダイハツ",
+          "model": "ムーヴ",
+          "units": 122349
+        },
+        {
+          "rank": 5,
+          "make": "スズキ",
+          "model": "ハスラー",
+          "units": 87972
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "ワゴンＲ",
+          "units": 72520
+        },
+        {
+          "rank": 7,
+          "make": "日産",
+          "model": "ルークス",
+          "units": 71498
+        },
+        {
+          "rank": 8,
+          "make": "三菱",
+          "model": "デリカミニ／ｅＫ",
+          "units": 58916
+        },
+        {
+          "rank": 9,
+          "make": "スズキ",
+          "model": "アルト",
+          "units": 57553
+        },
+        {
+          "rank": 10,
+          "make": "ダイハツ",
+          "model": "ミラ",
+          "units": 55777
+        },
+        {
+          "rank": 11,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 50362
+        },
+        {
+          "rank": 12,
+          "make": "ダイハツ",
+          "model": "タフト",
+          "units": 49019
+        },
+        {
+          "rank": 13,
+          "make": "日産",
+          "model": "デイズ",
+          "units": 43939
+        },
+        {
+          "rank": 14,
+          "make": "ホンダ",
+          "model": "Ｎ-ＷＧＮ",
+          "units": 27628
+        },
+        {
+          "rank": 15,
+          "make": "スズキ",
+          "model": "エブリイワゴン",
+          "units": 20312
+        }
+      ]
+    }
+  ],
+  "caution": "New-car sales are not used-car listings, trades, prices, exports or available stock. Missing top15 is not zero sales. Calendar-year totals, nameplate/series merged; cannot infer actual age-specific used supply."
+}
