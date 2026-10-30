@@ -1,5 +1,5 @@
-const CACHE_NAME = 'md-market-pwa-v2-0-20261030';
-const SHELL = ['./','./index.html','./style.css?v=1.2','./storage.js?v=1.6','./app.js?v=1.6','./uss.js?v=1.2','./model-sales.css?v=1.4','./model-sales.js?v=1.3','./registered-sales.js?v=1.4','./audit.css?v=1.6','./valuation.css?v=1.5','./valuation.js?v=1.5','./demand-signals.css?v=1.7.1','./demand-signals.js?v=1.7.1','./data/demand_rankings.json','./kei-history.css?v=1.8','./kei-history.js?v=1.8','./data/kei_annual_history.json','./registered-history.css?v=1.9','./registered-history.js?v=1.9','./inventory-observations.css?v=2.0','./inventory-observations.js?v=2.0','./data/registered_annual_history.json','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png'];
+const CACHE_NAME = 'md-market-pwa-v2-0-1-20261030';
+const SHELL = ['./','./index.html','./style.css?v=1.2','./storage.js?v=2.0.1','./app.js?v=2.0.1','./uss.js?v=1.2','./model-sales.css?v=1.4','./model-sales.js?v=1.3','./registered-sales.js?v=1.4','./audit.css?v=1.6','./valuation.css?v=1.5','./valuation.js?v=1.5','./demand-signals.css?v=1.7.1','./demand-signals.js?v=1.7.1','./data/demand_rankings.json','./kei-history.css?v=1.8','./kei-history.js?v=1.8','./data/kei_annual_history.json','./registered-history.css?v=1.9','./registered-history.js?v=1.9','./inventory-observations.css?v=2.0','./inventory-observations.js?v=2.0','./data/registered_annual_history.json','./manifest.webmanifest','./icons/icon.svg','./icons/icon-192.png','./icons/icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)).then(()=>self.skipWaiting()));
 });
@@ -13,5 +13,5 @@ self.addEventListener('fetch', event => {
       const clone=response.clone();caches.open(CACHE_NAME).then(cache=>cache.put(event.request,clone));
     }
     return response;
-  }).catch(()=>caches.match(event.request).then(x=>x||caches.match('./index.html'))));
+  }).catch(()=>caches.match(event.request).then(x=>x||(event.request.mode==='navigate'?caches.match('./index.html'):Response.error()))));
 });
