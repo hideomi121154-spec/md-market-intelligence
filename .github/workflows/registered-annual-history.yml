@@ -1,0 +1,37 @@
+name: JADA annual registered passenger sales 2021-2025
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/fetch_registered_annual.py'
+      - 'tests/test_registered_annual.py'
+      - 'data/registered_annual_2021_reference.json'
+      - '.github/workflows/registered-annual-history.yml'
+permissions:
+  contents: write
+concurrency:
+  group: registered-passenger-annual-history
+  cancel-in-progress: false
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --disable-pip-version-check pymupdf==1.26.5
+      - name: Validate annual parser and provenance safeguards
+        run: python -m unittest discover -s tests -p 'test_registered_annual.py' -v
+      - name: Fetch JADA historical official PDF pages
+        run: python scripts/fetch_registered_annual.py
+      - name: Publish the verified dataset
+        run: |
+          git add data/registered_annual_history.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: verify and refresh registered passenger annual rankings"
+          git pull --rebase origin main
+          git push origin HEAD:main
