@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "dataset": "Used-car national demand indicators: manually checked partial rankings",
-  "entered_on": "2026-10-29",
+  "dataset": "Used-car national demand indicators: manually checked top-10 rankings per platform",
+  "entered_on": "2026-10-30",
   "automation": "No automated harvesting of source rankings; this is a limited manually transcribed public snapshot",
   "snapshots": [
     {
@@ -11,15 +11,62 @@
       "month": "2026-09",
       "source_url": "https://www.carsensor.net/ranking/index.html",
       "source_period": "2026-09-01/2026-09-30",
-      "coverage": "partial_top_5_only",
+      "coverage": "complete_top_10_checked",
       "definition": "Carsensor model popularity ranking based on inquiries; not an inquiry count or a purchase-conversion rate",
       "models": [
-        {"rank": 1, "make": "ホンダ", "model": "N-BOX"},
-        {"rank": 2, "make": "日産", "model": "セレナ"},
-        {"rank": 3, "make": "トヨタ", "model": "アルファード"},
-        {"rank": 4, "make": "ダイハツ", "model": "タント"},
-        {"rank": 5, "make": "トヨタ", "model": "プリウス"}
-      ]
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "N-BOX"
+        },
+        {
+          "rank": 2,
+          "make": "日産",
+          "model": "セレナ"
+        },
+        {
+          "rank": 3,
+          "make": "トヨタ",
+          "model": "アルファード"
+        },
+        {
+          "rank": 4,
+          "make": "ダイハツ",
+          "model": "タント"
+        },
+        {
+          "rank": 5,
+          "make": "トヨタ",
+          "model": "プリウス"
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "ハスラー"
+        },
+        {
+          "rank": 7,
+          "make": "トヨタ",
+          "model": "ハイエースバン"
+        },
+        {
+          "rank": 8,
+          "make": "ホンダ",
+          "model": "フリード"
+        },
+        {
+          "rank": 9,
+          "make": "スズキ",
+          "model": "スペーシア"
+        },
+        {
+          "rank": 10,
+          "make": "トヨタ",
+          "model": "ヴォクシー"
+        }
+      ],
+      "checked_on": "2026-10-30",
+      "verification_note": "Published September 2026 inquiry-based ranking (ranks 1-10). Rank 6 Hustler, 7 Hiace Van, 8 Freed, 9 Spacia, 10 Voxy."
     },
     {
       "platform": "goonet",
@@ -28,18 +75,62 @@
       "month": "2026-09",
       "source_url": "https://www.goo-net.com/ranking/",
       "source_period": "2026-09-01/2026-09-30",
-      "coverage": "partial_top_8_only",
+      "coverage": "complete_top_10_checked",
       "definition": "Goo-net model ranking based on monthly page access; not a visitor count or a purchase-conversion rate",
       "models": [
-        {"rank": 1, "make": "トヨタ", "model": "アルファード"},
-        {"rank": 2, "make": "トヨタ", "model": "プリウス"},
-        {"rank": 3, "make": "ダイハツ", "model": "タント"},
-        {"rank": 4, "make": "トヨタ", "model": "クラウン"},
-        {"rank": 5, "make": "ホンダ", "model": "N-BOXカスタム"},
-        {"rank": 6, "make": "スズキ", "model": "ジムニー"},
-        {"rank": 7, "make": "トヨタ", "model": "ハイエースバン"},
-        {"rank": 8, "make": "トヨタ", "model": "ヴォクシー"}
-      ]
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "アルファード"
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "プリウス"
+        },
+        {
+          "rank": 3,
+          "make": "ダイハツ",
+          "model": "タント"
+        },
+        {
+          "rank": 4,
+          "make": "トヨタ",
+          "model": "クラウン"
+        },
+        {
+          "rank": 5,
+          "make": "ホンダ",
+          "model": "N-BOXカスタム"
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "ジムニー"
+        },
+        {
+          "rank": 7,
+          "make": "トヨタ",
+          "model": "ハイエースバン"
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "ヴォクシー"
+        },
+        {
+          "rank": 9,
+          "make": "日産",
+          "model": "スカイライン"
+        },
+        {
+          "rank": 10,
+          "make": "日産",
+          "model": "セレナ"
+        }
+      ],
+      "checked_on": "2026-10-30",
+      "verification_note": "Published September 2026 monthly-access ranking (ranks 1-10). Rank 9 Skyline, 10 Serena."
     }
   ]
 }
