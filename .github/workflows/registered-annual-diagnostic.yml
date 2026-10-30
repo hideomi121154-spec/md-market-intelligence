@@ -1,0 +1,32 @@
+name: Temporary JADA annual read diagnostics
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/registered-annual-diagnostic.yml'
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --disable-pip-version-check pymupdf==1.26.5
+      - name: Save parsing result or traceback without publishing invalid figures
+        run: |
+          python scripts/fetch_registered_annual.py > /tmp/annual_capture.txt 2>&1 || true
+          mkdir -p data
+          cp /tmp/annual_capture.txt data/registered_annual_diagnostic.txt
+          cat data/registered_annual_diagnostic.txt
+      - name: Publish only diagnostic file
+        run: |
+          git add data/registered_annual_diagnostic.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test: inspect annual JADA extraction outcome" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
