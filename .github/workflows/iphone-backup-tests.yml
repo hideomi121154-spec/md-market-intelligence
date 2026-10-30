@@ -1,0 +1,40 @@
+name: iPhone CSV backup fallback tests
+on:
+  push:
+    paths:
+      - 'app.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_iphone_backup.cjs'
+      - '.github/workflows/iphone-backup-tests.yml'
+  pull_request:
+    paths:
+      - 'app.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_iphone_backup.cjs'
+      - '.github/workflows/iphone-backup-tests.yml'
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    name: iPhone backup / ${{ matrix.engine }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Playwright
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Install browser
+        run: npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Check JS syntax
+        run: node --check app.js && node --check tests/test_iphone_backup.cjs
+      - name: Run backup test
+        run: node tests/test_iphone_backup.cjs
+        env:
+          BROWSER_ENGINE: ${{ matrix.engine }}
