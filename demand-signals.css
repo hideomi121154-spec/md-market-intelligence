@@ -31,3 +31,15 @@
 .demand-scope{font-size:12px;line-height:1.8;color:var(--muted)}
 @media(max-width:600px){.demand-panel{padding:16px}.demand-list{grid-template-columns:repeat(2,minmax(0,1fr))}.demand-row{padding:10px}.demand-name{font-size:13px}.demand-rank{padding:8px}.demand-rank b{font-size:17px}.demand-rank small{font-size:10px}}
 @media(max-width:380px){.demand-list{grid-template-columns:1fr}}
+/* v1.7.1: Both complete top-10 rankings are always visible independently of comparison filters */
+.demand-top10{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0 24px}
+.demand-top10-column{border:1px solid var(--stroke);border-radius:14px;padding:14px;background:#0c1a2d;min-width:0}
+.demand-top10-column h3{font-size:15px;margin:2px 0 7px;line-height:1.5}
+.demand-top10-column .hint{margin:2px 0 12px}
+.demand-top10-list{padding:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.demand-top10-row{display:flex;align-items:center;gap:8px;border-bottom:1px solid #283b56;padding:10px 2px;font-size:13px;line-height:1.5;min-height:43px}
+.demand-top10-row:last-child{border-bottom:none}
+.demand-top10-rank{color:#75e6d7;min-width:28px;font-weight:700}
+.demand-top10-name{color:#e1eaf6;overflow-wrap:anywhere}
+.demand-top10-empty{color:var(--muted);font-size:13px;line-height:1.7}
+@media(max-width:570px){.demand-top10{grid-template-columns:1fr;gap:12px}.demand-top10-column{padding:12px}.demand-top10-row{font-size:14px}}
