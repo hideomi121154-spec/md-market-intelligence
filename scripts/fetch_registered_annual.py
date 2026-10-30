@@ -68,12 +68,12 @@ def extract_rows(text,year):
         ):
             if rank in visible_ranks:
                 continue
-            match=re.search(r'(?m)^'+str(rank)+r'\s+'+re.escape(model)+r'(?=\s|$)',t)
+            match=re.search(r'(?m)^\s*'+str(rank)+r'\s+'+re.escape(model)+r'(?=\s|$)',t)
             if match is None:
                 pos=t.find(model)
                 raise ValueError(f'2023 PDF missing wrapped model {rank}: {model}; excerpt={t[max(0,pos-55):pos+130]!r}')
             excerpt=t[match.start():match.start()+110]
-            if f'{units:,}' not in excerpt or 'SUBAR' not in excerpt:
+            if f'{units:,}' not in excerpt or not re.search(r'(?:\sU\s|SUBAR)',excerpt):
                 raise ValueError(f'2023 PDF wrapped model or units unconfirmed: {model}')
             rows.append({'rank':rank,'make':'SUBARU','model':model,'units':units})
         rows.sort(key=lambda r:r['rank'])
