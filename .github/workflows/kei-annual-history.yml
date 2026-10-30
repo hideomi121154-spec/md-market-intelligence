@@ -25,15 +25,10 @@ jobs:
       - name: Test historical sales parser
         run: python -m unittest discover -s tests -p 'test_kei_history.py' -v
       - name: Collect and check published calendar-year official reports
-        run: |
-          python scripts/fetch_kei_history.py > /tmp/kei_history_test.log 2>&1 || true
-          cat /tmp/kei_history_test.log
-          mkdir -p data
-          cp /tmp/kei_history_test.log data/kei_history_diagnostics.txt
+        run: python scripts/fetch_kei_history.py
       - name: Commit verified public annual figures
         run: |
-          git add -f data/kei_history_diagnostics.txt
-          if [ -f data/kei_annual_history.json ]; then git add data/kei_annual_history.json; fi
+          git add data/kei_annual_history.json
           if git diff --cached --quiet; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
