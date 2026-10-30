@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="./valuation.css?v=1.5">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
+  <link rel="stylesheet" href="./kei-history.css?v=1.8">
   <title>MD MARKET | 中古車分析</title>
 </head>
 <body>
@@ -34,7 +35,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.7.1</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.8</b></span></div>
       </header>
       <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
@@ -155,6 +156,32 @@
           <p class="model-sales-status" id="model-sales-status" aria-live="polite">読み込み中…</p>
           <div id="model-sales-data" hidden><div id="model-sales-grid" class="model-sales-grid"></div></div>
           <p class="model-sales-note">新車の販売台数は将来の中古車供給を考えるための参考指標です。中古車の当月需要・成約台数・価格を直接表すものではありません。年式・グレード・走行距離・個別落札価格はこの統計には含まれません。iPhoneに保存済みの未検証車両データとは別に管理します。</p>
+        </article>
+        <article class="panel kei-history-panel" id="kei-history-panel">
+          <div class="kei-history-head">
+            <div>
+              <h2>過去の新車販売から中古車供給の母数を見る</h2>
+              <p class="hint">軽乗用車の公式年間販売台数｜2021〜2025年（暦年）</p>
+            </div>
+            <button class="button secondary" type="button" id="kei-history-refresh">公式保存データを確認</button>
+          </div>
+          <p class="kei-history-note">たとえば2021年に新車で売れた車は、2026年には登録から約5年が経過しています。<strong>過去の販売規模は将来の中古車供給を考える参考</strong>になりますが、実際に市場へ出品された台数・在庫・成約件数ではありません。</p>
+          <div class="kei-history-controls">
+            <label for="kei-history-model">注目車種
+              <select id="kei-history-model" aria-label="過去の販売台数を表示する車種"></select>
+            </label>
+            <label for="kei-history-compare">比較車種
+              <select id="kei-history-compare" aria-label="比較する車種"></select>
+            </label>
+          </div>
+          <p class="kei-history-note" id="kei-history-status" aria-live="polite">公式年間データを読み込み中…</p>
+          <div class="kei-history-summary">
+            <div class="kei-history-sumitem"><strong id="kei-history-early-sum">—</strong><small id="kei-history-early-caption">2021〜2023年の販売規模</small></div>
+            <div class="kei-history-sumitem"><strong id="kei-history-latest">—</strong><small id="kei-history-latest-caption">2025年の新車販売規模</small></div>
+          </div>
+          <div id="kei-history-chart" aria-label="2021年〜2025年の車種別年間新車販売台数の比較"></div>
+          <div class="kei-history-sources" id="kei-history-sources"></div>
+          <p class="kei-history-note">各年の<strong>軽乗用車ベスト15</strong>から取得しています。年によって上位15位外の車種は「不明」とし、0台とは扱いません。グレード・カラー・評価点・落札価格は含まれません。車名の合算区分は原資料に準拠しており、過去年式の実際の中古車流通台数や買取価格を推定したものではありません。</p>
         </article>
         <div class="content-grid">
           <article class="panel filters"><div class="panel-head"><h3>分析条件</h3><span>車種別に比較</span></div>
@@ -295,5 +322,6 @@
   <script src="./registered-sales.js?v=1.4" defer></script>
   <script src="./valuation.js?v=1.5" defer></script>
   <script src="./demand-signals.js?v=1.7.1" defer></script>
+  <script src="./kei-history.js?v=1.8" defer></script>
 </body>
 </html>
