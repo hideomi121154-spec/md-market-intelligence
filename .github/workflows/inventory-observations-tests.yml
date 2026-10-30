@@ -1,0 +1,22 @@
+name: Inventory observation regression
+on:
+  push:
+    paths:
+      - 'inventory-observations.js'
+      - 'tests/test_inventory_observations.js'
+      - '.github/workflows/inventory-observations-tests.yml'
+  pull_request:
+    paths:
+      - 'inventory-observations.js'
+      - 'tests/test_inventory_observations.js'
+      - '.github/workflows/inventory-observations-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check inventory-observations.js
+      - run: node tests/test_inventory_observations.js
