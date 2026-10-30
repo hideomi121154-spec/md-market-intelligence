@@ -1,0 +1,41 @@
+name: Browser E2E smoke test (mobile viewport)
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - 'storage.js'
+      - 'inventory-observations.js'
+      - 'inventory-observations.css'
+      - 'sw.js'
+      - 'data/**'
+      - 'tests/browser-smoke.cjs'
+      - '.github/workflows/browser-smoke.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - 'storage.js'
+      - 'inventory-observations.js'
+      - 'inventory-observations.css'
+      - 'sw.js'
+      - 'data/**'
+      - 'tests/browser-smoke.cjs'
+      - '.github/workflows/browser-smoke.yml'
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test dependency
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+      - name: Validate browser test syntax
+        run: node --check tests/browser-smoke.cjs
+      - name: Run browser smoke
+        run: node tests/browser-smoke.cjs
