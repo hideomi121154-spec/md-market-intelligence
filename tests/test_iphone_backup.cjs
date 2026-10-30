@@ -49,7 +49,7 @@ async function main(){
   await page.locator('#backup-share').click();
   await page.waitForFunction(()=>!!window.__shared);
   const shared=await page.evaluate(()=>window.__shared);
-  assert.equal(shared.body,output);
+  assert.equal(shared.body.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n'),output.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n'),'shared File.text() removes BOM and textarea normalizes newlines');
   assert.match(shared.name,/^MD_MARKET_backup_.*\.csv$/);
   await page.evaluate(()=>{navigator.canShare=()=>false;});
   await page.locator('#backup-share').click();
