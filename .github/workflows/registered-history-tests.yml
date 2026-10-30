@@ -1,0 +1,47 @@
+name: Registered passenger annual history integrity
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'registered-history.js'
+      - 'registered-history.css'
+      - 'data/registered_annual_history.json'
+      - 'data/registered_annual_2021_reference.json'
+      - 'tests/test_registered_history.js'
+      - 'index.html'
+      - '.github/workflows/registered-history-tests.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check browser JavaScript
+        run: node --check registered-history.js
+      - name: Validate annual figures and absence semantics
+        run: node tests/test_registered_history.js
+      - name: Verify iPhone historical dashboard selectors
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          h=Path('index.html').read_text('utf-8')
+          ids=['registered-history-panel','registered-history-refresh','registered-history-model','registered-history-compare',
+               'registered-history-status','registered-history-chart','registered-history-sources',
+               'registered-history-early-sum','registered-history-early-caption',
+               'registered-history-latest','registered-history-latest-caption']
+          missing=[x for x in ids if f'id="{x}"' not in h]
+          assert not missing, missing
+          assert '<b>v1.9</b>' in h
+          assert 'registered-history.js?v=1.9' in h
+          assert 'registered-history.css?v=1.9' in h
+          d=json.loads(Path('data/registered_annual_history.json').read_text('utf-8'))
+          assert [x['year'] for x in d['years']]==[2021,2022,2023,2024,2025]
+          assert [x['source_type'] for x in d['years']]==['secondary','official','official','official','official']
+          print('iPhone UI, annual data provenance and two source classes verified')
+          PY
