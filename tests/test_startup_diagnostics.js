@@ -14,7 +14,7 @@ function bootStorage(open){
     window:{},
     indexedDB:{open},
     setTimeout(callback,delay){timer.callback=callback;timer.delay=delay;return 7},
-    clearTimeout(id){assert.equal(id,7);timer.cancelled=true},
+    clearTimeout(id){if(id===undefined)return;assert.equal(id,7);timer.cancelled=true},
   };
   vm.runInNewContext(storageJS,sandbox,{filename:'storage.js'});
   return {MDStore:sandbox.window.MDStore,timer};
