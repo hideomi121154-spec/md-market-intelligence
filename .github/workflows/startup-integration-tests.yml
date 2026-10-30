@@ -1,0 +1,33 @@
+name: Startup and offline integration tests
+on:
+  push:
+    paths:
+      - 'storage.js'
+      - 'app.js'
+      - 'sw.js'
+      - 'index.html'
+      - 'inventory-observations.js'
+      - 'inventory-observations.css'
+      - 'tests/test_startup_diagnostics.js'
+      - '.github/workflows/startup-integration-tests.yml'
+  pull_request:
+    paths:
+      - 'storage.js'
+      - 'app.js'
+      - 'sw.js'
+      - 'index.html'
+      - 'inventory-observations.js'
+      - 'inventory-observations.css'
+      - 'tests/test_startup_diagnostics.js'
+      - '.github/workflows/startup-integration-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check storage.js && node --check app.js && node --check sw.js && node --check inventory-observations.js
+      - run: node tests/test_startup_diagnostics.js
+      - run: node tests/test_inventory_observations.js

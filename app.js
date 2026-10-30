@@ -200,5 +200,11 @@ $('manual-save').addEventListener('click',async()=>{
  finally{button.disabled=false}
 });
 
-window.addEventListener('hashchange',switchTab);switchTab();reload().catch(e=>{$('upload-status').textContent='保存データを開けません: '+e.message;console.error(e)});
+window.addEventListener('hashchange',switchTab);switchTab();reload().catch(e=>{
+ const message='保存データを開けません: '+e.message+' 端末内データを削除・初期化しないでください。';
+ $('upload-status').textContent=message;
+ $('audit-overview').textContent=message;
+ $('audit-overview').setAttribute('role','alert');
+ console.error(e);
+});
 if('serviceWorker'in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'))navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('Offline setup:',e));

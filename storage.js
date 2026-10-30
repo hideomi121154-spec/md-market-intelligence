@@ -31,7 +31,29 @@ async function decodeImportText(input){
  }catch(err){if(err?.message?.includes('5MB'))throw err;throw new Error('貼り付けコードを復元できません。途中で欠けていないか確認してください');}
 }
 function idFor(r){const keys=['date','make','model','grade','year','mileage_km','price_jpy','channel','market_type','source_url','vendor_record_id'];return keys.map(k=>String(r[k]??'')).join('\u001f')}
-function openDb(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,VERSION);req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'});if(!d.objectStoreNames.contains(AUDITS))d.createObjectStore(AUDITS,{keyPath:'id'})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function openDb(){return new Promise((resolve,reject)=>{
+ let settled=false,blocked=false,timer;
+ const finish=(error,db)=>{
+  if(settled){if(db)db.close();return;}
+  settled=true;clearTimeout(timer);
+  if(error)reject(error);else resolve(db);
+ };
+ let req;
+ try{req=indexedDB.open(DB_NAME,VERSION)}
+ catch(error){finish(new Error('端末内の保存領域を開けません: '+(error?.message||'ブラウザ設定を確認してください')));return;}
+ // A blocked upgrade or a Safari storage stall must not leave the UI waiting forever.
+ timer=setTimeout(()=>finish(new Error(blocked
+  ?'データベース更新が別のタブまたはホーム画面アプリに妨げられています。他のMD MARKET画面を閉じ、再読み込みしてください。'
+  :'端末内データの読み込みが長引いています。Safariの別タブやホーム画面版を閉じ、再読み込みしてください。')),15000);
+ req.onblocked=()=>{blocked=true};
+ req.onupgradeneeded=()=>{
+  const d=req.result;
+  if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'});
+  if(!d.objectStoreNames.contains(AUDITS))d.createObjectStore(AUDITS,{keyPath:'id'});
+ };
+ req.onsuccess=()=>finish(null,req.result);
+ req.onerror=()=>finish(req.error||new Error('保存領域の読み込みに失敗しました'));
+})}
 async function all(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);tx.oncomplete=()=>db.close();tx.onerror=()=>reject(tx.error);})}
 async function insert(rows){const db=await openDb();return new Promise((resolve,reject)=>{let inserted=0,duplicates=0;const tx=db.transaction(STORE,'readwrite'),store=tx.objectStore(STORE);const seen=new Set();for(const row of rows){const r={...row,id:idFor(row)};if(seen.has(r.id)){duplicates++;continue;}seen.add(r.id);const lookup=store.get(r.id);lookup.onsuccess=()=>{if(lookup.result){duplicates++;return;}const add=store.add(r);add.onsuccess=()=>inserted++;};}tx.oncomplete=()=>{db.close();resolve({inserted,duplicates})};tx.onerror=()=>{db.close();reject(tx.error||Error('DB保存失敗'))};tx.onabort=()=>{db.close();reject(tx.error||Error('DB保存中断'))};})}
 async function clear(){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction([STORE,AUDITS],'readwrite');tx.objectStore(STORE).clear();tx.objectStore(AUDITS).clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}

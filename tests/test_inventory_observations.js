@@ -1,0 +1,33 @@
+'use strict';
+const assert=require('node:assert/strict'),I=require('../inventory-observations.js');
+const one={date:'2026-10-01',make:'日産',model:'デイズ',region:'全国',grade:'',color:'赤',
+ conditions:'2020-2023年、5万km以下、修復歴なし',count:1200,
+ source_url:'https://carsensor.net/used/search?model=days'};
+const two={...one,date:'2026-10-30',count:1450};
+const same=I.mergeRows([one],[two]);
+assert.equal(I.summarize(same,I.seriesKey(one)).delta,250);
+assert.ok(Math.abs(I.summarize(same,I.seriesKey(one)).pct-20.833333)<0.001);
+assert.equal(I.mergeRows(same,[two]).length,2,'identical record import is idempotent');
+assert.throws(()=>I.mergeRows(same,[{...two,count:999}]),/上書き/);
+assert.equal(I.summarize([one,{...two,region:'愛知県'}],I.seriesKey(one)).data.length,1);
+assert.equal(I.summarize([one,{...two,grade:'ハイウェイスター'}],I.seriesKey(one)).data.length,1);
+assert.equal(I.summarize([one,{...two,conditions:'2020-2023年、10万km以下'}],I.seriesKey(one)).data.length,1);
+assert.equal(I.summarize([one,{...two,source_url:'https://different.example.jp/search'}],I.seriesKey(one)).data.length,1);
+assert.equal(I.summarize([one,{...two,source_url:'https://carsensor.net/used/search?model=note'}],I.seriesKey(one)).data.length,1,'even the same site with a different search URL is not automatically comparable');
+assert.equal(I.summarize([one,{...two,color:'黒'}],I.seriesKey(one)).data.length,1);
+assert.equal(I.importBundle(I.exportBundle(same)).length,2);
+assert.equal(I.importBundle(I.exportBundle([])).length,0);
+assert.throws(()=>I.importBundle('{"schema_version":1,"kind":"other","records":[]}'),/バックアップ/);
+assert.throws(()=>I.importBundle('not JSON'),/JSON/);
+assert.throws(()=>I.validateEntry({...one,count:-1}),/整数/);
+assert.throws(()=>I.validateEntry({...one,count:1.3}),/整数/);
+assert.throws(()=>I.validateEntry({...one,count:''}),/整数/);
+assert.throws(()=>I.validateEntry({...one,date:'2026-02-31'}),/観測日/);
+assert.throws(()=>I.validateEntry({...one,source_url:'javascript:alert(1)'}),/URL/);
+assert.throws(()=>I.validateEntry({...one,source_url:'https://example.test/'}),/URL/);
+assert.throws(()=>I.validateRows([one,{...one,count:1300}]),/重複/);
+assert.equal(I.summarize([{...one,count:0},two],I.seriesKey(one)).pct,null);
+const other=I.validateEntry({...one,model:'ノート'});
+assert.notEqual(I.seriesKey(other),I.seriesKey(one));
+assert.throws(()=>I.validateRows(Array(501).fill(one)),/上限/);
+console.log('PASS: inventory count, strict comparable scope, safe merge, backup and zero baseline');
