@@ -1,18 +1,14 @@
 2022 JADA official TOP50, source PDF p8: {'rank': 1, 'make': 'トヨタ', 'model': 'ヤリス', 'units': 168557}
 Traceback (most recent call last):
-  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 116, in <module>
+  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 136, in <module>
     if __name__=='__main__':main()
                             ^^^^^^
-  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 104, in main
+  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 124, in main
     row=parse_pdf(fetch_pdf(url),y,url)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 89, in parse_pdf
+  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 109, in parse_pdf
     rows=extract_rows(text,year)
          ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 50, in extract_rows
-    t=repair_2023_pdf_text(text) if year==2023 else normalized(text)
-      ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 34, in repair_2023_pdf_text
-    if n!=1: raise ValueError(f'Expected one split SUBARU entry: {model}; got {n}')
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: Expected one split SUBARU entry: インプレッサ; got 0
+  File "/home/runner/work/md-market-intelligence/md-market-intelligence/scripts/fetch_registered_annual.py", line 73, in extract_rows
+    raise ValueError(f'2023 PDF missing known wrapped model {rank}: {model}')
+ValueError: 2023 PDF missing known wrapped model 22: インプレッサ
