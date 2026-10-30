@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
+  <link rel="stylesheet" href="./registered-history.css?v=1.9">
   <title>MD MARKET | 中古車分析</title>
 </head>
 <body>
@@ -35,7 +36,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.8</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v1.9</b></span></div>
       </header>
       <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
@@ -156,6 +157,33 @@
           <p class="model-sales-status" id="model-sales-status" aria-live="polite">読み込み中…</p>
           <div id="model-sales-data" hidden><div id="model-sales-grid" class="model-sales-grid"></div></div>
           <p class="model-sales-note">新車の販売台数は将来の中古車供給を考えるための参考指標です。中古車の当月需要・成約台数・価格を直接表すものではありません。年式・グレード・走行距離・個別落札価格はこの統計には含まれません。iPhoneに保存済みの未検証車両データとは別に管理します。</p>
+        </article>
+        <article class="panel registered-history-panel" id="registered-history-panel">
+          <div class="registered-history-head">
+            <div>
+              <h2>普通車・小型車｜5年間の新車販売履歴</h2>
+              <p class="hint">登録乗用車（軽自動車・海外ブランド除く）｜2021〜2025年・暦年</p>
+            </div>
+            <button class="button secondary" type="button" id="registered-history-refresh">過去年次データを確認</button>
+          </div>
+          <p class="registered-history-note">プリウス、シエンタ、ヤリス、ノートなどの<strong>過去の新車登録台数</strong>を比較できます。中古車の出品・成約台数でも、色・グレード別の人気や落札価格でもありません。</p>
+          <p class="registered-history-note"><strong>出典の違い：</strong>2022〜2025年は自販連の公式PDFから検証して取得。2021年は公式PDFが取得できなかったため、当時のランキングを掲載した二次資料を区別して使用しています。2021年の値は公式原本と直接照合したものではありません。</p>
+          <div class="registered-history-controls">
+            <label for="registered-history-model">注目車種
+              <select id="registered-history-model"></select>
+            </label>
+            <label for="registered-history-compare">比較車種
+              <select id="registered-history-compare"></select>
+            </label>
+          </div>
+          <p class="registered-history-note" id="registered-history-status" aria-live="polite">年別の新車登録統計を読み込み中…</p>
+          <div class="registered-history-summary">
+            <div class="registered-history-sumitem"><strong id="registered-history-early-sum">—</strong><small id="registered-history-early-caption">2021〜2023年の新車登録合計</small></div>
+            <div class="registered-history-sumitem"><strong id="registered-history-latest">—</strong><small id="registered-history-latest-caption">2025年の新車登録数</small></div>
+          </div>
+          <div id="registered-history-chart" aria-label="2021年から2025年の登録乗用車の車名別年間新車登録台数"></div>
+          <div class="registered-history-sources" id="registered-history-sources"></div>
+          <p class="registered-history-note">各年の<strong>上位50車名</strong>を収録しています。ランキング外の車種は<strong>0台ではなく収録範囲外</strong>として扱います。ヤリス・カローラ等は複数の派生車を合算した通称名です。車名変更や区分変更にも注意が必要です。</p>
         </article>
         <article class="panel kei-history-panel" id="kei-history-panel">
           <div class="kei-history-head">
@@ -323,5 +351,6 @@
   <script src="./valuation.js?v=1.5" defer></script>
   <script src="./demand-signals.js?v=1.7.1" defer></script>
   <script src="./kei-history.js?v=1.8" defer></script>
+  <script src="./registered-history.js?v=1.9" defer></script>
 </body>
 </html>
