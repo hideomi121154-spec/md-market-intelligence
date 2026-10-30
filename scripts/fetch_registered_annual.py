@@ -47,7 +47,7 @@ def check_rows(rows,year):
         raise ValueError('Duplicate manufacturer/nameplate in year')
 
 def extract_rows(text,year):
-    t=repair_2023_pdf_text(text) if year==2023 else normalized(text)
+    t=normalized(text)
     rows=[]
     for line in t.splitlines():
         m=LINE.fullmatch(line.strip())
@@ -56,6 +56,26 @@ def extract_rows(text,year):
             rows.append({'rank':int(rank),'make':make,
                          'model':re.sub(r'\s+',' ',model.strip()),
                          'units':int(units.replace(',',''))})
+    if year==2023:
+        # The original official 2023 PDF splits the maker font in exactly three
+        # annual TOTAL rows. Reconcile those rows against the PDF's visible text.
+        # Never fill a missing row without confirming name AND literal unit count.
+        visible_ranks={r['rank'] for r in rows}
+        for rank,model,units in (
+            (22,'インプレッサ',34371),
+            (30,'フォレスター',22141),
+            (37,'レヴォーグ',15267),
+        ):
+            if rank in visible_ranks:
+                continue
+            match=re.search(r'(?m)^'+str(rank)+r'\s+'+re.escape(model)+r'(?=\s|$)',t)
+            if match is None:
+                raise ValueError(f'2023 PDF missing known wrapped model {rank}: {model}')
+            excerpt=t[match.start():match.start()+110]
+            if f'{units:,}' not in excerpt or 'SUBAR' not in excerpt:
+                raise ValueError(f'2023 PDF wrapped model or units unconfirmed: {model}')
+            rows.append({'rank':rank,'make':'SUBARU','model':model,'units':units})
+        rows.sort(key=lambda r:r['rank'])
     check_rows(rows,year)
     return rows
 
