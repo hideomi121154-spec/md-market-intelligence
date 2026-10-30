@@ -1,0 +1,15 @@
+'use strict';
+const assert=require('node:assert/strict');
+const K=require('../kei-history.js');
+const mk=(make,model,units,rank)=>({make,model,units,rank});
+const years=[2021,2022,2023,2024,2025].map(year=>({year,source_url:'https://www.zenkeijikyo.or.jp/statistics/tushokaku-7359',models:Array.from({length:15},(_,i)=>mk(i===0?'日産':'メーカー'+i,i===0?'デイズ':'車種'+i,190000-i*5000,i+1))}));
+assert.deepEqual(K.validate({schema_version:1,years}),years);
+assert.equal(K.findVehicle(years,{make:'日産',model:'デイズ'}).length,5);
+assert.equal(K.findVehicle(years,{make:'日産',model:'デイズ'})[0].row.units,190000);
+assert.equal(K.findVehicle(years,{make:'日産',model:'ノート'}).every(x=>x.row===null),true,'outside top15 is unknown, not zero');
+assert.equal(K.key({make:'ホンダ',model:'Ｎ－ＢＯＸ'}),K.key({make:'ホンダ',model:'N-BOX'}));
+assert.equal(K.key({make:'ホンダ',model:'N-BOXカスタム'})===K.key({make:'ホンダ',model:'N-BOX'}),false);
+assert.equal(K.listModels(years).length,15);
+assert.throws(()=>K.validate({schema_version:1,years:years.slice(0,4)}));
+assert.throws(()=>K.validate({schema_version:1,years:years.map(x=>({...x,models:x.models.slice(0,14)}))}));
+console.log('PASS: annual cohort integrity, five-year data, top15 incompleteness and precise vehicle identity');
