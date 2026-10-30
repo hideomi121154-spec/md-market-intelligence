@@ -13,6 +13,16 @@ for year,url in URLS.items():
   if body.startswith(b"%PDF-"):
    doc=fitz.open(stream=body,filetype="pdf")
    entry["pages"]=len(doc); entry["page_headers"]=[]
+   if year in (2022,2023):
+    last=doc[-1]
+    entry["last_page_samples"]={}
+    import re
+    for fraction in (.44,.45,.46,.47,.48,.49):
+     txt=last.get_text("text",sort=True,clip=fitz.Rect(last.rect.width*fraction,0,last.rect.width,last.rect.height))
+     lines=[l.strip() for l in txt.splitlines() if l.strip()]
+     matched=[l for l in lines if re.match(r'^\d{1,2}\s+[^\s]+\s+(?:トヨタ|日産|ホンダ|スズキ|マツダ|三菱|ダイハツ|レクサス|SUBARU)\s+[0-9,]+',l)]
+     entry["last_page_samples"][str(fraction)]={"count":len(matched),"first":matched[:3],"last":matched[-3:],"start":lines[:9]}
+
    for p in doc:
     t=p.get_text("text",sort=True)
     first=[l.strip() for l in t.splitlines() if l.strip()][:5]
