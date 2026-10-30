@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/registered-annual-diagnostic.yml'
+      - 'scripts/fetch_registered_annual.py'
 permissions:
   contents: write
 jobs:
