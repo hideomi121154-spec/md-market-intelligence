@@ -1,0 +1,45 @@
+name: Kei annual history UI and integrity tests
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'kei-history.js'
+      - 'kei-history.css'
+      - 'tests/test_kei_history.js'
+      - 'scripts/fetch_kei_history.py'
+      - 'tests/test_kei_history.py'
+      - 'index.html'
+      - '.github/workflows/kei-history-tests.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check browser code
+        run: node --check kei-history.js
+      - name: Validate 5-year series and model identity
+        run: node tests/test_kei_history.js
+      - name: Validate official annual HTML parser
+        run: python -m unittest discover -s tests -p 'test_kei_history.py' -v
+      - name: Verify iPhone historical panel
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html').read_text('utf-8')
+          ids=['kei-history-panel','kei-history-refresh','kei-history-model','kei-history-compare',
+            'kei-history-status','kei-history-chart','kei-history-sources','kei-history-early-sum',
+            'kei-history-early-caption','kei-history-latest','kei-history-latest-caption']
+          missing=[i for i in ids if f'id="{i}"' not in p]
+          assert not missing, f'Missing iPhone inputs: {missing}'
+          assert 'kei-history.js?v=1.8' in p
+          print('History component bindings present')
+          PY
