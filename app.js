@@ -58,7 +58,67 @@ $('paste-import').addEventListener('click',async()=>{
  }catch(err){console.error(err);target.textContent='貼り付けエラー：'+err.message;}
  finally{button.disabled=false;}
 });
-$('export').addEventListener('click',async()=>{try{const a=await MDStore.all();download(`MD_MARKET_backup_${new Date().toISOString().slice(0,10)}.csv`,MDStore.exportCSV(a));$('backup-status').textContent=`${a.length}件のCSV書き出しを開始しました。iPhoneのファイルに保存してください。`;}catch(e){$('backup-status').textContent=e.message}});
+// The download attribute is not reliable in every iPhone standalone PWA.
+// Keep an independent copyable CSV and offer a native share-sheet export.
+let preparedVehicleBackup=null;
+function backupFilename(){return 'MD_MARKET_backup_'+new Date().toISOString().slice(0,10)+'.csv'}
+async function prepareVehicleBackup(){
+  const rows=await MDStore.all(), csv=MDStore.exportCSV(rows);
+  if(!csv||!csv.includes('date,make,model'))throw new Error('CSVの生成を検証できません');
+  preparedVehicleBackup={filename:backupFilename(),csv,count:rows.length};
+  $('backup-text').value=csv;
+  $('backup-status').textContent=rows.length===0
+    ?'登録車両は0件です。Safari版とホーム画面版の保存領域が異なる可能性があります。データがある方でバックアップしてください。'
+    :rows.length+'件のバックアップ文を生成しました。まだ外部には保存されていません。「共有して保存」または「全文をコピー」でiPhoneの外に保管してください。';
+  return preparedVehicleBackup;
+}
+function selectBackupText(){
+  const area=$('backup-text');area.focus();area.select();
+  if(area.setSelectionRange)area.setSelectionRange(0,area.value.length);
+}
+$('backup-text-generate').addEventListener('click',async()=>{
+  try{await prepareVehicleBackup();selectBackupText()}
+  catch(e){$('backup-status').textContent='バックアップ文の作成に失敗しました：'+e.message}
+});
+$('backup-copy').addEventListener('click',()=>{
+  if(!preparedVehicleBackup){$('backup-status').textContent='先に「バックアップ文を表示」を押してください。';return}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(preparedVehicleBackup.csv).then(()=>{
+      $('backup-status').textContent='CSV全文をコピーしました。メモ等に貼り付けて保存し、内容を確認してください。';
+    }).catch(()=>{
+      selectBackupText();$('backup-status').textContent='自動コピーできませんでした。選択した文字を長押ししてコピーしてください。';
+    });
+  }else{
+    selectBackupText();$('backup-status').textContent='全文を選択しました。表示された「コピー」を押し、メモ等へ貼り付けてください。';
+  }
+});
+$('backup-share').addEventListener('click',()=>{
+  if(!preparedVehicleBackup){$('backup-status').textContent='先に「バックアップ文を表示」を押してください。';return}
+  try{
+    const f=new File([preparedVehicleBackup.csv],preparedVehicleBackup.filename,{type:'text/csv'});
+    if(typeof navigator.share!=='function'||typeof navigator.canShare!=='function'||!navigator.canShare({files:[f]})){
+      selectBackupText();
+      $('backup-status').textContent='この起動方法ではファイル共有できません。CSV全文を選択したので「コピー」してメモやファイルに保管してください。';
+      return;
+    }
+    navigator.share({files:[f],title:'MD MARKET 車両バックアップ'}).then(()=>{
+      $('backup-status').textContent='共有画面を閉じました。「ファイルに保存」などで保存できたか確認してください。共有しただけでは保存完了とは限りません。';
+    }).catch(e=>{
+      $('backup-status').textContent=e&&e.name==='AbortError'
+        ?'共有がキャンセルされました。バックアップはまだ確認できません。'
+        :'共有ができませんでした。バックアップ文をコピーして保存してください：'+e.message;
+    });
+  }catch(e){
+    selectBackupText();$('backup-status').textContent='共有を利用できません。バックアップ文をコピーして保存してください：'+e.message;
+  }
+});
+$('export').addEventListener('click',async()=>{
+  try{
+    const b=await prepareVehicleBackup();
+    download(b.filename,b.csv);
+    $('backup-status').textContent=b.count+'件のCSVダウンロードを試みました。iPhoneへの保存は未確認です。保存できない場合は「共有して保存」か「全文をコピー」を使ってください。';
+  }catch(e){$('backup-status').textContent='CSV書き出しエラー：'+e.message}
+});
 $('template').addEventListener('click',()=>{download('MD_MARKET_template.csv','date,make,model,grade,year,mileage_km,price_jpy,channel,market_type,source_url,color,equipment\r\n')});
 $('audit-backup-generate').addEventListener('click',async()=>{
  const status=$('audit-backup-status');
