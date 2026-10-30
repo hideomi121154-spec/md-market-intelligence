@@ -130,3 +130,11 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - **これは中古車在庫・業者間AA出品台数・中古車価格ではない。** 新車の販売台数から数年後に中古車へ流入する台数を直接推定したものではなく、保有期間・廃車・輸出・リース・生産供給・モデルチェンジなどが未反映。ヤリスやカローラの通称名には派生車が含まれる。2021年ランドクルーザーWのような分類変更も自動統合しない。
 - JavaScriptのデータ・UIの検証：`tests/test_registered_history.js` と `.github/workflows/registered-history-tests.yml`。PDF抽出・出典保護の検証：`tests/test_registered_annual.py`。
 - **取得対象は固定2021〜2025年。** 2026年の年次統計が公開された後に対象期間をずらす仕組みは未実装。今回はまず検証済みの5年間を表示する。
+
+
+## v1.9.2 — iPhoneのCSVバックアップ救済
+- v1.9までのCSVダウンロード（blob URL + `a.download`）がiPhoneのホーム画面PWAでは保存完了を保証しない問題に対応。
+- `データ` → `バックアップ文を表示` で IndexedDB の車両記録をCSVテキストとして表示。さらに `共有して「ファイル」に保存`（Web Share APIのファイル共有が利用可能な場合）または `全文をコピー` で退避可能。端末に保存できたかどうかは自動判定できないため、保存先で確認する。
+- CSV内容の生成は既存の `MDStore.exportCSV()` と同一。新機能は読み取りのみで、IndexedDBスキーマ変更やレコードの削除・移行はしない。
+- データが0件なら別のSafari/ホーム画面版の保存領域の可能性を案内。照合メモは従来どおり別途バックアップすること。
+- `tests/test_iphone_backup.cjs` と `.github/workflows/iphone-backup-tests.yml` でバックアップ処理を回帰検査。
