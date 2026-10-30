@@ -39,10 +39,14 @@ jobs:
           ]
           missing=[i for i in ids if f'id="{i}"' not in html]
           assert not missing, f'Missing UI controls: {missing}'
-          assert '<b>v1.7</b>' in html
-          assert 'demand-signals.js?v=1.7' in html
-          assert 'demand-signals.css?v=1.7' in html
+          assert '<b>v1.7.1</b>' in html
+          assert 'demand-signals.js?v=1.7.1' in html
+          assert 'demand-signals.css?v=1.7.1' in html
           data=json.loads(Path('data/demand_rankings.json').read_text(encoding='utf-8'))
           assert data['snapshots'][0]['month']==data['snapshots'][1]['month']=='2026-09'
+          assert all(len(x['models'])==10 for x in data['snapshots'])
+          assert all([r['rank'] for r in x['models']]==list(range(1,11)) for x in data['snapshots'])
+          for name in ('demand-top10-carsensor','demand-top10-goonet'):
+            assert f'id="{name}"' in html
           print('Demand UI and same-period source data verified')
           PY
