@@ -90,6 +90,24 @@
       textNode(slot,'span',SOURCES[source].label+': '+(snap?`公式ページで確認した${snap.models.length}順位`:'初期記録なし')+(count?`、端末追記${count}件`:''),'demand-source-count');
       slot.appendChild(openLink(SOURCES[source].url));
     }
+    for(const source of ['carsensor','goonet']){
+      const board=$('demand-top10-'+source);
+      board.replaceChildren();
+      const snap=snapshots.find(x=>x.month===m&&x.platform===source);
+      if(!snap){
+        const li=document.createElement('li');
+        li.textContent='この月の公式確認済みTOP10は未登録です';
+        li.className='demand-top10-empty';
+        board.appendChild(li);
+        continue;
+      }
+      for(const car of snap.models.filter(x=>x.rank<=10).sort((a,b)=>a.rank-b.rank)){
+        const li=document.createElement('li');li.className='demand-top10-row';
+        textNode(li,'span',car.rank+'位','demand-top10-rank');
+        textNode(li,'span',car.make+' '+car.model,'demand-top10-name');
+        board.appendChild(li);
+      }
+    }
     for(const item of visible){
       const card=document.createElement('article');card.className='demand-row';
       textNode(card,'strong',item.make+' '+item.model,'demand-name');
