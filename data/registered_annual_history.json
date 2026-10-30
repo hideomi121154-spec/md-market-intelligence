@@ -1,0 +1,1554 @@
+{
+  "schema_version": 1,
+  "dataset": "Registered NEW passenger car annual sales, not the used car market",
+  "years": [
+    {
+      "year": 2021,
+      "source_type": "secondary",
+      "source_url": "https://minkara.carview.co.jp/userid/245500/blog/45865484/",
+      "original_jada_archive_url": "https://www.jada.or.jp/files/libs/6127/202509241143583379.pdf",
+      "source_name": "2022-02-12 published JADA-rank transcription (not official original)",
+      "source_page": null,
+      "scope": "Domestic registered passenger nameplates top 50, calendar-year 2021",
+      "warning": "The original official 2021 PDF returned image/gif when checked 2026-10-30. These rows are independently published transcriptions, not verified from original JADA PDF. Top 10 cross-checked with contemporary industry publications.",
+      "models": [
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "ヤリス",
+          "units": 212927
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "ルーミー",
+          "units": 134801
+        },
+        {
+          "rank": 3,
+          "make": "トヨタ",
+          "model": "カローラ",
+          "units": 110865
+        },
+        {
+          "rank": 4,
+          "make": "トヨタ",
+          "model": "アルファード",
+          "units": 95049
+        },
+        {
+          "rank": 5,
+          "make": "日産",
+          "model": "ノート",
+          "units": 90177
+        },
+        {
+          "rank": 6,
+          "make": "トヨタ",
+          "model": "ライズ",
+          "units": 81880
+        },
+        {
+          "rank": 7,
+          "make": "トヨタ",
+          "model": "ハリアー",
+          "units": 74575
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "アクア",
+          "units": 72495
+        },
+        {
+          "rank": 9,
+          "make": "トヨタ",
+          "model": "ヴォクシー",
+          "units": 70085
+        },
+        {
+          "rank": 10,
+          "make": "ホンダ",
+          "model": "フリード",
+          "units": 69577
+        },
+        {
+          "rank": 11,
+          "make": "日産",
+          "model": "セレナ",
+          "units": 58954
+        },
+        {
+          "rank": 12,
+          "make": "ホンダ",
+          "model": "フィット",
+          "units": 58780
+        },
+        {
+          "rank": 13,
+          "make": "トヨタ",
+          "model": "シエンタ",
+          "units": 57802
+        },
+        {
+          "rank": 14,
+          "make": "ホンダ",
+          "model": "ヴェゼル",
+          "units": 52669
+        },
+        {
+          "rank": 15,
+          "make": "トヨタ",
+          "model": "RAV4",
+          "units": 49594
+        },
+        {
+          "rank": 16,
+          "make": "トヨタ",
+          "model": "プリウス",
+          "units": 49179
+        },
+        {
+          "rank": 17,
+          "make": "スズキ",
+          "model": "ソリオ",
+          "units": 44713
+        },
+        {
+          "rank": 18,
+          "make": "トヨタ",
+          "model": "ノア",
+          "units": 44211
+        },
+        {
+          "rank": 19,
+          "make": "ホンダ",
+          "model": "ステップワゴン",
+          "units": 39247
+        },
+        {
+          "rank": 20,
+          "make": "日産",
+          "model": "キックス",
+          "units": 35044
+        },
+        {
+          "rank": 21,
+          "make": "トヨタ",
+          "model": "ランドクルーザーW",
+          "units": 33481
+        },
+        {
+          "rank": 22,
+          "make": "トヨタ",
+          "model": "パッソ",
+          "units": 32542
+        },
+        {
+          "rank": 23,
+          "make": "SUBARU",
+          "model": "インプレッサ",
+          "units": 26854
+        },
+        {
+          "rank": 24,
+          "make": "SUBARU",
+          "model": "レヴォーグ",
+          "units": 25439
+        },
+        {
+          "rank": 25,
+          "make": "マツダ",
+          "model": "MAZDA2",
+          "units": 24652
+        },
+        {
+          "rank": 26,
+          "make": "スズキ",
+          "model": "スイフト",
+          "units": 23415
+        },
+        {
+          "rank": 27,
+          "make": "SUBARU",
+          "model": "フォレスター",
+          "units": 22903
+        },
+        {
+          "rank": 28,
+          "make": "マツダ",
+          "model": "CX-5",
+          "units": 22431
+        },
+        {
+          "rank": 29,
+          "make": "トヨタ",
+          "model": "クラウン",
+          "units": 21411
+        },
+        {
+          "rank": 30,
+          "make": "ダイハツ",
+          "model": "ロッキー",
+          "units": 21392
+        },
+        {
+          "rank": 31,
+          "make": "ホンダ",
+          "model": "オデッセイ",
+          "units": 21148
+        },
+        {
+          "rank": 32,
+          "make": "マツダ",
+          "model": "CX-30",
+          "units": 19355
+        },
+        {
+          "rank": 33,
+          "make": "トヨタ",
+          "model": "C-HR",
+          "units": 18096
+        },
+        {
+          "rank": 34,
+          "make": "マツダ",
+          "model": "CX-8",
+          "units": 16596
+        },
+        {
+          "rank": 35,
+          "make": "マツダ",
+          "model": "MAZDA3",
+          "units": 16361
+        },
+        {
+          "rank": 36,
+          "make": "三菱",
+          "model": "デリカD5",
+          "units": 14790
+        },
+        {
+          "rank": 37,
+          "make": "ダイハツ",
+          "model": "トール",
+          "units": 14780
+        },
+        {
+          "rank": 38,
+          "make": "スズキ",
+          "model": "ジムニーワゴン",
+          "units": 13903
+        },
+        {
+          "rank": 39,
+          "make": "ホンダ",
+          "model": "シャトル",
+          "units": 13636
+        },
+        {
+          "rank": 40,
+          "make": "トヨタ",
+          "model": "エスクァイア",
+          "units": 12482
+        },
+        {
+          "rank": 41,
+          "make": "スズキ",
+          "model": "クロスビー",
+          "units": 12401
+        },
+        {
+          "rank": 42,
+          "make": "日産",
+          "model": "エクストレイル",
+          "units": 12016
+        },
+        {
+          "rank": 43,
+          "make": "日産",
+          "model": "リーフ",
+          "units": 10843
+        },
+        {
+          "rank": 44,
+          "make": "トヨタ",
+          "model": "カムリ",
+          "units": 10620
+        },
+        {
+          "rank": 45,
+          "make": "三菱",
+          "model": "エクリプスクロス",
+          "units": 8882
+        },
+        {
+          "rank": 46,
+          "make": "日産",
+          "model": "マーチ",
+          "units": 8819
+        },
+        {
+          "rank": 47,
+          "make": "トヨタ",
+          "model": "ハイエースワゴン",
+          "units": 8547
+        },
+        {
+          "rank": 48,
+          "make": "ホンダ",
+          "model": "シビック",
+          "units": 8520
+        },
+        {
+          "rank": 49,
+          "make": "マツダ",
+          "model": "CX-3",
+          "units": 8408
+        },
+        {
+          "rank": 50,
+          "make": "レクサス",
+          "model": "UX250H",
+          "units": 8263
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "source_type": "official",
+      "source_url": "https://www.jada.or.jp/files/libs/6120/202509241131464590.pdf",
+      "source_page": 8,
+      "models": [
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "ヤリス",
+          "units": 168557
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "カローラ",
+          "units": 131548
+        },
+        {
+          "rank": 3,
+          "make": "日産",
+          "model": "ノート",
+          "units": 110113
+        },
+        {
+          "rank": 4,
+          "make": "トヨタ",
+          "model": "ルーミー",
+          "units": 109236
+        },
+        {
+          "rank": 5,
+          "make": "トヨタ",
+          "model": "ライズ",
+          "units": 83620
+        },
+        {
+          "rank": 6,
+          "make": "ホンダ",
+          "model": "フリード",
+          "units": 79525
+        },
+        {
+          "rank": 7,
+          "make": "トヨタ",
+          "model": "アクア",
+          "units": 72084
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "シエンタ",
+          "units": 68922
+        },
+        {
+          "rank": 9,
+          "make": "ホンダ",
+          "model": "フィット",
+          "units": 60271
+        },
+        {
+          "rank": 10,
+          "make": "トヨタ",
+          "model": "アルファード",
+          "units": 60225
+        },
+        {
+          "rank": 11,
+          "make": "トヨタ",
+          "model": "ノア",
+          "units": 57696
+        },
+        {
+          "rank": 12,
+          "make": "日産",
+          "model": "セレナ",
+          "units": 57513
+        },
+        {
+          "rank": 13,
+          "make": "トヨタ",
+          "model": "ヴォクシー",
+          "units": 55545
+        },
+        {
+          "rank": 14,
+          "make": "ホンダ",
+          "model": "ヴェゼル",
+          "units": 50736
+        },
+        {
+          "rank": 15,
+          "make": "スズキ",
+          "model": "ソリオ",
+          "units": 41590
+        },
+        {
+          "rank": 16,
+          "make": "ホンダ",
+          "model": "ステップワゴン",
+          "units": 37966
+        },
+        {
+          "rank": 17,
+          "make": "トヨタ",
+          "model": "ランドクルーザー",
+          "units": 35390
+        },
+        {
+          "rank": 18,
+          "make": "トヨタ",
+          "model": "ハリアー",
+          "units": 34182
+        },
+        {
+          "rank": 19,
+          "make": "トヨタ",
+          "model": "パッソ",
+          "units": 32990
+        },
+        {
+          "rank": 20,
+          "make": "トヨタ",
+          "model": "プリウス",
+          "units": 32675
+        },
+        {
+          "rank": 21,
+          "make": "マツダ",
+          "model": "CX-5",
+          "units": 31399
+        },
+        {
+          "rank": 22,
+          "make": "トヨタ",
+          "model": "RAV4",
+          "units": 31118
+        },
+        {
+          "rank": 23,
+          "make": "スズキ",
+          "model": "スイフト",
+          "units": 25113
+        },
+        {
+          "rank": 24,
+          "make": "SUBARU",
+          "model": "フォレスター",
+          "units": 25096
+        },
+        {
+          "rank": 25,
+          "make": "マツダ",
+          "model": "MAZDA2",
+          "units": 24429
+        },
+        {
+          "rank": 26,
+          "make": "SUBARU",
+          "model": "インプレッサ",
+          "units": 23042
+        },
+        {
+          "rank": 27,
+          "make": "ダイハツ",
+          "model": "ロッキー",
+          "units": 22223
+        },
+        {
+          "rank": 28,
+          "make": "日産",
+          "model": "キックス",
+          "units": 18697
+        },
+        {
+          "rank": 29,
+          "make": "日産",
+          "model": "エクストレイル",
+          "units": 18066
+        },
+        {
+          "rank": 30,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 17820
+        },
+        {
+          "rank": 31,
+          "make": "トヨタ",
+          "model": "クラウン",
+          "units": 17767
+        },
+        {
+          "rank": 32,
+          "make": "三菱",
+          "model": "アウトランダー",
+          "units": 17662
+        },
+        {
+          "rank": 33,
+          "make": "三菱",
+          "model": "デリカD5",
+          "units": 16838
+        },
+        {
+          "rank": 34,
+          "make": "マツダ",
+          "model": "CX-30",
+          "units": 16176
+        },
+        {
+          "rank": 35,
+          "make": "SUBARU",
+          "model": "レヴォーグ",
+          "units": 14275
+        },
+        {
+          "rank": 36,
+          "make": "マツダ",
+          "model": "MAZDA3",
+          "units": 14020
+        },
+        {
+          "rank": 37,
+          "make": "トヨタ",
+          "model": "86",
+          "units": 13341
+        },
+        {
+          "rank": 38,
+          "make": "ホンダ",
+          "model": "シャトル",
+          "units": 12941
+        },
+        {
+          "rank": 39,
+          "make": "マツダ",
+          "model": "CX-8",
+          "units": 12934
+        },
+        {
+          "rank": 40,
+          "make": "日産",
+          "model": "リーフ",
+          "units": 12732
+        },
+        {
+          "rank": 41,
+          "make": "スズキ",
+          "model": "クロスビー",
+          "units": 12315
+        },
+        {
+          "rank": 42,
+          "make": "トヨタ",
+          "model": "C-HR",
+          "units": 11811
+        },
+        {
+          "rank": 43,
+          "make": "ダイハツ",
+          "model": "トール",
+          "units": 11527
+        },
+        {
+          "rank": 44,
+          "make": "SUBARU",
+          "model": "レガシィ",
+          "units": 9697
+        },
+        {
+          "rank": 45,
+          "make": "マツダ",
+          "model": "ロードスター",
+          "units": 9578
+        },
+        {
+          "rank": 46,
+          "make": "トヨタ",
+          "model": "ハイエースワゴン",
+          "units": 9175
+        },
+        {
+          "rank": 47,
+          "make": "ホンダ",
+          "model": "シビック",
+          "units": 8773
+        },
+        {
+          "rank": 48,
+          "make": "マツダ",
+          "model": "CX-3",
+          "units": 8409
+        },
+        {
+          "rank": 49,
+          "make": "日産",
+          "model": "マーチ",
+          "units": 8200
+        },
+        {
+          "rank": 50,
+          "make": "三菱",
+          "model": "エクリプスクロス",
+          "units": 7693
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "source_type": "official",
+      "source_url": "https://www.jada.or.jp/files/libs/6128/202509241144117936.pdf",
+      "source_page": 8,
+      "models": [
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "ヤリス",
+          "units": 194364
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "カローラ",
+          "units": 154870
+        },
+        {
+          "rank": 3,
+          "make": "トヨタ",
+          "model": "シエンタ",
+          "units": 132332
+        },
+        {
+          "rank": 4,
+          "make": "日産",
+          "model": "ノート",
+          "units": 102508
+        },
+        {
+          "rank": 5,
+          "make": "トヨタ",
+          "model": "ルーミー",
+          "units": 100800
+        },
+        {
+          "rank": 6,
+          "make": "トヨタ",
+          "model": "プリウス",
+          "units": 99149
+        },
+        {
+          "rank": 7,
+          "make": "トヨタ",
+          "model": "ノア",
+          "units": 95181
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "ヴォクシー",
+          "units": 89080
+        },
+        {
+          "rank": 9,
+          "make": "トヨタ",
+          "model": "アクア",
+          "units": 80268
+        },
+        {
+          "rank": 10,
+          "make": "ホンダ",
+          "model": "フリード",
+          "units": 77562
+        },
+        {
+          "rank": 11,
+          "make": "日産",
+          "model": "セレナ",
+          "units": 75673
+        },
+        {
+          "rank": 12,
+          "make": "トヨタ",
+          "model": "ハリアー",
+          "units": 75211
+        },
+        {
+          "rank": 13,
+          "make": "トヨタ",
+          "model": "ライズ",
+          "units": 64995
+        },
+        {
+          "rank": 14,
+          "make": "ホンダ",
+          "model": "ヴェゼル",
+          "units": 59187
+        },
+        {
+          "rank": 15,
+          "make": "ホンダ",
+          "model": "フィット",
+          "units": 57033
+        },
+        {
+          "rank": 16,
+          "make": "トヨタ",
+          "model": "ランドクルーザー",
+          "units": 55263
+        },
+        {
+          "rank": 17,
+          "make": "トヨタ",
+          "model": "アルファード",
+          "units": 53086
+        },
+        {
+          "rank": 18,
+          "make": "スズキ",
+          "model": "ソリオ",
+          "units": 47983
+        },
+        {
+          "rank": 19,
+          "make": "ホンダ",
+          "model": "ステップワゴン",
+          "units": 44157
+        },
+        {
+          "rank": 20,
+          "make": "トヨタ",
+          "model": "クラウン",
+          "units": 43029
+        },
+        {
+          "rank": 21,
+          "make": "トヨタ",
+          "model": "RAV4",
+          "units": 41018
+        },
+        {
+          "rank": 22,
+          "make": "SUBARU",
+          "model": "インプレッサ",
+          "units": 34371
+        },
+        {
+          "rank": 23,
+          "make": "レクサス",
+          "model": "NX350H",
+          "units": 29141
+        },
+        {
+          "rank": 24,
+          "make": "日産",
+          "model": "エクストレイル",
+          "units": 27129
+        },
+        {
+          "rank": 25,
+          "make": "スズキ",
+          "model": "スイフト",
+          "units": 26589
+        },
+        {
+          "rank": 26,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 26388
+        },
+        {
+          "rank": 27,
+          "make": "トヨタ",
+          "model": "パッソ",
+          "units": 26359
+        },
+        {
+          "rank": 28,
+          "make": "マツダ",
+          "model": "CX-5",
+          "units": 25714
+        },
+        {
+          "rank": 29,
+          "make": "マツダ",
+          "model": "CX-60",
+          "units": 23941
+        },
+        {
+          "rank": 30,
+          "make": "SUBARU",
+          "model": "フォレスター",
+          "units": 22141
+        },
+        {
+          "rank": 31,
+          "make": "ホンダ",
+          "model": "ZR-V",
+          "units": 21168
+        },
+        {
+          "rank": 32,
+          "make": "マツダ",
+          "model": "MAZDA2",
+          "units": 20706
+        },
+        {
+          "rank": 33,
+          "make": "マツダ",
+          "model": "CX-30",
+          "units": 18016
+        },
+        {
+          "rank": 34,
+          "make": "三菱",
+          "model": "デリカD5",
+          "units": 17217
+        },
+        {
+          "rank": 35,
+          "make": "マツダ",
+          "model": "CX-8",
+          "units": 17181
+        },
+        {
+          "rank": 36,
+          "make": "日産",
+          "model": "キックス",
+          "units": 15778
+        },
+        {
+          "rank": 37,
+          "make": "SUBARU",
+          "model": "レヴォーグ",
+          "units": 15267
+        },
+        {
+          "rank": 38,
+          "make": "ダイハツ",
+          "model": "ロッキー",
+          "units": 15252
+        },
+        {
+          "rank": 39,
+          "make": "マツダ",
+          "model": "MAZDA3",
+          "units": 14310
+        },
+        {
+          "rank": 40,
+          "make": "三菱",
+          "model": "アウトランダー",
+          "units": 13395
+        },
+        {
+          "rank": 41,
+          "make": "スズキ",
+          "model": "クロスビー",
+          "units": 13356
+        },
+        {
+          "rank": 42,
+          "make": "ホンダ",
+          "model": "シビック",
+          "units": 13258
+        },
+        {
+          "rank": 43,
+          "make": "トヨタ",
+          "model": "ヴェルファイア",
+          "units": 13218
+        },
+        {
+          "rank": 44,
+          "make": "トヨタ",
+          "model": "ハイエースワゴン",
+          "units": 11102
+        },
+        {
+          "rank": 45,
+          "make": "ダイハツ",
+          "model": "トール",
+          "units": 10220
+        },
+        {
+          "rank": 46,
+          "make": "レクサス",
+          "model": "UX250H",
+          "units": 10172
+        },
+        {
+          "rank": 47,
+          "make": "日産",
+          "model": "リーフ",
+          "units": 10026
+        },
+        {
+          "rank": 48,
+          "make": "トヨタ",
+          "model": "86",
+          "units": 9796
+        },
+        {
+          "rank": 49,
+          "make": "レクサス",
+          "model": "RX500H",
+          "units": 9260
+        },
+        {
+          "rank": 50,
+          "make": "トヨタ",
+          "model": "カムリ",
+          "units": 8825
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "source_type": "official",
+      "source_url": "https://www.jada.or.jp/files/libs/6122/20250924113213650.pdf",
+      "source_page": 1,
+      "models": [
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "カローラ",
+          "units": 166956
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "ヤリス",
+          "units": 166162
+        },
+        {
+          "rank": 3,
+          "make": "トヨタ",
+          "model": "シエンタ",
+          "units": 111090
+        },
+        {
+          "rank": 4,
+          "make": "日産",
+          "model": "ノート",
+          "units": 101766
+        },
+        {
+          "rank": 5,
+          "make": "ホンダ",
+          "model": "フリード",
+          "units": 85368
+        },
+        {
+          "rank": 6,
+          "make": "トヨタ",
+          "model": "プリウス",
+          "units": 83485
+        },
+        {
+          "rank": 7,
+          "make": "日産",
+          "model": "セレナ",
+          "units": 80899
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "アルファード",
+          "units": 79374
+        },
+        {
+          "rank": 9,
+          "make": "ホンダ",
+          "model": "ヴェゼル",
+          "units": 75424
+        },
+        {
+          "rank": 10,
+          "make": "トヨタ",
+          "model": "ヴォクシー",
+          "units": 70636
+        },
+        {
+          "rank": 11,
+          "make": "トヨタ",
+          "model": "ノア",
+          "units": 70611
+        },
+        {
+          "rank": 12,
+          "make": "トヨタ",
+          "model": "ルーミー",
+          "units": 67698
+        },
+        {
+          "rank": 13,
+          "make": "トヨタ",
+          "model": "ハリアー",
+          "units": 64181
+        },
+        {
+          "rank": 14,
+          "make": "トヨタ",
+          "model": "アクア",
+          "units": 64180
+        },
+        {
+          "rank": 15,
+          "make": "トヨタ",
+          "model": "クラウン",
+          "units": 62628
+        },
+        {
+          "rank": 16,
+          "make": "ホンダ",
+          "model": "フィット",
+          "units": 61808
+        },
+        {
+          "rank": 17,
+          "make": "ホンダ",
+          "model": "ステップワゴン",
+          "units": 55147
+        },
+        {
+          "rank": 18,
+          "make": "スズキ",
+          "model": "ソリオ",
+          "units": 52404
+        },
+        {
+          "rank": 19,
+          "make": "トヨタ",
+          "model": "ランドクルーザー",
+          "units": 51288
+        },
+        {
+          "rank": 20,
+          "make": "トヨタ",
+          "model": "ライズ",
+          "units": 51225
+        },
+        {
+          "rank": 21,
+          "make": "ホンダ",
+          "model": "ZR-V",
+          "units": 41513
+        },
+        {
+          "rank": 22,
+          "make": "スズキ",
+          "model": "スイフト",
+          "units": 33131
+        },
+        {
+          "rank": 23,
+          "make": "トヨタ",
+          "model": "ヴェルファイア",
+          "units": 33105
+        },
+        {
+          "rank": 24,
+          "make": "日産",
+          "model": "エクストレイル",
+          "units": 31776
+        },
+        {
+          "rank": 25,
+          "make": "SUBARU",
+          "model": "インプレッサ",
+          "units": 31078
+        },
+        {
+          "rank": 26,
+          "make": "トヨタ",
+          "model": "RAV4",
+          "units": 30599
+        },
+        {
+          "rank": 27,
+          "make": "ホンダ",
+          "model": "WR-V",
+          "units": 30339
+        },
+        {
+          "rank": 28,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 25848
+        },
+        {
+          "rank": 29,
+          "make": "SUBARU",
+          "model": "フォレスター",
+          "units": 22977
+        },
+        {
+          "rank": 30,
+          "make": "SUBARU",
+          "model": "レヴォーグ",
+          "units": 22747
+        },
+        {
+          "rank": 31,
+          "make": "マツダ",
+          "model": "MAZDA2",
+          "units": 21649
+        },
+        {
+          "rank": 32,
+          "make": "レクサス",
+          "model": "LBX",
+          "units": 21221
+        },
+        {
+          "rank": 33,
+          "make": "三菱",
+          "model": "デリカD5",
+          "units": 19886
+        },
+        {
+          "rank": 34,
+          "make": "マツダ",
+          "model": "CX-5",
+          "units": 19418
+        },
+        {
+          "rank": 35,
+          "make": "レクサス",
+          "model": "NX350H",
+          "units": 17460
+        },
+        {
+          "rank": 36,
+          "make": "ホンダ",
+          "model": "シビック",
+          "units": 15573
+        },
+        {
+          "rank": 37,
+          "make": "日産",
+          "model": "キックス",
+          "units": 14346
+        },
+        {
+          "rank": 38,
+          "make": "マツダ",
+          "model": "CX-30",
+          "units": 13717
+        },
+        {
+          "rank": 39,
+          "make": "スズキ",
+          "model": "クロスビー",
+          "units": 12592
+        },
+        {
+          "rank": 40,
+          "make": "ホンダ",
+          "model": "オデッセイ",
+          "units": 12006
+        },
+        {
+          "rank": 41,
+          "make": "マツダ",
+          "model": "MAZDA3",
+          "units": 11804
+        },
+        {
+          "rank": 42,
+          "make": "ダイハツ",
+          "model": "ロッキー",
+          "units": 10127
+        },
+        {
+          "rank": 43,
+          "make": "マツダ",
+          "model": "ロードスター",
+          "units": 9543
+        },
+        {
+          "rank": 44,
+          "make": "トヨタ",
+          "model": "86",
+          "units": 8802
+        },
+        {
+          "rank": 45,
+          "make": "三菱",
+          "model": "アウトランダー",
+          "units": 8126
+        },
+        {
+          "rank": 46,
+          "make": "トヨタ",
+          "model": "JPN TAXI",
+          "units": 8103
+        },
+        {
+          "rank": 47,
+          "make": "マツダ",
+          "model": "CX-3",
+          "units": 8050
+        },
+        {
+          "rank": 48,
+          "make": "三菱",
+          "model": "エクリプスクロス",
+          "units": 7632
+        },
+        {
+          "rank": 49,
+          "make": "トヨタ",
+          "model": "ハイエースワゴン",
+          "units": 7087
+        },
+        {
+          "rank": 50,
+          "make": "マツダ",
+          "model": "CX-60",
+          "units": 6395
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "source_type": "official",
+      "source_url": "https://www.jada.or.jp/files/libs/6986/202604031138081429.pdf",
+      "source_page": 1,
+      "models": [
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "ヤリス",
+          "units": 166533
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "カローラ",
+          "units": 138829
+        },
+        {
+          "rank": 3,
+          "make": "トヨタ",
+          "model": "シエンタ",
+          "units": 106558
+        },
+        {
+          "rank": 4,
+          "make": "トヨタ",
+          "model": "ライズ",
+          "units": 100851
+        },
+        {
+          "rank": 5,
+          "make": "トヨタ",
+          "model": "ルーミー",
+          "units": 95221
+        },
+        {
+          "rank": 6,
+          "make": "ホンダ",
+          "model": "フリード",
+          "units": 90437
+        },
+        {
+          "rank": 7,
+          "make": "トヨタ",
+          "model": "アルファード",
+          "units": 86959
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "ノア",
+          "units": 80065
+        },
+        {
+          "rank": 9,
+          "make": "トヨタ",
+          "model": "ヴォクシー",
+          "units": 78760
+        },
+        {
+          "rank": 10,
+          "make": "日産",
+          "model": "ノート",
+          "units": 78123
+        },
+        {
+          "rank": 11,
+          "make": "日産",
+          "model": "セレナ",
+          "units": 71465
+        },
+        {
+          "rank": 12,
+          "make": "トヨタ",
+          "model": "アクア",
+          "units": 68499
+        },
+        {
+          "rank": 13,
+          "make": "ホンダ",
+          "model": "ヴェゼル",
+          "units": 67239
+        },
+        {
+          "rank": 14,
+          "make": "トヨタ",
+          "model": "プリウス",
+          "units": 63717
+        },
+        {
+          "rank": 15,
+          "make": "ホンダ",
+          "model": "ステップワゴン",
+          "units": 57053
+        },
+        {
+          "rank": 16,
+          "make": "トヨタ",
+          "model": "クラウン",
+          "units": 56717
+        },
+        {
+          "rank": 17,
+          "make": "スズキ",
+          "model": "ソリオ",
+          "units": 54417
+        },
+        {
+          "rank": 18,
+          "make": "トヨタ",
+          "model": "ハリアー",
+          "units": 52653
+        },
+        {
+          "rank": 19,
+          "make": "ホンダ",
+          "model": "フィット",
+          "units": 46881
+        },
+        {
+          "rank": 20,
+          "make": "トヨタ",
+          "model": "ランドクルーザー",
+          "units": 45515
+        },
+        {
+          "rank": 21,
+          "make": "スズキ",
+          "model": "ジムニー",
+          "units": 41366
+        },
+        {
+          "rank": 22,
+          "make": "トヨタ",
+          "model": "ヴェルファイア",
+          "units": 33031
+        },
+        {
+          "rank": 23,
+          "make": "SUBARU",
+          "model": "フォレスター",
+          "units": 31688
+        },
+        {
+          "rank": 24,
+          "make": "SUBARU",
+          "model": "インプレッサ",
+          "units": 31290
+        },
+        {
+          "rank": 25,
+          "make": "トヨタ",
+          "model": "RAV4",
+          "units": 29243
+        },
+        {
+          "rank": 26,
+          "make": "スズキ",
+          "model": "スイフト",
+          "units": 27879
+        },
+        {
+          "rank": 27,
+          "make": "ホンダ",
+          "model": "WR-V",
+          "units": 27024
+        },
+        {
+          "rank": 28,
+          "make": "マツダ",
+          "model": "CX-5",
+          "units": 24520
+        },
+        {
+          "rank": 29,
+          "make": "三菱",
+          "model": "デリカD5",
+          "units": 24383
+        },
+        {
+          "rank": 30,
+          "make": "マツダ",
+          "model": "MAZDA2",
+          "units": 23640
+        },
+        {
+          "rank": 31,
+          "make": "レクサス",
+          "model": "LBX",
+          "units": 20826
+        },
+        {
+          "rank": 32,
+          "make": "ホンダ",
+          "model": "ZR-V",
+          "units": 20380
+        },
+        {
+          "rank": 33,
+          "make": "レクサス",
+          "model": "NX350H",
+          "units": 20249
+        },
+        {
+          "rank": 34,
+          "make": "日産",
+          "model": "エクストレイル",
+          "units": 19940
+        },
+        {
+          "rank": 35,
+          "make": "スズキ",
+          "model": "フロンクス",
+          "units": 19721
+        },
+        {
+          "rank": 36,
+          "make": "ホンダ",
+          "model": "シビック",
+          "units": 19597
+        },
+        {
+          "rank": 37,
+          "make": "ダイハツ",
+          "model": "ロッキー",
+          "units": 16585
+        },
+        {
+          "rank": 38,
+          "make": "スズキ",
+          "model": "クロスビー",
+          "units": 15803
+        },
+        {
+          "rank": 39,
+          "make": "SUBARU",
+          "model": "レヴォーグ",
+          "units": 15327
+        },
+        {
+          "rank": 40,
+          "make": "マツダ",
+          "model": "CX-30",
+          "units": 12790
+        },
+        {
+          "rank": 41,
+          "make": "マツダ",
+          "model": "MAZDA3",
+          "units": 12290
+        },
+        {
+          "rank": 42,
+          "make": "マツダ",
+          "model": "CX-60",
+          "units": 10823
+        },
+        {
+          "rank": 43,
+          "make": "マツダ",
+          "model": "ロードスター",
+          "units": 10001
+        },
+        {
+          "rank": 44,
+          "make": "マツダ",
+          "model": "CX-80",
+          "units": 9689
+        },
+        {
+          "rank": 45,
+          "make": "日産",
+          "model": "キックス",
+          "units": 9595
+        },
+        {
+          "rank": 46,
+          "make": "トヨタ",
+          "model": "ハイエースワゴン",
+          "units": 8989
+        },
+        {
+          "rank": 47,
+          "make": "ホンダ",
+          "model": "オデッセイ",
+          "units": 8025
+        },
+        {
+          "rank": 48,
+          "make": "三菱",
+          "model": "アウトランダー",
+          "units": 7878
+        },
+        {
+          "rank": 49,
+          "make": "三菱",
+          "model": "エクリプスクロス",
+          "units": 7847
+        },
+        {
+          "rank": 50,
+          "make": "マツダ",
+          "model": "CX-3",
+          "units": 7574
+        }
+      ]
+    }
+  ],
+  "checked_at_utc": "2026-10-30T12:18:24.561575+00:00",
+  "scope": "Jan-Dec 2021-2025, registered domestic-brand passenger vehicles only (kei/foreign brands excluded), top50/year",
+  "provenance_caution": "2021 data comes from explicitly attributed SECONDARY reporting; original JADA 2021 PDF returned a GIF on 2026-10-30. Data for 2022-25 were read from JADA official PDF.",
+  "market_caution": "Not used car inventory, auction transactions, sales prices or demand. Some nameplates aggregate model families and naming changes may prevent direct comparisons."
+}
