@@ -89,11 +89,18 @@ async function run(){
   await page.locator('#inventory-restore').click();
   assert.match(await page.locator('#inventory-status').innerText(),/0件を追加復元/);
 
+  // Reload does not preserve unsaved form inputs; enter required criteria again.
   // Same car in another region must be an independent time series.
   await page.locator('#inventory-date').fill('2026-10-30');
+  await page.locator('#inventory-make').fill('日産');
+  await page.locator('#inventory-model').fill('デイズ');
   await page.locator('#inventory-region').fill('愛知県');
+  await page.locator('#inventory-color').fill('赤');
+  await page.locator('#inventory-conditions').fill('2020〜2023年・5万km以下');
+  await page.locator('#inventory-url').fill(src);
   await page.locator('#inventory-count').fill('990');
   await page.locator('#inventory-save').click();
+  assert.match(await page.locator('#inventory-status').innerText(),/保存しました/);
   assert.match(await page.locator('#inventory-summary').innerText(),/比較用の2件目/);
   assert.equal(await page.locator('#inventory-series option').count(),2);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('md-market-inventory-snapshots-v1')).length),3);
