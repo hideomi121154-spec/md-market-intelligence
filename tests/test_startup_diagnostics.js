@@ -58,12 +58,13 @@ async function storageChecks(){
     await assert.rejects(h.MDStore.openDb(),/SecurityError/);
   }
 }
-function workerHarness(){
+function workerHarness(offlineMode=false){
   const handlers={},offline=Error('offline'),fail={kind:'asset-failure'},homepage={kind:'offline-home'};
-  const calls=[];
+  const calls=[];let fetches=0;
   const sandbox={
     self:{
       location:{origin:'https://example.test'},
+      navigator:{onLine:!offlineMode},
       registration:{scope:'https://example.test/md-market-intelligence/'},
       skipWaiting(){},clients:{claim(){}},
       addEventListener(name,callback){handlers[name]=callback}
@@ -75,7 +76,7 @@ function workerHarness(){
       open:async()=>({addAll:async()=>{},put:async()=>{}}),
       keys:async()=>[]
     },
-    fetch:async()=>{throw offline;},
+    fetch:async()=>{fetches++;throw offline;},
   };
   vm.runInNewContext(workerJS,sandbox,{filename:'sw.js'});
   async function request(mode,path){
@@ -88,12 +89,17 @@ function workerHarness(){
     assert.ok(result,'service worker should respond to same-origin GET');
     return result;
   }
-  return {request,fail,homepage,calls};
+  return {request,fail,homepage,calls,get fetches(){return fetches}};
 }
 async function workerChecks(){
   const w=workerHarness();
   assert.equal(await w.request('cors','inventory-observations.js?v=2.0'),w.fail,'asset requests must not receive HTML on network failure');
   assert.equal(await w.request('navigate','index.html'),w.homepage,'navigation may use cached app shell');
+  const offlineW=workerHarness(true);
+  assert.equal(await offlineW.request('navigate','index.html'),offlineW.homepage);
+  assert.equal(offlineW.fetches,0,'known-offline navigation must not attempt network access');
+  assert.equal(await offlineW.request('cors','inventory-observations.js?v=2.0'),offlineW.fail);
+  assert.equal(offlineW.fetches,0,'offline resource must not attempt network access');
 }
 function linkageChecks(){
   const sw=read('sw.js');
