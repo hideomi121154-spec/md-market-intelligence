@@ -40,6 +40,48 @@ async function run(){
  const src='https://www.carsensor.net/used/search?model=days';
  try{
   await page.goto(origin+'/',{waitUntil:'domcontentloaded'});
+  // Consumer dashboard must be the initial screen while preserving the old market tab.
+  await page.locator('#mycar').waitFor({state:'visible'});
+  assert.match(await page.locator('#page-title').innerText(),/マイカー/);
+  await page.locator('#mycar-make').fill('日産');
+  await page.locator('#mycar-model').fill('デイズ');
+  await page.locator('#mycar-grade').fill('X');
+  await page.locator('#mycar-year').fill('2021');
+  await page.locator('#mycar-mileage').fill('43000');
+  await page.locator('#mycar-color').fill('白');
+  await page.locator('#mycar-repair').selectOption('none');
+  await page.locator('#mycar-save-car').click();
+  assert.equal(await page.locator('#mycar-selector option').count(),1);
+  assert.match(await page.locator('#mycar-summary').innerText(),/デイズ/);
+  await page.locator('#mycar-type').selectOption('estimate');
+  await page.locator('#mycar-price').fill('700000');
+  await page.locator('#mycar-source').fill('ガリバーの無料相場');
+  await page.locator('#mycar-source-url').fill('https://221616.com/satei/souba/');
+  await page.locator('#mycar-date').fill('2026-10-31');
+  await page.locator('#mycar-save-quote').click();
+  assert.match(await page.locator('#mycar-estimate').innerText(),/700,000円/);
+  await page.locator('#mycar-type').selectOption('offer');
+  await page.locator('#mycar-price').fill('850000');
+  await page.locator('#mycar-source').fill('地域の買取店');
+  await page.locator('#mycar-source-url').fill('');
+  await page.locator('#mycar-save-quote').click();
+  assert.match(await page.locator('#mycar-offer').innerText(),/850,000円/);
+  assert.match(await page.locator('#mycar-estimate').innerText(),/700,000円/);
+  assert.equal(await page.locator('#mycar-quote-rows tr').count(),2);
+  await page.locator('#mycar-export').click();
+  const personalBackup=await page.locator('#mycar-backup').inputValue();
+  assert.equal(JSON.parse(personalBackup).cars.length,1);
+  assert.equal(JSON.parse(personalBackup).quotes.length,2);
+  await page.locator('#mycar-backup').fill(personalBackup);
+  await page.locator('#mycar-restore').click();
+  assert.match(await page.locator('#mycar-status').innerText(),/車両0台、金額0件/);
+  const broken=JSON.parse(personalBackup);
+  broken.quotes[0].price=999999;
+  await page.locator('#mycar-backup').fill(JSON.stringify(broken));
+  await page.locator('#mycar-restore').click();
+  assert.match(await page.locator('#mycar-status').innerText(),/上書きしません/);
+  assert.equal(JSON.parse(await page.evaluate(()=>localStorage.getItem('md-market-consumer-price-v1'))).quotes[0].price,700000);
+  await page.locator('a[data-tab="overview"]').click();
   await page.locator('#inventory-summary').waitFor();
   // Local-only monthly publication transcriptions; all values are synthetic test fixtures.
   await page.locator('#model-price-month').fill('2026-08');
@@ -133,6 +175,8 @@ async function run(){
    dbName:'md_market_pwa_v1'
   }));
   assert.equal(saved.inventory.length,2,'inventory snapshots must persist separately');
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('md-market-consumer-price-v1')).cars.length),1,'consumer profile saved separately after reload');
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('md-market-consumer-price-v1')).quotes.length),2,'two kinds of prices remain after reload');
   assert.equal(await page.locator('#model-price-rows tr').count(),2,'public-model monthly records persist on reload');
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('md-market-model-price-monthly-v1')).length),2);
 
@@ -189,6 +233,8 @@ async function run(){
     });
     assert.equal(cached.ok,true,'WebKit must store the application asset in CacheStorage');
     assert.match(cached.body,/md-market-inventory-snapshots-v1/);
+    const personalCache=await page.evaluate(()=>caches.match('./personal-car.js?v=2.5.0').then(Boolean));
+    assert.equal(personalCache,true,'iPhone offline shell must cache personal car UI');
   }else{
     await page.reload({waitUntil:'domcontentloaded',timeout:15000});
     await page.waitForFunction(()=>document.querySelector('#count-all').textContent==='1');
