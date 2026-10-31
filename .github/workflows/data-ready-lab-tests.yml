@@ -1,0 +1,32 @@
+name: data-ready-lab-tests
+on:
+  pull_request:
+    paths:
+      - 'lab/data-ready/**'
+      - 'tests/test_data_ready.mjs'
+      - 'tests/test_data_ready_price.py'
+      - '.github/workflows/data-ready-lab-tests.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: JavaScript syntax
+        run: |
+          node --check lab/data-ready/core.mjs
+          node --check lab/data-ready/app.mjs
+      - name: Data contract regression
+        run: node tests/test_data_ready.mjs
+      - name: Temporal baseline regression
+        run: python tests/test_data_ready_price.py
+      - name: Run baseline against synthetic data
+        run: python lab/data-ready/train_price.py lab/data-ready/sample-data.json
