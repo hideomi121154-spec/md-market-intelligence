@@ -11,7 +11,7 @@ const rows=P.mergeRows([base],[sep]);
 assert.equal(rows.length,2);
 assert.equal(P.inputYen('145.3'),1453000);
 assert.equal(P.inputYen('145'),1450000);
-assert.throws(()=>P.validate({...base,average_total_yen:P.inputYen('0.1')}),/整数/,'minimum accepted price is >= 10000 yen');
+assert.throws(()=>P.inputYen('0.1'),/範囲/,'minimum accepted price is >= 10000 yen');
 const s=P.summarize(rows,P.seriesKey(base));
 assert.equal(s.latest.month,'2026-09');
 assert.equal(s.previous.month,'2026-08');
