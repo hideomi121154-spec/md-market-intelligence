@@ -6,6 +6,7 @@ on:
       - 'tests/test_data_ready.mjs'
       - 'tests/test_data_ready_price.py'
       - 'tests/test_data_ready_ml.py'
+      - 'tests/test_data_ready_inference.mjs'
       - '.github/workflows/data-ready-lab-tests.yml'
   workflow_dispatch:
 jobs:
@@ -25,6 +26,7 @@ jobs:
         run: |
           node --check lab/data-ready/core.mjs
           node --check lab/data-ready/app.mjs
+          node --check lab/data-ready/predict.mjs
       - name: Data contract regression
         run: node tests/test_data_ready.mjs
       - name: Temporal baseline regression
@@ -39,6 +41,8 @@ jobs:
         run: python lab/data-ready/train_ml.py /tmp/data-ready-synthetic.json --output /tmp/data-ready-retail-report.json
       - name: Evaluate synthetic auction price model
         run: python lab/data-ready/train_ml.py /tmp/data-ready-synthetic.json --market-type dealer_auction_closed --output /tmp/data-ready-auction-report.json
+      - name: Guarded browser inference regression
+        run: node tests/test_data_ready_inference.mjs /tmp/data-ready-retail-report.json
       - name: Validate synthetic report schemas
         run: |
           python - <<'PY'
