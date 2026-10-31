@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-31",
+  "updated_at": "2026-10-31T13:15:57+00:00",
   "data_period": "国交省申告を加工した公開集計（原典リンク参照）。対象期間・分類方法は各出典による。オンライン見出しは別指標。",
   "vehicles": [
     {
@@ -45,7 +45,29 @@
           "note": "ノート全型式のエアコン関連47件のうちDBA-E12は12件。『エアミックスアクチュエーター』故障だけの件数ではありません。上の分類と別集計なので足し合わせません。"
         }
       ],
-      "web_mentions": []
+      "web_mentions": [
+        {
+          "category": "その他",
+          "title": "安心の認証工場整備 日産 ノート(E12) コラムシャフト交換 愛知県一宮市 岐阜市 江南市 稲沢市 名古屋市 NO.10821 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBLdkpSeVEtUjRQd2dmdlBDcXVWbVRNRE1Lb2pVSlRJTnpzU1FDZzFmeGhrV291VmlOakRrTVdZR1lLN2d6UXNMWm43TmhTX3hqUkJkOS1DNFp3TEkwOVNocy1R?oc=5",
+          "kind": "news_rss",
+          "published_at": "2024-03-28"
+        },
+        {
+          "category": "その他",
+          "title": "日産 E12ノート ドラレコ、テレビナビキャンセラー取り付け 持ち込み取付 滋賀県 近江八幡市 野洲市 スタッドレスタイヤ交換、組み替え大歓迎です！！ - goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9FTWNlc0tzY1hSWTlPM0JoR0wwR0pIeUZJYlBBOFJVS2FnMngyVEtqc3VfM0dFMEZFZzNFTTRxUmxwQjFkSzhGODlFRGdBdm15UERyVnhIUlZXMkN2RzBtZFZR?oc=5",
+          "kind": "news_rss",
+          "published_at": "2023-12-22"
+        },
+        {
+          "category": "その他",
+          "title": "日産 ノート E12 タイヤ交換 シーズンタイヤ 入れ替え 愛媛 松山 松末 桑原 畑寺 束本 東野 樽味 福音寺 久米 - Goo-net（グーネット）",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE05TGh5UFRVQm5reGJ4WjFJR3NFVV91dEp6cmFGbnZ4eE80RTZSQzJLZmk4Qnl5MW9nOVNwa0FOUFJ5RTNOYXJoTTladEprM0dyYjZvbWhFUlBxbzZZVTl2dWpn?oc=5",
+          "kind": "news_rss",
+          "published_at": "2019-03-30"
+        }
+      ]
     },
     {
       "make": "日産",
@@ -65,6 +87,130 @@
         }
       ],
       "web_mentions": []
+    },
+    {
+      "make": "日産",
+      "model": "デイズ",
+      "code": "B21W",
+      "label": "B21W",
+      "report_groups": [],
+      "supplemental": [],
+      "web_mentions": [
+        {
+          "category": "その他",
+          "title": "左リヤ廻り修理 日産 デイズ DBA-B21W ご新規様 初来店 鈑金 塗装 事故修理 大阪市 住吉区 堺市 堺区 北区 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1BMk9KclVhS09SYnI4ZzdNSXRWTVk5ZUxkQzdPemE0M1psVE9xTkdCWVN3Mkk4NUFGSlRkZUpqVzJoWDg0bG1HYzZ0N0V2RllJWVdHZG5CSWs2YTE2cnZiRUtrTQ?oc=5",
+          "kind": "news_rss",
+          "published_at": "2026-09-25"
+        },
+        {
+          "category": "エアコン・温度調整",
+          "title": "B21W デイズ エアコン修理 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE5CYUNjV3BNMnMydC03VS1WbmZ2eXpXMm05RmhXU0xwWENCN09wWkhPLXBlZlplSFV4ZFBiWkUzMEdxcDViV0ZSNEJXZjFMNXp2X1lsYm9BUG5PSVF5Z2VtdQ?oc=5",
+          "kind": "news_rss",
+          "published_at": "2017-06-18"
+        }
+      ],
+      "source_note": "ニュースRSS見出しの収録のみ。国交省報告の順位ではありません。"
+    },
+    {
+      "make": "トヨタ",
+      "model": "プリウス",
+      "code": "ZVW30",
+      "label": "ZVW30",
+      "report_groups": [],
+      "supplemental": [],
+      "web_mentions": [
+        {
+          "category": "電装・バッテリー",
+          "title": "ZVW30 プリウス ハイブリッドバッテリー修理 会津若松市 電装系修理 ハイブリッドバッテリーユニット交換 リビルドバッテリー バッテリー交換 福島 会津 会津若松 会津坂下 喜多方 会津美里町 猪苗代 磐梯町 西会津 田島 柳津 ｜グーネットピット - goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5uTmZscUt0RW5HOXo3UF9vbzh4aVFFTWcwc3RrYmZFQy1ZWTdyUUs2cWExaE5mOS1LUDg0YktiR1dSSEwtWXRvdjNDZ2NXVF9nS2E5N05FaFRid0RPemd6cUl3?oc=5",
+          "kind": "news_rss",
+          "published_at": "2024-04-10"
+        },
+        {
+          "category": "その他",
+          "title": "ZVW30プリウス AT載せ替え HVインバータ交換 西尾 蒲郡 岡崎 安城 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1FQjYtcU1YMEl4UHJqd3h4Y0dPVzhxTngxcGZNRzFhZnprZ0hyOFFIUUt6Mk9UMTBYb1FHNktkVHpJRU1SeE5yM1dyZzg0WnFYc1ZzcHoyeUQtc0N1TzhiSHF3?oc=5",
+          "kind": "news_rss",
+          "published_at": "2024-02-21"
+        },
+        {
+          "category": "その他",
+          "title": "安心の認証工場整備 トヨタ プリウス(ZVW30) スパークプラグ交換 フロントロワブーツ交換 愛知県一宮市 岐阜市 江南市 稲沢市 名古屋市 NO.10477 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1fcXFHZE1sWWxOWUloRFQ3MHNWT05iclNNV0xvczZNM1A2b1JWc3MyRXRUV3FnR25uTzU1cmVOZkFNLUpIaFdqRW0xSE0tSHlTaWtKSERBSFBpNWdxQzZLZ1F3?oc=5",
+          "kind": "news_rss",
+          "published_at": "2023-10-23"
+        },
+        {
+          "category": "その他",
+          "title": "トヨタ プリウス DAA-ZVW30 マフラー交換 ストレート 爆音 カスタム ヘイストオートモービル 熊本県熊本市北区植木町舞尾645-1 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE10SV9KaHhJaGdBWXljeUtfdGNuaWZWRmJkd1h4cE5DUlBmWXdRSmlrNnFuYUkwRU1BaUNBTTVJZmNxblZvRWtab05CWVRGVU15Z1FPMVJQZDZEWlZ1b2hLQWJB?oc=5",
+          "kind": "news_rss",
+          "published_at": "2023-02-09"
+        },
+        {
+          "category": "電装・バッテリー",
+          "title": "トヨタZVW30プリウスハイブリッドバッテリー交換香川県観音寺市作業サムライモータースZVW30プリウス30プリウス前期リビルトHVバッテリー交換 交換方法 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5hY2hOX3VUY0trRUo1c205S2ZEU1VHb0VDMFpUUURIbHUwMGdjWGVfMUxtRmlJVm1Ncnp6ZTYtZ0I5Y2E0dHRxR2tTSWVWU0RsMWJQZC1XVFYwN3lHcVB1U29R?oc=5",
+          "kind": "news_rss",
+          "published_at": "2023-02-08"
+        },
+        {
+          "category": "電装・バッテリー",
+          "title": "30プリウス ハイブリッドバッテリー交換 チェックランプ点灯 P0A80 電池内部異常 ZVW30 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9ESUx1VWtyRk1kcDVSakdPdXBod044djBxZF9xX1RmejlfMDhRLWtBRVVmbFhSZDVyN0NMdmkxaG8zTF9QQzRaYnVzTEEzYkNDMWY0NUo2dlBMZFN2RlRHMGxn?oc=5",
+          "kind": "news_rss",
+          "published_at": "2022-09-15"
+        },
+        {
+          "category": "その他",
+          "title": "香川県 観音寺市 豊浜町 トヨタ ZVW30 プリウス 持込み 新品 タイヤ交換 19インチ 30プリウス サムライモータース - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE11cVVqek9JMklVYlNNQ0pnUENFWE1wbHVqLUotX2oxVWw3MEtRVlM0MDZXcmE3NFVtbzNnSE1YWmpCVUFwdmtEb09xZHNPQ2poSDNGZUE0SGpJZmRvMXREME5B?oc=5",
+          "kind": "news_rss",
+          "published_at": "2021-01-22"
+        },
+        {
+          "category": "その他",
+          "title": "トヨタZVW30系プリウス ナビ故障の為新規買い替えケンウッド８インチナビＭＤＶ-Ｓ706Ｌ交換取替え作業一式 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5DX2RoeDJYU2hqYUxjNl9RUU01UEpYVTljWFlrSzAxNTFod0RVWVl3YkZvdjdwMDJYS0RkSnN3V0tGQUJVWE1zQ05KdElBWmFNYnU1LVI4YWF6bXQzT1pCY25n?oc=5",
+          "kind": "news_rss",
+          "published_at": "2019-10-15"
+        },
+        {
+          "category": "その他",
+          "title": "トヨタ、「プリウス（ZVW30）」約99万7000台をリコール - Car Watch",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5xODAzQnpRR3U0elQ1dDZpMTg3b3cxWk9WdnhNUzAtcWR4LWc2eFItcHNidTkzMHFZeTZOUzVIM0tkeXhfTXpISjIwZ0JwWUQ3VW40UVMyZl9CTkE2Q2FuaFNTbw?oc=5",
+          "kind": "news_rss",
+          "published_at": "2014-02-12"
+        },
+        {
+          "category": "ブレーキ",
+          "title": "トヨタ、制動力が低下するおそれのため「プリウス（ZVW30）」11万台超をリコール - Car Watch",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9ad0RiTkFUSVhmakxjZDYyd0d5X25XbkhGMkhzdjQ3bS1nNEltdUZjOGczWW1vcmN0am5iZGN5Mm9wZmZHeWxZaDFvbm1UY3gxb1FHQlJjQnhsdFhfWDc0ckpiNA?oc=5",
+          "kind": "news_rss",
+          "published_at": "2013-06-05"
+        }
+      ],
+      "source_note": "ニュースRSS見出しの収録のみ。国交省報告の順位ではありません。"
+    },
+    {
+      "make": "ダイハツ",
+      "model": "タント",
+      "code": "LA600S",
+      "label": "LA600S",
+      "report_groups": [],
+      "supplemental": [],
+      "web_mentions": [
+        {
+          "category": "その他",
+          "title": "ダイハツ タント XSA LA600S フロントフェンダー交換 山口県 下関市 武久町 山の田 垢田 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFA2WXdSbmhIQ2N5endkVTlIR0lGREZPQzUyYVd3b0tPeXE2U3VmT1c2SWFxMGFLWUxCczk3TEZkQ3o4d0lKUmVEcmRGQzh4dzhYQ3d4VGtNMkhzdHNoVThxdDB3?oc=5",
+          "kind": "news_rss",
+          "published_at": "2023-11-24"
+        }
+      ],
+      "source_note": "ニュースRSS見出しの収録のみ。国交省報告の順位ではありません。"
     }
   ]
 }
