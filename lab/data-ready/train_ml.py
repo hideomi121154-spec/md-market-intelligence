@@ -123,6 +123,8 @@ def train_ridge(train, penalty=8.0):
         "min_training_date": train[0]["date"],
         "max_training_date": train[-1]["date"],
         "training_size": len(train),
+        "observed_feature_min": [min(v[j] for v in raw) for j in range(3)],
+        "observed_feature_max": [max(v[j] for v in raw) for j in range(3)],
     }
 
 
