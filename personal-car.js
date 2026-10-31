@@ -160,7 +160,7 @@ $('mycar-car-form').addEventListener('submit',event=>{
 $('mycar-quote-form').addEventListener('submit',event=>{
  event.preventDefault();if(!healthy)return;
  try{const q=formQuote();
-  persist(merge(data,{cars:[],quotes:[q]}));render();status.textContent='確認した金額を記録しました。査定サイトの推定値と実際の買取提示額は別表示です。';
+  persist(merge(data,{cars:[data.cars.find(x=>x.id===q.car_id)],quotes:[q]}));render();status.textContent='確認した金額を記録しました。査定サイトの推定値と実際の買取提示額は別表示です。';
  }catch(err){status.textContent='金額を記録できません：'+err.message;}
 });
 $('mycar-export').addEventListener('click',()=>{
