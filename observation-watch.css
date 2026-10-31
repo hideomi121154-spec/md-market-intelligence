@@ -1,0 +1,19 @@
+.observation-watch-panel{margin:20px 0 30px}
+.observation-watch-panel h2{font-size:20px;margin:0 0 10px}
+.observation-watch-intro,.observation-watch-note{font-size:12px;color:var(--muted);line-height:1.8}
+.observation-watch-alert{background:#252116;border:1px solid #75643f;border-radius:12px;padding:13px;margin:10px 0;color:#f0dfae;font-size:13px;line-height:1.8}
+.observation-watch-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin:14px 0}
+.observation-watch-controls label{display:flex;flex-direction:column;gap:5px;font-size:12px;flex:1;min-width:180px;color:#c8d7ec}
+.observation-watch-controls select{min-height:45px;width:100%;padding:10px;border-radius:10px;border:1px solid #34516b;background:#0b182a;color:white;font-size:15px}
+#observation-watch-summary{border:1px solid #36516b;border-radius:10px;background:#0c1a2e;padding:13px;color:#edf5ff;font-size:13px;line-height:1.7}
+.observation-watch-scroll{max-width:100%;overflow-x:auto;margin:13px 0}
+.observation-watch-table{min-width:720px;width:100%;border-collapse:collapse;font-size:12px}
+.observation-watch-table th,.observation-watch-table td{padding:10px;border-bottom:1px solid #36516b;vertical-align:top;text-align:left;line-height:1.65}
+.observation-watch-table th{background:#15243b;color:#d7e3f1}
+.observation-watch-table td:first-child{min-width:180px}
+.observation-watch-table td div{font-size:11px;color:#9ab8d2}
+.observation-watch-panel a{color:#92e5d8;overflow-wrap:anywhere}
+.observation-watch-alternatives{padding-left:21px;font-size:13px;line-height:1.8}
+.observation-watch-alternatives li{padding-bottom:8px}
+.observation-watch-alternatives div{font-size:12px;color:#adc7df}
+#observation-watch-status{min-height:20px;font-size:12px;line-height:1.7;color:#d4e0ed}
