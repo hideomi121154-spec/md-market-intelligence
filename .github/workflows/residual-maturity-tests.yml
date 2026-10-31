@@ -1,0 +1,19 @@
+name: Residual maturity scenario regression
+on:
+  pull_request:
+    paths: ['residual-maturity.js','residual-maturity.css','index.html','sw.js','tests/test_residual_maturity.cjs','tests/test_offline_data.cjs','.github/workflows/residual-maturity-tests.yml']
+  push:
+    paths: ['residual-maturity.js','residual-maturity.css','index.html','sw.js','tests/test_residual_maturity.cjs','tests/test_offline_data.cjs']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check residual-maturity.js && node --check sw.js
+      - name: Run maturity and offline tests
+        run: node tests/test_residual_maturity.cjs && node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js
