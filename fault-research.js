@@ -54,7 +54,73 @@ function searchLinks(make,model,modelCode){
   {label:'国交省不具合情報',url:'https://renrakuda.mlit.go.jp/renrakuda/opn.html'}
  ];
 }
-const API={validate,filterVehicles,groupMentions,searchLinks,code,DATA};
+
+/* Every user-supplied make/model can be researched via a live, public article-search API.
+   News article hits are NOT reported faults, recall counts, or vehicle failure rates.
+   GDELT Doc API publishes Access-Control-Allow-Origin: * for browser clients. */
+const LIVE_API='https://api.gdeltproject.org/api/v2/doc/doc';
+const ISSUE_RULES=[
+ {name:'エアコン・温度調整',rx:/エアコン|エアミックス|コンプレッサ|冷房|暖房|air.?condition|aircon/i},
+ {name:'変速機・CVT',rx:/CVT|ミッション|変速|トランスミッション|transmission/i},
+ {name:'エンジン・始動',rx:/エンジン|エンスト|始動|点火|engine|stall/i},
+ {name:'電装・バッテリー',rx:/バッテリー|発電機|電装|オルタネータ|battery|electrical/i},
+ {name:'吸気・過給機',rx:/吸気|インタークーラ|ターボ|スーパーチャージャ|turbo/i},
+ {name:'ブレーキ・制動',rx:/ブレーキ|制動|ABS|brake/i},
+ {name:'足回り・操舵',rx:/足回り|ステアリング|サスペンション|タイヤ|suspension|steering/i},
+ {name:'その他・部位不明',rx:/./}
+];
+function liveQueryUrl(make,model,modelCode=''){
+ const m=clean(make),n=clean(model),c=code(modelCode);
+ if(!n||n.length>80||m.length>50||c.length>30)throw Error('メーカー・車種・型式を確認してください');
+ const safe=s=>'"'+s.replace(/["\\()]/g,' ').trim()+'"';
+ const parts=[m,n,c].filter(Boolean).map(safe);
+ const term=parts.join(' ')+' (故障 OR 不具合 OR リコール OR 修理)';
+ const u=new URL(LIVE_API);
+ u.searchParams.set('query',term);
+ u.searchParams.set('mode','artlist');
+ u.searchParams.set('format','json');
+ u.searchParams.set('sort','datedesc');
+ u.searchParams.set('maxrecords','75');
+ u.searchParams.set('timespan','3m');
+ return u.toString();
+}
+function liveMatches(title,make,model,modelCode){
+ const t=key(title),m=key(make),n=key(model),c=code(modelCode);
+ if(!n||!t.includes(n))return false;
+ if(m&&!t.includes(m))return false;
+ if(c){
+   const normalized=clean(title).normalize('NFKC').toUpperCase();
+   const re=new RegExp('(^|[^A-Z0-9])'+c.replace(/[^A-Z0-9]/g,'')+'(?=$|[^A-Z0-9])');
+   if(!re.test(normalized))return false;
+ }
+ return true;
+}
+function classifyLiveArticles(payload,make,model,modelCode=''){
+ if(!payload||!Array.isArray(payload.articles))throw Error('記事APIが正常なJSONを返しませんでした');
+ const groups=new Map(),seen=new Set();let checked=0;
+ for(const article of payload.articles.slice(0,150)){
+  if(!article||!isHttpUrl(article.url)||!clean(article.title))continue;
+  const title=clean(article.title),url=article.url;
+  if(!liveMatches(title,make,model,modelCode))continue;
+  const unique=title.toLowerCase()+'|'+url.split('?')[0];
+  if(seen.has(unique))continue;seen.add(unique);checked++;
+  const label=ISSUE_RULES.find(x=>x.rx.test(title)).name;
+  const item=groups.get(label)||{name:label,count:0,examples:[]};
+  item.count++;
+  if(item.examples.length<12)item.examples.push({title,url,seendate:clean(article.seendate)});
+  groups.set(label,item);
+ }
+ return {total:checked,groups:[...groups.values()].sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name,'ja'))};
+}
+async function liveArticleSearch(make,model,modelCode='',fetcher=(...args)=>fetch(...args)){
+ const url=liveQueryUrl(make,model,modelCode);
+ const r=await fetcher(url,{method:'GET',mode:'cors',cache:'no-store'});
+ if(!r||!r.ok)throw Error('外部記事検索APIに接続できませんでした（HTTP '+(r?.status??'不明')+'）');
+ const data=await r.json();
+ return classifyLiveArticles(data,make,model,modelCode);
+}
+
+const API={validate,filterVehicles,groupMentions,searchLinks,code,DATA,liveQueryUrl,liveMatches,classifyLiveArticles,liveArticleSearch};
 if(typeof module==='object'&&module.exports)module.exports=API;
 root.MDFaultResearch=API;
 if(typeof document==='undefined')return;
@@ -126,6 +192,7 @@ async function fetchData(){
 }
 function result(matches,make,model,wantedCode){
  view.replaceChildren();
+ const live=element('section','fault-ranked');live.id='fault-live-results';view.append(live);
  fillLinks(make,model,wantedCode);
  if(!matches.length){
   view.append(element('p','fault-empty','この車種・型式の分析データはまだ収録されていません。ネット上に故障がないという意味ではありません。'));
@@ -139,7 +206,7 @@ function result(matches,make,model,wantedCode){
    const b=element('button','button secondary',v.label+' のランキングを見る');
    b.type='button';b.addEventListener('click',()=>{
     $('fault-search-code').value=v.code;
-    result([v],make,model,v.code);
+    if(form.requestSubmit)form.requestSubmit();else $('fault-search-run').click();
    });view.append(b);
   }
   return;
@@ -154,17 +221,22 @@ form.addEventListener('submit',async e=>{
  const make=$('fault-search-make').value,model=$('fault-search-model').value,modelCode=$('fault-search-code').value;
  if(!clean(model)){output('車種名を入力してください。');return;}
  const btn=$('fault-search-run');btn.disabled=true;
- output('保存済みの公開情報データを検索しています…');
+ output('車種 '+clean(model)+' の公開情報を検索しています…');
+ let matches=[];
  try{
   const data=db||await fetchData();
-  const matches=filterVehicles(data,make,model,modelCode);
-  result(matches,make,model,modelCode);
-  output('検索済み：'+(matches.length?matches.length+'型式の収録結果':'対象データなし')+'。この操作でSNSのライブ検索は行っていません。');
+  matches=filterVehicles(data,make,model,modelCode);
  }catch(err){
-  view.replaceChildren();
-  fillLinks(make,model,modelCode);
-  output('調査データを読み込めませんでした：'+err.message+'。通信・オフライン保存を確認してください。');
- }finally{btn.disabled=false;}
+  output('保存された公的集計を取得できませんでした。ネット記事の調査を続けます：'+err.message);
+ }
+ result(matches,make,model,modelCode);
+ if(!matches.length&&output)output('公開集計は未収録です。ネット上の関連記事を調査しています…');
+ await renderLive(make,model,modelCode);
+ const live=$('fault-live-results');
+ const failed=live&&live.textContent.includes('取得できませんでした');
+ if(!failed)output('調査結果を表示しました。国交省の申告件数とWeb記事の件数は別集計です。');
+ else output('公的集計・ネット記事の収録範囲を確認してください。検索リンクから追加調査できます。');
+ btn.disabled=false;
 });
 $('fault-search-e12').addEventListener('click',()=>{
  $('fault-search-make').value='日産';$('fault-search-model').value='ノート';$('fault-search-code').value='E12';
