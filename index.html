@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="./market-warning.css?v=2.9.0">
   <link rel="stylesheet" href="./regional-jobs.css?v=3.0.0">
   <link rel="stylesheet" href="./residual-gap.css?v=3.1.0">
+  <link rel="stylesheet" href="./residual-maturity.css?v=3.2.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
 </head>
 <body>
@@ -48,7 +49,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">YOUR CAR · YOUR DECISION</div><h1 id="page-title">マイカーの売却相場を比較</h1><p id="page-subtitle">無料査定サイトを確認し、価格を自分の端末に整理</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v3.1.0</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v3.2.0</b></span></div>
       </header>
       <div class="notice" role="note">マイカーの買取参考額は無料査定サイトでご自身が確認してください。アプリはその金額を自動取得せず、記録と比較を支援します。表示額は買取を保証しません。従来の市場統計・車両データは「市場」「車両」「データ」「計画」から引き続き利用できます。</div>
       <section class="screen" id="mycar">
@@ -501,6 +502,33 @@
           </article>
         </div>
 
+
+        <article class="panel rm-panel" id="rm-panel" aria-labelledby="rm-title">
+          <h2 id="rm-title">残クレ満了車の将来供給シミュレーター</h2>
+          <p class="rm-help">2021〜2025年の<strong>新車販売ランキング収録データ</strong>を使い、契約期間3・5・7年の満了、返却、AA流通の仮定台数を年別に試算します。実際の残クレ契約・返却・オークション出品台数ではありません。</p>
+          <div class="rm-form">
+            <div class="rm-field"><label for="rm-class">車両区分</label><select id="rm-class"><option value="">資料を確認中</option></select></div>
+            <div class="rm-field"><label for="rm-make">メーカー（収録範囲内）</label><select id="rm-make"><option value="">—</option></select></div>
+            <div class="rm-field"><label for="rm-model">車種／メーカーの収録車種合計</label><select id="rm-model"><option value="">—</option></select></div>
+            <div class="rm-field"><label for="rm-year">満了想定年</label><select id="rm-year"><option value="2024">2024年</option><option value="2025">2025年</option><option value="2026">2026年</option><option value="2027">2027年</option><option value="2028" selected>2028年</option><option value="2029">2029年</option><option value="2030">2030年</option><option value="2031">2031年</option><option value="2032">2032年</option></select></div>
+            <div class="rm-field"><label for="rm-penetration">新車販売中の残クレ利用率（仮定％）</label><input id="rm-penetration" type="number" inputmode="decimal" min="0" max="100" step="0.1" placeholder="例：40 ※実績ではない"></div>
+            <div class="rm-field"><label for="rm-return">満了車の返却率（仮定％）</label><input id="rm-return" type="number" inputmode="decimal" min="0" max="100" step="0.1" placeholder="例：60 ※実績ではない"></div>
+            <div class="rm-field"><label for="rm-term3">3年契約の構成比（仮定％）</label><input id="rm-term3" type="number" inputmode="decimal" min="0" max="100" step="0.1" placeholder="例：20"></div>
+            <div class="rm-field"><label for="rm-term5">5年契約の構成比（仮定％）</label><input id="rm-term5" type="number" inputmode="decimal" min="0" max="100" step="0.1" placeholder="例：60"></div>
+            <div class="rm-field"><label for="rm-term7">7年契約の構成比（仮定％）</label><input id="rm-term7" type="number" inputmode="decimal" min="0" max="100" step="0.1" placeholder="例：20（合計100％）"></div>
+            <div class="rm-field"><label for="rm-auction">返却車のうちAAに流れる割合（仮定％）</label><input id="rm-auction" type="number" inputmode="decimal" min="0" max="100" step="0.1" placeholder="例：70 ※実績ではない"></div>
+          </div>
+          <div class="rm-actions">
+            <button class="button secondary" type="button" id="rm-example">架空のシナリオで試算</button>
+            <button class="button secondary" type="button" id="rm-reload">保存済みの年次統計を再確認</button>
+            <button class="button secondary" type="button" id="rm-use-in-gap">この車種を残価乖離分析へ転記</button>
+          </div>
+          <p class="rm-status" id="rm-status" role="status" aria-live="polite">年次資料を確認しています…</p>
+          <div class="rm-results" id="rm-results" aria-live="polite"></div>
+          <div class="rm-sources" id="rm-sources"></div>
+          <p class="rm-note"><strong>計算：</strong>販売年の台数 × 仮定残クレ利用率 × 契約年数別構成比 → 満了年へ移動 → 仮定返却率 × 仮定AA流通率。契約が購入年内に均等に成立し満了時に一定の行動を取るという簡略化を含みます。出品地域・個別仕様・価格・実際の返却率は不明。欠測や順位表にない車種を0台扱いせず、部分収録として表示します。2021年の登録乗用車データは二次資料です。</p>
+        </article>
+
         <article class="panel rr-panel" id="rr-panel" aria-labelledby="rr-title">
           <div class="rr-heading">
             <h2 id="rr-title">残クレ返却圧力｜保証残価 × 業者間AA相場</h2>
@@ -699,6 +727,7 @@
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./regional-jobs.js?v=3.0.0" defer></script>
   <script src="./residual-gap.js?v=3.1.0" defer></script>
+  <script src="./residual-maturity.js?v=3.2.0" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
   <script src="./registered-sales.js?v=2.0.3" defer></script>
   <script src="./valuation.js?v=2.2.0" defer></script>
