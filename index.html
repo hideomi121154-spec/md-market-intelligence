@@ -119,7 +119,7 @@
           </article>
           <article class="panel mycar-panel fault-search-panel" id="fault-search-panel">
             <h3>5. 車種を入れると不具合ランキングを調査</h3>
-            <p class="mycar-intro">公的な不具合申告の公開集計と、定期的に収録したオンライン記事の見出しを車種・型式で絞り込み、アプリ内でランキング表示します。</p>
+            <p class="mycar-intro">**国産車も輸入車も、どの車種でも検索できます。** 入力した車種についてネット上の公開記事をその場で検索し、故障部位ごとの関連記事ランキングを表示します。公的な不具合申告の順位は、収録データがある型式だけ別枠で表示します。</p>
             <form id="fault-search-form">
               <div class="fault-search-grid">
                 <label>メーカー（任意）<input id="fault-search-make" maxlength="50" placeholder="例：日産" autocomplete="off"></label>
@@ -127,12 +127,12 @@
                 <label>型式（任意・推奨）<input id="fault-search-code" maxlength="30" placeholder="例：E12 / HE12" autocapitalize="characters"></label>
               </div>
               <div class="fault-search-actions">
-                <button type="submit" class="button primary" id="fault-search-run">不具合ランキングを調べる</button>
+                <button type="submit" class="button primary" id="fault-search-run">全車種の不具合情報を調べる</button>
                 <button type="button" class="button secondary" id="fault-search-e12">日産ノートE12で試す</button>
                 <button type="button" class="button secondary" id="fault-search-mycar">登録したマイカーで調べる</button>
               </div>
             </form>
-            <p class="fault-note">※現在のランキングは事前に収録した公開情報を検索します。入力した瞬間にSNS全体をリアルタイム検索するものではありません。国交省への「申告」とメーカーが確認した故障、SNSの個人投稿は別の種類として扱います。</p>
+            <p class="fault-note">※どの車種でも外部ニュース記事検索を試しますが、検索にヒットするとは限りません。GDELTの公開ニュース記事を検索するもので、SNS・ブログを網羅したり、故障率や修理確定件数を算出するものではありません。SNS投稿は別途リンクから調査します。</p>
             <p id="fault-search-status" class="fault-note" role="status" aria-live="polite">車種を入力し、「調べる」を押してください。</p>
             <div id="fault-search-results" aria-live="polite"></div>
             <h4>追加の最新情報を探す</h4>
@@ -607,7 +607,7 @@
   <script src="./app.js?v=2.0.2" defer></script>
   <script src="./personal-car.js?v=2.5.0" defer></script>
   <script src="./fault-risk.js?v=2.6.0" defer></script>
-  <script src="./fault-research.js?v=2.7.0" defer></script>
+  <script src="./fault-research.js?v=2.8.0" defer></script>
   <script src="./offline-data.js?v=2.0.3" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
