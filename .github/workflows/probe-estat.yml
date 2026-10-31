@@ -1,5 +1,6 @@
 name: Probe e-Stat workbook schema
 on:
+  pull_request:
   push:
     paths: ['scripts/probe_estat_workbook.py', '.github/workflows/probe-estat.yml']
 jobs:
