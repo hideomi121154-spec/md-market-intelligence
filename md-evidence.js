@@ -18,8 +18,9 @@
   const interval=prior?days(current.date,prior.date):null;
   const delta=prior?current.count-prior.count:null;
   const percent=prior&&prior.count>0?100*delta/prior.count:null;
-  const supply={current:current.count,previous:prior?.count??null,delta,percent,age,interval,
-   ready:!!prior&&age>=0&&age<=30&&interval>=1&&interval<=45};
+  const disrupted=!!(prior&&root.MDWatch?.outageOverlap(prior.date,current.date,current.source_url));
+  const supply={current:current.count,previous:prior?.count??null,delta:disrupted?null:delta,percent:disrupted?null:percent,age,interval,disrupted,
+   ready:!!prior&&age>=0&&age<=30&&interval>=1&&interval<=45&&!disrupted};
   let demand=[];
   if(ranking&&Array.isArray(ranking.snapshots)){
    const months=[...new Set(ranking.snapshots.map(x=>x.month).filter(x=>/^\d{4}-(0[1-9]|1[0-2])$/.test(x)&&x<=current.date.slice(0,7)))].sort().reverse();
@@ -49,6 +50,7 @@
   const prices={checkedCount:matching.length,uniqueSourceUrls:evidenceUrls.size,ready:exactSpecs&&matching.length>=5&&evidenceUrls.size>=5,
    limitation:!exactSpecs?'掲載条件にグレードと色を明示してください':'価格が照合済みでも年式・走行距離・車両状態・価格定義を個別に揃える必要があります'};
   const issues=[];
+  if(disrupted)issues.push('カーセンサーのサービス停止期間（2026年10月17〜22日）をまたぐ掲載台数の比較は保留。更新反映状況を確認する');
   if(!prior)issues.push('掲載台数を同じ条件でもう1回記録する');
   else if(!supply.ready)issues.push(age>30?'掲載台数が30日超前のため再観測する':'観測間隔を確認して台数を再測定する');
   if(demand.length===0)issues.push('同一車種の需要根拠を追加確認する（順位未収録は不人気の証拠ではない）');
@@ -95,7 +97,7 @@
    const result=evidenceForSeries(obs,records,reviews,rankCache,selected,today());
    if(!result.available){empty('観測記録がありません。');return}
    set('md-evidence-verdict',result.verdict);
-   set('md-evidence-supply',result.supply.previous===null
+   set('md-evidence-supply',result.supply.disrupted?'カーセンサー停止期間をまたぐため比較保留（最新 '+result.supply.current.toLocaleString('ja-JP')+'台）':result.supply.previous===null
       ?'最新 '+result.supply.current.toLocaleString('ja-JP')+'台（比較データなし）'
       :'最新 '+result.supply.current.toLocaleString('ja-JP')+'台 / '+(result.supply.delta>=0?'+':'')+result.supply.delta.toLocaleString('ja-JP')+'台'+
        (result.supply.percent===null?'（前回0台・率は計算不可）':'（'+(result.supply.percent>=0?'+':'')+result.supply.percent.toFixed(1)+'%）'));
