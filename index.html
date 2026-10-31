@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="./fault-research.css?v=2.7.0">
   <link rel="stylesheet" href="./market-warning.css?v=2.9.0">
   <link rel="stylesheet" href="./regional-jobs.css?v=3.0.0">
+  <link rel="stylesheet" href="./prefecture-jobs.css?v=3.1.0">
   <link rel="stylesheet" href="./residual-gap.css?v=3.1.0">
   <link rel="stylesheet" href="./residual-maturity.css?v=3.2.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
@@ -288,6 +289,33 @@
           <p id="regional-jobs-summary" class="regional-jobs-summary" aria-live="polite"></p>
           <p class="regional-jobs-note">出典：<a href="https://www.zenkyukyo.or.jp/outline/research/" target="_blank" rel="noopener noreferrer">全国求人情報協会・求人広告掲載件数等集計結果</a>。主要15媒体の広告データを集計した地域別の前月比・前年同月比です。募集人数や就職件数ではなく、同一募集の重複・複数地域もあり得ます。対象月は公表日時を見て判断し、リアルタイムの求人サイト巡回ではありません。</p>
           <p class="regional-jobs-note">現時点は6広域圏。<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Statの47都道府県別新規求人数（別指標）</a>との連携は次の段階です。求人広告の増減を中古車需要や仕入れ推奨に自動換算しません。</p>
+        </article>
+
+        <article class="panel prefecture-jobs-panel" id="prefecture-jobs-panel" aria-label="47都道府県別の新規求人数">
+          <div class="prefecture-jobs-head">
+            <div>
+              <h2>47都道府県｜新規求人数</h2>
+              <p class="prefecture-jobs-note">ハローワーク受理地別・原数値（e-Stat長期時系列表12）</p>
+            </div>
+            <div class="prefecture-jobs-controls">
+              <label for="prefecture-jobs-month">対象月<select id="prefecture-jobs-month"></select></label>
+              <label for="prefecture-jobs-basis">増減の比較<select id="prefecture-jobs-basis"><option value="mom">前月比</option><option value="yoy">前年同月比</option></select></label>
+              <label for="prefecture-jobs-pref">注目県<select id="prefecture-jobs-pref"></select></label>
+              <button type="button" class="button secondary" id="prefecture-jobs-reload">公開ファイルを再確認</button>
+            </div>
+          </div>
+          <p class="prefecture-jobs-status" id="prefecture-jobs-status" aria-live="polite">公開データを確認しています…</p>
+          <p class="prefecture-jobs-source" id="prefecture-jobs-source"></p>
+          <p class="prefecture-jobs-counts" id="prefecture-jobs-counts"></p>
+          <p class="prefecture-jobs-selected" id="prefecture-jobs-selected" aria-live="polite">データ確認中…</p>
+          <ol class="prefecture-jobs-list" id="prefecture-jobs-rows" aria-label="47都道府県の新規求人数の増減率順"></ol>
+          <details class="prefecture-jobs-import">
+            <summary>公式原本から整形したJSONを端末に取り込む（上級者向け）</summary>
+            <p class="prefecture-jobs-note">取込内容は端末内だけに保存し「ユーザー取込・未照合」として表示します。公式に自動照合した扱いにはしません。古い記録を自動削除しません。</p>
+            <input type="file" id="prefecture-jobs-file" accept=".json,application/json" aria-label="整形済み47都道府県JSONを読み込む">
+            <button type="button" class="button ghost" id="prefecture-jobs-reset">端末の取込データのみ解除</button>
+          </details>
+          <p class="prefecture-jobs-note">出典：<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Stat・一般職業紹介状況（長期時系列表12）</a>。求人広告15媒体の件数とは異なります。受理地は実際の就業地と一致するとは限らず、季節調整されない原数値のため単純な前月比は季節性の影響を受けます。求人の増減だけで地域の中古車需要や価格を決定しません。</p>
         </article>
 
         <article class="panel model-sales-panel" id="registered-sales-panel">
@@ -726,6 +754,7 @@
   <script src="./market-warning.js?v=2.9.0" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./regional-jobs.js?v=3.0.0" defer></script>
+  <script src="./prefecture-jobs.js?v=3.1.0" defer></script>
   <script src="./residual-gap.js?v=3.1.0" defer></script>
   <script src="./residual-maturity.js?v=3.2.0" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
