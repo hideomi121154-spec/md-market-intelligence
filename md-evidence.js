@@ -120,6 +120,7 @@
   }catch(err){rankError=err.message;}
  }
  picker.addEventListener('change',()=>{selected=picker.value;refresh();});
+ $('md-evidence-jump')?.addEventListener('click',()=>panel.scrollIntoView({behavior:'smooth',block:'start'}));
  $('md-evidence-refresh').addEventListener('click',async()=>{await loadRanking();await refresh()});
  window.addEventListener('md-inventory-updated',refresh);
  // Wait for the browser to settle; data stays local and is only read.
