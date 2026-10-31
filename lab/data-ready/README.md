@@ -25,15 +25,15 @@
 
 ## 起動
 
-GitHub Pagesに反映した場合は \`lab/data-ready/\` を開く。
+GitHub Pagesに反映した場合は `lab/data-ready/` を開く。
 ローカルではリポジトリのルートで：
 
-\`\`\`sh
+```sh
 python -m http.server 8765
 # http://localhost:8765/lab/data-ready/
 node tests/test_data_ready.mjs
 python lab/data-ready/train_price.py lab/data-ready/sample-data.json
-\`\`\`
+```
 
 UIは初期状態が**架空データ**であることを明示します。持ち込みJSONを読むとデモは消え、取り込んだデータだけになります。メモリ内に留まり、サーバーにアップロード・保存されません。
 
@@ -41,7 +41,7 @@ UIは初期状態が**架空データ**であることを明示します。持�
 
 1回の取込で1種類：
 
-\`\`\`json
+```json
 {
   "dataset": "market",
   "records": [
@@ -60,17 +60,17 @@ UIは初期状態が**架空データ**であることを明示します。持�
     }
   ]
 }
-\`\`\`
+```
 
-- \`market_type\`: \`retail_closed_sale\`（小売実成約）, \`dealer_auction_closed\`（業者AA実落札）, \`retail_listing\`（掲載提示額）, \`buy_offer\`（買取提示額）
+- `market_type`: `retail_closed_sale`（小売実成約）, `dealer_auction_closed`（業者AA実落札）, `retail_listing`（掲載提示額）, `buy_offer`（買取提示額）
 - **掲載価格は実成約価格ではない**。小売実成約とAA実落札は別目的変数。混合モデルを作らない。
-- \`license_status: authorized\` は**利用者が権利確認したという入力上の宣言**であって、アプリが契約や原本を保証したものではない。
-- \`synthetic\` はデモのみ。実データ取込では拒否する。
-- 共通の \`id/maker/model/grade/source/license_status\` に加え、以下が必要。
+- `license_status: authorized` は**利用者が権利確認したという入力上の宣言**であって、アプリが契約や原本を保証したものではない。
+- `synthetic` はデモのみ。実データ取込では拒否する。
+- 共通の `id/maker/model/grade/source/license_status` に加え、以下が必要。
 
-\`inventory\`（自社在庫）：
+`inventory`（自社在庫）：
 
-\`\`\`json
+```json
 {
   "dataset": "inventory",
   "records": [
@@ -87,13 +87,13 @@ UIは初期状態が**架空データ**であることを明示します。持�
     }
   ]
 }
-\`\`\`
+```
 
-\`status\` は \`available\`（在庫あり）、\`reserved\`（商談中）、\`sold\`（売約）。
+`status` は `available`（在庫あり）、`reserved`（商談中）、`sold`（売約）。
 
-\`demand\`（商談・販売記録）：
+`demand`（商談・販売記録）：
 
-\`\`\`json
+```json
 {
   "dataset": "demand",
   "records": [
@@ -111,9 +111,9 @@ UIは初期状態が**架空データ**であることを明示します。持�
     }
   ]
 }
-\`\`\`
+```
 
-複数種類の一括取込は \`{"datasets":[...上記データセット...]}\`。取り込む種類だけ置換し、他の種類は直近に読み込んだ実データを維持（デモは維持しない）。
+複数種類の一括取込は `{"datasets":[...上記データセット...]}`。取り込む種類だけ置換し、他の種類は直近に読み込んだ実データを維持（デモは維持しない）。
 
 ## 将来のAIに必要なデータ
 
@@ -153,7 +153,7 @@ UIは初期状態が**架空データ**であることを明示します。持�
 
 **現時点で実務投入可能な価格予測はありません。** データ取得後にモデル学習と精度評価を再実行できる道筋を実装しています。
 
-\`\`\`sh
+```sh
 # 全件架空の学習データを一時生成（実市場価格ではありません）
 python lab/data-ready/generate_synthetic.py --output /tmp/md-market-synthetic.json
 
@@ -166,20 +166,20 @@ python lab/data-ready/train_ml.py /tmp/md-market-synthetic.json \
 
 # 自動テスト
 python tests/test_data_ready_ml.py
-\`\`\`
+```
 
-作成した \`/tmp/retail-price-report.json\` はラボ画面の「価格モデルの学習・精度検証レポート」で読み取れます。JSON内の \`model_artifact\` は係数・特徴量・校正残差幅などの参考情報であり、Web画面では学習自体を実行しません。**企業・個人の私有価格データやモデル係数を公開GitHubにコミットしないこと。**
+作成した `/tmp/retail-price-report.json` はラボ画面の「価格モデルの学習・精度検証レポート」で読み取れます。JSON内の `model_artifact` は係数・特徴量・校正残差幅などの参考情報であり、Web画面では学習自体を実行しません。**企業・個人の私有価格データやモデル係数を公開GitHubにコミットしないこと。**
 
 ### 学習時のデータ分割
 
-- 対象は \`retail_closed_sale\` または \`dealer_auction_closed\` のどちらか一方のみ。小売掲載や買取提示額は学習に使わない。
+- 対象は `retail_closed_sale` または `dealer_auction_closed` のどちらか一方のみ。小売掲載や買取提示額は学習に使わない。
 - メーカー/車名/グレード/地域を同じとするセグメントごとに独立学習。地域なしの記録は、地域ありの記録と混ぜない。
 - 売買日を古い順に分割し、**学習約60% → 残差校正約20% → 最後の未知期間テスト約20%** を使う。同じ日付が境界をまたがない。
 - 最低でも**60件かつ30日以上の異なる日付**を必要とするが、この件数はコードの動作を確かめるための閾値であり、業務に十分なサンプル数を意味しない。
 - リッジ回帰の説明変数は車齢・走行距離・日付経過。基準モデルは学習期間内の単純中央値。比較指標はMAE（円）、中央値絶対誤差、MAPE、残差帯に入った観測割合。
 - テスト期間の数値は係数や校正値へ混ぜない。テストの成績を見てモデルを選択・調整する反復は、別の未使用期間で再検証するまで過剰適合の危険がある。
 - 90%を目標とする残差幅は時系列の市場変動下で90%を保証するものではない。あくまで**実験上の帯域**である。
-- \`license_status:authorized\` はデータ利用権の自動検証ではない。匿名化や権利確認は人間側の責任。
+- `license_status:authorized` はデータ利用権の自動検証ではない。匿名化や権利確認は人間側の責任。
 
 ### 未完成な部分
 
