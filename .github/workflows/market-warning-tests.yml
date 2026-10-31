@@ -1,0 +1,19 @@
+name: USS market early warning regression
+on:
+  pull_request:
+    paths: ['market-warning.js', 'market-warning.css', 'uss.js', 'index.html', 'sw.js', 'tests/test_market_warning.cjs', 'tests/test_offline_data.cjs', 'tests/test_startup_diagnostics.js', '.github/workflows/market-warning-tests.yml']
+  push:
+    paths: ['market-warning.js', 'market-warning.css', 'uss.js', 'index.html', 'sw.js', 'tests/test_market_warning.cjs', 'tests/test_offline_data.cjs', '.github/workflows/market-warning-tests.yml']
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check market-warning.js && node --check uss.js && node --check sw.js
+      - name: Source-limited warning & offline regressions
+        run: node tests/test_market_warning.cjs && node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js

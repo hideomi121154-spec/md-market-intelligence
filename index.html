@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="./personal-car.css?v=2.5.0">
   <link rel="stylesheet" href="./fault-risk.css?v=2.6.0">
   <link rel="stylesheet" href="./fault-research.css?v=2.7.0">
+  <link rel="stylesheet" href="./market-warning.css?v=2.9.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
 </head>
 <body>
@@ -239,6 +240,24 @@
             </div>
           </div>
           <p class="uss-note">USSのオークション全体の集計です。特定車種の落札相場・仕入れ上限ではありません。平均単価の元データは千円単位。USSの公表状況により最新月は実際の暦月より前になることがあります。</p>
+        </article>
+
+        <article class="uss-warning-panel" id="uss-warning-panel" hidden aria-label="USS市場全体の早期警戒">
+          <div class="uss-warning-header">
+            <div>
+              <h2>中古車市場の下落早期警戒（試験版）</h2>
+              <p>USS公式データから、価格より先に需給の悪化兆候を確認します。</p>
+            </div>
+            <label for="uss-warning-month">判定する月
+              <select id="uss-warning-month"></select>
+            </label>
+          </div>
+          <p class="uss-warning-note" id="uss-warning-status" aria-live="polite">USS公式統計の読み込みを待っています…</p>
+          <strong class="uss-warning-level" id="uss-warning-level" data-level="unknown" aria-live="polite">判定待ち</strong>
+          <p class="uss-warning-info" id="uss-warning-detail"></p>
+          <p class="uss-warning-info" id="uss-warning-scope"></p>
+          <p class="uss-warning-outcome" id="uss-warning-outcome"></p>
+          <p class="uss-warning-note">市場全体の月次先行指標であり、30日・60日後の価格を算出する予測モデルではありません。特定車種の相場、仕入れ上限、取引判断には直接使わないでください。警戒の閾値・的中率は未検証です。翌月実績は当時の判定に利用しません。</p>
         </article>
 
         <article class="panel model-sales-panel" id="registered-sales-panel">
@@ -609,6 +628,7 @@
   <script src="./fault-risk.js?v=2.6.0" defer></script>
   <script src="./fault-research.js?v=2.8.0" defer></script>
   <script src="./offline-data.js?v=2.0.3" defer></script>
+  <script src="./market-warning.js?v=2.9.0" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
   <script src="./registered-sales.js?v=2.0.3" defer></script>

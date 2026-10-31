@@ -49,6 +49,7 @@
    const updatedText=Number.isNaN(updated.getTime())?'日時不明':updated.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
    el('uss-status').textContent=`${mode==='cached'?'保存済みの統計を表示（オフライン・更新失敗）':'USS公式資料を自動取得'} · 最終確認 ${updatedText} · ${months.length}か月分`;
    el('uss-data').hidden=false;
+   document.dispatchEvent(new CustomEvent('mdmarket:uss-data',{detail:{data,mode}}));
  }
  async function load(){
    const status=el('uss-status'),button=el('uss-reload');button.disabled=true;
@@ -61,7 +62,7 @@
    }catch(error){
      let recovered=false;
      try{const cached=localStorage.getItem(fallbackKey);if(cached){render(validate(JSON.parse(cached)),'cached');recovered=true}}catch(_ignored){}
-     if(!recovered){el('uss-data').hidden=true;status.textContent='USS月次統計はまだ利用できません。自動取得処理の実行結果を確認してください。';}
+     if(!recovered){el('uss-data').hidden=true;status.textContent='USS月次統計はまだ利用できません。自動取得処理の実行結果を確認してください。';document.dispatchEvent(new Event('mdmarket:uss-unavailable'));}
      console.warn('USS public aggregate update:',error);
    }finally{button.disabled=false;}
  }
