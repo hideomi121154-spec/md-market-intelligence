@@ -1,4 +1,6 @@
 import {DATASETS,validateImport,readiness,priceEvidence,buyCap,inventoryEvidence} from "./core.mjs";
+import {inferPrice} from "./predict.mjs";
+let loadedMlReport=null;
 const byId=id=>document.getElementById(id);
 const setText=(id,s)=>{byId(id).textContent=s;};
 const yen=n=>Math.round(n).toLocaleString("ja-JP")+"円";
@@ -143,8 +145,36 @@ byId("mlReportFile").addEventListener("change",async e=>{
     if(!file)return;
     if(file.size>3*1024*1024)throw Error("3MB以下のJSONのみ対応");
     const report=JSON.parse(await file.text());
-    setText("mlReportResult",summarizeMlReport(report));
+    const summary=summarizeMlReport(report);
+    loadedMlReport=report;
+    setText("mlReportResult",summary);
+    const candidate=report.cohorts.find(c=>c.status==="evaluated_experiment_only");
+    if(report.data_mode==="synthetic" && candidate?.model_artifact?.max_training_date){
+      const s=candidate.model_artifact.max_training_date;
+      const ms=Date.parse(s+"T00:00:00Z");
+      if(Number.isFinite(ms))byId("mlPredictDate").value=new Date(ms+10*86400000).toISOString().slice(0,10);
+    } else {byId("mlPredictDate").value=new Date().toISOString().slice(0,10);}
+    setText("mlPredictionResult","モデルを選択しました。「この車両条件で試験的に推定」を押してください。");
   } catch(err) {
+    loadedMlReport=null;
     setText("mlReportResult","レポートを読み込めません: "+err.message);
+    setText("mlPredictionResult","モデル未設定です。");
   } finally {e.target.value="";}
+});
+
+byId("mlPredictButton").addEventListener("click",()=>{
+  const query={
+    ...getQuery(),
+    region:byId("region").value.trim(),
+    date:byId("mlPredictDate").value,
+  };
+  const r=inferPrice(loadedMlReport,query);
+  if(r.status==="hold"){
+    setText("mlPredictionResult","判断保留: "+r.reason);return;
+  }
+  setText("mlPredictionResult",
+    (r.status==="synthetic_demo"?"【架空データ・実相場ではありません】":"【実験用・未検証データ】")+
+    "\n実験モデルの算出値: "+showMoney(r.estimate_jpy)+
+    "\n校正残差に基づく試験的な幅: "+showMoney(r.lower_jpy)+" 〜 "+showMoney(r.upper_jpy)+
+    "\n学習に使用した件数: "+r.n_train+"件\n"+r.warning);
 });
