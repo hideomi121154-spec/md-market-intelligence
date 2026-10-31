@@ -1,0 +1,40 @@
+name: data-ready-lab-mobile-smoke
+on:
+  pull_request:
+    paths:
+      - 'lab/data-ready/**'
+      - 'tests/data-ready-browser-smoke.cjs'
+      - '.github/workflows/data-ready-lab-mobile-smoke.yml'
+  workflow_dispatch:
+jobs:
+  mobile-browser:
+    name: E2E / ${{ matrix.engine }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate synthetic-only trained model report
+        run: |
+          python lab/data-ready/generate_synthetic.py --output /tmp/data-ready-synthetic.json
+          python lab/data-ready/train_ml.py /tmp/data-ready-synthetic.json --output /tmp/data-ready-retail-report.json > /dev/null
+      - name: Install isolated test dependency
+        run: npm install --no-save --no-package-lock playwright@1.56.1
+      - name: Install browser
+        run: npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Check browser smoke syntax
+        run: node --check tests/data-ready-browser-smoke.cjs
+      - name: Run lab mobile browser smoke
+        run: node tests/data-ready-browser-smoke.cjs
+        env:
+          BROWSER_ENGINE: ${{ matrix.engine }}
+          REPORT_PATH: /tmp/data-ready-retail-report.json
