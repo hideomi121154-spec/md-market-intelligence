@@ -148,7 +148,21 @@ byId("mlReportFile").addEventListener("change",async e=>{
     const summary=summarizeMlReport(report);
     loadedMlReport=report;
     setText("mlReportResult",summary);
-    const candidate=report.cohorts.find(c=>c.status==="evaluated_experiment_only");
+    const q=getQuery();
+    const selectedRegion=byId("region").value.trim();
+    const candidate=report.cohorts.find(c=>c.status==="evaluated_experiment_only" &&
+      c.segment?.maker===q.maker && c.segment?.model===q.model &&
+      c.segment?.grade===q.grade && (c.segment?.region||"")===selectedRegion) ||
+      report.cohorts.find(c=>c.status==="evaluated_experiment_only");
+    if(candidate && (candidate.segment?.maker!==q.maker ||
+       candidate.segment?.model!==q.model ||
+       candidate.segment?.grade!==q.grade ||
+       (candidate.segment?.region||"")!==selectedRegion)){
+      byId("maker").value=candidate.segment.maker;
+      byId("model").value=candidate.segment.model;
+      byId("grade").value=candidate.segment.grade;
+      byId("region").value=candidate.segment.region||"";
+    }
     if(report.data_mode==="synthetic" && candidate?.model_artifact?.max_training_date){
       const s=candidate.model_artifact.max_training_date;
       const ms=Date.parse(s+"T00:00:00Z");
