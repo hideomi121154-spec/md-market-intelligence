@@ -63,6 +63,25 @@ async function run(){
   assert.match(await page.locator('#md-evidence-price').innerText(),/0件/);
   await page.locator('#md-evidence-jump').click();
   await page.locator('#md-evidence-panel').waitFor();
+  // Risk sensitivity is hypothetical and must not use imported unverified vehicle prices.
+  await page.locator('a[data-tab="plan"]').click();
+  await page.locator('#risk-rows tr').first().waitFor();
+  assert.equal(await page.locator('#risk-rows tr').count(),3);
+  assert.match(await page.locator('#risk-rows tr').first().innerText(),/30日/);
+  assert.match(await page.locator('#risk-status').innerText(),/架空の条件/);
+  const initial=await page.locator('#risk-rows tr').first().innerText();
+  await page.locator('#risk-daily').fill('1300');
+  const after=await page.locator('#risk-rows tr').first().innerText();
+  assert.notEqual(initial,after,'additional daily cost must update sensitivity');
+  await page.locator('#risk-markdown').fill('');
+  assert.match(await page.locator('#risk-status').innerText(),/試算を表示できません/);
+  await page.locator('#risk-markdown').fill('1.5');
+  await page.locator('#risk-note-show').click();
+  assert.match(await page.locator('#risk-summary').inputValue(),/実相場ではない/);
+  await page.locator('#risk-reset').click();
+  assert.equal(await page.locator('#risk-daily').inputValue(),'300');
+  assert.equal(await page.locator('#risk-markdown').inputValue(),'1.5');
+
 
 
   // The legacy private vehicle store and new inventory count must survive reload.
