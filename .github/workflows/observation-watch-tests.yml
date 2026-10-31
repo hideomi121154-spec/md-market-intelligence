@@ -1,0 +1,36 @@
+name: Inventory source quality regression
+on:
+  push:
+    paths:
+      - 'observation-watch.js'
+      - 'observation-watch.css'
+      - 'md-evidence.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_observation_watch.cjs'
+      - 'tests/test_md_evidence.cjs'
+      - '.github/workflows/observation-watch-tests.yml'
+  pull_request:
+    paths:
+      - 'observation-watch.js'
+      - 'observation-watch.css'
+      - 'md-evidence.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_observation_watch.cjs'
+      - 'tests/test_md_evidence.cjs'
+      - '.github/workflows/observation-watch-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: node --check observation-watch.js && node --check md-evidence.js && node --check tests/test_observation_watch.cjs
+      - name: Test outage guardrails and demand-source scope
+        run: node tests/test_observation_watch.cjs && node tests/test_md_evidence.cjs
+      - name: Protect inventory, price and risk features
+        run: node tests/test_inventory_observations.js && node tests/test_model_price_report.cjs && node tests/test_md_risk.cjs
