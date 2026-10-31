@@ -1,0 +1,19 @@
+name: Residual auction gap regression
+on:
+  pull_request:
+    paths: ['residual-gap.js', 'residual-gap.css', 'index.html', 'sw.js', 'tests/test_residual_gap.cjs', 'tests/test_offline_data.cjs', '.github/workflows/residual-gap-tests.yml']
+  push:
+    paths: ['residual-gap.js', 'residual-gap.css', 'index.html', 'sw.js', 'tests/test_residual_gap.cjs', 'tests/test_offline_data.cjs']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: node --check residual-gap.js && node --check sw.js
+      - name: Run gap and offline regressions
+        run: node tests/test_residual_gap.cjs && node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js
