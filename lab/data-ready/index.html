@@ -64,7 +64,7 @@ a{color:#8bd0ff}
 <pre id="demandResult">まだ分析していません。</pre>
 <p class="muted">問合せ件数・販売件数・在庫数の記録があっても、期間が揃わなければ需要予測や在庫最適化はできません。</p>
 <h2>5. この後接続する機能</h2>
-<ul><li>時系列で分けた価格予測モデルと精度検証</li>
+<ul><li>モデル学習・予測精度検証（下の独立ラボで試作済み）</li>
 <li>実在庫の販売日数・値下げ履歴を使った在庫最適化</li>
 <li>写真と人手ラベルによる車両状態の画像評価</li>
 <li>車両マスタに基づく広告文生成と事実確認</li></ul>
@@ -76,6 +76,9 @@ a{color:#8bd0ff}
 <p class="muted">PCなどで Python の `train_ml.py` が出力したJSONを読み込みます。モデル学習はこの画面内では行いません。レポートは端末内だけで読み取り、サーバーには送信しません。</p>
 <label class="field">学習・精度検証レポートJSON<input id="mlReportFile" type="file" accept=".json,application/json"></label>
 <pre id="mlReportResult">レポート未選択。まず架空データで学習・検証レポートを作成してください。</pre>
+<label class="field">価格を推定したい評価日<input id="mlPredictDate" type="date"></label>
+<button id="mlPredictButton">この車両条件で試験的に推定</button>
+<pre id="mlPredictionResult">学習レポートを読み込むと予測の試用ができます。車種・年式・走行距離・地域は上の入力欄を使用します。</pre>
 <p class="muted">MAE＝実取引価格と予測価格の平均絶対誤差。検証データでの誤差であって、将来の精度保証ではありません。架空データの結果は実務に使用できません。</p>
 </section>
 </main><script type="module" src="./app.mjs"></script></body></html>
