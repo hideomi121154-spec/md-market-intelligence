@@ -27,6 +27,7 @@ function calculateValues(p){
    bidWithinLimit:values.bid<=conservativeCeiling};
 }
 if(typeof module==='object'&&module.exports)module.exports={DEFAULTS,calculateValues};
+if(typeof window!=='undefined')window.MDValuation=Object.freeze({DEFAULTS,calculateValues});
 if(typeof document==='undefined')return;
 const $=id=>document.getElementById(id);
 const root=$('valuation-panel');
