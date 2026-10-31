@@ -1,0 +1,19 @@
+name: Prefecture labor data validation
+on:
+  pull_request:
+    paths: ['prefecture-jobs.js','prefecture-jobs.css','data/prefecture_jobs.json','scripts/normalize_prefecture_jobs.py','tests/test_prefecture_jobs.cjs','tests/test_prefecture_jobs.py','index.html','sw.js','.github/workflows/prefecture-jobs-tests.yml']
+  push:
+    paths: ['prefecture-jobs.js','prefecture-jobs.css','data/prefecture_jobs.json','scripts/normalize_prefecture_jobs.py','tests/test_prefecture_jobs.cjs','tests/test_prefecture_jobs.py']
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: node --check prefecture-jobs.js && node --check sw.js
+      - run: node tests/test_prefecture_jobs.cjs && node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js
+      - run: python -m unittest discover -s tests -p 'test_prefecture_jobs.py' -v
