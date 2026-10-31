@@ -12,7 +12,7 @@ const server=http.createServer((req,res)=>{
   let p;
   try{p=decodeURIComponent(new URL(req.url,'http://127.0.0.1').pathname)}
   catch{res.writeHead(400).end();return}
-  const local=path.resolve(root,p.replace(/^\/+/,''));
+  const local=path.resolve(root,(p.endsWith('/')?p+'index.html':p).replace(/^\/+/,''));
   if(!local.startsWith(root+path.sep)){res.writeHead(403).end();return}
   fs.stat(local,(error,st)=>{
     if(error || !st.isFile()){res.writeHead(404).end();return}
