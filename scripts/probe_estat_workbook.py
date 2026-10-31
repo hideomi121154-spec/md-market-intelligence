@@ -1,4 +1,5 @@
 import io,re,zipfile,requests,openpyxl
+# Probe only: no data files are committed.
 URL='https://www.e-stat.go.jp/stat-search/files?cycle=1&layout=dataset&page=1&toukei=00450222&tstat=000001020327'
 u='https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040505323&fileKind=0'
 for url in [URL,'https://www.e-stat.go.jp/stat-search/files?layout=dataset&stat_infid=000040505323&toukei_kind=8']:
