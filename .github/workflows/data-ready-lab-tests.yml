@@ -1,0 +1,66 @@
+name: data-ready-lab-tests
+on:
+  pull_request:
+    paths:
+      - 'lab/data-ready/**'
+      - 'tests/test_data_ready.mjs'
+      - 'tests/test_data_ready_price.py'
+      - 'tests/test_data_ready_ml.py'
+      - 'tests/test_data_ready_inference.mjs'
+      - '.github/workflows/data-ready-lab-tests.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: JavaScript syntax
+        run: |
+          node --check lab/data-ready/core.mjs
+          node --check lab/data-ready/app.mjs
+          node --check lab/data-ready/predict.mjs
+      - name: Data contract regression
+        run: node tests/test_data_ready.mjs
+      - name: Temporal baseline regression
+        run: python tests/test_data_ready_price.py
+      - name: Run baseline against synthetic data
+        run: python lab/data-ready/train_price.py lab/data-ready/sample-data.json
+      - name: ML training and leakage regression
+        run: python tests/test_data_ready_ml.py
+      - name: Build synthetic training dataset
+        run: python lab/data-ready/generate_synthetic.py --output /tmp/data-ready-synthetic.json
+      - name: Evaluate synthetic retail price model
+        run: python lab/data-ready/train_ml.py /tmp/data-ready-synthetic.json --output /tmp/data-ready-retail-report.json
+      - name: Evaluate synthetic auction price model
+        run: python lab/data-ready/train_ml.py /tmp/data-ready-synthetic.json --market-type dealer_auction_closed --output /tmp/data-ready-auction-report.json
+      - name: Guarded browser inference regression
+        run: node tests/test_data_ready_inference.mjs /tmp/data-ready-retail-report.json
+      - name: Validate synthetic report schemas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for kind in ("retail", "auction"):
+              report = json.loads(Path(f"/tmp/data-ready-{kind}-report.json").read_text())
+              assert report["data_mode"] == "synthetic"
+              assert report["cohorts"]
+              assert all(x["status"] == "evaluated_experiment_only" for x in report["cohorts"])
+              assert all(x["model_artifact"]["validated_for_real_bidding"] is False for x in report["cohorts"])
+          print("Synthetic evaluation reports validated")
+          PY
+      - name: Attach synthetic-only example reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-ready-synthetic-model-reports
+          path: |
+            /tmp/data-ready-retail-report.json
+            /tmp/data-ready-auction-report.json
+          retention-days: 7

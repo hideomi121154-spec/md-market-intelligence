@@ -1,0 +1,231 @@
+{
+  "notice": "すべて架空の説明用データです。実相場・実取引・実需要ではありません。",
+  "datasets": [
+    {
+      "dataset": "market",
+      "records": [
+        {
+          "id": "demo-market-1",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 25000,
+          "price_jpy": 1380000,
+          "date": "2026-03-12",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-2",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 29000,
+          "price_jpy": 1350000,
+          "date": "2026-04-18",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-3",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2023,
+          "mileage_km": 19000,
+          "price_jpy": 1490000,
+          "date": "2026-05-14",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-4",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 35000,
+          "price_jpy": 1310000,
+          "date": "2026-06-16",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-5",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2023,
+          "mileage_km": 23000,
+          "price_jpy": 1450000,
+          "date": "2026-07-09",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-6",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 41000,
+          "price_jpy": 1280000,
+          "date": "2026-08-10",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-7",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 32000,
+          "price_jpy": 1330000,
+          "date": "2026-09-17",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-8",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2023,
+          "mileage_km": 26000,
+          "price_jpy": 1420000,
+          "date": "2026-10-08",
+          "market_type": "retail_closed_sale"
+        },
+        {
+          "id": "demo-market-9",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 28000,
+          "price_jpy": 1010000,
+          "date": "2026-09-11",
+          "market_type": "dealer_auction_closed"
+        },
+        {
+          "id": "demo-market-10",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 33000,
+          "price_jpy": 980000,
+          "date": "2026-10-03",
+          "market_type": "dealer_auction_closed"
+        },
+        {
+          "id": "demo-market-11",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "year": 2022,
+          "mileage_km": 31000,
+          "price_jpy": 1560000,
+          "date": "2026-10-04",
+          "market_type": "retail_listing"
+        }
+      ]
+    },
+    {
+      "dataset": "inventory",
+      "records": [
+        {
+          "id": "demo-stock-1",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "region": "愛知県",
+          "status": "available",
+          "date": "2026-10-01"
+        },
+        {
+          "id": "demo-stock-2",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "region": "愛知県",
+          "status": "available",
+          "date": "2026-10-01"
+        },
+        {
+          "id": "demo-stock-3",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "region": "東京都",
+          "status": "available",
+          "date": "2026-10-01"
+        },
+        {
+          "id": "demo-stock-4",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "region": "愛知県",
+          "status": "sold",
+          "date": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "dataset": "demand",
+      "records": [
+        {
+          "id": "demo-demand-1",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "region": "愛知県",
+          "period_end": "2026-09-30",
+          "inquiries": 12,
+          "closed_sales": 4
+        },
+        {
+          "id": "demo-demand-2",
+          "maker": "日産",
+          "model": "ノート",
+          "grade": "X",
+          "source": "SYNTHETIC_EXAMPLE",
+          "license_status": "synthetic",
+          "region": "東京都",
+          "period_end": "2026-09-30",
+          "inquiries": 9,
+          "closed_sales": 3
+        }
+      ]
+    }
+  ]
+}

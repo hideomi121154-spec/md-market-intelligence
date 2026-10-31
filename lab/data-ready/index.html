@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MD MARKET | Data-ready Lab</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#e7eef7;background:#0c1523}
+*{box-sizing:border-box}body{margin:0}main{max-width:940px;margin:auto;padding:24px 16px 60px}
+h1{font-size:1.75rem;margin:0 0 8px}h2{font-size:1.17rem;margin:0 0 12px}
+p,li{line-height:1.6}.subtitle,.muted{color:#abc0d7}.muted{font-size:.86rem}
+.banner{background:#553a13;border:1px solid #ce9534;padding:12px;border-radius:10px;margin:15px 0;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.panel{background:#172538;border:1px solid #34506c;padding:17px;border-radius:12px;margin-top:14px}
+.field{display:flex;flex-direction:column;gap:5px;margin:9px 0}
+label{font-size:.9rem;color:#c9d7e6}
+input{background:#0e1b2b;color:#fff;border:1px solid #536e8a;border-radius:8px;padding:10px;font:inherit;width:100%}
+button{background:#2679c9;color:#fff;border:none;border-radius:9px;padding:10px 14px;font:inherit;font-weight:650;cursor:pointer;margin:6px 6px 4px 0}
+button.secondary{background:#38516b}button:focus-visible,input:focus-visible{outline:3px solid #ffca66}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0b1c2d;padding:12px;border-radius:8px;line-height:1.6}
+strong.num{font-size:1.3rem}.small{font-size:.85rem}
+a{color:#8bd0ff}
+</style></head><body><main>
+<h1>MD MARKET — データ接続準備ラボ</h1>
+<p class="subtitle">データの「受け口」を作り、接続後の価格・仕入れ・需要分析を事前に動作検証する独立試作版です。</p>
+<div class="banner" id="banner">デモモード：画面の数値はすべて架空。実在の相場・仕入れ推奨ではありません。</div>
+<div class="panel">
+<h2>1. データを読み込む</h2>
+<p class="muted">初期状態は架空データ。実データは利用許諾を得たJSONだけを選択してください。データはブラウザのメモリ内で処理し、サーバー送信・端末保存はしません。</p>
+<button id="resetDemo">架空データに戻す</button>
+<label class="field">許諾確認済みデータのJSONを読み込む<input id="fileInput" type="file" accept=".json,application/json"></label>
+<pre id="importStatus">初期データ読み込み中…</pre>
+<div id="readiness" class="muted"></div>
+</div>
+<div class="panel">
+<h2>2. 類似車の小売成約履歴</h2>
+<div class="grid">
+<label class="field">メーカー<input id="maker" value="日産"></label>
+<label class="field">車種<input id="model" value="ノート"></label>
+<label class="field">グレード<input id="grade" value="X"></label>
+<label class="field">年式（西暦）<input id="year" type="number" value="2022" min="1980"></label>
+<label class="field">走行距離（km）<input id="km" type="number" value="30000" min="0"></label>
+</div>
+<button id="analyze">条件で分析する</button>
+<pre id="priceResult">まだ分析していません。</pre>
+<p class="muted">同一車種・グレード、年式±2年、走行距離±30,000kmの「小売実成約」だけを参照します。最低5件未満なら価格は出しません。統計的な参考値で、学習済みAI予測ではありません。</p>
+</div>
+<div class="grid">
+<section class="panel">
+<h2>3. 仕入れ上限を逆算</h2>
+<p class="muted">価格を自動推定せず、想定売価と諸経費を入力して計算します。</p>
+<label class="field">想定売価（円）<input id="sell" type="number" value="1350000" min="0"></label>
+<label class="field">AA手数料（円）<input id="auctionFee" type="number" value="40000" min="0"></label>
+<label class="field">陸送費（円）<input id="transport" type="number" value="30000" min="0"></label>
+<label class="field">整備費（円）<input id="repair" type="number" value="50000" min="0"></label>
+<label class="field">販売諸経費（円）<input id="sellingCost" type="number" value="80000" min="0"></label>
+<label class="field">在庫維持費（円）<input id="holdingCost" type="number" value="15000" min="0"></label>
+<label class="field">リスク予備費（円）<input id="reserve" type="number" value="30000" min="0"></label>
+<label class="field">目標粗利益（円）<input id="profit" type="number" value="150000" min="0"></label>
+<button id="calcCap">上限を計算</button>
+<pre id="capResult">まだ計算していません。</pre>
+</section>
+<section class="panel">
+<h2>4. 現場の需要と在庫を照合</h2>
+<label class="field">地域<input id="region" value="愛知県"></label>
+<button id="checkDemand">需要・在庫記録を比較</button>
+<pre id="demandResult">まだ分析していません。</pre>
+<p class="muted">問合せ件数・販売件数・在庫数の記録があっても、期間が揃わなければ需要予測や在庫最適化はできません。</p>
+<h2>5. この後接続する機能</h2>
+<ul><li>モデル学習・予測精度検証（下の独立ラボで試作済み）</li>
+<li>実在庫の販売日数・値下げ履歴を使った在庫最適化</li>
+<li>写真と人手ラベルによる車両状態の画像評価</li>
+<li>車両マスタに基づく広告文生成と事実確認</li></ul>
+</section>
+</div>
+<p class="muted">既存MD MARKETのIndexedDB・ローカルストレージ・バックアップには触れません。コードと契約仕様はこのラボ内に隔離されています。</p>
+<section class="panel">
+<h2>6. 価格モデルの学習・精度検証レポート</h2>
+<p class="muted">PCなどで Python の `train_ml.py` が出力したJSONを読み込みます。モデル学習はこの画面内では行いません。レポートは端末内だけで読み取り、サーバーには送信しません。</p>
+<label class="field">学習・精度検証レポートJSON<input id="mlReportFile" type="file" accept=".json,application/json"></label>
+<pre id="mlReportResult">レポート未選択。まず架空データで学習・検証レポートを作成してください。</pre>
+<label class="field">価格を推定したい評価日<input id="mlPredictDate" type="date"></label>
+<button id="mlPredictButton">この車両条件で試験的に推定</button>
+<pre id="mlPredictionResult">学習レポートを読み込むと予測の試用ができます。車種・年式・走行距離・地域は上の入力欄を使用します。</pre>
+<p class="muted">MAE＝実取引価格と予測価格の平均絶対誤差。検証データでの誤差であって、将来の精度保証ではありません。架空データの結果は実務に使用できません。</p>
+</section>
+</main><script type="module" src="./app.mjs"></script></body></html>
