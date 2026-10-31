@@ -47,7 +47,7 @@ assert.equal(noGrade.prices.ready,false);
 assert.match(noGrade.prices.limitation,/グレードと色/);
 assert.equal(evaluate([base]).supply.ready,false);
 assert.equal(evaluate([{...base,count:0},latest]).supply.percent,null);
-const aged=evaluate([base,{...latest,date:'2026-09-01'}],[],[],source,'2026-10-31');
+const aged=evaluate([{...base,date:'2026-08-01'},{...latest,date:'2026-09-01'}],[],[],source,'2026-10-31');
 assert.equal(aged.supply.ready,false);
 assert.equal(evaluate([base,latest],[],[],source,'2027-03-01').demand.length,0,'stale demand must not count as fresh');
 assert.equal(evaluate([base,latest],[],[],{schema_version:1,snapshots:[]}).demand.length,0,'no rank is not "unpopular"');
