@@ -1,9 +1,9 @@
 name: Fault research regression
 on:
   pull_request:
-    paths: ['fault-research.js','fault-research.css','data/fault-research-index.json','tests/test_fault_research.cjs','scripts/update_fault_research.py','tests/test_fault_feed.py','.github/workflows/fault-research-tests.yml','index.html','sw.js']
+    paths: ['fault-research.js','fault-research.css','data/fault-research-index.json','tests/test_fault_research.cjs','tests/test_fault_live.cjs','scripts/update_fault_research.py','tests/test_fault_feed.py','.github/workflows/fault-research-tests.yml','index.html','sw.js']
   push:
-    paths: ['fault-research.js','fault-research.css','data/fault-research-index.json','tests/test_fault_research.cjs','scripts/update_fault_research.py','tests/test_fault_feed.py']
+    paths: ['fault-research.js','fault-research.css','data/fault-research-index.json','tests/test_fault_research.cjs','tests/test_fault_live.cjs','scripts/update_fault_research.py','tests/test_fault_feed.py']
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,5 +15,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: node --check fault-research.js && node tests/test_fault_research.cjs
+      - run: node --check fault-research.js && node tests/test_fault_research.cjs && node tests/test_fault_live.cjs
       - run: python -m unittest discover -s tests -p test_fault_feed.py
