@@ -50,8 +50,8 @@
   const prices={checkedCount:matching.length,uniqueSourceUrls:evidenceUrls.size,ready:exactSpecs&&matching.length>=5&&evidenceUrls.size>=5,
    limitation:!exactSpecs?'掲載条件にグレードと色を明示してください':'価格が照合済みでも年式・走行距離・車両状態・価格定義を個別に揃える必要があります'};
   const issues=[];
-  if(disrupted)issues.push('カーセンサーのサービス停止期間（2026年10月17〜22日）をまたぐ掲載台数の比較は保留。更新反映状況を確認する');
   if(!prior)issues.push('掲載台数を同じ条件でもう1回記録する');
+  else if(disrupted)issues.push('カーセンサーのサービス停止期間（2026年10月17〜22日）をまたぐ掲載台数の比較は保留。更新反映状況を確認する');
   else if(!supply.ready)issues.push(age>30?'掲載台数が30日超前のため再観測する':'観測間隔を確認して台数を再測定する');
   if(demand.length===0)issues.push('同一車種の需要根拠を追加確認する（順位未収録は不人気の証拠ではない）');
   if(!prices.ready)issues.push('同一仕様の照合済み掲載価格と販売見込価格を集める');
