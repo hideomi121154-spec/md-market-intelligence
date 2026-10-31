@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="MD MARKET">
-  <meta name="description" content="iPhone単体で使える中古車相場分析・車両データ管理アプリ">
+  <meta name="description" content="無料査定サイトを調べて比較するマイカー相場ノート。価格は自分で記録し、iPhoneに保存します">
   <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
@@ -23,15 +23,17 @@
   <link rel="stylesheet" href="./md-evidence.css?v=2.1.0">
   <link rel="stylesheet" href="./model-price-report.css?v=2.3.0">
   <link rel="stylesheet" href="./observation-watch.css?v=2.4.0">
-  <title>MD MARKET | 中古車分析</title>
+  <link rel="stylesheet" href="./personal-car.css?v=2.5.0">
+  <title>MD MARKET | マイカー売却相場を比較</title>
 </head>
 <body>
   <div class="shell">
     <aside class="side">
-      <a href="#overview" class="brand"><span class="logo">MD</span><span><strong>MD MARKET</strong><small>中古車市場分析</small></span></a>
-      <div class="side-label">MARKET INTELLIGENCE</div>
+      <a href="#mycar" class="brand"><span class="logo">MD</span><span><strong>MD MARKET</strong><small>マイカー価格比較</small></span></a>
+      <div class="side-label">PERSONAL CAR VALUE</div>
       <nav aria-label="画面の切り替え">
-        <a href="#overview" data-tab="overview"><span class="nav-icon">▥</span><span>相場</span></a>
+        <a href="#mycar" data-tab="mycar"><span class="nav-icon">🚘</span><span>マイカー</span></a>
+        <a href="#overview" data-tab="overview"><span class="nav-icon">▥</span><span>市場</span></a>
         <a href="#records" data-tab="records"><span class="nav-icon">▤</span><span>車両</span></a>
         <a href="#import" data-tab="import"><span class="nav-icon">↥</span><span>データ</span></a>
         <a href="#plan" data-tab="plan"><span class="nav-icon">◷</span><span>計画</span></a>
@@ -40,10 +42,81 @@
     </aside>
     <main>
       <header class="topbar">
-        <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.4.0</b></span></div>
+        <div><div class="eyebrow">YOUR CAR · YOUR DECISION</div><h1 id="page-title">マイカーの売却相場を比較</h1><p id="page-subtitle">無料査定サイトを確認し、価格を自分の端末に整理</p></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.5.0</b></span></div>
       </header>
-      <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
+      <div class="notice" role="note">マイカーの買取参考額は無料査定サイトでご自身が確認してください。アプリはその金額を自動取得せず、記録と比較を支援します。表示額は買取を保証しません。従来の市場統計・車両データは「市場」「車両」「データ」「計画」から引き続き利用できます。</div>
+      <section class="screen" id="mycar">
+        <div class="mycar-screen">
+          <div class="mycar-hero">
+            <h2>自分の車、いくらで売れる？</h2>
+            <p class="mycar-intro">無料の買取相場を調べて、実際の査定提示額や小売掲載価格と比べる<strong>個人向けの比較ノート</strong>です。査定会社の価格データを取得・転載するAPIは使っていません。</p>
+            <div class="mycar-steps"><span>1 車の条件を登録</span><span>2 無料相場を確認</span><span>3 見つけた金額を記録・比較</span></div>
+            <p class="mycar-note">無料サイトは各社で利用条件が異なります。相場照会・見積依頼・一括査定申込は別の操作です。車台番号・ナンバー・氏名・電話番号は、このノートに入力しないでください。</p>
+          </div>
+          <article class="panel mycar-panel">
+            <h3>1. マイカーを登録</h3>
+            <form id="mycar-car-form">
+              <div class="mycar-fields">
+                <label>メーカー<input id="mycar-make" required maxlength="50" placeholder="例：日産"></label>
+                <label>車種<input id="mycar-model" required maxlength="80" placeholder="例：デイズ"></label>
+                <label>グレード（任意）<input id="mycar-grade" maxlength="100" placeholder="例：X"></label>
+                <label>初度登録年（西暦）<input id="mycar-year" type="number" min="1950" max="2028" step="1" required inputmode="numeric" placeholder="2021"></label>
+                <label>走行距離（km）<input id="mycar-mileage" type="number" min="0" max="2000000" step="1" required inputmode="numeric" placeholder="45000"></label>
+                <label>色（任意）<input id="mycar-color" maxlength="60" placeholder="例：パールホワイト"></label>
+                <label>修復歴<select id="mycar-repair" required><option value="unknown">不明・未確認</option><option value="none">なし</option><option value="yes">あり</option></select></label>
+              </div>
+              <button class="button primary" id="mycar-save-car" type="submit">この車を端末に登録</button>
+            </form>
+            <p class="mycar-note">同じ車を重複登録しないよう確認してください。保存後の記録は自動で編集・削除しません。入力情報は端末内のみで保持します。</p>
+          </article>
+          <article class="panel mycar-panel">
+            <h3>2. 無料の相場サービスを開く</h3>
+            <p class="mycar-intro">公式ページで車種・年式などを入力し、表示された金額を確かめてください。アプリから車両情報を外部サイトへ自動送信することはありません。</p>
+            <ul id="mycar-services" class="mycar-services"></ul>
+          </article>
+          <article class="panel mycar-panel">
+            <h3>3. 調べた価格を比較</h3>
+            <label for="mycar-selector" class="mycar-select-label">比較する車両
+              <select id="mycar-selector" aria-label="相場を比較する車両"></select>
+            </label>
+            <p class="mycar-summary" id="mycar-summary">登録済みの車両を確認中…</p>
+            <div class="mycar-price-grid">
+              <div class="mycar-price"><small>無料サイトの買取参考価格（転記記録）</small><strong id="mycar-estimate">記録なし</strong></div>
+              <div class="mycar-price"><small>実際に買取店から提示された金額（自己記録）</small><strong id="mycar-offer">記録なし</strong></div>
+              <div class="mycar-price"><small>中古車の小売掲載価格（成約価格ではない）</small><strong id="mycar-retail">記録なし</strong></div>
+            </div>
+            <p class="mycar-note">同じ車についてのメモを金額の種類別に分けています。最高額・最低額は<strong>記録した範囲</strong>であり、市場全体の統計ではありません。グレード・車両状態・税や諸費用などの価格条件が揃わないことがあります。自動査定額や推奨売却価格は生成しません。</p>
+            <div class="mycar-quote-section">
+              <h3>確認した価格を追加</h3>
+              <form id="mycar-quote-form" hidden>
+                <div class="mycar-fields">
+                  <label>金額の種類<select id="mycar-type" required>
+                    <option value="estimate">無料相場サイトの参考価格</option>
+                    <option value="offer">実際の買取店の提示額</option>
+                    <option value="retail">中古車サイトの小売掲載価格</option>
+                  </select></label>
+                  <label>金額（円）<input id="mycar-price" type="number" min="1" max="1000000000" step="1" inputmode="numeric" required placeholder="例：700000"></label>
+                  <label>確認日<input id="mycar-date" type="date" required></label>
+                  <label>情報元の名前<input id="mycar-source" maxlength="100" required placeholder="例：ガリバー / 〇〇買取店"></label>
+                  <label class="wide">参考元URL（任意）<input id="mycar-source-url" type="url" placeholder="https://..."></label>
+                  <label class="wide">条件・注意点のメモ（任意）<textarea id="mycar-notes" maxlength="400" placeholder="参考価格の範囲・走行距離条件・税や諸費用の扱い・査定有効期限など"></textarea></label>
+                </div>
+                <button class="button primary" type="submit" id="mycar-save-quote">この金額を記録</button>
+              </form>
+            </div>
+            <div class="mycar-table-container"><table class="mycar-table"><thead><tr><th>価格の種類</th><th>金額</th><th>情報源・メモ</th><th>確認日</th></tr></thead><tbody id="mycar-quote-rows"></tbody></table></div>
+            <p id="mycar-status" role="status" aria-live="polite"></p>
+          </article>
+          <article class="panel mycar-panel">
+            <h3>4. マイカー記録をバックアップ</h3>
+            <p class="mycar-note">車両管理の109件とは別に保存しています。iPhoneのホーム画面版とSafari版で保存領域が分かれることがあります。アプリ削除やサイトデータ消去の前に、バックアップJSONを端末外へ保管してください。</p>
+            <div class="mycar-actions"><button type="button" id="mycar-export" class="button secondary">JSONバックアップを表示・選択</button><button type="button" id="mycar-restore" class="button ghost">JSONを追加復元</button></div>
+            <textarea id="mycar-backup" class="mycar-backup" spellcheck="false" autocorrect="off" aria-label="マイカー相場ノートのバックアップJSON"></textarea>
+            <p class="mycar-note">復元は追加のみで、既存IDの異なるデータは上書きしません。まだ保存されたファイルではないため、必ずコピーして外部に保管してください。</p>
+          </article>
+        </div>
+      </section>
       <section class="screen" id="overview">
         <div class="section-heading"><h2>市場サマリー</h2><span>端末内の保存データ</span></div>
         <div class="stat-grid">
@@ -505,6 +578,7 @@
   </div>
   <script src="./storage.js?v=2.0.1" defer></script>
   <script src="./app.js?v=2.0.2" defer></script>
+  <script src="./personal-car.js?v=2.5.0" defer></script>
   <script src="./offline-data.js?v=2.0.3" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>

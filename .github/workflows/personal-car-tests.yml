@@ -1,0 +1,34 @@
+name: Consumer car valuation regression
+on:
+  push:
+    paths:
+      - 'personal-car.js'
+      - 'personal-car.css'
+      - 'index.html'
+      - 'app.js'
+      - 'sw.js'
+      - 'tests/test_personal_car.cjs'
+      - '.github/workflows/personal-car-tests.yml'
+  pull_request:
+    paths:
+      - 'personal-car.js'
+      - 'personal-car.css'
+      - 'index.html'
+      - 'app.js'
+      - 'sw.js'
+      - 'tests/test_personal_car.cjs'
+      - '.github/workflows/personal-car-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check personal-car.js && node --check app.js && node --check tests/test_personal_car.cjs
+      - name: Consumer price and safe restore
+        run: node tests/test_personal_car.cjs
+      - name: Regression of existing vehicle analysis
+        run: node tests/test_model_price_report.cjs && node tests/test_md_evidence.cjs && node tests/test_md_risk.cjs && node tests/test_observation_watch.cjs
