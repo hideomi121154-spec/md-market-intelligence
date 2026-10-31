@@ -40,8 +40,8 @@ async function testReader(){
  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
  assert.ok(index.indexOf('offline-data.js?v=2.0.3')<index.indexOf('uss.js?v=2.0.3'),'offline helper must execute before statistics');
- assert.ok(index.includes('<b>v2.2.0</b>'));
- assert.ok(sw.includes('md-market-pwa-v2-2-0-20261031'));
+ assert.ok(index.includes('<b>v2.3.0</b>'));
+ assert.ok(sw.includes('md-market-pwa-v2-3-0-20261031'));
  assert.ok(sw.includes("'./offline-data.js?v=2.0.3'"),'offline helper must be precached');
  for(const script of scripts){
   const code=fs.readFileSync(path.join(root,script),'utf8');
@@ -50,6 +50,7 @@ async function testReader(){
   assert.ok(index.includes('./'+script+'?v=2.0.3'),'script version must be updated: '+script);
   assert.ok(sw.includes("'./"+script+"?v=2.0.3'"),'script cache version mismatch: '+script);
  }
+ assert.ok(index.includes('model-price-report.js?v=2.3.0')&&sw.includes("'./model-price-report.js?v=2.3.0'"));
  // The backup hotfix and inventory must survive this patch.
  assert.ok(index.includes('id="backup-share"')&&index.includes('id="inventory-panel"'));
  console.log('PASS offline no-network reader, version agreement, backups and inventory feature preservation');
