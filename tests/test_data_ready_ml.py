@@ -62,7 +62,7 @@ class TestDataReadyML(unittest.TestCase):
         changed = copy.deepcopy(self.payload)
         for r in changed["datasets"][0]["records"]:
             if (r["market_type"] == "retail_closed_sale" and r["model"] == "ノート"
-                    and r["date"] > "2026-05-01"):
+                    and r["date"] > "2026-05-04"):
                 r["price_jpy"] += 400000
         out = self.with_json(changed, ml.evaluate)
         old = next(c for c in original["cohorts"] if c["segment"]["model"] == "ノート")
