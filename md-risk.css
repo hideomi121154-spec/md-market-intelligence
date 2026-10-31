@@ -1,0 +1,18 @@
+.risk-panel{margin:18px 0 26px;padding:20px}
+.risk-panel h2{font-size:20px;margin:0 0 9px}
+.risk-intro,.risk-footnote,.risk-calc-note{font-size:12px;line-height:1.8;color:var(--muted)}
+.risk-params{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.risk-params label{font-size:12px;line-height:1.5;color:#c2d5e9;display:flex;flex-direction:column;gap:6px;min-width:0}
+.risk-params input{width:100%;min-height:44px;min-width:0;padding:9px;border:1px solid #36506d;background:#0b182a;border-radius:9px;color:white;font-size:16px}
+.risk-actions{display:flex;flex-wrap:wrap;gap:10px}
+.risk-table-scroll{width:100%;overflow-x:auto;margin:14px 0}
+.risk-table{width:100%;border-collapse:collapse;font-size:12px;min-width:580px}
+.risk-table th,.risk-table td{padding:12px 10px;border-bottom:1px solid #36506d;text-align:right;white-space:nowrap}
+.risk-table th:first-child{text-align:left}
+.risk-table thead th{background:#102237;color:#ceddef}
+.risk-table tbody tr[data-situation="shortfall"]{color:#ffcfab}
+.risk-limit{padding:11px 13px;background:#101f32;border:1px solid #37506d;border-radius:10px;line-height:1.7;font-size:13px}
+.risk-limit strong{color:#f0f8ff}
+#risk-summary{box-sizing:border-box;width:100%;min-height:135px;background:#091a2c;border:1px solid #36506d;border-radius:10px;padding:12px;color:#f0f8ff;font-size:12px;line-height:1.6;resize:vertical}
+#risk-status{font-size:12px;line-height:1.7;color:#e3cda1;min-height:20px}
+@media(max-width:660px){.risk-params{grid-template-columns:1fr}.risk-panel{padding:16px}.risk-actions .button{flex:1}}
