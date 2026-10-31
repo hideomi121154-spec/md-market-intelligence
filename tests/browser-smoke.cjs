@@ -87,8 +87,10 @@ async function run(){
   await page.waitForFunction(()=>document.querySelector('#inventory-summary').textContent.includes('+20.8%'));
   assert.match(await page.locator('#inventory-summary').innerText(),/\+250台/);
   assert.match(await page.locator('#md-evidence-verdict').innerText(),/仕入れ判断は保留/);
-  await page.waitForFunction(()=>document.querySelector('#md-evidence-supply').textContent.includes('1,450台'));
-  assert.match(await page.locator('#md-evidence-supply').innerText(),/\+250台/);
+  await page.waitForFunction(()=>document.querySelector('#md-evidence-supply').textContent.includes('比較保留'));
+  assert.match(await page.locator('#md-evidence-supply').innerText(),/比較保留/);
+  assert.match(await page.locator('#observation-watch-summary').innerText(),/確認・追加観測が必要/);
+  assert.match(await page.locator('#observation-watch-rows').innerText(),/停止期間をまたぐ比較不可/);
   assert.match(await page.locator('#md-evidence-demand').innerText(),/収録順位なし/);
   assert.match(await page.locator('#md-evidence-price').innerText(),/0件/);
   await page.locator('#md-evidence-jump').click();
@@ -164,6 +166,10 @@ async function run(){
   await page.locator('#inventory-count').fill('990');
   await page.locator('#inventory-save').click();
   assert.match(await page.locator('#inventory-status').innerText(),/保存しました/);
+  assert.match(await page.locator('#observation-watch-summary').innerText(),/2条件/);
+  await page.locator('#observation-watch-filter').selectOption('review');
+  assert.equal(await page.locator('#observation-watch-rows tr').count(),2);
+  await page.locator('#observation-watch-filter').selectOption('all');
   assert.match(await page.locator('#inventory-summary').innerText(),/比較用の2件目/);
   assert.equal(await page.locator('#inventory-series option').count(),2);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('md-market-inventory-snapshots-v1')).length),3);
