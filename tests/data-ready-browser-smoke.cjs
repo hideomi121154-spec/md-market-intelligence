@@ -70,6 +70,7 @@ async function main(){
       name:'sample-data.json',mimeType:'application/json',
       buffer:Buffer.from(JSON.stringify(demo))
     });
+    await page.waitForFunction(()=>document.querySelector('#importStatus')?.textContent.includes('取込中止'));
     assert.match(await page.locator('#importStatus').innerText(),/取込中止/);
     assert.match(await page.locator('#banner').innerText(),/デモモード/);
     const storage=await page.evaluate(()=>localStorage.length);
