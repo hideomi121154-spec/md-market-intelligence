@@ -2,8 +2,9 @@
 const assert=require('node:assert/strict');
 const Inv=require('../inventory-observations.js');
 global.MDInventory=Inv;
+global.MDWatch=require('../observation-watch.js');
 const Desk=require('../md-evidence.js');
-const base={date:'2026-10-01',make:'日産',model:'デイズ',region:'愛知県',grade:'X',color:'赤',conditions:'2022年式、走行5万km以下',count:1200,source_url:'https://www.carsensor.net/used/search?model=days'};
+const base={date:'2026-10-01',make:'日産',model:'デイズ',region:'愛知県',grade:'X',color:'赤',conditions:'2022年式、走行5万km以下',count:1200,source_url:'https://www.goo-net.com/used/search?model=days'};
 const latest={...base,date:'2026-10-30',count:1000};
 const source={schema_version:1,snapshots:[
  {platform:'carsensor',scope:'national',month:'2026-09',source_url:'https://www.carsensor.net/ranking/index.html',models:[{make:'日産',model:'デイズ',rank:7}]},
@@ -55,4 +56,10 @@ assert.equal(evaluate([base,latest],[],[],{schema_version:1,snapshots:[]}).deman
 assert.equal(evaluate([{...base,region:'愛知県'},{...latest,region:'全国'}]).supply.previous,null,'do not mix regions');
 assert.equal(evaluate([{...base,source_url:'https://different.example.net/used'},{...latest}]).supply.previous,null,'do not mix source URLs');
 assert.equal(evaluate([]).available,false);
+const carsensorRows=[{...base,source_url:'https://www.carsensor.net/used/search?model=days'}, {...latest,source_url:'https://www.carsensor.net/used/search?model=days'}];
+const blocked=Desk.evidenceForSeries(carsensorRows,[],[],source,Inv.seriesKey(carsensorRows[0]),'2026-10-31');
+assert.equal(blocked.supply.disrupted,true);
+assert.equal(blocked.supply.delta,null);
+assert.equal(blocked.supply.ready,false);
+assert.match(blocked.issues.join(' '),/停止期間/);
 console.log('PASS MD evidence: listing comparability, regional boundaries, demand scope, stale records, checked prices, no auto buying');

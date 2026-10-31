@@ -40,8 +40,8 @@ async function testReader(){
  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
  assert.ok(index.indexOf('offline-data.js?v=2.0.3')<index.indexOf('uss.js?v=2.0.3'),'offline helper must execute before statistics');
- assert.ok(index.includes('<b>v2.3.0</b>'));
- assert.ok(sw.includes('md-market-pwa-v2-3-0-20261031'));
+ assert.ok(index.includes('<b>v2.4.0</b>'));
+ assert.ok(sw.includes('md-market-pwa-v2-4-0-20261031'));
  assert.ok(sw.includes("'./offline-data.js?v=2.0.3'"),'offline helper must be precached');
  for(const script of scripts){
   const code=fs.readFileSync(path.join(root,script),'utf8');
