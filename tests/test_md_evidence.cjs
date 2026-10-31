@@ -42,7 +42,8 @@ assert.equal(evaluate(undefined,prices.map((x,i)=>i===0?{...x,date:'2025-01-01'}
 assert.equal(evaluate(undefined,prices,prices.map(r=>({id:r.id,status:'flagged'}))).prices.checkedCount,0);
 const duplicate=prices.map((p,i)=>i===4?{...p,source_url:prices[0].source_url}:p);
 assert.equal(evaluate(undefined,duplicate,audits).prices.ready,false,'five records with four unique source URLs are not sufficient');
-const noGrade=evaluate([ {...base,grade:'',color:''}, {...latest,grade:'',color:''} ]);
+const noGradeRows=[{...base,grade:'',color:''},{...latest,grade:'',color:''}];
+const noGrade=Desk.evidenceForSeries(noGradeRows,[],[],source,Inv.seriesKey(noGradeRows[0]),'2026-10-31');
 assert.equal(noGrade.prices.ready,false);
 assert.match(noGrade.prices.limitation,/グレードと色/);
 assert.equal(evaluate([base]).supply.ready,false);
