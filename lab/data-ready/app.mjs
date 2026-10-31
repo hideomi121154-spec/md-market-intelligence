@@ -99,3 +99,52 @@ byId("calcCap").addEventListener("click",analyzeCap);
 resetDemo().catch(err=>{state.mode="user";setText("importStatus","デモの読込に失敗: "+err.message);
   setText("banner","デモデータが読み込めませんでした。");redraw();});
 analyzeCap();
+
+const showMoney = v => Number.isFinite(v) ? Math.round(v).toLocaleString("ja-JP")+"円" : "算出不可";
+function summarizeMlReport(report) {
+  if (!report || report.schema_version!=="price-ml-lab-v0.2" ||
+      !Array.isArray(report.cohorts) ||
+      !["synthetic","authorized",null].includes(report.data_mode))
+    throw Error("価格モデル検証レポートの形式が違います");
+  const rows=[
+    "評価モード: "+(report.data_mode==="synthetic"?"架空データ（実務使用不可）":
+      report.data_mode==="authorized"?"持込データ（利用権・実データの真正性は未検証）":"データなし"),
+    "対象取引: "+(report.market_type==="retail_closed_sale"?"小売実成約":
+      report.market_type==="dealer_auction_closed"?"業者AA実落札":"未対応"),
+    "※モデルの結果は仕入れ推奨ではありません。",
+  ];
+  for(const c of report.cohorts.slice(0,20)){
+    const seg=c.segment||{};
+    rows.push("");
+    rows.push([seg.maker,seg.model,seg.grade,seg.region].filter(Boolean).join(" / "));
+    if(c.status!=="evaluated_experiment_only"){
+      rows.push("保留: "+(c.message||"取引履歴が不足しています"));continue;
+    }
+    const base=c.baseline?.metrics;
+    const model=c.ridge?.metrics;
+    if(!base||!model)throw Error("予測誤差の値が不完全です");
+    rows.push("学習 "+(c.periods?.train?.n??"?")+"件 / 調整 "+
+      (c.periods?.calibration?.n??"?")+"件 / 未使用期間のテスト "+
+      (c.periods?.test?.n??"?")+"件");
+    rows.push("基準モデルMAE: "+showMoney(base.mae_jpy));
+    rows.push("回帰モデルMAE: "+showMoney(model.mae_jpy));
+    rows.push("調整期間の残差幅: "+showMoney(c.ridge.calibration_residual_q_jpy));
+    rows.push("テスト期間の帯域内率: "+
+      (Number.isFinite(c.ridge.observed_test_coverage)?
+        Math.round(c.ridge.observed_test_coverage*1000)/10+"%":"算出不可"));
+    rows.push("※将来の価格・誤差幅が保証されたわけではありません。");
+  }
+  if(report.cohorts.length>20)rows.push("※21車種目以降の詳細は省略");
+  return rows.join("\n");
+}
+byId("mlReportFile").addEventListener("change",async e=>{
+  try {
+    const file=e.target.files?.[0];
+    if(!file)return;
+    if(file.size>3*1024*1024)throw Error("3MB以下のJSONのみ対応");
+    const report=JSON.parse(await file.text());
+    setText("mlReportResult",summarizeMlReport(report));
+  } catch(err) {
+    setText("mlReportResult","レポートを読み込めません: "+err.message);
+  } finally {e.target.value="";}
+});
