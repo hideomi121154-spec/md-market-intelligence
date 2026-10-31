@@ -105,7 +105,7 @@ function linkageChecks(){
   const sw=read('sw.js');
   for(const asset of [
     './storage.js?v=2.0.1','./app.js?v=2.0.2',
-    './inventory-observations.js?v=2.1.0','./inventory-observations.css?v=2.1.0','./md-evidence.js?v=2.1.0','./md-evidence.css?v=2.1.0','./model-price-report.js?v=2.3.0','./model-price-report.css?v=2.3.0','./observation-watch.js?v=2.4.0','./observation-watch.css?v=2.4.0'
+    './inventory-observations.js?v=2.1.0','./inventory-observations.css?v=2.1.0','./md-evidence.js?v=2.1.0','./md-evidence.css?v=2.1.0','./model-price-report.js?v=2.3.0','./model-price-report.css?v=2.3.0','./observation-watch.js?v=2.4.0','./observation-watch.css?v=2.4.0','./personal-car.js?v=2.5.0','./personal-car.css?v=2.5.0'
   ]){
     assert.ok(html.includes(asset),'HTML missing '+asset);
     assert.ok(sw.includes(asset),'SW missing '+asset);
