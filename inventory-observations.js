@@ -44,6 +44,7 @@ function importBundle(s){
 }
 function exportBundle(rows){return JSON.stringify({schema_version:1,kind:'used_listing_observations',records:validateRows(rows)},null,2)}
 const API={KEY,LIMIT,validDate,validateEntry,validateRows,seriesKey,mergeRows,summarize,importBundle,exportBundle};
+root.MDInventory=API;
 if(typeof module==='object'&&module.exports)module.exports=API;
 if(typeof document==='undefined')return;
 const $=id=>document.getElementById(id);if(!$('inventory-panel'))return;
@@ -79,13 +80,13 @@ $('inventory-form').addEventListener('submit',e=>{
  try{const v=id=>$(id).value;
   const row=validateEntry({date:v('inventory-date'),make:v('inventory-make'),model:v('inventory-model'),region:v('inventory-region'),grade:v('inventory-grade'),color:v('inventory-color'),conditions:v('inventory-conditions'),source_url:v('inventory-url'),count:v('inventory-count')});
   const updated=mergeRows(records,[row]);if(updated.length===records.length)throw Error('同じ日の同一条件データが既に存在します');
-  persist(updated);render();select.value=seriesKey(row);render();status.textContent='端末内に掲載台数を保存しました。成約台数ではありません。';
+  persist(updated);render();select.value=seriesKey(row);render();window.dispatchEvent(new Event('md-inventory-updated'));status.textContent='端末内に掲載台数を保存しました。成約台数ではありません。';
  }catch(err){status.textContent='保存できません：'+err.message}
 });
 $('inventory-export').addEventListener('click',()=>{try{backup.value=exportBundle(records);status.textContent=records.length+'件のバックアップを表示しました。コピーして保管してください。'}catch(e){status.textContent='書き出しエラー：'+e.message}});
 $('inventory-restore').addEventListener('click',()=>{
  if(!healthy)return;
- try{const incoming=importBundle(backup.value),merged=mergeRows(records,incoming),n=merged.length-records.length;persist(merged);render();status.textContent=n+'件を追加復元しました。元の記録は削除・上書きしていません。'}
+ try{const incoming=importBundle(backup.value),merged=mergeRows(records,incoming),n=merged.length-records.length;persist(merged);render();window.dispatchEvent(new Event('md-inventory-updated'));status.textContent=n+'件を追加復元しました。元の記録は削除・上書きしていません。'}
  catch(e){status.textContent='復元できません：'+e.message}
 });
 })(typeof window==='undefined'?{}:window);

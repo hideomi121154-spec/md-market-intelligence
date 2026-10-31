@@ -1,0 +1,31 @@
+name: MD evidence desk regression
+on:
+  push:
+    paths:
+      - 'md-evidence.js'
+      - 'md-evidence.css'
+      - 'inventory-observations.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_md_evidence.cjs'
+      - '.github/workflows/md-evidence-tests.yml'
+  pull_request:
+    paths:
+      - 'md-evidence.js'
+      - 'md-evidence.css'
+      - 'inventory-observations.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_md_evidence.cjs'
+      - '.github/workflows/md-evidence-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check md-evidence.js && node --check inventory-observations.js && node --check tests/test_md_evidence.cjs
+      - run: node tests/test_md_evidence.cjs
+      - run: node tests/test_inventory_observations.js
