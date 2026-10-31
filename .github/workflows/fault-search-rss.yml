@@ -1,0 +1,35 @@
+name: Fault search RSS aggregation
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/update_fault_research.py'
+      - '.github/workflows/fault-search-rss.yml'
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate parser locally
+        run: python -m unittest discover -s tests -p test_fault_feed.py
+      - name: Read Google News RSS headlines only
+        run: python scripts/update_fault_research.py
+      - name: Commit new metadata if changed
+        run: |
+          if ! git diff --quiet -- data/fault-research-index.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add data/fault-research-index.json
+            git commit -m 'data: refresh fault news RSS headline index'
+            git push origin HEAD:main
+          else
+            echo 'No new RSS metadata'
+          fi
