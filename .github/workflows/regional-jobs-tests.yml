@@ -1,0 +1,19 @@
+name: Regional job-ad signals regression
+on:
+  pull_request:
+    paths: ['regional-jobs.js', 'regional-jobs.css', 'data/regional_job_ads.json', 'index.html', 'sw.js', 'tests/test_regional_jobs.cjs', 'tests/test_offline_data.cjs', '.github/workflows/regional-jobs-tests.yml']
+  push:
+    paths: ['regional-jobs.js', 'regional-jobs.css', 'data/regional_job_ads.json', 'index.html', 'sw.js', 'tests/test_regional_jobs.cjs', 'tests/test_offline_data.cjs']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check browser scripts
+        run: node --check regional-jobs.js && node --check sw.js
+      - name: Run regional and offline tests
+        run: node tests/test_regional_jobs.cjs && node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js

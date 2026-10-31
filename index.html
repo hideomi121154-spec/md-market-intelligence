@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="./fault-risk.css?v=2.6.0">
   <link rel="stylesheet" href="./fault-research.css?v=2.7.0">
   <link rel="stylesheet" href="./market-warning.css?v=2.9.0">
+  <link rel="stylesheet" href="./regional-jobs.css?v=3.0.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
 </head>
 <body>
@@ -258,6 +259,33 @@
           <p class="uss-warning-info" id="uss-warning-scope"></p>
           <p class="uss-warning-outcome" id="uss-warning-outcome"></p>
           <p class="uss-warning-note">市場全体の月次先行指標であり、30日・60日後の価格を算出する予測モデルではありません。特定車種の相場、仕入れ上限、取引判断には直接使わないでください。警戒の閾値・的中率は未検証です。翌月実績は当時の判定に利用しません。</p>
+        </article>
+
+        <article class="panel regional-jobs-panel" id="regional-jobs-panel" aria-label="地域別求人広告の増減">
+          <div class="regional-jobs-head">
+            <div>
+              <h2>地域別の求人広告増減</h2>
+              <p id="regional-jobs-period">公表済み統計の取得待ち</p>
+            </div>
+            <div class="regional-jobs-actions">
+              <label for="regional-jobs-basis">比較する期間
+                <select id="regional-jobs-basis">
+                  <option value="mom">前月比</option>
+                  <option value="yoy">前年同月比</option>
+                </select>
+              </label>
+              <button class="button secondary" type="button" id="regional-jobs-reload">保存データを再確認</button>
+            </div>
+          </div>
+          <p class="regional-jobs-status" id="regional-jobs-status" aria-live="polite">読み込み中…</p>
+          <div class="regional-jobs-summaries">
+            <div class="regional-jobs-summary-item"><small>求人広告が増加</small><strong id="regional-jobs-rising">—</strong></div>
+            <div class="regional-jobs-summary-item"><small>求人広告が減少</small><strong id="regional-jobs-falling">—</strong></div>
+          </div>
+          <ol id="regional-jobs-rows" class="regional-jobs-list" aria-label="求人広告の増減率が大きい順"></ol>
+          <p id="regional-jobs-summary" class="regional-jobs-summary" aria-live="polite"></p>
+          <p class="regional-jobs-note">出典：<a href="https://www.zenkyukyo.or.jp/outline/research/" target="_blank" rel="noopener noreferrer">全国求人情報協会・求人広告掲載件数等集計結果</a>。主要15媒体の広告データを集計した地域別の前月比・前年同月比です。募集人数や就職件数ではなく、同一募集の重複・複数地域もあり得ます。対象月は公表日時を見て判断し、リアルタイムの求人サイト巡回ではありません。</p>
+          <p class="regional-jobs-note">現時点は6広域圏。<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Statの47都道府県別新規求人数（別指標）</a>との連携は次の段階です。求人広告の増減を中古車需要や仕入れ推奨に自動換算しません。</p>
         </article>
 
         <article class="panel model-sales-panel" id="registered-sales-panel">
@@ -630,6 +658,7 @@
   <script src="./offline-data.js?v=2.0.3" defer></script>
   <script src="./market-warning.js?v=2.9.0" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
+  <script src="./regional-jobs.js?v=3.0.0" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
   <script src="./registered-sales.js?v=2.0.3" defer></script>
   <script src="./valuation.js?v=2.2.0" defer></script>

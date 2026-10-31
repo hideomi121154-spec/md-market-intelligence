@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "dataset": "regional_job_ad_public_summary",
+  "source_name": "公益社団法人 全国求人情報協会",
+  "source_url": "https://www.zenkyukyo.or.jp/outline/research/",
+  "source_method": "掲載件数等集計結果2026年9月分 公式ウェブページの地域別件数の概要を照合して転記",
+  "published_on": "2026-10-23",
+  "month": "2026-09",
+  "geography_level": "six_macroregions",
+  "measure": "求人広告掲載件数（主要15媒体・週平均ベース）の増減率",
+  "coverage_note": "協会公表の6地域区分。求人広告の重複・複数地域カウントを含む場合があり、企業の採用人数でも中古車需要でもない。労働者派遣・職業紹介案件は対象外。",
+  "regions": [
+    {
+      "name": "北海道・東北",
+      "mom_pct": 8.8,
+      "yoy_pct": 51
+    },
+    {
+      "name": "関東・甲信越",
+      "mom_pct": 4.6,
+      "yoy_pct": 29.1
+    },
+    {
+      "name": "中部・北陸",
+      "mom_pct": 4.8,
+      "yoy_pct": 29.6
+    },
+    {
+      "name": "近畿",
+      "mom_pct": 5.4,
+      "yoy_pct": 45.8
+    },
+    {
+      "name": "中四国",
+      "mom_pct": 7.2,
+      "yoy_pct": 62.4
+    },
+    {
+      "name": "九州・沖縄",
+      "mom_pct": 7.4,
+      "yoy_pct": 39.7
+    }
+  ],
+  "update_policy": "手動原本照合。ウェブサイト・求人情報プラットフォームの無断スクレイピングは行わない。新しい月の公表時に明示的に更新する。"
+}
