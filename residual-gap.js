@@ -99,7 +99,8 @@
     [
       ['推定下取り額（AA−控除）',yen(r.trade)],
       ['下取り額−保証残価',(r.gap>0?'+':'')+yen(r.gap)],
-      ['残価乖離率',percentage(r.gapPct)],
+      ['残価乖離率（下取り基準）',percentage(r.gapPct)],
+      ['AA−残価の乖離率（控除前）',percentage(r.rawGapPct)],
       ['損益分岐AA価格',yen(r.auctionBreakEven)]
     ].forEach(([name,value])=>{
       const span=document.createElement('span'),small=document.createElement('small'),b=document.createElement('b');
