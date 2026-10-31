@@ -126,7 +126,7 @@ async function run(){
     // on navigation and "Load failed" on fetch. Verify that the SW persisted
     // the asset in CacheStorage; offline delivery requires a real iOS check.
     const cached=await page.evaluate(async()=>{
-      const response=await caches.match('./inventory-observations.js?v=2.0');
+      const response=await caches.match('./inventory-observations.js?v=2.1.0');
       return {ok:!!response,body:response?await response.text():''};
     });
     assert.equal(cached.ok,true,'WebKit must store the application asset in CacheStorage');
