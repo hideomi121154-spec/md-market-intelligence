@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-31",
+  "data_period": "国交省申告を加工した公開集計（原典リンク参照）。対象期間・分類方法は各出典による。オンライン見出しは別指標。",
+  "vehicles": [
+    {
+      "make": "日産",
+      "model": "ノート",
+      "code": "E12",
+      "label": "E12（DBA-E12・ガソリン車）",
+      "checked_at": "2026-10-31",
+      "source_note": "公開されている国交省申告の二次集計。車種・型式別に限定しています。報告件数は母数で補正していないため故障率ではありません。",
+      "report_groups": [
+        {
+          "name": "吸気配管・インタークーラー周辺",
+          "count": 47,
+          "scope": "日産 ノート E12／同じ公開集計内の分類",
+          "source": "事例でわかる車の修理代",
+          "source_url": "https://www.shuridai.com/toyota/mlit-defect-report-ranking-top10/",
+          "details": "吸気配管の破損・外れなどの申告。具体的な車両での診断が必要です。"
+        },
+        {
+          "name": "CVT・変速機",
+          "count": 35,
+          "scope": "日産 ノート E12／同じ公開集計内の分類",
+          "source": "事例でわかる車の修理代",
+          "source_url": "https://www.shuridai.com/toyota/mlit-defect-report-ranking-top10/",
+          "details": "滑り・変速不良・ショック・走行不能など。"
+        },
+        {
+          "name": "エンスト",
+          "count": 19,
+          "scope": "日産 ノート E12／同じ公開集計内の分類",
+          "source": "事例でわかる車の修理代",
+          "source_url": "https://www.shuridai.com/toyota/mlit-defect-report-ranking-top10/",
+          "details": "他項目に分類済みのものを除くエンスト報告。"
+        }
+      ],
+      "supplemental": [
+        {
+          "name": "エアコンが効かない（E12の申告）",
+          "count": 12,
+          "source": "クルマデータ／国交省申告の別集計",
+          "source_url": "https://kuruma-data.com/car/note/trouble/aircon/",
+          "note": "ノート全型式のエアコン関連47件のうちDBA-E12は12件。『エアミックスアクチュエーター』故障だけの件数ではありません。上の分類と別集計なので足し合わせません。"
+        }
+      ],
+      "web_mentions": []
+    },
+    {
+      "make": "日産",
+      "model": "ノート",
+      "code": "HE12",
+      "label": "HE12（DAA-HE12・e-POWER）",
+      "checked_at": "2026-10-31",
+      "source_note": "E12ガソリン車とは分けた公開集計の参考値です。",
+      "report_groups": [],
+      "supplemental": [
+        {
+          "name": "エアコンが効かない（HE12の申告）",
+          "count": 28,
+          "source": "クルマデータ",
+          "source_url": "https://kuruma-data.com/car/note/trouble/aircon/",
+          "note": "ノート全型式のエアコン関連47件のうちDAA-HE12は28件。故障率ではありません。"
+        }
+      ],
+      "web_mentions": []
+    }
+  ]
+}
