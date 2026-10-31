@@ -71,4 +71,11 @@ a{color:#8bd0ff}
 </section>
 </div>
 <p class="muted">既存MD MARKETのIndexedDB・ローカルストレージ・バックアップには触れません。コードと契約仕様はこのラボ内に隔離されています。</p>
+<section class="panel">
+<h2>6. 価格モデルの学習・精度検証レポート</h2>
+<p class="muted">PCなどで Python の \`train_ml.py\` が出力したJSONを読み込みます。モデル学習はこの画面内では行いません。レポートは端末内だけで読み取り、サーバーには送信しません。</p>
+<label class="field">学習・精度検証レポートJSON<input id="mlReportFile" type="file" accept=".json,application/json"></label>
+<pre id="mlReportResult">レポート未選択。まず架空データで学習・検証レポートを作成してください。</pre>
+<p class="muted">MAE＝実取引価格と予測価格の平均絶対誤差。検証データでの誤差であって、将来の精度保証ではありません。架空データの結果は実務に使用できません。</p>
+</section>
 </main><script type="module" src="./app.mjs"></script></body></html>
