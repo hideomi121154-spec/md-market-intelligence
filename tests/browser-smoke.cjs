@@ -56,6 +56,14 @@ async function run(){
   await page.locator('#inventory-save').click();
   await page.waitForFunction(()=>document.querySelector('#inventory-summary').textContent.includes('+20.8%'));
   assert.match(await page.locator('#inventory-summary').innerText(),/\+250台/);
+  assert.match(await page.locator('#md-evidence-verdict').innerText(),/仕入れ判断は保留/);
+  await page.waitForFunction(()=>document.querySelector('#md-evidence-supply').textContent.includes('1,450台'));
+  assert.match(await page.locator('#md-evidence-supply').innerText(),/\+250台/);
+  assert.match(await page.locator('#md-evidence-demand').innerText(),/収録順位なし/);
+  assert.match(await page.locator('#md-evidence-price').innerText(),/0件/);
+  await page.locator('#md-evidence-jump').click();
+  await page.locator('#md-evidence-panel').waitFor();
+
 
   // The legacy private vehicle store and new inventory count must survive reload.
   page.on('dialog',dialog=>dialog.accept());
@@ -67,6 +75,8 @@ async function run(){
   await page.waitForFunction(()=>document.querySelector('#count-all').textContent==='1');
   await page.reload({waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>document.querySelector('#count-all').textContent==='1');
+  assert.match(await page.locator('#md-evidence-verdict').innerText(),/仕入れ判断は保留/);
+  assert.match(await page.locator('#md-evidence-price').innerText(),/0件/,'unverified imported listing must not count');
   const saved=await page.evaluate(()=>({
    inventory:JSON.parse(localStorage.getItem('md-market-inventory-snapshots-v1')||'[]'),
    dbName:'md_market_pwa_v1'
