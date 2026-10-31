@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./style.css?v=1.2">
   <link rel="stylesheet" href="./model-sales.css?v=1.4">
   <link rel="stylesheet" href="./valuation.css?v=1.5">
+  <link rel="stylesheet" href="./md-risk.css?v=2.2.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
@@ -38,7 +39,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">USED CAR MARKET INTELLIGENCE</div><h1 id="page-title">中古車市場の現在地</h1><p id="page-subtitle">実際の取引データを、出典と市場区分を分けて分析</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.1.0</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v2.2.0</b></span></div>
       </header>
       <div class="notice" role="note">USSの公式月次集計、全軽自協の軽乗用車、自販連の登録乗用車の車種別新車販売台数を自動取得します。車種別の中古車実落札価格や小売掲載価格は自動取得しません。個別車両CSVは出典を確認するまで「未検証」として扱い、USS統計には混ぜません。</div>
       <section class="screen" id="overview">
@@ -403,6 +404,32 @@
           </div>
           <p class="valuation-disclaimer">計算式：上限仕入価格＝想定小売販売価格 − 値引き − 諸経費 − 目標利益。慎重シナリオではさらに設定した割合だけ小売販売価格が下がったと仮定します。登録済み109件は出典未検証のため自動で試算に使いません。</p>
         </article>
+        <article class="panel risk-panel" id="risk-panel">
+          <h2>在庫期間別のリスク感度分析</h2>
+          <p class="risk-intro">上の仕入れ上限価格の入力条件を引き継ぎ、30日・60日・90日の在庫期間を比較します。<strong>予測ではなく仮定の試算</strong>です。</p>
+          <p class="risk-intro">次の入力値は架空の例です。実車の経費・値下がり想定に変更してください。税抜ベースです。</p>
+          <div class="risk-params">
+            <label>対象車種・グレード（任意）<input id="risk-car" maxlength="100" placeholder="例：デイズ X / 赤"></label>
+            <label>1日あたり追加在庫費（円）<input id="risk-daily" type="number" min="0" max="100000" step="10" inputmode="numeric"></label>
+            <label>30日あたり追加値下がり率（%）<input id="risk-markdown" type="number" min="0" max="5" step="0.1" inputmode="decimal"></label>
+          </div>
+          <p class="risk-calc-note" id="risk-note">諸経費の入力値を読み込み中…</p>
+          <div class="risk-table-scroll">
+            <table class="risk-table">
+              <thead><tr><th scope="col">期間</th><th scope="col">追加値下がり</th><th scope="col">追加保管費</th><th scope="col">目標利益を満たす計算上の仕入上限</th><th scope="col">候補額での利益</th></tr></thead>
+              <tbody id="risk-rows"></tbody>
+            </table>
+          </div>
+          <p class="risk-limit">目標利益を保てる期間の計算上の境界：<strong id="risk-limit">—</strong></p>
+          <p id="risk-status" role="status" aria-live="polite"></p>
+          <div class="risk-actions">
+            <button id="risk-note-show" class="button secondary" type="button">検討メモを全文選択</button>
+            <button id="risk-reset" class="button ghost" type="button">在庫リスクの例に戻す</button>
+          </div>
+          <label class="risk-intro" for="risk-summary">検討メモ（長押しコピー可。自動保存・送信しません）</label>
+          <textarea id="risk-summary" readonly spellcheck="false" autocorrect="off"></textarea>
+          <p class="risk-footnote">計算式：追加値下がり率＝入力率×日数÷30。想定売上＝小売販売価格×（1−初期下落率−追加値下がり率）。目標利益確保の上限＝想定売上−上段の諸経費−追加保管費−目標利益。上段の在庫維持費は既に計上済みです。実際の販売日数・成約率・相場の予測や仕入れ承認ではありません。消費税・共通固定費などは別途検証してください。</p>
+        </article>
         <div class="roadmap">
           <div class="step complete"><small>PHASE 0 — 実装済み</small><h3>iPhone単独PWA</h3><p>ホーム画面アプリ、CSV取込、端末保存、価格分析、オフライン表示</p></div>
           <div class="step"><small>PHASE 1</small><h3>実データの信頼性と充実</h3><p>車両ごとの原本照合、グレード・色・装備、正規のデータソース</p></div>
@@ -421,7 +448,8 @@
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
   <script src="./registered-sales.js?v=2.0.3" defer></script>
-  <script src="./valuation.js?v=1.5" defer></script>
+  <script src="./valuation.js?v=2.2.0" defer></script>
+  <script src="./md-risk.js?v=2.2.0" defer></script>
   <script src="./demand-signals.js?v=2.0.3" defer></script>
   <script src="./kei-history.js?v=2.0.3" defer></script>
   <script src="./registered-history.js?v=2.0.3" defer></script>

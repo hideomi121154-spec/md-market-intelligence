@@ -1,0 +1,32 @@
+name: MD inventory risk sensitivity tests
+on:
+  push:
+    paths:
+      - 'valuation.js'
+      - 'md-risk.js'
+      - 'md-risk.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_md_risk.cjs'
+      - '.github/workflows/md-risk-tests.yml'
+  pull_request:
+    paths:
+      - 'valuation.js'
+      - 'md-risk.js'
+      - 'md-risk.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_md_risk.cjs'
+      - '.github/workflows/md-risk-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check valuation.js && node --check md-risk.js && node --check tests/test_md_risk.cjs
+      - run: node tests/test_md_risk.cjs
+      - run: node tests/test_md_evidence.cjs
+      - run: node tests/test_inventory_observations.js
