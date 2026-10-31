@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="./model-price-report.css?v=2.3.0">
   <link rel="stylesheet" href="./observation-watch.css?v=2.4.0">
   <link rel="stylesheet" href="./personal-car.css?v=2.5.0">
+  <link rel="stylesheet" href="./fault-risk.css?v=2.6.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
 </head>
 <body>
@@ -114,6 +115,77 @@
             <div class="mycar-actions"><button type="button" id="mycar-export" class="button secondary">JSONバックアップを表示・選択</button><button type="button" id="mycar-restore" class="button ghost">JSONを追加復元</button></div>
             <textarea id="mycar-backup" class="mycar-backup" spellcheck="false" autocorrect="off" aria-label="マイカー相場ノートのバックアップJSON"></textarea>
             <p class="mycar-note">復元は追加のみで、既存IDの異なるデータは上書きしません。まだ保存されたファイルではないため、必ずコピーして外部に保管してください。</p>
+          </article>
+          <article class="panel mycar-panel fault-panel" id="fault-risk-panel">
+            <h3>5. 車種別の故障・修理情報を調べる</h3>
+            <p class="mycar-intro">国土交通省やメーカーの公表情報、整備事例、現場での経験を型式ごとに分けて記録します。情報は端末にのみ保存されます。</p>
+            <p class="fault-note">国交省の「不具合申告」はリコール確定ではありません。SNS投稿数・保存メモ数から故障率や発生確率を計算しません。情報源ごとの検索・原典確認を行ってください。</p>
+            <div class="fault-links">
+              <a class="fault-link" href="https://renrakuda.mlit.go.jp/renrakuda/opn.html" target="_blank" rel="noopener noreferrer">国交省の不具合申告を検索 ↗</a>
+              <a class="fault-link" href="https://renrakuda.mlit.go.jp/renrakuda/recall-search.html" target="_blank" rel="noopener noreferrer">国交省のリコール情報を検索 ↗</a>
+              <a class="fault-link" href="https://www.nissan.co.jp/RECALL/" target="_blank" rel="noopener noreferrer">日産のリコール情報 ↗</a>
+            </div>
+            <p class="mycar-note">リンク先で車種・型式を入力して調べてください。外部ページの無断自動収集や投稿の転載は行いません。</p>
+            <div class="fault-actions">
+              <button type="button" class="button secondary" id="fault-sync-mycar">登録したマイカーの車名を反映</button>
+              <button type="button" class="button secondary" id="fault-example">ノートE12の入力例</button>
+            </div>
+            <form id="fault-form">
+              <div class="fault-grid">
+                <label>メーカー<input id="fault-make" maxlength="50" required placeholder="日産"></label>
+                <label>車種<input id="fault-model" maxlength="80" required placeholder="ノート"></label>
+                <label>型式（必須・別型式は分ける）<input id="fault-code" maxlength="30" required placeholder="DBA-E12 / DAA-HE12"></label>
+                <label>故障部品<input id="fault-component" maxlength="80" required placeholder="エアミックスアクチュエーター"></label>
+                <label class="wide">症状・不具合の内容<textarea id="fault-symptom" maxlength="400" required rows="2" placeholder="温度調整不能・冷風が出ないなど。原因が未確定なら症状のみ記入"></textarea></label>
+                <label>情報源<select id="fault-source">
+                  <option value="field">現場経験・本人確認</option>
+                  <option value="mlit">国交省の不具合申告</option>
+                  <option value="maker">メーカー公式情報</option>
+                  <option value="sns">SNS・口コミ</option>
+                  <option value="web">整備事例・その他</option>
+                </select></label>
+                <label>確認状況<select id="fault-condition">
+                  <option value="reported">症状の報告</option>
+                  <option value="diagnosed">故障部位を確認</option>
+                  <option value="repaired">修理・交換を確認</option>
+                </select></label>
+                <label>発生・確認日（任意）<input id="fault-date" type="date"></label>
+                <label>走行距離km（任意）<input id="fault-mileage" type="number" min="0" max="2000000" step="1" inputmode="numeric"></label>
+                <label>修理費・見積額（円・任意）<input id="fault-cost" type="number" min="0" max="10000000" step="1" inputmode="numeric"></label>
+                <label class="wide">原典URL（外部情報では必須）<input id="fault-url" type="url" placeholder="https://..."></label>
+                <label class="wide">メモ（任意）<textarea id="fault-notes" maxlength="500" rows="2" placeholder="作業内容や未確認点。車台番号・氏名・電話番号は入力しない"></textarea></label>
+              </div>
+              <button type="submit" class="button primary" id="fault-save">この故障・修理メモを端末に保存</button>
+            </form>
+            <p class="mycar-note" id="fault-today"></p>
+            <h3>保存した故障情報を検索</h3>
+            <div class="fault-grid">
+              <label>メーカー<input id="fault-filter-make" placeholder="メーカーで絞る"></label>
+              <label>車種<input id="fault-filter-model" placeholder="車種で絞る"></label>
+              <label>型式・車両コード<input id="fault-filter-code" placeholder="E12 と HE12 は区別"></label>
+            </div>
+            <p id="fault-count" class="mycar-note"></p>
+            <div id="fault-records" aria-live="polite"></div>
+            <div class="fault-cap">
+              <h3>想定修理費を仕入れ上限に反映（仮定の試算）</h3>
+              <p class="mycar-note">既に試算した仕入れ上限から、追加で見込む修理費を単純に引きます。故障確率や市場価格をAIが推定したものではありません。既存の計画タブには自動転記しません。</p>
+              <div class="fault-grid">
+                <label>元の仕入れ上限（円）<input id="fault-baseline" type="number" min="0" max="1000000000" step="1" inputmode="numeric" placeholder="1000000"></label>
+                <label>追加修理費の見込み（円）<input id="fault-reserve" type="number" min="0" max="10000000" step="1" inputmode="numeric" placeholder="50000"></label>
+              </div>
+              <output id="fault-adjusted" aria-live="polite">金額を入力してください</output>
+              <a class="fault-link" href="#plan">仕入れ上限の詳細試算（計画タブ）へ</a>
+            </div>
+            <div class="fault-cap">
+              <h3>故障情報メモのJSONバックアップ</h3>
+              <p class="mycar-note">マイカー価格データとは別の保存領域です。Safariとホーム画面版で別保存になる場合があります。</p>
+              <div class="fault-actions">
+                <button type="button" id="fault-export" class="button secondary">JSONを表示・コピー</button>
+                <button type="button" id="fault-restore" class="button ghost">JSONから追加復元</button>
+              </div>
+              <textarea class="fault-backup" id="fault-backup" aria-label="故障情報メモのバックアップJSON" spellcheck="false"></textarea>
+            </div>
+            <p id="fault-status" role="status" aria-live="polite"></p>
           </article>
         </div>
       </section>
@@ -579,6 +651,7 @@
   <script src="./storage.js?v=2.0.1" defer></script>
   <script src="./app.js?v=2.0.2" defer></script>
   <script src="./personal-car.js?v=2.5.0" defer></script>
+  <script src="./fault-risk.js?v=2.6.0" defer></script>
   <script src="./offline-data.js?v=2.0.3" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>

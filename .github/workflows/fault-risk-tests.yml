@@ -1,0 +1,22 @@
+name: Fault risk notebook checks
+on:
+  push:
+    paths:
+      - 'fault-risk.js'
+      - 'tests/test_fault_risk.js'
+      - '.github/workflows/fault-risk-tests.yml'
+  pull_request:
+    paths:
+      - 'fault-risk.js'
+      - 'tests/test_fault_risk.js'
+      - '.github/workflows/fault-risk-tests.yml'
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check fault-risk.js
+      - run: node tests/test_fault_risk.js
