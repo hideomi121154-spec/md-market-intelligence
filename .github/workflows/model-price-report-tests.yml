@@ -1,0 +1,32 @@
+name: Monthly model price report regression
+on:
+  push:
+    paths:
+      - 'model-price-report.js'
+      - 'model-price-report.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_model_price_report.cjs'
+      - '.github/workflows/model-price-report-tests.yml'
+  pull_request:
+    paths:
+      - 'model-price-report.js'
+      - 'model-price-report.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_model_price_report.cjs'
+      - '.github/workflows/model-price-report-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check syntax
+        run: node --check model-price-report.js && node --check tests/test_model_price_report.cjs
+      - name: Test official-source monthly price records
+        run: node tests/test_model_price_report.cjs
+      - name: Preserve inventory and price-evidence rules
+        run: node tests/test_inventory_observations.js && node tests/test_md_evidence.cjs && node tests/test_md_risk.cjs

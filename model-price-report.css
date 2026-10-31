@@ -1,0 +1,27 @@
+.model-price-panel{margin:20px 0 30px}
+.model-price-panel h2{font-size:clamp(18px,2vw,23px);margin:0 0 10px}
+.model-price-intro,.model-price-note{font-size:12px;line-height:1.8;color:var(--muted)}
+.model-price-panel a{color:#8fe3dc}
+.model-price-form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:15px 0}
+.model-price-form-grid label{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:12px;color:#c9d9ed}
+.model-price-form-grid input{width:100%;min-width:0;box-sizing:border-box;min-height:45px;border:1px solid #36506d;border-radius:10px;padding:9px 11px;font-size:16px;background:#0a192b;color:#fff}
+.model-price-form-grid .wide{grid-column:1/-1}
+.model-price-source-note{padding:11px 13px;border-left:3px solid #55a99a;background:#0a2030;border-radius:0 9px 9px 0}
+.model-price-control{margin-top:15px;display:grid;gap:6px;font-size:12px;color:#c5d7e9}
+.model-price-control select{max-width:100%;min-height:45px;border:1px solid #36506d;border-radius:10px;padding:9px 11px;background:#0b182a;color:#fff;font-size:15px}
+#model-price-summary{margin:12px 0;padding:14px;border:1px solid #36506d;border-radius:11px;background:#0c1b30;line-height:1.85;font-size:13px}
+.model-price-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.model-price-chart{padding:12px;border:1px solid #36506d;border-radius:11px;background:#0b1a2c;min-width:0}
+.model-price-chart strong{display:block;font-size:12px;color:#d6e8fa}
+.model-price-chart svg{display:block;width:100%;height:auto;max-height:165px}
+.model-price-table-scroll{overflow-x:auto;max-width:100%;margin:15px 0}
+.model-price-table{border-collapse:collapse;min-width:590px;width:100%;font-size:12px}
+.model-price-table th,.model-price-table td{border-bottom:1px solid #36506d;padding:10px;text-align:right;white-space:nowrap}
+.model-price-table th:first-child,.model-price-table td:first-child{text-align:left}
+.model-price-table th{background:#142438;color:#d4e2f4}
+.model-price-backup{margin-top:18px}
+.model-price-backup summary{color:#a7e9dd;font-weight:700}
+#model-price-backup{width:100%;min-height:110px;box-sizing:border-box;margin:11px 0;padding:10px;border:1px solid #36506d;border-radius:10px;background:#0b192a;color:#fff;resize:vertical;font:12px/1.5 ui-monospace,monospace}
+#model-price-status{font-size:12px;line-height:1.75;min-height:23px;color:#f2d29e}
+@media(max-width:740px){.model-price-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.model-price-form-grid{grid-template-columns:1fr}.model-price-charts{grid-template-columns:1fr}}
