@@ -127,4 +127,4 @@
  window.addEventListener('md-inventory-updated',refresh);
  // Wait for the browser to settle; data stays local and is only read.
  (async()=>{await loadRanking();await refresh()})();
-})(typeof window==='undefined'?{}:window);
+})(typeof window==='undefined'?globalThis:window);
