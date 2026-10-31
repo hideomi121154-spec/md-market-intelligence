@@ -1,0 +1,55 @@
+'use strict';
+const assert=require('node:assert/strict');
+const P=require('../model-price-report.js');
+const base={
+ month:'2026-08',make:'日産',model:'デイズ',model_scope:'B4系（現行型）',
+ average_total_yen:1453000,extended_listings:1300,
+ source_url:P.SOURCE,source_pdf_url:'https://www.carsensor.net/contents/skins/CMSsouken/pdf/sample_2026_8.pdf',checked_on:'2026-10-31'
+};
+const sep={...base,month:'2026-09',average_total_yen:1510000,extended_listings:1450,source_pdf_url:'https://www.carsensor.net/contents/skins/CMSsouken/pdf/sample_2026_9.pdf'};
+const rows=P.mergeRows([base],[sep]);
+assert.equal(rows.length,2);
+assert.equal(P.inputYen('145.3'),1453000);
+assert.equal(P.inputYen('145'),1450000);
+assert.throws(()=>P.validate({...base,average_total_yen:P.inputYen('0.1')}),/整数/,'minimum accepted price is >= 10000 yen');
+const s=P.summarize(rows,P.seriesKey(base));
+assert.equal(s.latest.month,'2026-09');
+assert.equal(s.previous.month,'2026-08');
+assert.equal(s.delta,57000);
+assert.equal(s.volumeDelta,150);
+assert.equal(s.gap,1);
+assert.equal(s.comparable,true);
+assert.ok(Math.abs(s.pct-3.923)<0.01);
+const skipped=P.summarize([base,{...sep,month:'2026-10'}],P.seriesKey(base));
+assert.equal(skipped.gap,2);
+assert.equal(skipped.comparable,false,'missing September is not month-on-month');
+assert.equal(P.mergeRows(rows,[sep]).length,2,'duplicate import must be idempotent');
+assert.throws(()=>P.mergeRows(rows,[{...sep,average_total_yen:999000}]),/上書き/);
+assert.equal(P.summarize([base,{...sep,model_scope:'別世代'}],P.seriesKey(base)).data.length,1);
+assert.equal(P.summarize([base,{...sep,model:'ノート'}],P.seriesKey(base)).data.length,1);
+assert.equal(P.summarize([base,{...sep,make:'ホンダ'}],P.seriesKey(base)).data.length,1);
+assert.equal(P.unbundle(P.bundle(rows)).length,2);
+assert.equal(P.unbundle(P.bundle([])).length,0);
+assert.throws(()=>P.unbundle('{"schema_version":1,"kind":"other","records":[]}'),/バックアップ/);
+assert.throws(()=>P.unbundle('not json'),/JSON/);
+assert.throws(()=>P.validate({...base,month:'2026-13'}),/対象月/);
+assert.throws(()=>P.validate({...base,checked_on:'2026-02-31'}),/対象月/);
+assert.throws(()=>P.validate({...base,average_total_yen:NaN}),/整数/);
+assert.throws(()=>P.validate({...base,average_total_yen:1453000.5}),/整数/);
+assert.throws(()=>P.validate({...base,extended_listings:-1}),/整数/);
+assert.throws(()=>P.validate({...base,extended_listings:'1300'}),/整数/);
+assert.throws(()=>P.validate({...base,source_url:'https://another.com'}),/参照元/);
+assert.throws(()=>P.validate({...base,source_pdf_url:'https://example.com/price.pdf'}),/PDF/);
+assert.throws(()=>P.validate({...base,source_pdf_url:'http://www.carsensor.net/data.pdf'}),/PDF/);
+assert.throws(()=>P.validate({...base,source_pdf_url:'https://www.carsensor.net/source.csv'}),/PDF/);
+assert.throws(()=>P.inputYen('1e4'),/万円単位/);
+assert.throws(()=>P.inputYen('145.33'),/万円単位/);
+assert.throws(()=>P.inputYen(''),/万円単位/);
+assert.equal(P.pdfUrl(''),'','PDF URL may remain empty, but entry is described as unverified without it');
+assert.throws(()=>P.validateRows([base,base]),/重複/);
+assert.throws(()=>P.validateRows(Array(501).fill(base)),/500件/);
+const none=P.summarize([],P.seriesKey(base));
+assert.equal(none.latest,null);
+assert.equal(none.comparable,false);
+assert.equal(Object.keys(P.validate(base)).includes('seller_price'),false);
+console.log('PASS: monthly price and extended listings, source validation, real units, gap protection, backup safety');
