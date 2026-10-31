@@ -41,6 +41,36 @@ async function run(){
  try{
   await page.goto(origin+'/',{waitUntil:'domcontentloaded'});
   await page.locator('#inventory-summary').waitFor();
+  // Local-only monthly publication transcriptions; all values are synthetic test fixtures.
+  await page.locator('#model-price-month').fill('2026-08');
+  await page.locator('#model-price-make').fill('日産');
+  await page.locator('#model-price-model').fill('デイズ');
+  await page.locator('#model-price-scope').fill('B4系');
+  await page.locator('#model-price-amount').fill('145.3');
+  await page.locator('#model-price-count').fill('1300');
+  await page.locator('#model-price-checked').fill('2026-10-31');
+  await page.locator('#model-price-save').click();
+  await page.waitForFunction(()=>document.querySelector('#model-price-summary').textContent.includes('145.3万円'));
+  await page.locator('#model-price-month').fill('2026-09');
+  await page.locator('#model-price-amount').fill('151.0');
+  await page.locator('#model-price-count').fill('1450');
+  await page.locator('#model-price-save').click();
+  await page.waitForFunction(()=>document.querySelector('#model-price-summary').textContent.includes('前月比較'));
+  assert.equal(await page.locator('#model-price-rows tr').count(),2);
+  assert.equal(await page.locator('#model-price-chart svg circle').count(),2);
+  assert.equal(await page.locator('#model-volume-chart svg circle').count(),2);
+  await page.locator('.model-price-backup summary').click();
+  await page.locator('#model-price-export').click();
+  const priceBackup=await page.locator('#model-price-backup').inputValue();
+  assert.equal(JSON.parse(priceBackup).records.length,2);
+  await page.locator('#model-price-backup').fill(priceBackup);
+  await page.locator('#model-price-restore').click();
+  assert.match(await page.locator('#model-price-status').innerText(),/0件を追加復元/);
+  await page.locator('#model-price-backup').fill('not-json');
+  await page.locator('#model-price-restore').click();
+  assert.match(await page.locator('#model-price-status').innerText(),/復元できません/);
+  await page.locator('#model-price-backup').fill(priceBackup);
+
   await page.locator('#inventory-date').fill('2026-10-01');
   await page.locator('#inventory-make').fill('日産');
   await page.locator('#inventory-model').fill('デイズ');
@@ -101,6 +131,9 @@ async function run(){
    dbName:'md_market_pwa_v1'
   }));
   assert.equal(saved.inventory.length,2,'inventory snapshots must persist separately');
+  assert.equal(await page.locator('#model-price-rows tr').count(),2,'public-model monthly records persist on reload');
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('md-market-model-price-monthly-v1')).length),2);
+
 
   await page.locator('a[data-tab="overview"]').click();
   assert.match(await page.locator('#inventory-summary').innerText(),/\+20.8%/);
