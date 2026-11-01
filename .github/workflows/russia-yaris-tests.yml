@@ -1,0 +1,36 @@
+name: Russia Yaris export monitor validation
+on:
+  pull_request:
+    paths:
+      - 'russia-yaris.*'
+      - 'data/russia-yaris-sources.json'
+      - 'data/overseas-export-snapshot.json'
+      - 'data/registered_annual_history.json'
+      - 'tests/test_russia_yaris.cjs'
+      - 'index.html'
+      - 'sw.js'
+      - '.github/workflows/russia-yaris-tests.yml'
+  push:
+    paths:
+      - 'russia-yaris.*'
+      - 'data/russia-yaris-sources.json'
+      - 'data/overseas-export-snapshot.json'
+      - 'data/registered_annual_history.json'
+      - 'tests/test_russia_yaris.cjs'
+      - 'index.html'
+      - 'sw.js'
+      - '.github/workflows/russia-yaris-tests.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check russia-yaris.js
+      - run: node tests/test_russia_yaris.cjs
+      - run: node tests/test_overseas_market.cjs
+      - run: node tests/test_crossborder_signal.cjs
