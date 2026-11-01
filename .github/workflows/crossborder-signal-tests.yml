@@ -1,0 +1,31 @@
+name: Domestic versus overseas crossborder demand signal
+on:
+  pull_request:
+    paths:
+      - 'crossborder-signal.js'
+      - 'crossborder-signal.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_crossborder_signal.cjs'
+      - '.github/workflows/crossborder-signal-tests.yml'
+  push:
+    paths:
+      - 'crossborder-signal.js'
+      - 'crossborder-signal.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_crossborder_signal.cjs'
+      - '.github/workflows/crossborder-signal-tests.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check crossborder-signal.js && node --check tests/test_crossborder_signal.cjs
+      - run: node tests/test_crossborder_signal.cjs
+      - run: node tests/test_inventory_observations.js
