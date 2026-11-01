@@ -1,0 +1,42 @@
+name: Overseas destination evidence desk regression
+on:
+  push:
+    paths:
+      - 'export-evidence-desk.*'
+      - 'global-export-model.js'
+      - 'model-price-report.js'
+      - 'data/overseas-export-snapshot.json'
+      - 'data/export-model-catalog.json'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_export_evidence_desk.cjs'
+      - '.github/workflows/export-evidence-desk-tests.yml'
+  pull_request:
+    paths:
+      - 'export-evidence-desk.*'
+      - 'global-export-model.js'
+      - 'model-price-report.js'
+      - 'data/overseas-export-snapshot.json'
+      - 'data/export-model-catalog.json'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_export_evidence_desk.cjs'
+      - '.github/workflows/export-evidence-desk-tests.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compare country totals, model evidence, and user-observed retail prices
+        run: |
+          node --check export-evidence-desk.js
+          node --check global-export-model.js
+          node --check sw.js
+          node tests/test_export_evidence_desk.cjs
+          node tests/test_global_export_model.cjs
+          node tests/test_country_export_mix.cjs

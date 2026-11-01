@@ -292,7 +292,15 @@ function change(){
  try{
   const view=buildView(inputs.catalog,inputs.snapshot,inputs.official,inputs.annual,inputs.kei,inputs.russia,
    inputs.notes,c,m,v);
-  paint(view);rememberSelection();
+  paint(view);
+  if(root.MDExportEvidence?.refresh){
+    try{root.MDExportEvidence.refresh(view,inputs.snapshot,inputs.official)}
+    catch(err){
+      const target=$('export-evidence-results');
+      if(target)target.textContent='比較表を表示できません：'+err.message;
+    }
+  }
+  rememberSelection();
   status(view.country+' × '+view.make+' '+view.model+'を表示中。車種別の公式実輸出台数は未取得です。');
  }catch(err){host.replaceChildren();status('表示できません：'+err.message)}
 }

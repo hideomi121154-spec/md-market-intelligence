@@ -106,6 +106,16 @@ async function run(){
   await page.locator('#export-model-make').selectOption('トヨタ');
   await page.locator('#export-model-model').selectOption('ヤリス');
   assert.match(await page.locator('#export-model-results').innerText(),/186,585台/);
+  await page.waitForFunction(()=>document.querySelector('#export-evidence-results')?.textContent.includes('国別全車種'));
+  assert.equal(await page.locator('#export-evidence-mode option').count(),3);
+  await page.locator('#export-evidence-mode').selectOption('recorded');
+  assert.match(await page.locator('#export-evidence-results').innerText(),/本人記録はありません/);
+  await page.locator('#export-evidence-mode').selectOption('all');
+  assert.equal(await page.locator('#export-evidence-results .gm-compare-table tbody tr').count(),55);
+  await page.locator('#export-evidence-mode').selectOption('top10');
+  assert.equal(await page.locator('#export-evidence-results .gm-compare-table tbody tr').count(),10);
+  assert.match(await page.locator('#export-evidence-results').innerText(),/掲載価格/);
+
   assert.match(await page.locator('#export-model-results').innerText(),/未取得/);
   
   await page.locator('#md-evidence-jump').click();
