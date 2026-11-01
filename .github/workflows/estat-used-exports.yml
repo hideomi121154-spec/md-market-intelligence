@@ -1,0 +1,77 @@
+name: Official e-Stat Japanese used-car export updates
+on:
+  schedule:
+    - cron: '26 1 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/fetch_estat_used_car_exports.py'
+      - 'tests/test_fetch_estat_exports.py'
+      - 'tests/test_estat_exports.cjs'
+      - 'estat-exports.js'
+      - 'estat-exports.css'
+      - 'data/estat_used_vehicle_exports.json'
+      - 'index.html'
+      - 'sw.js'
+      - '.github/workflows/estat-used-exports.yml'
+  pull_request:
+    paths:
+      - 'scripts/fetch_estat_used_car_exports.py'
+      - 'tests/test_fetch_estat_exports.py'
+      - 'tests/test_estat_exports.cjs'
+      - 'estat-exports.js'
+      - 'estat-exports.css'
+      - 'data/estat_used_vehicle_exports.json'
+      - 'index.html'
+      - 'sw.js'
+      - '.github/workflows/estat-used-exports.yml'
+permissions:
+  contents: write
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regression tests without credentials
+        run: |
+          python -m unittest discover -s tests -p 'test_fetch_estat_exports.py' -v
+          node --check estat-exports.js
+          node tests/test_estat_exports.cjs
+  official-update:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: validation
+    runs-on: ubuntu-latest
+    env:
+      ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch verified government country and HS quantities
+        if: env.ESTAT_APP_ID != ''
+        run: python scripts/fetch_estat_used_car_exports.py
+      - name: Document missing optional credential
+        if: env.ESTAT_APP_ID == ''
+        run: echo 'SKIPPED - register the free e-Stat app ID in repository secrets as ESTAT_APP_ID.'
+      - name: Commit validated public data only when changed
+        if: env.ESTAT_APP_ID != ''
+        run: |
+          if ! git diff --quiet -- data/estat_used_vehicle_exports.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/estat_used_vehicle_exports.json
+            git commit -m "data: update official Japanese used-car exports by destination and HS"
+            git push origin HEAD:main
+          else
+            echo 'Official source has not changed.'
+          fi

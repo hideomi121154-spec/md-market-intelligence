@@ -1,0 +1,7 @@
+.estat-export-panel{padding:13px;border:1px solid #34536d;border-radius:10px;margin:13px 0}
+.estat-export-panel h3{font-size:15px;margin:5px 0 10px}
+.estat-export-panel .cm-controls{margin:8px 0 13px}
+.estat-export-panel select{min-width:0;width:100%;background:#0b2032;color:#fff;border:1px solid #35516b;border-radius:8px;padding:8px;font:inherit}
+.estat-export-panel .cm-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+.estat-export-panel .cm-warning{margin:9px 0}
+@media(max-width:420px){.estat-export-panel .cm-kpis{grid-template-columns:1fr}}

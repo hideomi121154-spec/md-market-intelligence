@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "status": "not_configured",
+  "year": 2026,
+  "source_url": "https://www.e-stat.go.jp/stat-search/database?layout=dataset&result_page=1&toukei=00350300",
+  "hs_reference_url": "https://www.customs.go.jp/yusyutu/2026_01_01/data/j_87.htm",
+  "months": [],
+  "rows": [],
+  "hs_labels": {},
+  "updated_at": null,
+  "note": "e-StatアプリケーションID未設定のため公式統計の自動取得は未開始。公開ランキングとユーザー転記は別の表示です。"
+}
