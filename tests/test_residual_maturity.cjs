@@ -53,5 +53,5 @@ for(const asset of ['residual-maturity.js?v=3.2.0','residual-maturity.css?v=3.2.
 assert.ok(html.includes('id="rm-panel"')&&html.includes('id="rm-results"')&&html.includes('id="rm-class"'));
 assert.ok(html.indexOf('offline-data.js?v=2.0.3')<html.indexOf('residual-maturity.js?v=3.2.0'));
 assert.ok(sw.includes("'./data/registered_annual_history.json'")&&sw.includes("'./data/kei_annual_history.json'"));
-assert.ok(sw.includes('md-market-pwa-v3-8-0-20261101'));
+assert.ok(sw.includes('md-market-pwa-v3-9-0-20261101'));
 console.log('PASS: cohort schedule, weighted scenarios, source labels, ranking gaps, PWA assets');
