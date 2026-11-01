@@ -13,7 +13,7 @@ const compare=(make,model,raw='')=>E.compareCountries(catalog,snap,official,raw,
 const base=compare('トヨタ','ヤリス');
 assert.equal(base.rows.length,55);
 assert.equal(base.macroCountries,10);
-assert.equal(base.typeCountries,18);
+assert.equal(base.typeCountries,16,'only countries with type top-five coverage count; other aggregate-only countries are not counted');
 assert.equal(base.modelCountries,0);
 assert.equal(base.officialCountries,0);
 assert.equal(base.officialIsConfigured,false);
