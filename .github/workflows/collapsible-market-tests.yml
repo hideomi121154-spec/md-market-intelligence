@@ -1,0 +1,21 @@
+name: Collapsible market panels regression
+on:
+  pull_request:
+    paths: ['index.html','residual-maturity.js','sw.js','history-fold.css','tests/test_collapsible_market_panels.cjs','tests/test_offline_data.cjs','tests/test_residual_gap.cjs','tests/test_residual_maturity.cjs','.github/workflows/collapsible-market-tests.yml']
+  push:
+    paths: ['index.html','residual-maturity.js','sw.js','history-fold.css','tests/test_collapsible_market_panels.cjs','tests/test_offline_data.cjs','tests/test_residual_gap.cjs','tests/test_residual_maturity.cjs']
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check syntax
+        run: node --check residual-maturity.js && node --check sw.js
+      - name: Verify fold panels and legacy business logic
+        run: node tests/test_collapsible_market_panels.cjs && node tests/test_regional_jobs.cjs && node tests/test_prefecture_jobs.cjs && node tests/test_residual_gap.cjs && node tests/test_residual_maturity.cjs
+      - name: Verify backups and offline startup
+        run: node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js
