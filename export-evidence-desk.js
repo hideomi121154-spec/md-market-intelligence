@@ -184,16 +184,17 @@
   }
   target.append(domestic);
  }
- function refresh(view,snapshot){
+ function safeStorage(key){try{return localStorage.getItem(key)||''}catch{return ''}}
+ function refresh(view,snapshot,official){
   if(!view||!snapshot)return;
   const result=compareCountries(view.catalog,snapshot,
-   window.__mdEstatDataForComparison||{schema_version:1,status:'not_configured',year:2026,rows:[],months:[],updated_at:null,hs_labels:{}},
-   localStorage.getItem(root.MDGlobalModelExport.NOTES_KEY)||'',
+   official,
+   safeStorage(root.MDGlobalModelExport.NOTES_KEY),
    view.make,view.model);
-  // Official HS country selection is already shown in main monitor; comparison
-  // uses the catalog and approved secondary snapshot unless available safely.
+  // Official e-Stat remains a separate data series; the table never
+  // converts HS totals to model-specific counts.
   latest=result;
-  price=priceContext(localStorage.getItem(PRICE_KEY)||'',view.make,view.model);
+  price=priceContext(safeStorage(PRICE_KEY),view.make,view.model);
   render();
  }
  const mode=$('export-evidence-mode');
