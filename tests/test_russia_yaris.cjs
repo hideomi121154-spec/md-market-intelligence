@@ -22,12 +22,15 @@ assert.throws(()=>M.verifyExport({...exportSnapshot,latest_period:'2026-10'}),/é
 assert.equal(M.userModelNotes('{bad JSON').length,0);
 assert.equal(M.userModelNotes(JSON.stringify({kind:'fake',records:[]})).length,0);
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
-for(const id of ['russia-yaris-panel','russia-yaris-results','russia-yaris-refresh','russia-yaris-add-note','russia-yaris-status'])
- assert.ok(html.includes('id="'+id+'"'),'missing UI '+id);
+assert.ok(!html.includes('id="russia-yaris-panel"'),'obsolete Russia-only UI is now global');
+for(const id of ['export-model-panel','export-model-country','export-model-make','export-model-model','export-model-results'])
+ assert.ok(html.includes('id="'+id+'"'),'global UI must preserve Russia Yaris as default '+id);
 for(const a of ['russia-yaris.js?v=4.0.0','russia-yaris.css?v=4.0.0'])
  assert.ok(html.includes(a)&&sw.includes(a),'cache mismatch '+a);
 assert.ok(sw.includes("'./data/russia-yaris-sources.json'"));
 assert.ok(html.indexOf('crossborder-signal.js?v=3.9.0')<html.indexOf('russia-yaris.js?v=4.0.0'));
+assert.ok(html.indexOf('russia-yaris.js?v=4.0.0')<html.indexOf('global-export-model.js?v=4.3.0'));
+assert.ok(sw.includes("'./data/export-model-catalog.json'"));
 const mod=fs.readFileSync(path.join(root,'russia-yaris.js'),'utf8');
 assert.ok(!mod.includes('innerHTML')&&!mod.includes('localStorage.removeItem'));
 console.log('PASS Russia/Yaris: official/secondary/brand/model separation, invalid records, in-app data reuse, PWA');

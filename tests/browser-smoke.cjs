@@ -89,6 +89,25 @@ async function run(){
   for(const id of marketFolds){
     assert.equal(await page.locator('#'+id).evaluate(el=>el.open),false,'must start collapsed: '+id);
   }
+  // World export monitor: native iPhone-sized selectors and no invented model demand.
+  assert.equal(await page.locator('#export-model-panel').evaluate(el=>el.open),false);
+  await page.locator('#export-model-panel > summary').click();
+  await page.waitForFunction(()=>document.querySelector('#export-model-status').textContent.includes('未取得'));
+  assert.ok(await page.locator('#export-model-country option').count()>=55);
+  assert.ok(await page.locator('#export-model-make option').count()>=9);
+  await page.locator('#export-model-country').selectOption('ニュージーランド');
+  await page.locator('#export-model-make').selectOption('ホンダ');
+  await page.locator('#export-model-model').selectOption('N-BOX');
+  assert.match(await page.locator('#export-model-results').innerText(),/国内新車登録台数/);
+  assert.match(await page.locator('#export-model-results').innerText(),/車種名まで一致した公式/);
+  await page.locator('#export-model-country').selectOption('オーストラリア');
+  assert.match(await page.locator('#export-model-results').innerText(),/未収録/);
+  await page.locator('#export-model-country').selectOption('ロシア');
+  await page.locator('#export-model-make').selectOption('トヨタ');
+  await page.locator('#export-model-model').selectOption('ヤリス');
+  assert.match(await page.locator('#export-model-results').innerText(),/186,585台/);
+  assert.match(await page.locator('#export-model-results').innerText(),/未取得/);
+  
   await page.locator('#md-evidence-jump').click();
   assert.equal(await page.locator('#md-evidence-panel').evaluate(el=>el.open),true,
     'MD shortcut must open its destination');

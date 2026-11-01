@@ -1,0 +1,49 @@
+name: World country and nameplate export monitor regression
+on:
+  push:
+    paths:
+      - 'global-export-model.*'
+      - 'data/export-model-catalog.json'
+      - 'data/overseas-export-snapshot.json'
+      - 'data/estat_used_vehicle_exports.json'
+      - 'data/registered_annual_history.json'
+      - 'data/kei_annual_history.json'
+      - 'russia-yaris.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_global_export_model.cjs'
+      - 'tests/test_russia_yaris.cjs'
+      - '.github/workflows/global-export-model-tests.yml'
+  pull_request:
+    paths:
+      - 'global-export-model.*'
+      - 'data/export-model-catalog.json'
+      - 'data/overseas-export-snapshot.json'
+      - 'data/estat_used_vehicle_exports.json'
+      - 'data/registered_annual_history.json'
+      - 'data/kei_annual_history.json'
+      - 'russia-yaris.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_global_export_model.cjs'
+      - 'tests/test_russia_yaris.cjs'
+      - '.github/workflows/global-export-model-tests.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate world model selector and cached JS
+        run: |
+          node --check global-export-model.js
+          node --check russia-yaris.js
+          node --check sw.js
+          node tests/test_global_export_model.cjs
+          node tests/test_russia_yaris.cjs
+          node tests/test_country_export_mix.cjs
+          node tests/test_estat_exports.cjs
