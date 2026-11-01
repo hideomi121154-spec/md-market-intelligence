@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="./repair-md.css?v=3.7.0">
   <link rel="stylesheet" href="./overseas-market.css?v=3.8.0">
   <link rel="stylesheet" href="./crossborder-signal.css?v=3.9.0">
+  <link rel="stylesheet" href="./russia-yaris.css?v=4.0.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
@@ -224,6 +225,18 @@
             </details>
             <p id="overseas-status" class="overseas-muted" role="status" aria-live="polite">海外の統計データを読み込み中…</p>
             <p class="overseas-warn">国内価格との比較：輸出台数増加は買い需要の手掛かりですが、為替、車齢規制、車種・仕様の適合、船積み、季節要因によって国内の個別車両への影響は異なります。仕入れ推奨・実際の成約率の算出には使用しません。</p>
+          </div>
+        </details>
+        <details class="panel russia-yaris-panel history-fold" id="russia-yaris-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>ロシア × トヨタ ヤリス｜海外輸出需要モニター</strong><small>公表統計・国内新車供給・車種別根拠を厳密に分離</small></span></summary>
+          <div class="history-fold-body">
+            <h2>ロシア向け輸出とヤリスの需要を検証</h2>
+            <p class="ry-muted">国別・ブランド別の数字は「ロシア向けヤリス輸出台数」ではありません。実測、公表資料を引用した二次集計、本人記録、未取得を区別します。</p>
+            <div id="russia-yaris-results" aria-live="polite"></div>
+            <p><button class="button secondary" type="button" id="russia-yaris-refresh">最新の収録データを再表示</button>
+              <button class="button ghost" type="button" id="russia-yaris-add-note">車種別の原典付き記録を追加</button></p>
+            <p class="ry-muted" role="status" id="russia-yaris-status">データを確認中…</p>
+            <p class="ry-muted">更新方法：出典付きJSONを公開リポジトリに保存したスナップショット方式です。e-Stat APIの自動巡回は、無料アプリIDの登録・設定が必要なため未有効化です。第三者サイトの無許諾スクレイピングや推定台数の自動補完は行いません。</p>
           </div>
         </details>
         <details class="panel crossborder-panel history-fold" id="crossborder-panel">
@@ -1004,6 +1017,7 @@
   <script src="./registered-history.js?v=3.4.0" defer></script>
   <script src="./inventory-observations.js?v=2.1.0" defer></script>
   <script src="./crossborder-signal.js?v=3.9.0" defer></script>
+  <script src="./russia-yaris.js?v=4.0.0" defer></script>
   <script src="./observation-watch.js?v=2.4.0" defer></script>
   <script src="./md-evidence.js?v=3.6.0" defer></script>
   <script src="./model-price-report.js?v=2.3.0" defer></script>

@@ -217,3 +217,13 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - ユーザーの住所・名前・車台番号・ナンバー・電話番号は入力不要。正式査定申込に必要な個人情報は公式サービス側で入力する場合があり、その旨も説明。
 - 現段階では**推定買取価格を自動生成せず**、元のデータ数がない場合は「記録なし」と示す。価格を自動取得できない制限を回避したとは主張しない。
 - tests/test_personal_car.cjs で価格種別の混同防止・復元競合防止・不正URL・数値・車両との紐づきを検査。Chromium/WebKit E2Eで個人用ノート→以前の市場分析→再読み込み→オフラインキャッシュを確認。
+
+## v4.0.0 — ロシア×ヤリス海外輸出需要モニター（公表統計・未取得の区分）
+
+- 「市場」に専用パネルを追加。2025年の日本→ロシア中古乗用車輸出 **186,585台**はJETROが財務省統計を引用した値。ロシア国内のトヨタ中古車販売 **624,822台**はJETROがAUTOSTATを引用したブランド全体の販売台数。**両者は定義・集計母数が異なります**。
+- 2026年1〜9月ロシア向け **168,891台**は既存 `data/overseas-export-snapshot.json` に保存されたJUMV.NETによる**e-Stat加工・二次集計**。2025年のJETRO経由値とも数値を混合・按分しません。
+- `data/registered_annual_history.json` から日本国内のヤリス**新車**登録数（2021〜2025年）だけを読み、将来供給の参考として分離表示。2021年は二次資料、2022〜25年は自販連公式PDFからの転記を区別。
+- **ロシアへのヤリス車種別実輸出台数は未取得（null）**。国別輸出台数やロシア全トヨタ車販売をヤリスの実績・需要・価格予測として推定しない。既存の「国内在庫 × 海外需要」に入力した原典付き車種別記録がある場合のみ、**ユーザー入力・未検証**として専用パネルに表示。
+- 原典URL：JETRO（https://www.jetro.go.jp/biz/areareports/2026/a686ac30d5cbf8c4.html）、財務省貿易統計（https://www.customs.go.jp/toukei/info/tsdl.htm）、e-Stat（https://www.e-stat.go.jp/api/）、経産省対ロ制裁（https://www.meti.go.jp/press/2023/07/20230728001/20230728001.html）。
+- 今回の「接続」は**公表済みスナップショットと既存の年次データを参照する方式**。完全自動の公的統計更新はまだ含まれません。e-Stat APIは無料ですが登録・アプリIDが必須。IDを公開JSやGitHubのコミットに直接埋めず、GitHub Actions Secretsで運用すること。
+- 既存のIndexedDB・照合履歴・車両CSV・端末内のlocalStorageのスキーマは無変更。キャッシュ更新だけ実施。テスト：`tests/test_russia_yaris.cjs`、`.github/workflows/russia-yaris-tests.yml`。iPhone実機の最終確認は別途必要。

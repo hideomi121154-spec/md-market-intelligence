@@ -1,0 +1,33 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),M=require('../russia-yaris.js');
+const src=JSON.parse(fs.readFileSync(path.join(root,'data/russia-yaris-sources.json'),'utf8'));
+const exportSnapshot=JSON.parse(fs.readFileSync(path.join(root,'data/overseas-export-snapshot.json'),'utf8'));
+const annual=JSON.parse(fs.readFileSync(path.join(root,'data/registered_annual_history.json'),'utf8'));
+const view=M.buildView(src,exportSnapshot,annual,'');
+assert.equal(view.subject.model,'ヤリス');
+assert.equal(view.observations.find(x=>x.id==='jp-ru-used-passenger-2025').value,186585);
+assert.equal(view.macro.count,168891);
+assert.equal(view.macro.grade,'secondary');
+assert.equal(view.directModelCount,null);
+assert.equal(view.directModelStatus,'未取得');
+assert.ok(view.japanNewSales.length>=4);
+assert.equal(view.japanNewSales.find(x=>x.year===2021).source_type,'secondary');
+assert.equal(view.japanNewSales.find(x=>x.year===2025).source_type,'official');
+assert.throws(()=>M.verifySource({...src,direct_model_exports:[{value:10}]}),/未検証/);
+assert.throws(()=>M.verifySource({...src,observations:src.observations.map(x=>({...x,scope:'yaris'}))}),/出典/);
+assert.throws(()=>M.verifySource({...src,subject:{...src.subject,model:'アクア'}}),/監視対象/);
+assert.throws(()=>M.verifyExport({...exportSnapshot,country_ytd:{...exportSnapshot.country_ytd,countries:[]}}),/ロシア/);
+assert.throws(()=>M.verifyExport({...exportSnapshot,latest_period:'2026-10'}),/集計月/);
+assert.equal(M.userModelNotes('{bad JSON').length,0);
+assert.equal(M.userModelNotes(JSON.stringify({kind:'fake',records:[]})).length,0);
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
+for(const id of ['russia-yaris-panel','russia-yaris-results','russia-yaris-refresh','russia-yaris-add-note','russia-yaris-status'])
+ assert.ok(html.includes('id="'+id+'"'),'missing UI '+id);
+for(const a of ['russia-yaris.js?v=4.0.0','russia-yaris.css?v=4.0.0'])
+ assert.ok(html.includes(a)&&sw.includes(a),'cache mismatch '+a);
+assert.ok(sw.includes("'./data/russia-yaris-sources.json'"));
+assert.ok(html.indexOf('crossborder-signal.js?v=3.9.0')<html.indexOf('russia-yaris.js?v=4.0.0'));
+const mod=fs.readFileSync(path.join(root,'russia-yaris.js'),'utf8');
+assert.ok(!mod.includes('innerHTML')&&!mod.includes('localStorage.removeItem'));
+console.log('PASS Russia/Yaris: official/secondary/brand/model separation, invalid records, in-app data reuse, PWA');
