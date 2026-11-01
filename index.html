@@ -161,7 +161,9 @@
         <p class="coverage" id="coverage"></p>
         <div class="audit-overview" id="audit-overview" aria-live="polite">個別価格の出典照合状況を確認中…</div>
         <p><button class="button secondary" type="button" id="md-evidence-jump">MD仕入れ判断の根拠を確認する</button></p>
-        <article class="panel demand-panel" id="demand-signals-panel">
+        <details class="panel demand-panel history-fold" id="demand-signals-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>中古車の需要シグナル比較</strong><small>問い合わせ・アクセス順位／車種別の関心</small></span></summary>
+          <div class="history-fold-body">
           <div class="demand-heading">
             <div>
               <h2>中古車の需要シグナル比較</h2>
@@ -217,8 +219,12 @@
             <button class="button primary" type="button" id="demand-add">この端末に順位を記録する</button>
             <p id="demand-manual-status" class="hint" aria-live="polite"></p>
           </details>
-        </article>
-        <article class="panel uss-panel" id="uss-aggregate">
+        
+          </div>
+        </details>
+        <details class="panel uss-panel history-fold" id="uss-aggregate">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>USS公式オークション市場統計</strong><small>出品台数・成約率・平均価格の推移</small></span></summary>
+          <div class="history-fold-body">
           <div class="uss-head">
             <div><h2>USS公式市場統計</h2><p id="uss-period">公開データを確認中</p></div>
             <button class="button secondary" type="button" id="uss-reload">最新情報を確認</button>
@@ -245,9 +251,13 @@
             </div>
           </div>
           <p class="uss-note">USSのオークション全体の集計です。特定車種の落札相場・仕入れ上限ではありません。平均単価の元データは千円単位。USSの公表状況により最新月は実際の暦月より前になることがあります。</p>
-        </article>
+        
+          </div>
+        </details>
 
-        <article class="uss-warning-panel" id="uss-warning-panel" hidden aria-label="USS市場全体の早期警戒">
+        <details class="uss-warning-panel history-fold" id="uss-warning-panel" hidden aria-label="USS市場全体の早期警戒">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>中古車相場の下落早期警戒（試験版）</strong><small>需給の変化と翌月実績の事後検証</small></span></summary>
+          <div class="history-fold-body">
           <div class="uss-warning-header">
             <div>
               <h2>中古車市場の下落早期警戒（試験版）</h2>
@@ -263,7 +273,9 @@
           <p class="uss-warning-info" id="uss-warning-scope"></p>
           <p class="uss-warning-outcome" id="uss-warning-outcome"></p>
           <p class="uss-warning-note">市場全体の月次先行指標であり、30日・60日後の価格を算出する予測モデルではありません。特定車種の相場、仕入れ上限、取引判断には直接使わないでください。警戒の閾値・的中率は未検証です。翌月実績は当時の判定に利用しません。</p>
-        </article>
+        
+          </div>
+        </details>
 
         <details class="panel regional-jobs-panel history-fold" id="regional-jobs-panel" aria-label="地域別求人広告の増減">
           <summary class="history-fold-summary"><span class="history-fold-title"><strong>求人広告の増減｜全国6地域</strong><small>前月比・前年同月比を比較</small></span></summary>
@@ -327,7 +339,9 @@
           </div>
         </details>
 
-        <article class="panel model-sales-panel" id="registered-sales-panel">
+        <details class="panel model-sales-panel history-fold" id="registered-sales-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>普通車・小型車｜月別新車販売ランキング</strong><small>最新月の車名別登録台数</small></span></summary>
+          <div class="history-fold-body">
           <div class="model-sales-head">
             <div><h2>普通車・小型車｜車種別の販売動向</h2><p id="registered-sales-period">自販連の公式月次統計を確認中</p></div>
             <button class="button secondary" type="button" id="registered-sales-reload">最新情報を確認</button>
@@ -339,8 +353,12 @@
             <button class="button secondary" type="button" id="registered-sales-more" hidden>全50車種を表示</button>
           </div>
           <p class="model-sales-note">対象は軽自動車・海外ブランド車を除く<strong>登録乗用車</strong>（コンパクトカーも含む）です。ヤリスやカローラなどは同一車名のシリーズ合算で、一部教習車などを含みます。新車登録台数は中古車成約件数・落札価格・現在の中古車需要を表しません。</p>
-        </article>
-        <article class="panel model-sales-panel" id="model-sales-panel">
+        
+          </div>
+        </details>
+        <details class="panel model-sales-panel history-fold" id="model-sales-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>軽自動車｜月別新車販売ランキング</strong><small>最新月の車名別新車販売台数</small></span></summary>
+          <div class="history-fold-body">
           <div class="model-sales-head">
             <div><h2>軽乗用車・車種別の販売動向</h2><p id="model-sales-period">公式統計を確認中</p></div>
             <button class="button secondary" type="button" id="model-sales-reload">最新情報を確認</button>
@@ -349,7 +367,9 @@
           <p class="model-sales-status" id="model-sales-status" aria-live="polite">読み込み中…</p>
           <div id="model-sales-data" hidden><div id="model-sales-grid" class="model-sales-grid"></div></div>
           <p class="model-sales-note">新車の販売台数は将来の中古車供給を考えるための参考指標です。中古車の当月需要・成約台数・価格を直接表すものではありません。年式・グレード・走行距離・個別落札価格はこの統計には含まれません。iPhoneに保存済みの未検証車両データとは別に管理します。</p>
-        </article>
+        
+          </div>
+        </details>
         <details class="panel registered-history-panel history-fold" id="registered-history-panel">
           <summary class="history-fold-summary"><span class="history-fold-title"><strong>普通車・小型車｜過去5年の新車販売台数</strong><small>2021〜2025年・車種ごとの年間推移</small></span></summary>
           <div class="history-fold-body">
@@ -415,7 +435,9 @@
           <p class="kei-history-note">各年の<strong>軽乗用車ベスト15</strong>から取得しています。年によって上位15位外の車種は「不明」とし、0台とは扱いません。グレード・カラー・評価点・落札価格は含まれません。車名の合算区分は原資料に準拠しており、過去年式の実際の中古車流通台数や買取価格を推定したものではありません。</p>
           </div>
         </details>
-        <article class="panel inventory-panel" id="inventory-panel">
+        <details class="panel inventory-panel history-fold" id="inventory-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>中古車の掲載台数｜在庫観測ノート</strong><small>条件を揃えた掲載台数の記録・比較</small></span></summary>
+          <div class="history-fold-body">
           <h2>中古車の掲載台数｜在庫観測ノート</h2>
           <p class="inventory-help">カーセンサー等で<strong>自分で確認した掲載台数</strong>を記録します。同じ参照元・メーカー・車種・地域・グレード・色・検索条件の場合だけ増減を比較します。サイトから自動収集しません。</p>
           <form id="inventory-form">
@@ -444,8 +466,12 @@
             <div class="button-row"><button type="button" class="button secondary" id="inventory-export">バックアップJSONを表示</button><button type="button" class="button secondary" id="inventory-restore">JSONから追加復元</button></div>
             <textarea id="inventory-backup" spellcheck="false" aria-label="在庫観測バックアップJSON" placeholder="ここにバックアップJSONを表示、または貼り付けて復元"></textarea>
           </details>
-        </article>
-        <article class="panel observation-watch-panel" id="observation-watch-panel">
+        
+          </div>
+        </details>
+        <details class="panel observation-watch-panel history-fold" id="observation-watch-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>掲載台数の信頼性チェック</strong><small>掲載サイトの障害・観測条件を確認</small></span></summary>
+          <div class="history-fold-body">
           <h2>掲載台数の信頼性チェック｜需要・供給の観測</h2>
           <p class="observation-watch-intro">自分で記録した掲載台数の変化を、同じ検索条件・地域・グレード・色・参照URLに限定して確認します。<strong>仕入れ推奨・売約率・実成約価格の分析ではありません。</strong>観測記録や車両データの保存内容は変更しません。</p>
           <div class="observation-watch-alert"><strong>カーセンサー掲載情報に関する注意（2026年10月31日時点）</strong>
@@ -466,8 +492,12 @@
           <ul class="observation-watch-alternatives" id="observation-watch-alternatives"></ul>
           <p class="observation-watch-note">上記ランキングはWebサイトで人が確認するためのリンクです。自動取得や同意のない大量収集は行いません。carview!の平均車両本体価格は、カーセンサーの平均支払総額とは異なる定義のため、月次価格レポートに混ぜません。掲載台数の増減は売約を意味しません。</p>
           <p id="observation-watch-status" role="status" aria-live="polite"></p>
-        </article>
-        <article class="panel model-price-panel" id="model-price-panel">
+        
+          </div>
+        </details>
+        <details class="panel model-price-panel history-fold" id="model-price-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>車種別市場価格レポート｜月次推移</strong><small>公表PDFの価格・掲載データを記録</small></span></summary>
+          <div class="history-fold-body">
           <h2>車種別市場価格レポート｜月次推移</h2>
           <p class="model-price-intro">カーセンサー自動車総研が公表する<strong>モデル別平均支払総額（税込・諸費用込みの掲載情報）と月間延べ掲載台数</strong>を、原資料から確認して記録するための画面です。実際の成約価格や、いま売られている車両の個別店頭価格ではありません。</p>
           <p class="model-price-intro model-price-source-note">公式資料：<a id="model-price-source" href="https://www.carsensor.net/contents/souken/contents/_68603.html" target="_blank" rel="noopener noreferrer">モデル別中古車動向データ・各月PDF</a>。月間延べ掲載台数は月内に複数回計上され得るため、月末時点の実在庫台数・販売件数ではありません。引用時のクレジット：<strong>出典：「カーセンサー中古車動向データ」リクルート調べ</strong>。</p>
@@ -503,8 +533,12 @@
             <div class="button-row"><button id="model-price-export" type="button" class="button secondary">バックアップJSONを表示</button><button id="model-price-restore" type="button" class="button secondary">JSONから追加復元</button></div>
             <textarea id="model-price-backup" spellcheck="false" aria-label="月次価格観測のバックアップJSON"></textarea>
           </details>
-        </article>
-        <article class="panel md-evidence-panel" id="md-evidence-panel">
+        
+          </div>
+        </details>
+        <details class="panel md-evidence-panel history-fold" id="md-evidence-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>MD仕入れ判断｜証拠の確認</strong><small>供給・需要・価格の根拠を個別に照合</small></span></summary>
+          <div class="history-fold-body">
           <h2>MD仕入れ判断｜証拠の確認</h2>
           <p class="md-evidence-intro">在庫観測の1条件を選び、掲載台数・需要順位・自己照合済み小売掲載価格を別々に確認します。<strong>仕入れ推奨や実売価格の予測ではありません。</strong>端末データは読み取り専用で使用します。</p>
           <div class="md-evidence-head">
@@ -528,7 +562,9 @@
           <p class="md-evidence-note">掲載台数の減少は売約を意味しません。全国の需要順位を特定地域・グレードの需要とはみなしません。自己照合済み価格も独立保証ではありません。順位未収録を不人気や圏外と判定しません。</p>
           <p class="md-evidence-note"><a id="md-evidence-source" href="#" target="_blank" rel="noopener noreferrer" hidden>この観測の参照元を開く</a>　<a href="#plan">目標利益から仕入れ上限を試算する</a></p>
           <p id="md-evidence-status" role="status" aria-live="polite"></p>
-        </article>
+        
+          </div>
+        </details>
         <div class="content-grid">
           <article class="panel filters"><div class="panel-head"><h3>分析条件</h3><span>車種別に比較</span></div>
             <div class="field"><label for="make">メーカー</label><input id="make" autocomplete="off" placeholder="例：トヨタ"></div>
