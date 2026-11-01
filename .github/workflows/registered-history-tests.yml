@@ -37,8 +37,9 @@ jobs:
                'registered-history-latest','registered-history-latest-caption']
           missing=[x for x in ids if f'id="{x}"' not in h]
           assert not missing, missing
-          assert '<b>v1.9</b>' in h
-          assert 'registered-history.js?v=1.9' in h
+          assert 'registered-history.js?v=3.4.0' in h
+          assert 'id="registered-history-trend"' in h
+          assert '<details class="panel registered-history-panel history-fold"' in h
           assert 'registered-history.css?v=1.9' in h
           d=json.loads(Path('data/registered_annual_history.json').read_text('utf-8'))
           assert [x['year'] for x in d['years']]==[2021,2022,2023,2024,2025]

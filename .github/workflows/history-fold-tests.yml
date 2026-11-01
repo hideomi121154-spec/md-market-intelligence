@@ -1,0 +1,21 @@
+name: Foldable 5-year new-car sales graphs
+on:
+  pull_request:
+    paths: ['history-trend.js','history-fold.css','registered-history.js','kei-history.js','index.html','sw.js','tests/test_history_folds.cjs','tests/test_offline_data.cjs','.github/workflows/history-fold-tests.yml']
+  push:
+    paths: ['history-trend.js','history-fold.css','registered-history.js','kei-history.js','index.html','sw.js','tests/test_history_folds.cjs','tests/test_offline_data.cjs']
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check scripts
+        run: node --check history-trend.js && node --check registered-history.js && node --check kei-history.js && node --check sw.js
+      - name: Verify actual figures and missing-year gaps
+        run: node tests/test_history_folds.cjs && node tests/test_registered_history.js && node tests/test_kei_history.js
+      - name: Verify existing offline startup and save flows
+        run: node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js

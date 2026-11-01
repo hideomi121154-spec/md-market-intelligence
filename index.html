@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
   <link rel="stylesheet" href="./registered-history.css?v=1.9">
+  <link rel="stylesheet" href="./history-fold.css?v=3.4.0">
   <link rel="stylesheet" href="./inventory-observations.css?v=2.1.0">
   <link rel="stylesheet" href="./md-evidence.css?v=2.1.0">
   <link rel="stylesheet" href="./model-price-report.css?v=2.3.0">
@@ -341,10 +342,12 @@
           <div id="model-sales-data" hidden><div id="model-sales-grid" class="model-sales-grid"></div></div>
           <p class="model-sales-note">新車の販売台数は将来の中古車供給を考えるための参考指標です。中古車の当月需要・成約台数・価格を直接表すものではありません。年式・グレード・走行距離・個別落札価格はこの統計には含まれません。iPhoneに保存済みの未検証車両データとは別に管理します。</p>
         </article>
-        <article class="panel registered-history-panel" id="registered-history-panel">
+        <details class="panel registered-history-panel history-fold" id="registered-history-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>普通車・小型車｜過去5年の新車販売台数</strong><small>2021〜2025年・車種ごとの年間推移</small></span></summary>
+          <div class="history-fold-body">
           <div class="registered-history-head">
             <div>
-              <h2>普通車・小型車｜5年間の新車販売履歴</h2>
+              <h3>車種を選んで年間台数を比較</h3>
               <p class="hint">登録乗用車（軽自動車・海外ブランド除く）｜2021〜2025年・暦年</p>
             </div>
             <button class="button secondary" type="button" id="registered-history-refresh">過去年次データを確認</button>
@@ -364,14 +367,20 @@
             <div class="registered-history-sumitem"><strong id="registered-history-early-sum">—</strong><small id="registered-history-early-caption">2021〜2023年の新車登録合計</small></div>
             <div class="registered-history-sumitem"><strong id="registered-history-latest">—</strong><small id="registered-history-latest-caption">2025年の新車登録数</small></div>
           </div>
+          <h3 class="history-fold-graph-heading">年別推移・折れ線グラフ</h3>
+          <div id="registered-history-trend" class="history-trend" aria-label="普通車・小型車の年間新車販売台数の折れ線グラフ"></div>
+          <h3 class="history-fold-graph-heading">年ごとの比較・棒グラフ</h3>
           <div id="registered-history-chart" aria-label="2021年から2025年の登録乗用車の車名別年間新車登録台数"></div>
           <div class="registered-history-sources" id="registered-history-sources"></div>
           <p class="registered-history-note">各年の<strong>上位50車名</strong>を収録しています。ランキング外の車種は<strong>0台ではなく収録範囲外</strong>として扱います。ヤリス・カローラ等は複数の派生車を合算した通称名です。車名変更や区分変更にも注意が必要です。</p>
-        </article>
-        <article class="panel kei-history-panel" id="kei-history-panel">
+          </div>
+        </details>
+        <details class="panel kei-history-panel history-fold" id="kei-history-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>軽自動車｜過去5年の新車販売台数</strong><small>2021〜2025年・車種ごとの年間推移</small></span></summary>
+          <div class="history-fold-body">
           <div class="kei-history-head">
             <div>
-              <h2>過去の新車販売から中古車供給の母数を見る</h2>
+              <h3>車種を選んで年間台数を比較</h3>
               <p class="hint">軽乗用車の公式年間販売台数｜2021〜2025年（暦年）</p>
             </div>
             <button class="button secondary" type="button" id="kei-history-refresh">公式保存データを確認</button>
@@ -390,10 +399,14 @@
             <div class="kei-history-sumitem"><strong id="kei-history-early-sum">—</strong><small id="kei-history-early-caption">2021〜2023年の販売規模</small></div>
             <div class="kei-history-sumitem"><strong id="kei-history-latest">—</strong><small id="kei-history-latest-caption">2025年の新車販売規模</small></div>
           </div>
+          <h3 class="history-fold-graph-heading">年別推移・折れ線グラフ</h3>
+          <div id="kei-history-trend" class="history-trend" aria-label="軽自動車の年間新車販売台数の折れ線グラフ"></div>
+          <h3 class="history-fold-graph-heading">年ごとの比較・棒グラフ</h3>
           <div id="kei-history-chart" aria-label="2021年〜2025年の車種別年間新車販売台数の比較"></div>
           <div class="kei-history-sources" id="kei-history-sources"></div>
           <p class="kei-history-note">各年の<strong>軽乗用車ベスト15</strong>から取得しています。年によって上位15位外の車種は「不明」とし、0台とは扱いません。グレード・カラー・評価点・落札価格は含まれません。車名の合算区分は原資料に準拠しており、過去年式の実際の中古車流通台数や買取価格を推定したものではありません。</p>
-        </article>
+          </div>
+        </details>
         <article class="panel inventory-panel" id="inventory-panel">
           <h2>中古車の掲載台数｜在庫観測ノート</h2>
           <p class="inventory-help">カーセンサー等で<strong>自分で確認した掲載台数</strong>を記録します。同じ参照元・メーカー・車種・地域・グレード・色・検索条件の場合だけ増減を比較します。サイトから自動収集しません。</p>
@@ -762,8 +775,9 @@
   <script src="./valuation.js?v=2.2.0" defer></script>
   <script src="./md-risk.js?v=2.2.0" defer></script>
   <script src="./demand-signals.js?v=2.0.3" defer></script>
-  <script src="./kei-history.js?v=2.0.3" defer></script>
-  <script src="./registered-history.js?v=2.0.3" defer></script>
+  <script src="./history-trend.js?v=3.4.0" defer></script>
+  <script src="./kei-history.js?v=3.4.0" defer></script>
+  <script src="./registered-history.js?v=3.4.0" defer></script>
   <script src="./inventory-observations.js?v=2.1.0" defer></script>
   <script src="./observation-watch.js?v=2.4.0" defer></script>
   <script src="./md-evidence.js?v=2.1.0" defer></script>

@@ -40,6 +40,8 @@ jobs:
             'kei-history-early-caption','kei-history-latest','kei-history-latest-caption']
           missing=[i for i in ids if f'id="{i}"' not in p]
           assert not missing, f'Missing iPhone inputs: {missing}'
-          assert 'kei-history.js?v=1.8' in p
+          assert 'kei-history.js?v=3.4.0' in p
+          assert 'id="kei-history-trend"' in p
+          assert '<details class="panel kei-history-panel history-fold"' in p
           print('History component bindings present')
           PY
