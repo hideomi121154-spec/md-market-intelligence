@@ -265,7 +265,9 @@
           <p class="uss-warning-note">市場全体の月次先行指標であり、30日・60日後の価格を算出する予測モデルではありません。特定車種の相場、仕入れ上限、取引判断には直接使わないでください。警戒の閾値・的中率は未検証です。翌月実績は当時の判定に利用しません。</p>
         </article>
 
-        <article class="panel regional-jobs-panel" id="regional-jobs-panel" aria-label="地域別求人広告の増減">
+        <details class="panel regional-jobs-panel history-fold" id="regional-jobs-panel" aria-label="地域別求人広告の増減">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>求人広告の増減｜全国6地域</strong><small>前月比・前年同月比を比較</small></span></summary>
+          <div class="history-fold-body">
           <div class="regional-jobs-head">
             <div>
               <h2>地域別の求人広告増減</h2>
@@ -290,9 +292,13 @@
           <p id="regional-jobs-summary" class="regional-jobs-summary" aria-live="polite"></p>
           <p class="regional-jobs-note">出典：<a href="https://www.zenkyukyo.or.jp/outline/research/" target="_blank" rel="noopener noreferrer">全国求人情報協会・求人広告掲載件数等集計結果</a>。主要15媒体の広告データを集計した地域別の前月比・前年同月比です。募集人数や就職件数ではなく、同一募集の重複・複数地域もあり得ます。対象月は公表日時を見て判断し、リアルタイムの求人サイト巡回ではありません。</p>
           <p class="regional-jobs-note">現時点は6広域圏。<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Statの47都道府県別新規求人数（別指標）</a>との連携は次の段階です。求人広告の増減を中古車需要や仕入れ推奨に自動換算しません。</p>
-        </article>
+        
+          </div>
+        </details>
 
-        <article class="panel prefecture-jobs-panel" id="prefecture-jobs-panel" aria-label="47都道府県別の新規求人数">
+        <details class="panel prefecture-jobs-panel history-fold" id="prefecture-jobs-panel" aria-label="47都道府県別の新規求人数">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>求人動向｜47都道府県</strong><small>新規求人数・公表データの確認</small></span></summary>
+          <div class="history-fold-body">
           <div class="prefecture-jobs-head">
             <div>
               <h2>47都道府県｜新規求人数</h2>
@@ -317,7 +323,9 @@
             <button type="button" class="button ghost" id="prefecture-jobs-reset">端末の取込データのみ解除</button>
           </details>
           <p class="prefecture-jobs-note">出典：<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Stat・一般職業紹介状況（長期時系列表12）</a>。求人広告15媒体の件数とは異なります。受理地は実際の就業地と一致するとは限らず、季節調整されない原数値のため単純な前月比は季節性の影響を受けます。求人の増減だけで地域の中古車需要や価格を決定しません。</p>
-        </article>
+        
+          </div>
+        </details>
 
         <article class="panel model-sales-panel" id="registered-sales-panel">
           <div class="model-sales-head">
@@ -544,7 +552,9 @@
         </div>
 
 
-        <article class="panel rm-panel" id="rm-panel" aria-labelledby="rm-title">
+        <details class="panel rm-panel history-fold" id="rm-panel" aria-labelledby="rm-title">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>残クレ満了車｜将来の供給シミュレーター</strong><small>年別満了・返却・AA流通の仮説計算</small></span></summary>
+          <div class="history-fold-body">
           <h2 id="rm-title">残クレ満了車の将来供給シミュレーター</h2>
           <p class="rm-help">2021〜2025年の<strong>新車販売ランキング収録データ</strong>を使い、契約期間3・5・7年の満了、返却、AA流通の仮定台数を年別に試算します。実際の残クレ契約・返却・オークション出品台数ではありません。</p>
           <div class="rm-form">
@@ -568,9 +578,13 @@
           <div class="rm-results" id="rm-results" aria-live="polite"></div>
           <div class="rm-sources" id="rm-sources"></div>
           <p class="rm-note"><strong>計算：</strong>販売年の台数 × 仮定残クレ利用率 × 契約年数別構成比 → 満了年へ移動 → 仮定返却率 × 仮定AA流通率。契約が購入年内に均等に成立し満了時に一定の行動を取るという簡略化を含みます。出品地域・個別仕様・価格・実際の返却率は不明。欠測や順位表にない車種を0台扱いせず、部分収録として表示します。2021年の登録乗用車データは二次資料です。</p>
-        </article>
+        
+          </div>
+        </details>
 
-        <article class="panel rr-panel" id="rr-panel" aria-labelledby="rr-title">
+        <details class="panel rr-panel history-fold" id="rr-panel" aria-labelledby="rr-title">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>残クレ返却圧力｜保証残価とAA価格</strong><small>実額・仮定を入力して経済的な乖離を比較</small></span></summary>
+          <div class="history-fold-body">
           <div class="rr-heading">
             <h2 id="rr-title">残クレ返却圧力｜保証残価 × 業者間AA相場</h2>
             <p>メーカー・車種を問わず、契約満了時の保証残価と業者間オークション相場の乖離を比較します。価格は手入力で、実落札価格・契約返却率の自動収集ではありません。</p>
@@ -605,7 +619,9 @@
           <textarea id="rr-backup" class="rr-backup" rows="3" aria-label="残価分析メモ用JSONバックアップ" placeholder="コピー用のバックアップJSONを表示、または以前のバックアップJSONを貼り付け"></textarea>
           <p id="rr-status" class="rr-status" role="status" aria-live="polite"></p>
           <p class="rr-hint">比較メモはこの端末内の専用保存領域だけに保存。既存の中古車レコード・原本照合履歴・他のバックアップとは独立しています。残価設定ローンの返却率・契約満了予定台数・車種別実落札価格は未接続です。</p>
-        </article>
+        
+          </div>
+        </details>
 
       </section>
       <section class="screen" id="records">
