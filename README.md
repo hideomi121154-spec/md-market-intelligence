@@ -237,3 +237,14 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - 転記したHS数値は月・国・統計番号の組で検証し、既存行と異なる数値の上書きを禁止。転記CSVは別の `localStorage` キー `md-market-country-hs-manual-v1` へ追加保存し、CSVテキストを別途コピー・復元できる。既存のIndexedDB、車両CSV、照合履歴、輸出メモに変更なし。
 - 2026年の公的HS分類： https://www.customs.go.jp/yusyutu/2026_01_01/data/j_87.htm 。e-Stat APIは登録・アプリIDが必要で、まだ自動接続されていない。初期のカテゴリー別台数はJUMV.NETが普通貿易統計から作成した公開ランキングの一部を既存JSONから表示する方式。
 - テスト：`tests/test_country_export_mix.cjs`, `.github/workflows/country-export-mix-tests.yml`。iPhone Safari実機確認は残る。
+
+## v4.2.0 — 財務省e-Stat公式データの自動更新（登録待ち）
+
+- 「市場」→「世界各国｜中古車の輸出内訳」内に、独立した**公的統計**パネルを追加。`data/estat_used_vehicle_exports.json` から対象国×2026年各月×HS 9桁（中古乗用車のガソリン排気量別、ディーゼル、HV/PHEV、EV等）を表示。2026年の分類は税関第87類を使用。
+- 初期ファイルの状態は `not_configured`、実績数値は**空**。実データ取得まで公的実測を装わず、既存の二次集計・本人転記もそのまま残す。
+- `scripts/fetch_estat_used_car_exports.py` が公式 `getStatsList` → `getMetaInfo` → `getStatsData` を使用。**品別国別表・輸出・全国・2026年**の統計表タイトルを検証、表IDは最新公表から自動発見する。月次`数量1`だけ抽出し、単位 `NO` を必須確認。ページ送り、重複、形式変化、異常値、取得月の巻き戻りは更新停止。未公表の値や秘匿値は0台としない。
+- APIは登録無料だがアプリケーションIDが必要。https://www.e-stat.go.jp/api/ で取得し、リポジトリの **Settings → Secrets and variables → Actions → New repository secret** へ名前 `ESTAT_APP_ID` で登録する。**チャットや公開コードにIDを送らない**。登録後は GitHub Actions → `Official e-Stat Japanese used-car export updates` → `Run workflow` で最初の検証実行。
+- `.github/workflows/estat-used-exports.yml` は毎日01:26 UTC（日本時間10:26頃）に確認（実際の起動時刻は遅れることがある）。未登録時は正常なスキップとしてデータを更新しない。検証成功＋ファイル変更時のみ `main` にコミット。API構造が変更されても以前の正しいJSONを維持する。
+- e-Stat JSONの数値は「日本からその国への中古乗用車の**対応16個のHS分類の収録行**」であり、日本の中古車輸出全車種全種類や特定車種名（ヤリスなど）の実数ではない。HS分類で未収録の区分は0とせず`未収録`として表示。既存 JUMV.NET ランキングとは統計定義・データ期間が違うため合計や横並びの自動率計算をしない。
+- 既存の車両レコード・照合履歴・在庫観測・端末メモには**読み取りも書き込みもしない**。 Service Workerのファイルキャッシュ識別子だけを変更。
+- テスト：`tests/test_fetch_estat_exports.py`（API応答モックで出典/単位/欠測/改定を検査）、`tests/test_estat_exports.cjs`（データと画面・オフラインファイルの検証）。新規APIの実応答はアプリID設定後に確認できるため、現時点でリアルタイム接続成功は未確認。
