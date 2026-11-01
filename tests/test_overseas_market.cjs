@@ -1,0 +1,57 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..');
+const M=require('../overseas-market.js');
+const data=JSON.parse(fs.readFileSync(path.join(root,'data/overseas-export-snapshot.json'),'utf8'));
+assert.equal(M.verifySnapshot(data).latest_period,'2026-09');
+const sep=M.latestComparison(data);
+assert.equal(sep.period,'2026-09');
+assert.equal(sep.current,137310);
+assert.equal(sep.priorYear,150451);
+assert.equal(Math.round(sep.yoy*10)/10,-8.7);
+assert.equal(sep.previous,145180);
+assert.equal(M.comparison(data,'2026-01').monthOnMonth,null);
+assert.equal(M.comparison(data,'2026-10').available,false,'future month must be missing, not zero');
+assert.throws(()=>M.comparison(data,'2025-09'),/比較月/);
+assert.throws(()=>M.verifySnapshot({...data,monthly_totals:{...data.monthly_totals,'2026':[...data.monthly_totals['2026'].slice(0,8),-1,null,null,null]}}),/月次輸出台数/);
+assert.throws(()=>M.verifySnapshot({...data,monthly_totals:{...data.monthly_totals,'2026':[...data.monthly_totals['2026'].slice(0,8),null,null,null,null]}}),/月次輸出台数/);
+const countries=M.countryMoves(data);
+assert.equal(countries[0].country,'ロシア');
+assert.equal(countries[0].count,168891);
+assert.equal(countries[1].country,'タンザニア');
+assert.equal(countries[1].direction,'increase');
+assert.equal(countries.find(x=>x.country==='アラブ首長国連邦').direction,'decrease');
+assert.equal(data.type_rankings.categories.find(x=>x.id==='ev').rows[0][0],'スリランカ');
+const fx={id:'fx-1',type:'fx',as_of:'2026-10-30',country:'全世界',usdjpy:152.31,description:'日銀17時レート',source:'日銀',source_url:'https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_d_1.html'};
+const event={id:'event-1',type:'event',as_of:'2026-10-30',country:'ロシア',description:'輸出規制を確認する（モデルへの影響は未検証）',source:'経済産業省',source_url:'https://www.meti.go.jp/policy/external_economy/trade_control/02_export/17_russia/qa.html'};
+assert.equal(M.validateNote(fx).usdjpy,152.31);
+assert.equal(M.validateNote(event).usdjpy,null);
+assert.throws(()=>M.validateNote({...fx,usdjpy:''}),/ドル円/);
+assert.throws(()=>M.validateNote({...fx,usdjpy:1}),/ドル円/);
+assert.throws(()=>M.validateNote({...fx,country:'ロシア'}),/全世界/);
+assert.throws(()=>M.validateNote({...event,description:''}),/内容/);
+assert.throws(()=>M.validateNote({...event,source_url:'javascript:alert(1)'}),/URL/);
+assert.throws(()=>M.validateNote({...event,source_url:''}),/出典URL/);
+assert.throws(()=>M.validateNote({...event,as_of:'2026-02-30'}),/入力項目/);
+assert.equal(M.mergeNotes([fx],[fx]).length,1);
+assert.equal(M.mergeNotes([fx],[event]).length,2);
+assert.throws(()=>M.mergeNotes([fx],[{...fx,usdjpy:160}]),/上書きしません/);
+assert.equal(M.importNotes(M.exportNotes([fx,event])).length,2);
+assert.throws(()=>M.importNotes('{"kind":"other","schema_version":1,"rows":[]}'),/専用/);
+assert.throws(()=>M.validateNotes(Array.from({length:151},(_,i)=>({...fx,id:String(i)}))),/150件/);
+const source=fs.readFileSync(path.join(root,'overseas-market.js'),'utf8');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
+for(const id of ['overseas-panel','overseas-metrics','overseas-months','overseas-countries','overseas-type','overseas-types-list','overseas-fx-date','overseas-add-fx','overseas-event-date','overseas-add-event','overseas-export','overseas-import','overseas-backup']){
+ assert.ok(html.includes('id="'+id+'"'),'missing overseas UI '+id);
+}
+for(const asset of ['overseas-market.js?v=3.8.0','overseas-market.css?v=3.8.0']){
+ assert.ok(html.includes(asset)&&sw.includes(asset),'cache mismatch for '+asset);
+}
+assert.ok(sw.includes("'./data/overseas-export-snapshot.json'"));
+assert.ok(source.includes('MDOffline.read(DATA'),'offline read helper integration missing');
+assert.ok(!source.includes('innerHTML'),'untrusted HTML must not be constructed');
+assert.equal(html.includes('id="inventory-panel"'),true,'existing inventory must survive');
+assert.equal(html.includes('id="repair-md-panel"'),true,'existing repair module must survive');
+console.log('PASS: overseas monthly YoY, missing months, country segmentation, user data safety, PWA integration');
