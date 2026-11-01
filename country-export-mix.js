@@ -11,7 +11,9 @@ const CLASSES=[
   {id:'ordinary',title:'普通車（サイト分類）'},
   {id:'hybrid',title:'ハイブリッド車'},
   {id:'ev',title:'電気自動車'},
-  {id:'kei',title:'軽自動車'}
+  {id:'kei',title:'軽自動車'},
+  {id:'truck',title:'トラック'},
+  {id:'bus',title:'バス'}
 ];
 const HS=Object.freeze({
  '870321915':['petrol_660','ガソリン／660cc以下'],
@@ -163,7 +165,7 @@ function show(){
  heading.append(year);
  const measured=out.types.filter(x=>x.units!==null).length;
  const cover=el('article',undefined,'cm-kpi');
- cover.append(el('small',out.displayPeriod+'　区分別の収録状況'),el('strong',measured+' / 4 区分'),
+ cover.append(el('small',out.displayPeriod+'　区分別の収録状況'),el('strong',measured+' / '+CLASSES.length+' 区分'),
    el('span','月次の上位5国に掲載された区分数。網羅率ではありません'));
  heading.append(cover);area.append(heading);
  const list=el('div',undefined,'cm-kpis cm-category');
