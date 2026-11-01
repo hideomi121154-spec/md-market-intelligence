@@ -1,0 +1,21 @@
+name: All market panels accordion regression
+on:
+  pull_request:
+    paths: ['index.html','md-evidence.js','sw.js','tests/test_market_all_folds.cjs','tests/browser-smoke.cjs','tests/test_offline_data.cjs','.github/workflows/market-all-folds-tests.yml']
+  push:
+    paths: ['index.html','md-evidence.js','sw.js','tests/test_market_all_folds.cjs','tests/browser-smoke.cjs','tests/test_offline_data.cjs']
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JS syntax
+        run: node --check md-evidence.js && node --check tests/browser-smoke.cjs && node --check sw.js
+      - name: Check all market accordions
+        run: node tests/test_market_all_folds.cjs && node tests/test_collapsible_market_panels.cjs && node tests/test_history_folds.cjs
+      - name: Existing business functions, backups and offline boot
+        run: node tests/test_md_evidence.cjs && node tests/test_market_warning.cjs && node tests/test_offline_data.cjs && node tests/test_startup_diagnostics.js
