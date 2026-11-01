@@ -138,6 +138,7 @@
       official=parsed.available?parsed:null;
     }catch(e){official=null;console.warn('Prefecture e-Stat:',e);}
     render();
+    status.textContent=local?'端末に取り込んだ未照合データを表示しています。公式データとは区別しています。':official?'公表済みの公式データを表示しています。':'公式Excelの解析・照合は未完了のため、都道府県別の実数は未取得です。';
   }
   for(const name of PREF){const option=node('option',name);option.value=name;pref.append(option);}
   pref.value='愛知県';
@@ -153,8 +154,8 @@
       const raw=JSON.parse(await file.text());
       raw.source_type='user_import_unverified';
       const checked=validate(raw);
-      local=checked;
       localStorage.setItem(KEY,JSON.stringify(checked));
+      local=checked;
       render();status.textContent='47都道府県データを端末内だけに保存しました。原典の数字と一致するかは未検証です。';
     }catch(e){status.textContent='取込失敗：'+e.message+'。既存データは変更していません。';}
     event.target.value='';
