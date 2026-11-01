@@ -105,11 +105,12 @@ function linkageChecks(){
   const sw=read('sw.js');
   for(const asset of [
     './storage.js?v=2.0.1','./app.js?v=2.0.2',
-    './inventory-observations.js?v=2.1.0','./inventory-observations.css?v=2.1.0','./md-evidence.js?v=3.6.0','./md-evidence.css?v=2.1.0','./model-price-report.js?v=2.3.0','./model-price-report.css?v=2.3.0','./observation-watch.js?v=2.4.0','./observation-watch.css?v=2.4.0','./personal-car.js?v=2.5.0','./personal-car.css?v=2.5.0','./fault-risk.js?v=2.6.0','./fault-risk.css?v=2.6.0','./fault-research.js?v=2.8.0','./fault-research.css?v=2.7.0'
+    './inventory-observations.js?v=2.1.0','./inventory-observations.css?v=2.1.0','./md-evidence.js?v=3.6.0','./md-evidence.css?v=2.1.0','./model-price-report.js?v=2.3.0','./model-price-report.css?v=2.3.0','./observation-watch.js?v=2.4.0','./observation-watch.css?v=2.4.0','./personal-car.js?v=2.5.0','./personal-car.css?v=2.5.0','./fault-risk.js?v=2.6.0','./fault-risk.css?v=2.6.0','./fault-research.js?v=2.8.0','./fault-research.css?v=2.7.0','./repair-md.js?v=3.7.0','./repair-md.css?v=3.7.0'
   ]){
     assert.ok(html.includes(asset),'HTML missing '+asset);
     assert.ok(sw.includes(asset),'SW missing '+asset);
   }
+  assert.ok(html.includes('id="repair-md-panel"'));
   assert.ok(sw.includes("'./data/fault-research-index.json'"),'rankings data must be precached');
   assert.ok(sw.includes("event.request.mode==='navigate'"));
   assert.ok(!html.includes('src="./storage.js?v=1.6"'));
