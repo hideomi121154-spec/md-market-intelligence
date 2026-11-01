@@ -34,5 +34,5 @@ for(const asset of ['residual-gap.js?v=3.1.0','residual-gap.css?v=3.1.0']){asser
 for(const id of ['rr-panel','rr-residual','rr-auction','rr-expenses','rr-sourceType','rr-out','rr-history','rr-export','rr-import','rr-backup'])assert.ok(html.includes('id="'+id+'"'),'missing '+id);
 assert.ok(html.indexOf('<section class="screen" id="overview">')<html.indexOf('id="rr-panel"'));
 assert.ok(html.indexOf('id="rr-panel"')<html.indexOf('<section class="screen" id="records">'));
-assert.ok(sw.includes("md-market-pwa-v4-2-0-20261101"));
+assert.ok(sw.includes("md-market-pwa-v4-3-0-20261102"));
 console.log('PASS: residual/AA calculation, tax/source validation, PWA assets');
