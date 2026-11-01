@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "dataset": "hello_work_prefecture_new_offers",
+  "geography": "accepted_at_prefecture",
+  "measure": "monthly_new_job_offers_original_count",
+  "source_type": "official_file_not_yet_ingested",
+  "source_url": "https://www.e-stat.go.jp/stat-search/files?cycle=1&layout=dataset&page=1&toukei=00450222&tstat=000001020327",
+  "source_table": "long_term_table_12",
+  "available": false,
+  "checked_at_utc": null,
+  "published_on": null,
+  "months": [],
+  "notes": "e-Stat表12の47都道府県・原数値。原本のExcel列構成と日付を検証した値のみ追加。初期状態では未取得。既存の求人広告15媒体の統計と別指標。"
+}
