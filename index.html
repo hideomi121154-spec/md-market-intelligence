@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="./crossborder-signal.css?v=3.9.0">
   <link rel="stylesheet" href="./russia-yaris.css?v=4.0.0">
   <link rel="stylesheet" href="./country-export-mix.css?v=4.1.0">
+  <link rel="stylesheet" href="./estat-exports.css?v=4.2.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
@@ -255,6 +256,17 @@
               </div>
               <p class="cm-muted">本機能は閲覧用公開統計と利用者入力を別系列で保持します。大量データの自動取得には、政府統計の利用登録・API IDの保護と2026年HSコードの照合が必要です。</p>
             </details>
+            <section class="estat-export-panel" id="estat-export-panel" aria-label="政府統計による国別中古乗用車輸出">
+              <h3>公的統計｜輸出先 × 排気量・動力方式 × 月</h3>
+              <p class="cm-muted">財務省「全国・品別国別表（輸出）」の2026年中古乗用車HS番号を利用。JUMV.NETのランキングや端末内の本人転記とは独立した系列です。e-StatのAPI登録が完了するまで実績は未表示です。</p>
+              <div class="cm-controls">
+                <label>公式統計の輸出先<select id="estat-export-country" aria-label="公式統計の輸出先"></select></label>
+                <label>公式統計の対象月<select id="estat-export-month" aria-label="公式統計の年月"></select></label>
+              </div>
+              <div id="estat-export-results" aria-live="polite"></div>
+              <p id="estat-export-status" class="cm-muted" role="status" aria-live="polite">公式統計の接続状況を確認中…</p>
+              <p class="cm-muted"><a target="_blank" rel="noopener noreferrer" href="https://www.e-stat.go.jp/api/">e-StatのAPI利用登録</a> ／ <a target="_blank" rel="noopener noreferrer" href="https://www.customs.go.jp/toukei/info/tsdl.htm">財務省の統計表一覧</a></p>
+            </section>
             <p id="country-mix-status" class="cm-muted" role="status" aria-live="polite">輸出統計を確認中…</p>
           </div>
         </details>
@@ -1043,6 +1055,7 @@
   <script src="./repair-md.js?v=3.7.0" defer></script>
   <script src="./overseas-market.js?v=3.8.0" defer></script>
   <script src="./country-export-mix.js?v=4.1.0" defer></script>
+  <script src="./estat-exports.js?v=4.2.0" defer></script>
   <script src="./demand-signals.js?v=2.0.3" defer></script>
   <script src="./history-trend.js?v=3.4.0" defer></script>
   <script src="./kei-history.js?v=3.4.0" defer></script>
