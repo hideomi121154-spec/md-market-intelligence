@@ -159,7 +159,7 @@ function refresh(){
   area.append(cards);
   area.append(mk('h3',null,result.verdict));
   area.append(mk('p','overseas-muted','国内：'+result.domestic.previousDate+' → '+result.domestic.latestDate
-   +'（'+result.domestic.region+'）／海外：'+result.overseas.period+'。観測期間と対象母数は異なるため直接比較できません。'.replace('undefined','')));
+   +'（'+result.region+'）／海外：'+result.overseas.period+'。観測期間と対象母数は異なるため直接比較できません。'));
   if(result.modelEvidence){
    const n=result.modelEvidence;
    area.append(mk('p','crossborder-emphasis','車種別の自己記録：'+n.make+' '+n.model+'／'+n.country+'　当月'+fmt(n.current)+'台、前年同月'+fmt(n.previous)+'台'
