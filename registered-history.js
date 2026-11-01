@@ -46,6 +46,8 @@
     const models=listModels(years),primary=models.find(m=>m.lookup===select.value),secondary=models.find(m=>m.lookup===compare.value);
     if(!primary)return;
     const points=findVehicle(years,primary),secondaryPts=secondary&&secondary.lookup!==primary.lookup?findVehicle(years,secondary):null;
+    MDSalesTrendView.render($('registered-history-trend'),points,secondaryPts,
+      primary.make+' '+primary.model,secondaryPts?secondary.make+' '+secondary.model:null);
     chart.replaceChildren();
     const header=el('div','registered-history-legend');
     header.append(el('strong',null,primary.make+' '+primary.model));
