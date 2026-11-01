@@ -39,6 +39,6 @@ for(const id of ['registered-history-panel','kei-history-panel']){
 for(const file of ['regional-jobs.js','prefecture-jobs.js','residual-gap.js','residual-maturity.js']){
   assert.ok(fs.existsSync(path.join(root,file)),'existing logic preserved: '+file);
 }
-assert.ok(sw.includes('md-market-pwa-v3-6-0-20261101'),'PWA shell must refresh after HTML update');
+assert.ok(sw.includes('md-market-pwa-v3-7-0-20261101'),'PWA shell must refresh after HTML update');
 assert.ok(sw.includes("'./history-fold.css?v=3.4.0'"),'reuse existing offline folding style');
 console.log('PASS: four independent default-closed panels, existing controls, keyboard style and residual transfer');
