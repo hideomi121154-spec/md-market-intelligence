@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="./crossborder-signal.css?v=3.9.0">
   <link rel="stylesheet" href="./russia-yaris.css?v=4.0.0">
   <link rel="stylesheet" href="./global-export-model.css?v=4.3.0">
+  <link rel="stylesheet" href="./export-evidence-desk.css?v=4.4.0">
   <link rel="stylesheet" href="./country-export-mix.css?v=4.1.0">
   <link rel="stylesheet" href="./estat-exports.css?v=4.2.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
@@ -288,6 +289,18 @@
               </label>
             </div>
             <div id="export-model-results" aria-live="polite"></div>
+            <section class="gm-evidence-desk" id="export-evidence-panel" aria-label="国別比較と車種別根拠">
+              <h3>国別比較｜選択車種の根拠を確認</h3>
+              <p class="gm-description">国の全車種輸出台数は、その国の市場規模の参考です。選択した車種の輸出実績とは限りません。本人の原典付き車種別記録がある国と、未取得の国を区別します。</p>
+              <label class="gm-evidence-select" for="export-evidence-mode">表示する国
+                <select id="export-evidence-mode" aria-label="国別比較の表示範囲">
+                  <option value="top10">国全体の輸出先上位10か国（車種の順位ではありません）</option>
+                  <option value="recorded">選択車種の本人記録がある国</option>
+                  <option value="all">選択可能なすべての国（未収録を含む）</option>
+                </select>
+              </label>
+              <div id="export-evidence-results" aria-live="polite"></div>
+            </section>
             <div class="gm-actions">
               <button class="button secondary" type="button" id="export-model-refresh">収録データを再表示</button>
               <button class="button ghost" type="button" id="export-model-country-mix">この国の車両タイプを確認</button>
@@ -1082,5 +1095,6 @@
   <script src="./observation-watch.js?v=2.4.0" defer></script>
   <script src="./md-evidence.js?v=3.6.0" defer></script>
   <script src="./model-price-report.js?v=2.3.0" defer></script>
+  <script src="./export-evidence-desk.js?v=4.4.0" defer></script>
 </body>
 </html>
