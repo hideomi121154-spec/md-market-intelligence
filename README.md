@@ -227,3 +227,13 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - 原典URL：JETRO（https://www.jetro.go.jp/biz/areareports/2026/a686ac30d5cbf8c4.html）、財務省貿易統計（https://www.customs.go.jp/toukei/info/tsdl.htm）、e-Stat（https://www.e-stat.go.jp/api/）、経産省対ロ制裁（https://www.meti.go.jp/press/2023/07/20230728001/20230728001.html）。
 - 今回の「接続」は**公表済みスナップショットと既存の年次データを参照する方式**。完全自動の公的統計更新はまだ含まれません。e-Stat APIは無料ですが登録・アプリIDが必須。IDを公開JSやGitHubのコミットに直接埋めず、GitHub Actions Secretsで運用すること。
 - 既存のIndexedDB・照合履歴・車両CSV・端末内のlocalStorageのスキーマは無変更。キャッシュ更新だけ実施。テスト：`tests/test_russia_yaris.cjs`、`.github/workflows/russia-yaris-tests.yml`。iPhone実機の最終確認は別途必要。
+
+## v4.1.0 — 世界各国の中古車輸出内訳
+
+- 「市場」画面に `世界各国｜中古車の輸出内訳` を追加。国別輸出累計（2026年1〜9月、上位10国）と、普通車・軽・HV・EVの国別月次台数（2026年9月、**各タイプ上位5国に限定**）を**異なる期間として分離表示**。その時点で公表されている国の和集合を選択肢として収録（全世界全国家の網羅とは異なる）。
+- 既存の `data/overseas-export-snapshot.json` を読み取り専用で利用。分類別の未収録国は0台ではなく `未収録`、国別累計未収録も同様。4区分の合計・国別累計との比率算出は禁止。**車名別・年式別・グレード別実輸出台数は提供しない**。
+- 国選択、対象月選択、カテゴリー別輸出先上位ランキングを追加。ランキングの国をタップすれば該当国へ切替。
+- 財務省2026年版 `第87類・中古乗用車` のHS 9桁統計番号に対応した**本人転記CSV取込**を追加（ガソリン車の排気量別、ディーゼル、HV、PHEV、EV、その他）。`period,country,hs_code,units,source_url` の5列、`2026-MM` 形式、原典URLは税関またはe-Statに限定。これらは**公的統計の自動取得ではなく利用者の未検証転記**。
+- 転記したHS数値は月・国・統計番号の組で検証し、既存行と異なる数値の上書きを禁止。転記CSVは別の `localStorage` キー `md-market-country-hs-manual-v1` へ追加保存し、CSVテキストを別途コピー・復元できる。既存のIndexedDB、車両CSV、照合履歴、輸出メモに変更なし。
+- 2026年の公的HS分類： https://www.customs.go.jp/yusyutu/2026_01_01/data/j_87.htm 。e-Stat APIは登録・アプリIDが必要で、まだ自動接続されていない。初期のカテゴリー別台数はJUMV.NETが普通貿易統計から作成した公開ランキングの一部を既存JSONから表示する方式。
+- テスト：`tests/test_country_export_mix.cjs`, `.github/workflows/country-export-mix-tests.yml`。iPhone Safari実機確認は残る。
