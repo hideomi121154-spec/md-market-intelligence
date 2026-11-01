@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "exporter": "日本",
+    "destination": "ロシア",
+    "make": "トヨタ",
+    "model": "ヤリス"
+  },
+  "checked_at": "2026-11-01",
+  "observations": [
+    {
+      "id": "jp-ru-used-passenger-2025",
+      "label": "日本→ロシア：中古乗用車輸出台数",
+      "scope": "all_models",
+      "geography": "JP_to_RU",
+      "period": "2025",
+      "unit": "台",
+      "value": 186585,
+      "grade": "official_republication",
+      "source_name": "JETRO（財務省貿易統計を引用）",
+      "source_url": "https://www.jetro.go.jp/biz/areareports/2026/a686ac30d5cbf8c4.html",
+      "note": "ヤリスに限定した台数ではない。年次の通関ベース。"
+    },
+    {
+      "id": "ru-toyota-used-sales-2025",
+      "label": "ロシア国内：トヨタ中古車販売台数",
+      "scope": "brand_all_models",
+      "geography": "RU_domestic_sales",
+      "period": "2025",
+      "unit": "台",
+      "value": 624822,
+      "grade": "official_republication_of_industry_data",
+      "source_name": "JETRO（AUTOSTATのブランド別中古車販売を引用）",
+      "source_url": "https://www.jetro.go.jp/biz/areareports/2026/a686ac30d5cbf8c4.html",
+      "note": "ロシア国内で売れたトヨタ中古車全体。日本からの輸入実績ではない。"
+    }
+  ],
+  "direct_model_exports": [],
+  "source_links": [
+    {
+      "label": "財務省・貿易統計（国別／品別）",
+      "url": "https://www.customs.go.jp/toukei/info/tsdl.htm"
+    },
+    {
+      "label": "e-Stat 中古乗用車統計の検索",
+      "url": "https://www.e-stat.go.jp/stat-search/database?query=70503011"
+    },
+    {
+      "label": "e-Stat API登録・利用方法",
+      "url": "https://www.e-stat.go.jp/api/"
+    },
+    {
+      "label": "経産省の対ロ輸出禁止措置",
+      "url": "https://www.meti.go.jp/press/2023/07/20230728001/20230728001.html"
+    }
+  ]
+}
