@@ -82,6 +82,20 @@ async function run(){
   assert.match(await page.locator('#mycar-status').innerText(),/上書きしません/);
   assert.equal(JSON.parse(await page.evaluate(()=>localStorage.getItem('md-market-consumer-price-v1'))).quotes[0].price,700000);
   await page.locator('a[data-tab="overview"]').click();
+  const marketFolds=['demand-signals-panel','uss-aggregate','registered-sales-panel','model-sales-panel',
+    'inventory-panel','observation-watch-panel','model-price-panel','md-evidence-panel',
+    'regional-jobs-panel','prefecture-jobs-panel','rm-panel','rr-panel',
+    'registered-history-panel','kei-history-panel'];
+  for(const id of marketFolds){
+    assert.equal(await page.locator('#'+id).evaluate(el=>el.open),false,'must start collapsed: '+id);
+  }
+  await page.locator('#md-evidence-jump').click();
+  assert.equal(await page.locator('#md-evidence-panel').evaluate(el=>el.open),true,
+    'MD shortcut must open its destination');
+  for(const id of ['model-price-panel','inventory-panel','observation-watch-panel']){
+    await page.locator('#'+id+' > summary').click();
+    assert.equal(await page.locator('#'+id).evaluate(el=>el.open),true,'tap opens '+id);
+  }
   await page.locator('#inventory-summary').waitFor();
   // Local-only monthly publication transcriptions; all values are synthetic test fixtures.
   await page.locator('#model-price-month').fill('2026-08');
@@ -168,6 +182,10 @@ async function run(){
   await page.waitForFunction(()=>document.querySelector('#count-all').textContent==='1');
   await page.reload({waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>document.querySelector('#count-all').textContent==='1');
+  await page.locator('a[data-tab="overview"]').click();
+  for(const id of ['md-evidence-panel','inventory-panel','observation-watch-panel']){
+    await page.locator('#'+id+' > summary').click();
+  }
   assert.match(await page.locator('#md-evidence-verdict').innerText(),/仕入れ判断は保留/);
   assert.match(await page.locator('#md-evidence-price').innerText(),/0件/,'unverified imported listing must not count');
   const saved=await page.evaluate(()=>({
