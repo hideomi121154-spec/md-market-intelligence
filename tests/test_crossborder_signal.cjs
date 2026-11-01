@@ -39,7 +39,7 @@ const modelEvidence={id:'a',make:'トヨタ',model:'ヤリス',country:'タン�
 const withModel=M.analyze(rows,key,'タンザニア',[modelEvidence],snapshot,'2026-11-01',I,W);
 assert.equal(withModel.modelEvidence.model,'ヤリス');
 assert.equal(withModel.modelYoy,100);
-assert.ok(withModel.evidenceStrength.includes('自己記録'));
+assert.ok(withModel.evidenceStrength.includes('ユーザー記録'));
 assert.equal(M.analyze(rows,key,'ロシア',[modelEvidence],snapshot,'2026-11-01',I,W).modelEvidence,null,'country must match');
 assert.equal(M.analyze([{...car,make:'日産'}, {...later,make:'日産'}],
  I.seriesKey({...car,make:'日産'}),'タンザニア',[modelEvidence],snapshot,'2026-11-01',I,W).modelEvidence,null,'manufacturer must match');
