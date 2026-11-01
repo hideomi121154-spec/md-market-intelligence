@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./md-risk.css?v=2.2.0">
   <link rel="stylesheet" href="./repair-md.css?v=3.7.0">
   <link rel="stylesheet" href="./overseas-market.css?v=3.8.0">
+  <link rel="stylesheet" href="./crossborder-signal.css?v=3.9.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
@@ -223,6 +224,44 @@
             </details>
             <p id="overseas-status" class="overseas-muted" role="status" aria-live="polite">海外の統計データを読み込み中…</p>
             <p class="overseas-warn">国内価格との比較：輸出台数増加は買い需要の手掛かりですが、為替、車齢規制、車種・仕様の適合、船積み、季節要因によって国内の個別車両への影響は異なります。仕入れ推奨・実際の成約率の算出には使用しません。</p>
+          </div>
+        </details>
+        <details class="panel crossborder-panel history-fold" id="crossborder-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>国内在庫 × 海外需要｜車種別比較</strong><small>在庫観測の増減／輸出先国の動向／車種別根拠</small></span></summary>
+          <div class="history-fold-body">
+            <h2>国内の供給増を海外需要と照らし合わせる</h2>
+            <p class="overseas-muted">「国内在庫の増加」と「海外向け輸出台数の増加」は別の指標です。国内は保存した掲載情報、海外は国別の輸出統計を使います。<strong>国別統計から車種別の輸出人気は判断できません。</strong></p>
+            <div class="crossborder-selectors">
+              <label>国内掲載台数の検索条件（端末内の記録）<select id="crossborder-series" aria-label="比較する国内在庫記録"></select></label>
+              <label>海外輸出先（国全体の統計）<select id="crossborder-country" aria-label="比較する国別輸出台数"></select></label>
+            </div>
+            <div id="crossborder-results" aria-live="polite"></div>
+            <p class="overseas-muted">国内掲載データは「車両」画面の掲載台数記録で追加できます。同じURL・地域・グレード・色・検索条件で複数回記録してください。2026年10月のカーセンサー障害をまたぐ比較、30日以上前の記録は保留します。</p>
+            <details>
+              <summary><strong>車種別の輸出実台数が分かる場合のみ、原典付きで追加</strong></summary>
+              <p class="overseas-muted">メーカー・車名・国・集計対象の一致する実績を手入力します。**架空の数字や「海外で人気らしい」という印象を実台数として入力しないでください。** 車種別の公開データが得られない場合、この欄は空で問題ありません。アップロード・自動送信しません。</p>
+              <div class="crossborder-evidence">
+                <label>メーカー<input id="crossborder-note-make" maxlength="50" placeholder="例：トヨタ"></label>
+                <label>車名<input id="crossborder-note-model" maxlength="80" placeholder="例：ヤリス"></label>
+                <label>輸出先国<input id="crossborder-note-country" maxlength="60" placeholder="例：タンザニア"></label>
+                <label>車種別集計の対象範囲<input id="crossborder-note-scope" maxlength="160" placeholder="例：指定モデルのみ、通関ベース"></label>
+                <label>当期の対象月<input type="month" id="crossborder-note-period" placeholder="2026-09"></label>
+                <label>前年同月<input type="month" id="crossborder-note-prior-period" placeholder="2025-09"></label>
+                <label>当期の輸出台数<input type="number" min="0" step="1" id="crossborder-note-current" placeholder="実績値のみ"></label>
+                <label>前年同月の輸出台数<input type="number" min="0" step="1" id="crossborder-note-previous" placeholder="実績値のみ"></label>
+                <label>出典名<input id="crossborder-note-source" maxlength="160" placeholder="例：行政公表のモデル別集計"></label>
+                <label>出典URL<input type="url" id="crossborder-note-url" placeholder="https://..."></label>
+                <label class="wide">対象台数・集計条件の説明（任意）<input id="crossborder-note-extra" maxlength="500" placeholder="例：輸出先別、特定年式、車種の表記差に注意"></label>
+              </div>
+              <button id="crossborder-save" class="button secondary" type="button">車種別の実績を端末に保存</button>
+              <div id="crossborder-notes"></div>
+              <p class="overseas-muted">保存記録は入力者の自己申告で、出典URLがあっても自動検証したことにはなりません。データの重複や集計範囲の差は原典で確認してください。</p>
+              <button id="crossborder-export" class="button secondary" type="button">JSONバックアップを書き出す</button>
+              <button id="crossborder-import" class="button ghost" type="button">JSONから追加復元</button>
+              <textarea id="crossborder-json" rows="4" aria-label="車種別海外輸出データのバックアップJSON" spellcheck="false"></textarea>
+            </details>
+            <p id="crossborder-status" role="status" aria-live="polite" class="overseas-muted">比較の準備中…</p>
+            <p class="overseas-muted">この画面は需給分析のための調査補助です。市場の価格予測、売約率、オークション入札の承認ではありません。車両輸出規制、用途・年式制限、陸送費、税金も別途確認してください。</p>
           </div>
         </details>
         <details class="panel demand-panel history-fold" id="demand-signals-panel">
@@ -964,6 +1003,7 @@
   <script src="./kei-history.js?v=3.4.0" defer></script>
   <script src="./registered-history.js?v=3.4.0" defer></script>
   <script src="./inventory-observations.js?v=2.1.0" defer></script>
+  <script src="./crossborder-signal.js?v=3.9.0" defer></script>
   <script src="./observation-watch.js?v=2.4.0" defer></script>
   <script src="./md-evidence.js?v=3.6.0" defer></script>
   <script src="./model-price-report.js?v=2.3.0" defer></script>
