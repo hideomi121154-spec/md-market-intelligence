@@ -193,7 +193,7 @@ id('use-in-gap').addEventListener('click',()=>{
  const m=document.getElementById('rr-make'),v=document.getElementById('rr-model'),to=document.getElementById('rr-panel');
  if(!m||!v||!to){status.textContent='残価乖離分析の画面が見つかりません。';return;}
  m.value=selected.make;v.value=selected.model;m.dispatchEvent(new Event('input',{bubbles:true}));v.dispatchEvent(new Event('input',{bubbles:true}));
- to.scrollIntoView({behavior:'smooth',block:'start'});status.textContent='残価乖離分析にメーカー・車名を転記しました。保証残価とAA相場は別途入力してください。';
+ to.open=true;to.scrollIntoView({behavior:'smooth',block:'start'});status.textContent='残価乖離分析を開き、メーカー・車名を転記しました。保証残価とAA相場は別途入力してください。';
 });
 load();
 })(typeof window!=='undefined'?window:globalThis);
