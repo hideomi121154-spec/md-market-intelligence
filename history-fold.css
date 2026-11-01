@@ -1,0 +1,22 @@
+/* MD MARKET v3.4: collapsible new-car annual history with accessible trend chart */
+.history-fold{overflow:visible}
+.history-fold > .history-fold-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none;cursor:pointer;padding:2px 0;min-height:48px}
+.history-fold > .history-fold-summary::-webkit-details-marker{display:none}
+.history-fold > .history-fold-summary::after{content:'＋ 開く';flex:none;color:#7be3d5;font-size:13px;font-weight:750;border:1px solid #42677c;border-radius:10px;padding:7px 10px}
+.history-fold[open] > .history-fold-summary::after{content:'− 閉じる'}
+.history-fold > .history-fold-summary:focus-visible{outline:2px solid #6eebdd;outline-offset:4px;border-radius:6px}
+.history-fold-title{display:grid;gap:6px;min-width:0}
+.history-fold-title strong{font-size:clamp(16px,2.8vw,20px);line-height:1.4}
+.history-fold-title small{color:var(--muted);font-size:12px;line-height:1.5}
+.history-fold-body{padding-top:14px;border-top:1px solid #35516a;margin-top:12px}
+.history-fold-body h3{font-size:15px;margin:4px 0 10px}
+.history-fold-graph-heading{color:#d7f5f2;font-size:14px!important;margin:18px 0 8px!important}
+.history-trend{min-width:0;background:#0b1a2c;border:1px solid #2d4665;padding:12px;border-radius:13px}
+.history-trend-svg{width:100%;height:auto;display:block;overflow:visible}
+.history-trend-legend{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;font-size:12px;margin:2px 0 8px;color:#e4f0fa}
+.history-trend-legend-item{display:flex;align-items:center;gap:7px}
+.history-trend-legend-dot{width:12px;height:12px;display:inline-block;flex:none;border-radius:50%}
+.history-trend-legend-dot.primary{background:#49d5c2}
+.history-trend-legend-dot.secondary{background:#84aaff}
+.history-trend-note{font-size:11px!important;line-height:1.7!important;color:#b8c9df;margin:8px 0 0!important}
+@media(max-width:600px){.history-fold > .history-fold-summary::after{font-size:12px;padding:7px}.history-trend{padding:7px}.history-fold-body{padding-top:10px}}
