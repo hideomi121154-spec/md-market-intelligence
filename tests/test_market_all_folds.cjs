@@ -49,7 +49,7 @@ assert.ok(overview.includes('<details class="prefecture-jobs-import">'),'prefect
 assert.ok(overview.includes('id="md-evidence-jump"'),'dashboard jump button preserved');
 assert.ok(evidence.includes('panel.open=true;panel.scrollIntoView'),'shortcut opens collapsed destination');
 assert.ok(smoke.includes("await page.locator('#md-evidence-jump').click()"));
-assert.ok(sw.includes('md-market-pwa-v3-6-0-20261101'),'versioned offline shell updated');
+assert.ok(sw.includes('md-market-pwa-v3-7-0-20261101'),'versioned offline shell updated');
 assert.ok(sw.includes("'./md-evidence.js?v=3.6.0'"));
 assert.ok(html.includes('./md-evidence.js?v=3.6.0'));
 console.log('PASS 15 closed market panels, 9 newly folded, original inputs/backups, source-only warning and MD shortcut');

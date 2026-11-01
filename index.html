@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./model-sales.css?v=1.4">
   <link rel="stylesheet" href="./valuation.css?v=1.5">
   <link rel="stylesheet" href="./md-risk.css?v=2.2.0">
+  <link rel="stylesheet" href="./repair-md.css?v=3.7.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
@@ -772,6 +773,73 @@
           </div>
           <p class="valuation-disclaimer">計算式：上限仕入価格＝想定小売販売価格 − 値引き − 諸経費 − 目標利益。慎重シナリオではさらに設定した割合だけ小売販売価格が下がったと仮定します。登録済み109件は出典未検証のため自動で試算に使いません。</p>
         </article>
+        <article class="panel repair-md-panel" id="repair-md-panel">
+          <h2>車種別修理実績 → MD仕入れリスク分析（試作）</h2>
+          <p class="repair-md-muted">整備部門の修理実績を、仕入れ上限の判断材料へつなげる試作です。社内データには接続していません。メーカー・車名・型式・年式・走行距離ごとに、車両母数のある実績集計、または明示的な仮定シナリオを記録できます。故障事例やSNSの投稿件数だけから故障率を計算しません。</p>
+          <details>
+            <summary><strong>集計・仮定を入力する（任意の車種）</strong></summary>
+            <p class="repair-md-muted">個人情報や車台番号を入力しないでください。実績集計の「故障確認車両数」は同じ車両を重複計数しないことが必要です。共通母数・対象期間・修理費の定義を統一してください。</p>
+            <form id="repair-md-form">
+              <div class="repair-md-grid">
+                <label>メーカー<input id="repair-md-make" maxlength="50" required placeholder="トヨタ"></label>
+                <label>車名<input id="repair-md-model" maxlength="80" required placeholder="ヤリス"></label>
+                <label>型式（必須）<input id="repair-md-code" maxlength="30" required placeholder="KSP210"></label>
+                <label>対象年式（開始）<input type="number" id="repair-md-year-min" min="1980" max="2100" required placeholder="2022"></label>
+                <label>対象年式（終了）<input type="number" id="repair-md-year-max" min="1980" max="2100" required placeholder="2025"></label>
+                <label>走行距離下限 km<input type="number" id="repair-md-mile-min" min="0" max="2000000" required placeholder="0"></label>
+                <label>走行距離上限 km<input type="number" id="repair-md-mile-max" min="0" max="2000000" required placeholder="80000"></label>
+                <label>故障部位・症状<input id="repair-md-component" maxlength="100" required placeholder="エアコン"></label>
+                <label>根拠区分<select id="repair-md-kind"><option value="cohort">対象車両の母数がある修理集計（自己申告）</option><option value="assumption">試算用の仮定</option></select></label>
+              </div>
+              <div class="repair-md-grid" id="repair-md-cohort-fields">
+                <label>対象となる点検車両数（重複なし）<input type="number" id="repair-md-inspected" min="1" max="1000000" placeholder="100"></label>
+                <label>そのうち故障が確認された車両数<input type="number" id="repair-md-affected" min="0" max="1000000" placeholder="4"></label>
+              </div>
+              <div class="repair-md-grid" id="repair-md-assumption-fields" hidden>
+                <label>仮定の発生割合（%）<input type="number" id="repair-md-rate" min="0" max="100" step="0.1" placeholder="8"></label>
+              </div>
+              <div class="repair-md-grid">
+                <label>1件あたり未計上の整備費（税抜・円）<input type="number" id="repair-md-cost" min="0" max="5000000" required step="1" placeholder="60000"></label>
+                <label>出典名・データ管理者<input id="repair-md-source" maxlength="160" required placeholder="集計責任者名ではなく資料名など"></label>
+                <label>集計・確認日<input id="repair-md-date" type="date" required></label>
+                <label>参考資料URL（任意）<input id="repair-md-url" type="url" placeholder="https://..."></label>
+                <label class="wide">データの範囲・注意事項（任意）<textarea id="repair-md-notes" maxlength="500" rows="2" placeholder="例：点検対象の定義、集計期間、税抜修理費の集計方法"></textarea></label>
+              </div>
+              <div class="repair-md-actions">
+                <button type="submit" id="repair-md-save" class="button primary">集計を端末内に保存</button>
+                <button type="button" id="repair-md-example" class="button secondary">架空のヤリスを入力例にセット</button>
+              </div>
+            </form>
+          </details>
+          <details open>
+            <summary><strong>車種別に整備リスクを計算</strong></summary>
+            <p class="repair-md-muted">上段の「仕入れ上限価格の試算」と連動し、既存費用で未対応の部分のみ追加控除します。ここで試算した金額は元の仕入れ価格欄へ書き戻しません。</p>
+            <div class="repair-md-grid">
+              <label>メーカー<input id="repair-md-filter-make" placeholder="トヨタ"></label>
+              <label>車名<input id="repair-md-filter-model" placeholder="ヤリス"></label>
+              <label>型式<input id="repair-md-filter-code" placeholder="KSP210"></label>
+              <label>対象年式<input type="number" id="repair-md-filter-year" min="1980" max="2100" placeholder="2024"></label>
+              <label>走行距離（km）<input type="number" id="repair-md-filter-mileage" min="0" max="2000000" placeholder="30000"></label>
+              <label>元の整備費・予備費のうち、このリスクに充当済みの金額（円）<input type="number" id="repair-md-coverage" min="0" max="5000000" value="0" step="1"></label>
+            </div>
+            <div id="repair-md-analysis" aria-live="polite">
+              <div id="repair-md-output"></div>
+            </div>
+          </details>
+          <details>
+            <summary><strong>記録の確認・JSONでの社内データ取込／バックアップ</strong></summary>
+            <p id="repair-md-count" class="repair-md-muted"></p>
+            <div id="repair-md-records"></div>
+            <p class="repair-md-muted">JSONはこの機能専用の形式です。入力したデータはこの端末のみに保存。送信・共有は自動で行いません。社内実績を用いる場合は利用許可・匿名化・持ち出しルールを確認してください。</p>
+            <div class="repair-md-actions">
+              <button id="repair-md-export" type="button" class="button secondary">JSON書き出し</button>
+              <button id="repair-md-import" type="button" class="button ghost">JSONから追加復元</button>
+            </div>
+            <textarea id="repair-md-json" rows="5" aria-label="修理実績集計のバックアップJSON" spellcheck="false"></textarea>
+          </details>
+          <p id="repair-md-status" class="repair-md-muted" role="status" aria-live="polite"></p>
+          <p class="repair-md-muted">注意：記録の実績値は入力者の申告で、独立に検証された故障率ではありません。販売・仕入れの判断には実車確認や社内承認が必要です。</p>
+        </article>
         <article class="panel risk-panel" id="risk-panel">
           <h2>在庫期間別のリスク感度分析</h2>
           <p class="risk-intro">上の仕入れ上限価格の入力条件を引き継ぎ、30日・60日・90日の在庫期間を比較します。<strong>予測ではなく仮定の試算</strong>です。</p>
@@ -826,6 +894,7 @@
   <script src="./registered-sales.js?v=2.0.3" defer></script>
   <script src="./valuation.js?v=2.2.0" defer></script>
   <script src="./md-risk.js?v=2.2.0" defer></script>
+  <script src="./repair-md.js?v=3.7.0" defer></script>
   <script src="./demand-signals.js?v=2.0.3" defer></script>
   <script src="./history-trend.js?v=3.4.0" defer></script>
   <script src="./kei-history.js?v=3.4.0" defer></script>
