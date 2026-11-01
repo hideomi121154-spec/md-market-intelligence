@@ -41,7 +41,7 @@ async function testReader(){
  const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
  assert.ok(index.indexOf('offline-data.js?v=2.0.3')<index.indexOf('uss.js?v=2.0.3'),'offline helper must execute before statistics');
  assert.ok(index.includes('<b>v3.2.0</b>'));
- assert.ok(sw.includes('md-market-pwa-v3-5-0-20261101'));
+ assert.ok(sw.includes('md-market-pwa-v3-6-0-20261101'));
  assert.ok(sw.includes("'./offline-data.js?v=2.0.3'"),'offline helper must be precached');
  for(const script of scripts){
   const code=fs.readFileSync(path.join(root,script),'utf8');
@@ -58,6 +58,7 @@ async function testReader(){
  }
  assert.ok(index.includes('history-trend.js?v=3.4.0') && sw.includes("'./history-trend.js?v=3.4.0'"));
  assert.ok(index.includes('history-fold.css?v=3.4.0') && sw.includes("'./history-fold.css?v=3.4.0'"));
+ assert.ok(index.includes('md-evidence.js?v=3.6.0')&&sw.includes("'./md-evidence.js?v=3.6.0'"));
  assert.ok(index.includes('model-price-report.js?v=2.3.0')&&sw.includes("'./model-price-report.js?v=2.3.0'"));
  assert.ok(index.includes('personal-car.js?v=2.5.0')&&sw.includes("'./personal-car.js?v=2.5.0'"));
  // The backup hotfix and inventory must survive this patch.
