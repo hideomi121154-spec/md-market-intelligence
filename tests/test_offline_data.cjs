@@ -36,12 +36,12 @@ async function testReader(){
 }
 (async()=>{
  await testReader();
- const scripts=['uss.js','model-sales.js','registered-sales.js','demand-signals.js','kei-history.js','registered-history.js'];
+ const scripts=['uss.js','model-sales.js','registered-sales.js','demand-signals.js'];
  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
  assert.ok(index.indexOf('offline-data.js?v=2.0.3')<index.indexOf('uss.js?v=2.0.3'),'offline helper must execute before statistics');
  assert.ok(index.includes('<b>v3.2.0</b>'));
- assert.ok(sw.includes('md-market-pwa-v3-3-0-20261101'));
+ assert.ok(sw.includes('md-market-pwa-v3-4-0-20261101'));
  assert.ok(sw.includes("'./offline-data.js?v=2.0.3'"),'offline helper must be precached');
  for(const script of scripts){
   const code=fs.readFileSync(path.join(root,script),'utf8');
@@ -50,6 +50,14 @@ async function testReader(){
   assert.ok(index.includes('./'+script+'?v=2.0.3'),'script version must be updated: '+script);
   assert.ok(sw.includes("'./"+script+"?v=2.0.3'"),'script cache version mismatch: '+script);
  }
+ for(const script of ['kei-history.js','registered-history.js']){
+  const source=fs.readFileSync(path.join(root,script),'utf8');
+  assert.ok(source.includes('await MDOffline.read('));
+  assert.ok(index.includes('./'+script+'?v=3.4.0'));
+  assert.ok(sw.includes("'./"+script+"?v=3.4.0'"));
+ }
+ assert.ok(index.includes('history-trend.js?v=3.4.0') && sw.includes("'./history-trend.js?v=3.4.0'"));
+ assert.ok(index.includes('history-fold.css?v=3.4.0') && sw.includes("'./history-fold.css?v=3.4.0'"));
  assert.ok(index.includes('model-price-report.js?v=2.3.0')&&sw.includes("'./model-price-report.js?v=2.3.0'"));
  assert.ok(index.includes('personal-car.js?v=2.5.0')&&sw.includes("'./personal-car.js?v=2.5.0'"));
  // The backup hotfix and inventory must survive this patch.
