@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="./valuation.css?v=1.5">
   <link rel="stylesheet" href="./md-risk.css?v=2.2.0">
   <link rel="stylesheet" href="./repair-md.css?v=3.7.0">
+  <link rel="stylesheet" href="./overseas-market.css?v=3.8.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
@@ -162,6 +163,68 @@
         <p class="coverage" id="coverage"></p>
         <div class="audit-overview" id="audit-overview" aria-live="polite">個別価格の出典照合状況を確認中…</div>
         <p><button class="button secondary" type="button" id="md-evidence-jump">MD仕入れ判断の根拠を確認する</button></p>
+        <details class="panel overseas-panel history-fold" id="overseas-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>海外中古車需要・輸出動向</strong><small>月次輸出台数／国別需要／為替・輸入規制メモ</small></span></summary>
+          <div class="history-fold-body">
+            <h2>海外市場の需給シグナル</h2>
+            <p class="overseas-muted">日本から海外への中古車輸出は国内オークションの買い手側に関わります。国別の台数と前年同月・同期を比較できますが、車種別の落札数、成約価格、将来の相場を直接示すものではありません。</p>
+            <div id="overseas-results" hidden>
+              <div class="overseas-metrics" id="overseas-metrics"></div>
+              <h3>2025年・2026年の月別輸出台数</h3>
+              <p class="overseas-muted">欠損月は「未公表」と表示。前年同月比を計算します。バーは年ごとの系列ではなく、両年を同じスケールで描画しています。</p>
+              <div class="overseas-table-container"><table class="overseas-table">
+                <thead><tr><th>月</th><th>2025年</th><th>2026年</th><th>前年同月比</th></tr></thead>
+                <tbody id="overseas-months"></tbody>
+              </table></div>
+              <h3>主な輸出先と前年同期比</h3>
+              <p id="overseas-country-period" class="overseas-muted"></p>
+              <div id="overseas-countries"></div>
+              <h3>車両カテゴリー別：輸出先の違い</h3>
+              <label class="overseas-muted" for="overseas-type">分類を選ぶ</label>
+              <select id="overseas-type" aria-label="輸出車両の種類"></select>
+              <p id="overseas-type-period" class="overseas-muted"></p>
+              <div id="overseas-types-list" class="overseas-type-results"></div>
+              <p class="overseas-warn">国別累計とカテゴリ別月次は対象期間が異なります。普通車・ハイブリッド・軽自動車等のサイト分類はメーカー・車種名ではありません。国別ランキングの数字を特定車種の輸出需要として流用しないでください。</p>
+            </div>
+            <p class="overseas-muted" id="overseas-definition"></p>
+            <p id="overseas-source" class="overseas-muted"></p>
+            <div class="overseas-grid">
+              <div><a href="https://www.customs.go.jp/toukei/" target="_blank" rel="noopener noreferrer">財務省：貿易統計（原典）</a></div>
+              <div><a href="https://www.stat-search.boj.or.jp/ssi/mtshtml/fm08_d_1.html" target="_blank" rel="noopener noreferrer">日銀：ドル円為替データ</a></div>
+              <div><a href="https://www.meti.go.jp/policy/external_economy/trade_control/02_export/17_russia/qa.html" target="_blank" rel="noopener noreferrer">経産省：輸出規制の確認</a></div>
+              <div><a href="https://jumv.net/" target="_blank" rel="noopener noreferrer">JUMV.NET：最新の月次輸出統計</a></div>
+            </div>
+            <details>
+              <summary><strong>ドル円の観測値・海外規制などを記録</strong></summary>
+              <p class="overseas-muted">月次統計の自動更新や海外ニュースの自動監視は未実装です。公表元を確認したうえで、ドル円レートや海外の出来事を手入力して保存できます。観測記録は市場の事実として自動採用しません。</p>
+              <h3>ドル円（USD/JPY）を記録</h3>
+              <div class="overseas-grid">
+                <label>観測日<input type="date" id="overseas-fx-date"></label>
+                <label>1ドル＝何円<input type="number" id="overseas-usdjpy" min="50" max="300" step="0.01" inputmode="decimal" placeholder="例：150.20"></label>
+                <label>出典名<input id="overseas-fx-source" maxlength="120" placeholder="例：日本銀行"></label>
+                <label>出典URL<input id="overseas-fx-url" type="url" placeholder="https://..."></label>
+              </div>
+              <button type="button" class="button secondary" id="overseas-add-fx">ドル円を端末に記録</button>
+              <h3>輸出先国の制度変更・需要・海上輸送メモ</h3>
+              <div class="overseas-grid">
+                <label>確認日／制度発効日<input type="date" id="overseas-event-date"></label>
+                <label>対象国<input id="overseas-event-country" maxlength="70" placeholder="例：ケニア／ロシア／全世界"></label>
+                <label class="wide">事実と市場への仮説を区別してメモ<input id="overseas-event-description" maxlength="500" placeholder="例：新しい輸入規制の発効。中古車需要への影響は未検証"></label>
+                <label>出典名<input id="overseas-event-source" maxlength="120" placeholder="例：相手国税関・経産省"></label>
+                <label>公式・参考出典URL<input id="overseas-event-url" type="url" placeholder="https://..."></label>
+              </div>
+              <button type="button" class="button secondary" id="overseas-add-event">海外動向を端末に記録</button>
+              <h3>記録一覧・バックアップ</h3>
+              <p id="overseas-notes-count" class="overseas-muted"></p>
+              <div id="overseas-notes"></div>
+              <button type="button" class="button secondary" id="overseas-export">JSONバックアップを書き出す</button>
+              <button type="button" class="button ghost" id="overseas-import">JSONを追加復元</button>
+              <textarea id="overseas-backup" rows="4" aria-label="海外観測データのバックアップJSON" spellcheck="false"></textarea>
+            </details>
+            <p id="overseas-status" class="overseas-muted" role="status" aria-live="polite">海外の統計データを読み込み中…</p>
+            <p class="overseas-warn">国内価格との比較：輸出台数増加は買い需要の手掛かりですが、為替、車齢規制、車種・仕様の適合、船積み、季節要因によって国内の個別車両への影響は異なります。仕入れ推奨・実際の成約率の算出には使用しません。</p>
+          </div>
+        </details>
         <details class="panel demand-panel history-fold" id="demand-signals-panel">
           <summary class="history-fold-summary"><span class="history-fold-title"><strong>中古車の需要シグナル比較</strong><small>問い合わせ・アクセス順位／車種別の関心</small></span></summary>
           <div class="history-fold-body">
@@ -895,6 +958,7 @@
   <script src="./valuation.js?v=2.2.0" defer></script>
   <script src="./md-risk.js?v=2.2.0" defer></script>
   <script src="./repair-md.js?v=3.7.0" defer></script>
+  <script src="./overseas-market.js?v=3.8.0" defer></script>
   <script src="./demand-signals.js?v=2.0.3" defer></script>
   <script src="./history-trend.js?v=3.4.0" defer></script>
   <script src="./kei-history.js?v=3.4.0" defer></script>
