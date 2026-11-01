@@ -1,0 +1,32 @@
+name: Repair evidence to MD bid ceiling
+on:
+  pull_request:
+    paths:
+      - 'repair-md.js'
+      - 'repair-md.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_repair_md.cjs'
+      - '.github/workflows/repair-md-tests.yml'
+  push:
+    paths:
+      - 'repair-md.js'
+      - 'repair-md.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_repair_md.cjs'
+      - '.github/workflows/repair-md-tests.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: node --check repair-md.js && node --check tests/test_repair_md.cjs
+      - name: Computation, data safety and UI integration
+        run: node tests/test_repair_md.cjs
