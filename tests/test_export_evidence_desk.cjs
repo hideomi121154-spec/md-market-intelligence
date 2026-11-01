@@ -41,7 +41,7 @@ const ru=cmp.rows.find(x=>x.country==='ロシア');
 assert.equal(ru.modelRecord.current,4);
 assert.equal(compare('トヨタ','ヤリス',raw).modelCountries,0);
 assert.ok(compare('日産','ノート','broken JSON').notesError);
-assert.throws(()=>compare('トヨタ','not-listed'),/カタログ/);
+assert.throws(()=>compare('トヨタ','not-listed'),/メーカー・車種/);
 assert.deepEqual(E.priceContext('', '日産','ノート'),{series:[],error:null});
 assert.ok(E.priceContext('broken','日産','ノート').error);
 const source=P.SOURCE;
