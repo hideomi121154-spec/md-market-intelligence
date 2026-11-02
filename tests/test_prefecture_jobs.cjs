@@ -10,9 +10,21 @@ assert.equal(new Set(PREF).size,47);
 assert.ok(PREF.includes('愛知県')&&PREF.includes('広島県'));
 const publicData=JSON.parse(fs.readFileSync(path.join(root,'data/prefecture_jobs.json'),'utf8'));
 assert.equal(validate(publicData,true),publicData);
-assert.equal(publicData.available,false);
-assert.equal(publicData.months.length,0);
-assert.throws(()=>validate(publicData),/公表日/);
+if(publicData.available){
+ assert.equal(publicData.source_type,'e_stat_file_verified');
+ assert.ok(/^\\d{10}$/.test(publicData.source_file_id));
+ assert.ok(/^[a-f0-9]{64}$/.test(publicData.source_sha256));
+ assert.ok(publicData.months.length>=14);
+ assert.ok(publicData.months.at(-1).month>='2026-09');
+ const sept=publicData.months.find(x=>x.month==='2026-09');
+ assert.ok(sept,'2026-09 must exist');
+ assert.equal(Object.values(sept.values).reduce((a,b)=>a+b,0),777944,'official national sheet1 total must reconcile');
+ const yoy=compare(publicData,'2026-09','yoy');
+ assert.equal(yoy.status,'ready');
+} else {
+ assert.equal(publicData.months.length,0);
+ assert.throws(()=>validate(publicData),/公表日/);
+}
 const vals=(base)=>Object.fromEntries(PREF.map((n,i)=>[n,base+i*10]));
 const row=(month,base)=>({month,values:vals(base)});
 const data={
@@ -39,12 +51,14 @@ assert.throws(()=>validate({...data,source_url:'https://example.com'}),/形式/)
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
 const js=fs.readFileSync(path.join(root,'prefecture-jobs.js'),'utf8');
-for(const asset of ['prefecture-jobs.js?v=3.3.0','prefecture-jobs.css?v=3.3.0']){
+for(const asset of ['prefecture-jobs.js?v=4.5.0','prefecture-jobs.css?v=4.5.0']){
  assert.ok(html.includes(asset),asset+' missing HTML');
  assert.ok(sw.includes(asset),asset+' missing SW');
 }
 assert.ok(sw.includes('./data/prefecture_jobs.json'));
 assert.ok(html.includes('id="prefecture-jobs-panel"'));
+assert.ok(html.includes('id="prefecture-jobs-data-source"'));
+assert.ok(html.includes('id="prefecture-jobs-trend"'));
 assert.ok(js.includes('MDOffline.read('),'offline-first access required');
 assert.ok(js.includes("localStorage.setItem(KEY"),'mobile local import persistence required');
 assert.ok(js.includes("raw.source_type='user_import_unverified'"),'user import must never auto-promote as verified');
