@@ -24,3 +24,11 @@
 .prefecture-jobs-import input[type=file]{max-width:100%;font-size:12px;margin:10px 0}
 .prefecture-jobs-import .button{margin:5px 0}
 @media(max-width:600px){.prefecture-job-row{grid-template-columns:54px minmax(35px,1fr) 66px 68px;gap:4px;font-size:11px}.prefecture-jobs-head h2{font-size:18px}}
+
+/* v4.5: 24-month original-count trend for the selected prefecture. */
+.prefecture-jobs-trend{margin:13px 0 17px;padding:11px;border:1px solid #315471;border-radius:10px;background:#0e2335;overflow:hidden;min-height:45px}
+.prefecture-jobs-trend strong,.prefecture-jobs-trend small{display:block;font-size:12px;line-height:1.7;color:#d2e9fa}
+.prefecture-jobs-trend small{color:#a8c5d8;font-size:11px}
+.prefecture-jobs-trend svg{display:block;width:100%;height:auto;max-height:210px}
+.prefecture-jobs-controls label:first-child{min-width:148px}
+@media(max-width:600px){.prefecture-jobs-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.prefecture-jobs-controls label{min-width:0!important}.prefecture-jobs-controls select{width:100%;max-width:100%;min-width:0}.prefecture-jobs-controls button{grid-column:1/-1;justify-self:start}}
