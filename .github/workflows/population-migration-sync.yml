@@ -1,0 +1,64 @@
+name: Official 47-prefecture migration snapshot
+on:
+  pull_request:
+    paths:
+      - 'population-migration.js'
+      - 'tests/test_population_migration.cjs'
+      - 'scripts/fetch_population_migration.py'
+      - '.github/workflows/population-migration-sync.yml'
+  push:
+    branches: [main, 'feature/jobs-population-migration-20261102']
+    paths:
+      - 'scripts/fetch_population_migration.py'
+      - '.github/workflows/population-migration-sync.yml'
+  schedule:
+    - cron: '33 3 * * 2'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: population-migration-sync-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Offline spreadsheet parser unit tests
+        run: python -m unittest discover -s tests -p 'test_population_migration_fetch.py' -v
+      - name: Unit test browser model
+        run: node tests/test_population_migration.cjs
+      - name: Validate official Excel and all 47 prefectures
+        run: python scripts/fetch_population_migration.py --check-only
+  publish:
+    needs: verify
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build verified official JSON
+        run: python scripts/fetch_population_migration.py
+      - name: Commit official data only
+        run: |
+          if ! git diff --quiet -- data/prefecture_migration.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/prefecture_migration.json
+            git commit -m "data: verified monthly prefecture migration (Statistics Bureau Table 2)"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo 'No official data change.'
+          fi

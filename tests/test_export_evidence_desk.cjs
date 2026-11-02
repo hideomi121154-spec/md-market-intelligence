@@ -67,7 +67,7 @@ for(const id of ['export-evidence-panel','export-evidence-mode','export-evidence
  assert.ok(html.includes('id="'+id+'"'),'missing '+id);
 for(const file of ['export-evidence-desk.js?v=4.4.0','export-evidence-desk.css?v=4.4.0'])
  assert.ok(sw.includes(file)&&html.includes(file),'cache/HTML mismatch '+file);
-assert.ok(sw.includes('md-market-pwa-v4-5-0-20261102'));
+assert.ok(sw.includes('md-market-pwa-v4-6-0-20261102'));
 assert.ok(html.indexOf('model-price-report.js?v=2.3.0')<html.indexOf('export-evidence-desk.js?v=4.4.0'));
 assert.ok(html.indexOf('global-export-model.js?v=4.3.0')<html.indexOf('export-evidence-desk.js?v=4.4.0'));
 assert.ok(fs.readFileSync(path.join(root,'global-export-model.js'),'utf8').includes('MDExportEvidence.refresh'));

@@ -1,0 +1,26 @@
+/* MD MARKET: cross-reference monthly job offers and registered domestic migration */
+.migration-panel{margin-top:18px}
+.migration-head h2{font-size:19px;margin:0 0 6px}
+.migration-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
+.migration-controls label{display:grid;gap:5px;font-size:12px;color:#c4d7e7;min-width:0}
+.migration-controls select{width:100%;min-width:0;max-width:100%;background:#0d2035;color:#eef8ff;border:1px solid #506e8d;border-radius:10px;padding:10px;min-height:42px}
+.migration-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}
+.migration-kpi{padding:11px;border:1px solid #385570;border-radius:12px;background:#10273c;min-width:0}
+.migration-kpi small{font-size:11px;color:#b9cfe1;display:block;line-height:1.5}
+.migration-kpi strong{display:block;font-size:21px;color:#e4f8f8;letter-spacing:-.02em;margin:3px 0;overflow-wrap:anywhere}
+.migration-notice,.migration-status,.migration-detail,.migration-source{font-size:12px;line-height:1.75;color:#bdcfe0}
+.migration-detail{border:1px solid #3b5a72;border-radius:11px;padding:11px;background:#122a40}
+.migration-source{margin-top:9px}
+.migration-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.migration-actions button{max-width:100%}
+.migration-list{list-style:none;display:grid;gap:8px;max-height:390px;overflow-y:auto;padding:0;margin:10px 0}
+.migration-row{display:grid;grid-template-columns:86px minmax(0,1fr) 88px;gap:7px;align-items:center;font-size:12px;padding:8px;background:#102237;border-radius:8px}
+.migration-row strong{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.migration-row [data-change="up"]{color:#72e6d2}
+.migration-row [data-change="down"]{color:#ffb7a7}
+.migration-import{border-top:1px solid #39536c;padding-top:10px;margin-top:13px}
+.migration-import summary{cursor:pointer;font-size:12px;color:#c8f3eb}
+.migration-import input{max-width:100%;margin:12px 0;color:#d6e4f0}
+.migration-panel a{color:#8befe0;text-decoration:underline}
+@media(min-width:770px){.migration-controls{grid-template-columns:repeat(4,minmax(0,1fr))}.migration-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:390px){.migration-row{grid-template-columns:67px minmax(0,1fr) 82px;font-size:11px}}

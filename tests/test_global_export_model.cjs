@@ -99,5 +99,5 @@ assert.ok(html.indexOf('russia-yaris.js?v=4.0.0')<html.indexOf('global-export-mo
 assert.ok(html.indexOf('estat-exports.js?v=4.2.0')<html.indexOf('global-export-model.js?v=4.3.0'),'official HS dependency order');
 assert.ok(!fs.readFileSync(path.join(root,'global-export-model.js'),'utf8').includes('innerHTML'));
 assert.ok(!fs.readFileSync(path.join(root,'global-export-model.js'),'utf8').includes('localStorage.removeItem'));
-assert.ok(sw.includes('md-market-pwa-v4-5-0-20261102'));
+assert.ok(sw.includes('md-market-pwa-v4-6-0-20261102'));
 console.log('PASS world country/model selector, 81 models, strict sources, notes, kei & JADA, missing≠0, official HS separation');
