@@ -1,4 +1,4 @@
-/* MD MARKET v3.1 | Hello Work 47-prefecture NEW JOB OFFERS, not job advertisements.
+/* MD MARKET v4.5 | Verified e-Stat Excel 47-prefecture NEW JOB OFFERS, not job advertisements.
    Strict source/provenance and no fabricated data. */
 'use strict';
 (function(root){
@@ -17,8 +17,9 @@
     if(raw.available!==true||!DATE.test(raw.published_on||'')||raw.months.length<1)
       throw Error('原典の公表日と月次実績が必要です');
     if(!['e_stat_file_verified','user_import_unverified'].includes(raw.source_type))throw Error('出典区分が不正です');
-    if(raw.source_type==='e_stat_file_verified' && !/^https:\/\/www\.e-stat\.go\.jp\/stat-search\/files\?/.test(raw.source_url))
-      throw Error('e-Stat出典が不正です');
+    if(raw.source_type==='e_stat_file_verified' && (!/^https:\/\/www\.e-stat\.go\.jp\/stat-search\/files\?/.test(raw.source_url)||
+      !/^\d{10}$/.test(raw.source_file_id||'')||!/^[a-f0-9]{64}$/.test(raw.source_sha256||'')))
+      throw Error('検証済み公式Excelの出典ID・ハッシュが不正です');
     let last='';
     for(const m of raw.months){
       if(!m||!MONTH.test(m.month)||m.month<=last||
@@ -60,6 +61,7 @@
   const monthSelect=$('prefecture-jobs-month'),basis=$('prefecture-jobs-basis'),pref=$('prefecture-jobs-pref');
   const rows=$('prefecture-jobs-rows'),status=$('prefecture-jobs-status'),source=$('prefecture-jobs-source');
   const detail=$('prefecture-jobs-selected'),counts=$('prefecture-jobs-counts');
+  const mode=$('prefecture-jobs-data-source'),trend=$('prefecture-jobs-trend');
   const fmt=n=>Number(n).toLocaleString('ja-JP');
   const signed=n=>(n>0?'+':'')+n.toFixed(1)+'%';
   const monthLabel=m=>m.slice(0,4)+'年'+Number(m.slice(5))+'月';
@@ -81,13 +83,17 @@
     }
   }
   function render(){
-    current=local||official;
-    rows.replaceChildren();monthSelect.replaceChildren();
+    mode.querySelector('[value="official"]').disabled=!official;
+    mode.querySelector('[value="user"]').disabled=!local;
+    if(mode.value==='official'&&!official&&local)mode.value='user';
+    else if(mode.value==='user'&&!local&&official)mode.value='official';
+    current=mode.value==='user'?local:official;
+    rows.replaceChildren();monthSelect.replaceChildren();trend.replaceChildren();
     if(!current||current.available!==true){
       monthSelect.disabled=true;basis.disabled=true;pref.disabled=true;
       counts.textContent='47都道府県｜数値は未取得';
       detail.textContent='公表済みの原数値を取り込むまで増減率を表示しません。';
-      source.textContent='e-Stat表12は2026年9月分まで公開されていますが、アプリ内の47都道府県データは未検証・未収録です。';
+      source.textContent='e-Statの長期時系列表12は公表されていますが、アプリ内の公式Excel検証済みデータはまだ収録されていません。';
       return;
     }
     monthSelect.disabled=false;basis.disabled=false;pref.disabled=false;
@@ -99,10 +105,11 @@
   function draw(){
     if(!current||current.available!==true)return;
     const result=compare(current,monthSelect.value,basis.value);
-    const context=local?'ユーザー取込・原本未照合':'公式ファイル検証済み';
+    const context=current===local?'ユーザー取込・原本未照合':'公式Excel検証済み';
     source.textContent=context+' · '+monthLabel(monthSelect.value)+' · 公表日 '+current.published_on+
-      ' · 統計定義：ハローワーク受理地別の新規求人数（原数値）。';
+      ' · 統計定義：ハローワーク受理地別・パートタイムを含む一般新規求人数（原数値）。';
     rows.replaceChildren();
+    drawTrend();
     if(result.status!=='ready'){
       counts.textContent='比較データ不足';detail.textContent=result.reason+'。数値を0として補完しません。';
       const m=current.months.find(x=>x.month===monthSelect.value);
@@ -130,6 +137,49 @@
       item.append(name,barArea,value,amount);rows.append(item);
     }
   }
+  function drawTrend(){
+    trend.replaceChildren();
+    if(!current||current.available!==true)return;
+    const county=pref.value,records=current.months.filter(m=>m.month<=monthSelect.value).slice(-24);
+    if(records.length<2){
+      trend.textContent='推移グラフ：比較できる月が2か月未満です。';return;
+    }
+    const ns='http://www.w3.org/2000/svg';
+    const svg=document.createElementNS(ns,'svg');
+    svg.setAttribute('viewBox','0 0 640 205');
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label',county+'の新規求人数の推移（原数値・最近'+records.length+'か月）');
+    const vals=records.map(r=>r.values[county]),lo=Math.min(...vals),hi=Math.max(...vals);
+    const padding=Math.max(5,Math.round((hi-lo)*0.15)),bottom=Math.max(0,lo-padding),top=hi+padding;
+    const x=i=>52+i*558/(records.length-1),y=n=>155-(n-bottom)/Math.max(1,top-bottom)*120;
+    const line=(x1,y1,x2,y2,color,width)=>{
+      const p=document.createElementNS(ns,'line');
+      for(const [k,v] of Object.entries({x1,y1,x2,y2,stroke:color,'stroke-width':width}))p.setAttribute(k,v);
+      svg.append(p);
+    };
+    const label=(text,x,y,anchor)=>{
+      const e=document.createElementNS(ns,'text');e.setAttribute('x',x);e.setAttribute('y',y);
+      e.setAttribute('text-anchor',anchor||'start');e.setAttribute('fill','#b7cad9');
+      e.setAttribute('font-size','12');e.textContent=text;svg.append(e);
+    };
+    for(let i=0;i<=3;i++){
+      const y0=35+i*40;line(52,y0,610,y0,'#34516b',1);
+      label(Math.round(top-(top-bottom)*i/3).toLocaleString('ja-JP'),46,y0+4,'end');
+    }
+    const points=vals.map((v,i)=>x(i)+','+y(v)).join(' ');
+    const path=document.createElementNS(ns,'polyline');
+    path.setAttribute('points',points);path.setAttribute('fill','none');
+    path.setAttribute('stroke','#50dec7');path.setAttribute('stroke-width','3');svg.append(path);
+    for(let i=0;i<records.length;i++){
+      if(i%4===0||i===records.length-1)label(records[i].month.slice(2).replace('-','/'),x(i),181,'middle');
+    }
+    const circle=document.createElementNS(ns,'circle');
+    circle.setAttribute('cx',x(vals.length-1));circle.setAttribute('cy',y(vals.at(-1)));
+    circle.setAttribute('r','5');circle.setAttribute('fill','#50dec7');svg.append(circle);
+    trend.append(node('strong',county+'｜直近'+records.length+'か月の新規求人数（原数値）'));
+    trend.append(svg);
+    trend.append(node('small','折れ線は季節調整されていません。求人広告数、就業地別雇用、車の販売台数ではありません。'));
+  }
   async function loadOfficial(){
     try{
       const res=await MDOffline.read('./data/prefecture_jobs.json?refresh='+Date.now(),{cache:'no-store'});
@@ -138,13 +188,14 @@
       official=parsed.available?parsed:null;
     }catch(e){official=null;console.warn('Prefecture e-Stat:',e);}
     render();
-    status.textContent=local?'端末に取り込んだ未照合データを表示しています。公式データとは区別しています。':official?'公表済みの公式データを表示しています。':'公式Excelの解析・照合は未完了のため、都道府県別の実数は未取得です。';
+    status.textContent=current===local&&local?'端末に取り込んだ未照合データを表示中です。':official?'公式Excelの47都道府県実数を表示中です。':'公式Excelの47都道府県データは未取得です。';
   }
   for(const name of PREF){const option=node('option',name);option.value=name;pref.append(option);}
   pref.value='愛知県';
   monthSelect.addEventListener('change',draw);
   basis.addEventListener('change',draw);
   pref.addEventListener('change',draw);
+  mode.addEventListener('change',()=>{render();status.textContent=mode.value==='official'?'公式Excel検証済みデータを表示しています。':'本人取込（未照合）データを表示しています。'});
   $('prefecture-jobs-reload').addEventListener('click',loadOfficial);
   $('prefecture-jobs-file').addEventListener('change',async(event)=>{
     const file=event.target.files&&event.target.files[0];
@@ -155,13 +206,13 @@
       raw.source_type='user_import_unverified';
       const checked=validate(raw);
       localStorage.setItem(KEY,JSON.stringify(checked));
-      local=checked;
+      local=checked;mode.value='user';
       render();status.textContent='47都道府県データを端末内だけに保存しました。原典の数字と一致するかは未検証です。';
     }catch(e){status.textContent='取込失敗：'+e.message+'。既存データは変更していません。';}
     event.target.value='';
   });
   $('prefecture-jobs-reset').addEventListener('click',()=>{
-    try{localStorage.removeItem(KEY);local=null;render();status.textContent='端末内に追加した求人統計だけを解除しました。';}
+    try{localStorage.removeItem(KEY);local=null;mode.value='official';render();status.textContent='端末内に追加した求人統計だけを解除しました。';}
     catch(e){status.textContent='端末データの解除に失敗しました：'+e.message;}
   });
   loadLocal();loadOfficial();
