@@ -12,7 +12,7 @@ const publicData=JSON.parse(fs.readFileSync(path.join(root,'data/prefecture_jobs
 assert.equal(validate(publicData,true),publicData);
 if(publicData.available){
  assert.equal(publicData.source_type,'e_stat_file_verified');
- assert.ok(/^\\d{10}$/.test(publicData.source_file_id));
+ assert.ok(/^[0-9]{10}$/.test(publicData.source_file_id));
  assert.ok(/^[a-f0-9]{64}$/.test(publicData.source_sha256));
  assert.ok(publicData.months.length>=14);
  assert.ok(publicData.months.at(-1).month>='2026-09');
