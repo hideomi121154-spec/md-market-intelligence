@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="./fault-research.css?v=2.7.0">
   <link rel="stylesheet" href="./market-warning.css?v=2.9.0">
   <link rel="stylesheet" href="./regional-jobs.css?v=3.0.0">
-  <link rel="stylesheet" href="./prefecture-jobs.css?v=3.3.0">
+  <link rel="stylesheet" href="./prefecture-jobs.css?v=4.5.0">
   <link rel="stylesheet" href="./residual-gap.css?v=3.1.0">
   <link rel="stylesheet" href="./residual-maturity.css?v=3.2.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
@@ -504,6 +504,12 @@
               <p class="prefecture-jobs-note">ハローワーク受理地別・原数値（e-Stat長期時系列表12）</p>
             </div>
             <div class="prefecture-jobs-controls">
+              <label for="prefecture-jobs-data-source">データ出典
+                <select id="prefecture-jobs-data-source">
+                  <option value="official">公式Excel（検証済み）</option>
+                  <option value="user">端末取込（未照合）</option>
+                </select>
+              </label>
               <label for="prefecture-jobs-month">対象月<select id="prefecture-jobs-month"></select></label>
               <label for="prefecture-jobs-basis">増減の比較<select id="prefecture-jobs-basis"><option value="mom">前月比</option><option value="yoy">前年同月比</option></select></label>
               <label for="prefecture-jobs-pref">注目県<select id="prefecture-jobs-pref"></select></label>
@@ -514,6 +520,7 @@
           <p class="prefecture-jobs-source" id="prefecture-jobs-source"></p>
           <p class="prefecture-jobs-counts" id="prefecture-jobs-counts"></p>
           <p class="prefecture-jobs-selected" id="prefecture-jobs-selected" aria-live="polite">データ確認中…</p>
+          <div class="prefecture-jobs-trend" id="prefecture-jobs-trend" aria-label="選択県の月次求人推移"></div>
           <ol class="prefecture-jobs-list" id="prefecture-jobs-rows" aria-label="47都道府県の新規求人数の増減率順"></ol>
           <details class="prefecture-jobs-import">
             <summary>公式原本から整形したJSONを端末に取り込む（上級者向け）</summary>
@@ -1073,7 +1080,7 @@
   <script src="./market-warning.js?v=2.9.0" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./regional-jobs.js?v=3.0.0" defer></script>
-  <script src="./prefecture-jobs.js?v=3.3.0" defer></script>
+  <script src="./prefecture-jobs.js?v=4.5.0" defer></script>
   <script src="./residual-gap.js?v=3.1.0" defer></script>
   <script src="./residual-maturity.js?v=3.2.0" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
