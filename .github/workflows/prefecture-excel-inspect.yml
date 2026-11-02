@@ -1,4 +1,4 @@
-name: Verify latest official e-Stat table 12 workbook
+name: Inspect official Table 12 Excel layout
 on:
   pull_request:
     paths: ['.github/workflows/prefecture-excel-inspect.yml']
@@ -12,26 +12,32 @@ jobs:
         with: {python-version: '3.12'}
       - run: |
           python - <<'PY'
-          import urllib.request,urllib.error,urllib.parse,html,re,io,zipfile
-          from http.cookiejar import CookieJar
+          import urllib.request,zipfile,io,xml.etree.ElementTree as ET,re
           root='https://www.e-stat.go.jp'
-          op=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(CookieJar()))
-          ua={'User-Agent':'Mozilla/5.0','Accept':'*/*'}
-          index=root+'/stat-search/files?cycle=1&layout=dataset&page=1&toukei=00450222&tstat=000001020327'
-          try:
-           h=op.open(urllib.request.Request(index,headers=ua),timeout=15).read().decode('utf-8')
-           for q in ['000040518992','000040518991','000040519000']:
-            i=h.index(q) if q in h else -1
-            print('ID',q,'CONTEXT',re.sub(r'\s+',' ',html.unescape(h[max(0,i-150):i+1300]))[:1200])
-          except Exception as ex:print('INDEX_ERROR',str(ex)[:200])
-          for ident in ['000040518992','000040505323']:
-           for suffix in [f'/stat-search/file-download?statInfId={ident}&fileKind=0',f'/stat-search/file-download?statInfId={ident}&fileKind=0&download=1']:
-            try:
-             r=op.open(urllib.request.Request(root+suffix,headers={**ua,'Referer':index}),timeout=15)
-             b=r.read(6500000)
-             print('FETCH',ident,r.status,r.url,r.headers.get('Content-Type'),len(b),b[:20],zipfile.is_zipfile(io.BytesIO(b)))
-             if zipfile.is_zipfile(io.BytesIO(b)):
-              z=zipfile.ZipFile(io.BytesIO(b))
-              print('CONTENTS',z.namelist()[:12])
-            except Exception as e:print('ERROR',ident,type(e).__name__,str(e)[:140])
+          u=root+'/stat-search/files?cycle=1&layout=dataset&page=1&toukei=00450222&tstat=000001020327'
+          op=urllib.request.build_opener(urllib.request.HTTPCookieProcessor(__import__('http.cookiejar',fromlist=['CookieJar']).CookieJar()))
+          req=lambda u,ref=None:urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0',**({'Referer':ref} if ref else {})})
+          op.open(req(u),timeout=15).read()
+          b=op.open(req(root+'/stat-search/file-download?statInfId=000040518992&fileKind=0',u),timeout=15).read()
+          z=zipfile.ZipFile(io.BytesIO(b))
+          n={'m':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+          shared=[]
+          if 'xl/sharedStrings.xml' in z.namelist():
+           ss=ET.fromstring(z.read('xl/sharedStrings.xml'))
+           shared=[''.join(x.itertext()) for x in ss.findall('m:si',n)]
+          print('SHARED',len(shared))
+          workbook=ET.fromstring(z.read('xl/workbook.xml'))
+          print('SHEETS',[(x.get('name'),x.get('sheetId')) for x in workbook.findall('m:sheets/m:sheet',n)])
+          for sheet in [p for p in z.namelist() if re.fullmatch(r'xl/worksheets/sheet\d+\.xml',p)]:
+           xml=ET.fromstring(z.read(sheet))
+           rows=xml.findall('m:sheetData/m:row',n)
+           print('SHEET',sheet,'rowcount',len(rows))
+           for row in rows[:14]+rows[-5:]:
+            cells=[]
+            for c in row.findall('m:c',n):
+             v=c.find('m:v',n);inline=c.find('m:is',n)
+             t=v.text if v is not None else ''.join(inline.itertext()) if inline is not None else ''
+             if c.get('t')=='s' and t is not None:t=shared[int(t)]
+             if str(t).strip():cells.append((c.get('r'),str(t)[:45]))
+            print('ROW',row.get('r'),cells[:16])
           PY
