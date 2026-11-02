@@ -43,7 +43,7 @@ def visible(s):
 
 def discover_document(index_html):
     """Use the title *next to* the download link, never its position in the list."""
-    rex = re.compile(r'href="/stat-search/file-download\?statInfId=(\d{10})&fileKind=0"')
+    rex = re.compile(r'href="/stat-search/file-download\?statInfId=(\d{12})&fileKind=0"')
     matches = list(rex.finditer(index_html))
     eligible = []
     for i, hit in enumerate(matches):
