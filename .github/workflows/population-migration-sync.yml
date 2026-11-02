@@ -31,6 +31,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Offline spreadsheet parser unit tests
+        run: python -m unittest discover -s tests -p 'test_population_migration_fetch.py' -v
       - name: Unit test browser model
         run: node tests/test_population_migration.cjs
       - name: Validate official Excel and all 47 prefectures
