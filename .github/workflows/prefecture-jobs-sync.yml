@@ -1,0 +1,60 @@
+name: Verified 47-prefecture e-Stat Table 12 sync
+on:
+  pull_request:
+    paths:
+      - 'scripts/fetch_prefecture_jobs.py'
+      - 'tests/test_fetch_prefecture_jobs.py'
+      - 'data/prefecture_jobs.json'
+      - '.github/workflows/prefecture-jobs-sync.yml'
+  push:
+    branches: [main, 'feature/prefecture-jobs-official-excel-20261102']
+    paths:
+      - 'scripts/fetch_prefecture_jobs.py'
+      - 'tests/test_fetch_prefecture_jobs.py'
+      - '.github/workflows/prefecture-jobs-sync.yml'
+  schedule:
+    - cron: '44 2 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prefecture-jobs-official-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit tests (no network and no production mutations)
+        run: python -m unittest discover -s tests -p 'test_fetch_prefecture_jobs.py' -v
+      - name: Verify public official Excel metadata and prefecture checksum
+        run: python scripts/fetch_prefecture_jobs.py --check-only --out /tmp/prefecture_jobs.json
+  publish:
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Re-fetch official workbook, verify again and write JSON
+        run: python scripts/fetch_prefecture_jobs.py
+      - name: Commit only verified official observations
+        run: |
+          if ! git diff --quiet -- data/prefecture_jobs.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/prefecture_jobs.json
+            git commit -m "data: refresh official 47-prefecture new job offers (e-Stat Table 12)"
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo 'Official Excel unchanged: no data update.'
+          fi
