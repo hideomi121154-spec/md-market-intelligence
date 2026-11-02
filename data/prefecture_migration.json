@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "dataset": "interprefecture_migration_total",
+  "geography": "prefecture",
+  "measure": "monthly_in_out_domestic_moves",
+  "source_url": "https://www.stat.go.jp/data/idou/sokuhou/tsuki/",
+  "source_table": "stat_go_jp_table_2",
+  "available": false,
+  "source_type": "not_yet_verified",
+  "published_on": null,
+  "checked_on": "2026-11-02",
+  "note": "2026-09 official source exists (published 2026-10-27), but the 47-prefecture raw counts have not yet been verified for app display. Never replace missing with zero.",
+  "months": []
+}
