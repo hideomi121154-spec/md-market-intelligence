@@ -18,7 +18,7 @@
       throw Error('原典の公表日と月次実績が必要です');
     if(!['e_stat_file_verified','user_import_unverified'].includes(raw.source_type))throw Error('出典区分が不正です');
     if(raw.source_type==='e_stat_file_verified' && (!/^https:\/\/www\.e-stat\.go\.jp\/stat-search\/files\?/.test(raw.source_url)||
-      !/^\d{10}$/.test(raw.source_file_id||'')||!/^[a-f0-9]{64}$/.test(raw.source_sha256||'')))
+      !/^\d{12}$/.test(raw.source_file_id||'')||!/^[a-f0-9]{64}$/.test(raw.source_sha256||'')))
       throw Error('検証済み公式Excelの出典ID・ハッシュが不正です');
     let last='';
     for(const m of raw.months){
