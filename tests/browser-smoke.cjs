@@ -118,6 +118,23 @@ async function run(){
 
   assert.match(await page.locator('#export-model-results').innerText(),/未取得/);
   
+  // Verified 47-prefecture new-job-offer data must not be confused with paid job ads.
+  await page.locator('#prefecture-jobs-panel > summary').click();
+  await page.waitForFunction(()=>!document.querySelector('#prefecture-jobs-status').textContent.includes('確認しています'));
+  assert.equal(await page.locator('#prefecture-jobs-data-source option').count(),2);
+  const officialReady=await page.locator('#prefecture-jobs-month option').count()>0;
+  if(officialReady){
+    await page.locator('#prefecture-jobs-month').selectOption('2026-09');
+    await page.locator('#prefecture-jobs-pref').selectOption('愛知県');
+    await page.locator('#prefecture-jobs-basis').selectOption('yoy');
+    assert.equal(await page.locator('#prefecture-jobs-rows > li').count(),47);
+    assert.equal(await page.locator('#prefecture-jobs-trend svg').count(),1);
+    assert.match(await page.locator('#prefecture-jobs-selected').innerText(),/愛知県/);
+    assert.match(await page.locator('#prefecture-jobs-source').innerText(),/公式Excel検証済み/);
+  }else{
+    assert.match(await page.locator('#prefecture-jobs-status').innerText(),/未取得/);
+  }
+
   await page.locator('#md-evidence-jump').click();
   assert.equal(await page.locator('#md-evidence-panel').evaluate(el=>el.open),true,
     'MD shortcut must open its destination');
