@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="./market-warning.css?v=2.9.0">
   <link rel="stylesheet" href="./regional-jobs.css?v=3.0.0">
   <link rel="stylesheet" href="./prefecture-jobs.css?v=4.5.0">
+  <link rel="stylesheet" href="./population-migration.css?v=4.6.0">
   <link rel="stylesheet" href="./residual-gap.css?v=3.1.0">
   <link rel="stylesheet" href="./residual-maturity.css?v=3.2.0">
   <title>MD MARKET | マイカー売却相場を比較</title>
@@ -530,6 +531,36 @@
           </details>
           <p class="prefecture-jobs-note">出典：<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Stat・一般職業紹介状況（長期時系列表12）</a>。求人広告15媒体の件数とは異なります。受理地は実際の就業地と一致するとは限らず、季節調整されない原数値のため単純な前月比は季節性の影響を受けます。求人の増減だけで地域の中古車需要や価格を決定しません。</p>
         
+          </div>
+        </details>
+
+        <details class="panel migration-panel history-fold" id="migration-jobs-panel" aria-label="求人と人口流入・流出の比較">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>求人 × 人口移動｜47都道府県</strong><small>新規求人数・転入・転出を同じ月で比較</small></span></summary>
+          <div class="history-fold-body">
+            <div class="migration-head">
+              <h2>地域の採用動向と人口移動</h2>
+              <p class="migration-notice">求人が増えていても、人口が流出している地域を区別します。仕事の募集と住民票の移動は独立した統計であり、車の販売台数を表しません。</p>
+            </div>
+            <div class="migration-controls">
+              <label for="migration-pref">注目する都道府県<select id="migration-pref"></select></label>
+              <label for="migration-month">対象月<select id="migration-month"></select></label>
+              <label for="migration-basis">求人増減の比較<select id="migration-basis"><option value="mom">前月比</option><option value="yoy">前年同月比</option></select></label>
+              <label for="migration-mode">人口データの出典<select id="migration-mode"><option value="official">公式原本・検証済み</option><option value="user">端末取込・未照合</option></select></label>
+            </div>
+            <div class="migration-actions"><button class="button secondary" id="migration-reload" type="button">公表データを再確認</button></div>
+            <p class="migration-status" id="migration-status" aria-live="polite">公式データを確認中…</p>
+            <div class="migration-kpis" id="migration-cards" aria-label="求人と人口移動の主要指標"></div>
+            <p class="migration-detail" id="migration-detail" aria-live="polite">対象月を確認しています。</p>
+            <p class="migration-source" id="migration-source"></p>
+            <h3>都道府県比較：求人増減率／転入超過数</h3>
+            <ol class="migration-list" id="migration-rows" aria-label="都道府県の転入超過数順"></ol>
+            <details class="migration-import">
+              <summary>照合した人口移動JSONを端末に取り込む（上級者向け）</summary>
+              <p class="migration-notice">47都道府県の国内の転入・転出実数をすべて含むJSONのみ取り込めます。検証していない取込データは公式検証済みとは表示しません。</p>
+              <input type="file" id="migration-import" accept=".json,application/json" aria-label="人口移動JSONを読み込む">
+              <button class="button ghost" id="migration-clear" type="button">端末取込の人口データだけ解除</button>
+            </details>
+            <p class="migration-notice">出典：<a href="https://www.stat.go.jp/data/idou/sokuhou/tsuki/" target="_blank" rel="noopener noreferrer">総務省統計局「住民基本台帳人口移動報告」月次結果・表2</a>。他県との住民票上の移動（全移動者）を集計し、県内移動、国際移動、出生・死亡は含めません。求人数は<a href="https://www.e-stat.go.jp/stat-search/files?cycle=1&amp;layout=dataset&amp;page=1&amp;toukei=00450222&amp;tstat=000001020327" target="_blank" rel="noopener noreferrer">e-Statハローワーク新規求人数</a>です。転入は新規雇用人数と同義ではなく、車の需要増加を自動判定しません。</p>
           </div>
         </details>
 
@@ -1081,6 +1112,7 @@
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./regional-jobs.js?v=3.0.0" defer></script>
   <script src="./prefecture-jobs.js?v=4.5.0" defer></script>
+  <script src="./population-migration.js?v=4.6.0" defer></script>
   <script src="./residual-gap.js?v=3.1.0" defer></script>
   <script src="./residual-maturity.js?v=3.2.0" defer></script>
   <script src="./model-sales.js?v=2.0.3" defer></script>
