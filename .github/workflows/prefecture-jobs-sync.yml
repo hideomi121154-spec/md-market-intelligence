@@ -32,19 +32,7 @@ jobs:
       - name: Unit tests (no network and no production mutations)
         run: python -m unittest discover -s tests -p 'test_fetch_prefecture_jobs.py' -v
       - name: Verify public official Excel metadata and prefecture checksum
-        run: python scripts/fetch_prefecture_jobs.py --out /tmp/prefecture_jobs.json
-      - name: Transfer public, source-checked monthly values for PR review
-        if: github.event_name == 'pull_request'
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          d=json.loads(Path('/tmp/prefecture_jobs.json').read_text(encoding='utf-8'))
-          months=d.pop('months')
-          print('PREF_DOC_META '+json.dumps(d,ensure_ascii=False,separators=(',',':')))
-          for m in months:print('PREF_DOC_MONTH '+json.dumps(m,ensure_ascii=False,separators=(',',':')))
-          print('PREF_DOC_END '+str(len(months)))
-          PY
+        run: python scripts/fetch_prefecture_jobs.py --check-only --out /tmp/prefecture_jobs.json
   publish:
     if: github.event_name != 'pull_request'
     needs: verify
