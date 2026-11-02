@@ -149,7 +149,7 @@ def main():
     ap.add_argument("--check-only",action="store_true")
     args=ap.parse_args()
     previous=json.loads(args.out.read_text(encoding="utf-8")) if args.out.exists() else None
-    result=verified_document(fetch(INDEX).decode("utf-8"),fetch(XLSX),previous)
+    result=verified_document(fetch(INDEX).decode("cp932"),fetch(XLSX),previous)
     print(f"VERIFIED migration {result['months'][-1]['month']}: {len(result['months'])} months x 47; SHA {result['source_sha256']}")
     if not args.check_only and result!=previous:
         args.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
