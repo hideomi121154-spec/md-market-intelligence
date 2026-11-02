@@ -108,7 +108,7 @@ def parse_workbook(data):
     return rows
 
 def extract_months(rows,published_on):
-    if len(rows)<36:
+    if len(rows)<17:
         raise ValueError("公表Excelの行数が不足しています")
     title=rows[0].get("A","")
     if not all(q in title for q in ["都道府県","新規求人数","実数","パートタイムを含む一般"]):
