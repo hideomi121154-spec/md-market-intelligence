@@ -1,0 +1,40 @@
+name: Inspect official labor table 12 workbook structure
+on:
+  pull_request:
+    paths: ['.github/workflows/prefecture-excel-inspect.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: |
+          python - <<'PY'
+          import urllib.request,urllib.error,zipfile,io,xml.etree.ElementTree as ET,re
+          ids=['000040505323','000040492562']
+          for ident in ids:
+              for path in (f'https://www.e-stat.go.jp/stat-search/file-download?statInfId={ident}&fileKind=0',
+                           f'https://www.e-stat.go.jp/stat-search/files?layout=dataset&stat_infid={ident}'):
+                  print('TEST',path)
+                  try:
+                      r=urllib.request.urlopen(urllib.request.Request(path,headers={'User-Agent':'Mozilla/5.0'}),timeout=12)
+                      chunk=r.read(7000000);print('RESPONSE',r.status,r.url,r.headers.get('Content-Type'),len(chunk),chunk[:90])
+                      if chunk.startswith(b'PK'):
+                          z=zipfile.ZipFile(io.BytesIO(chunk))
+                          print('XLSX PARTS',z.namelist()[:12])
+                          s=[p for p in z.namelist() if re.match(r'xl/worksheets/sheet\d+\.xml$',p)]
+                          for sheet in s[:2]:
+                              root=ET.fromstring(z.read(sheet))
+                              ns={'m':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+                              vals=[]
+                              for row in root.findall('.//m:sheetData/m:row',ns)[:20]:
+                                  cells=[(c.get('r'),''.join(c.itertext())[:55]) for c in list(row)[:9]]
+                                  vals.append(cells)
+                              print(sheet,vals[:12])
+                  except Exception as exc:
+                      print('FETCH_ERROR',type(exc).__name__,str(exc)[:180])
+          PY
