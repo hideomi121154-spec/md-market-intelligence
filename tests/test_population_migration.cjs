@@ -7,7 +7,12 @@ const migration=require('../population-migration.js');
 const jobData=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/prefecture_jobs.json'),'utf8'));
 const PREF=migration.PREF;
 assert.equal(PREF.length,47);
-assert.equal(migration.validate(JSON.parse(fs.readFileSync(path.join(__dirname,'../data/prefecture_migration.json'),'utf8')),true).available,false);
+const included=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/prefecture_migration.json'),'utf8'));
+assert.equal(migration.validate(included,true),included);
+if(included.available){
+  const item=included.months.find(x=>x.month==='2026-09');
+  if(item)assert.deepEqual(item.values['島根県'],{in:675,out:706});
+}
 const values=Object.fromEntries(PREF.map(name=>[name,{in:1000,out:1000}]));
 values['島根県']={in:675,out:706};
 values['愛知県']={in:1031,out:1000};
