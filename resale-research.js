@@ -44,7 +44,9 @@
     const make=clean(input.make,40),model=clean(input.model,70);
     if(!make||!model)throw Error('メーカーと車名は必須です');
     const powertrain=clean(input.powertrain,30);
-    if(!['gasoline','hybrid','diesel','electric','other'].includes(powertrain))throw Error('動力区分が不正です');
+    if(!['gasoline','hybrid','diesel','electric','mixed','other'].includes(powertrain))throw Error('動力区分が不正です');
+    const segment=clean(input.segment,100);
+    if(!segment)throw Error('集計表の区分（車種全体・型式・グレードなど）は必須です');
     const metric=clean(input.metric,30);
     if(!['year_avg','weekly_avg'].includes(metric))throw Error('集計区分が不正です');
     const year=metric==='year_avg'?integer(input.model_year,'年式',1980,2100,false):null;
@@ -58,15 +60,15 @@
     if(published&&published<period)throw Error('記事公開日が集計終了日より前です');
     if(observation<period)throw Error('確認日は集計終了日以降にしてください');
     return {
-      make,model,powertrain,metric,model_year:year,
+      make,model,powertrain,segment,metric,model_year:year,
       period_end:period,published_on:published,observed_on:observation,
       average_estimate_jpy:integer(input.average_estimate_jpy,'平均売却予想額',1,100000000,false),
       average_mileage_km:mileage,sample_count:count,
       source_url:sourceUrl(input.source_url),memo:clean(input.memo,200)
     };
   }
-  function key(r){return [r.make,r.model,r.powertrain,r.metric,r.model_year===null?'':r.model_year,r.period_end,r.source_url].join('|');}
-  function series(r){return [r.make,r.model,r.powertrain,r.metric,r.model_year===null?'':r.model_year,r.source_url].join('|');}
+  function key(r){return [r.make,r.model,r.powertrain,r.segment,r.metric,r.model_year===null?'':r.model_year,r.period_end,r.source_url].join('|');}
+  function series(r){return [r.make,r.model,r.powertrain,r.segment,r.metric,r.model_year===null?'':r.model_year,r.source_url].join('|');}
   function merge(a,b){
     if(!Array.isArray(a)||!Array.isArray(b)||a.length+b.length>MAX*2)throw Error('取込件数が多すぎます');
     const map=new Map();
@@ -138,8 +140,8 @@
         const price=doc.createElement('span');price.textContent=fmt(r.average_estimate_jpy)+'円（売却予想額）';
         box.append(title,price);
         const caption=doc.createElement('small');
-        caption.textContent=(r.powertrain==='gasoline'?'ガソリン':r.powertrain==='hybrid'?'HV':r.powertrain==='diesel'?'ディーゼル':r.powertrain==='electric'?'EV':'その他')
-          +'・'+(r.metric==='year_avg'?'年式別平均':'週次全体平均')+' / 確認 '+r.observed_on
+        caption.textContent=(r.powertrain==='gasoline'?'ガソリン':r.powertrain==='hybrid'?'HV':r.powertrain==='diesel'?'ディーゼル':r.powertrain==='electric'?'EV':r.powertrain==='mixed'?'複数方式混合':'その他')
+          +'・'+r.segment+'・'+(r.metric==='year_avg'?'年式別平均':'週次全体平均')+' / 確認 '+r.observed_on
           +(r.average_mileage_km===null?'':' / 平均走行 '+fmt(r.average_mileage_km)+'km')
           +(r.sample_count===null?'':' / 同一週の査定 '+fmt(r.sample_count)+'件');
         box.append(caption);
@@ -161,7 +163,7 @@
       try{
         const v=id=>get(id);
         const record=normalize({
-          make:v('resale-make'),model:v('resale-model'),powertrain:v('resale-powertrain'),
+          make:v('resale-make'),model:v('resale-model'),powertrain:v('resale-powertrain'),segment:v('resale-segment'),
           metric:v('resale-metric'),model_year:by('resale-year').disabled?'':v('resale-year'),
           period_end:v('resale-period'),published_on:v('resale-published'),observed_on:v('resale-observed'),
           average_estimate_jpy:v('resale-price'),average_mileage_km:by('resale-mileage').disabled?'':v('resale-mileage'),
