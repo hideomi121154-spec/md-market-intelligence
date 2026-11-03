@@ -69,7 +69,7 @@
   }
   function key(r){return [r.make,r.model,r.powertrain,r.segment,r.metric,r.model_year===null?'':r.model_year,r.period_end,r.source_url].join('|');}
   function series(r){return [r.make,r.model,r.powertrain,r.segment,r.metric,r.model_year===null?'':r.model_year,r.source_url].join('|');}
-  function merge(a,b){
+  function merge(a,b=[]){
     if(!Array.isArray(a)||!Array.isArray(b)||a.length+b.length>MAX*2)throw Error('取込件数が多すぎます');
     const map=new Map();
     for(const raw of a.concat(b)){
