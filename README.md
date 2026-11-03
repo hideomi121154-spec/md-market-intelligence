@@ -288,3 +288,5 @@ Nodeで `node --check storage.js` / `node --check app.js`、Pythonで `python -m
 - localStorage別キー `md-market-resale-research-v1` に最大500件。JSONの全量表示と追加復元、同じ期間・条件の矛盾値拒否、破損した保存データがあるときの書込停止を実装。車両価格やUSS統計は変更・混合しない。
 - **自動スクレイピング・第三者数値の無断一括収集・外部公開はしない**。サイトが閲覧可能でもAPIの外部利用・定期収集の許諾を意味しない。データライセンスの確認後にのみ連携範囲を再検討する。
 - 検証は `node --check resale-research.js` と `node tests/test_resale_research.js`、GitHub Actions `resale-research-tests.yml`。
+
+- 年式別に車種全体・型式・グレード別の表が混在するため「集計表の対象」を別キーに追加。異なる対象・動力方式の数値を比較しない。
