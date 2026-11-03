@@ -196,8 +196,9 @@
                 <label>メーカー<input id="resale-make" maxlength="40" required value="トヨタ"></label>
                 <label>車種<input id="resale-model" maxlength="70" required value="アルファード"></label>
                 <label>動力方式
-                  <select id="resale-powertrain"><option value="gasoline">ガソリン</option><option value="hybrid">ハイブリッド</option><option value="diesel">ディーゼル</option><option value="electric">電気</option><option value="other">その他</option></select>
+                  <select id="resale-powertrain"><option value="gasoline">ガソリン</option><option value="hybrid">ハイブリッド</option><option value="diesel">ディーゼル</option><option value="electric">電気</option><option value="mixed">複数方式混合・指定なし</option><option value="other">その他</option></select>
                 </label>
+                <label>集計表の対象（型式・グレードなど）<input id="resale-segment" maxlength="100" required value="車種全体" placeholder="例：ZSU60W型／Z レザーパッケージ"></label>
                 <label>公開表の集計区分
                   <select id="resale-metric"><option value="year_avg">年式別・平均売却予想額</option><option value="weekly_avg">週次・全体平均売却予想額</option></select>
                 </label>
@@ -211,7 +212,7 @@
                 <label>公式記事URL（必須）<input id="resale-source" type="url" required placeholder="https://resalevalue.jp/article/..."></label>
                 <label>照合メモ（任意）<input id="resale-memo" maxlength="200" placeholder="記事の対象表・型式など"></label>
               </div>
-              <p class="resale-note">車種全体の査定件数を「年式別件数」として扱わないよう、年式別記録には査定件数を入力できません。週次記録には平均走行距離を入力できません。集計期間や年式、動力方式が異なる値は同じ系列として比較しません。</p>
+              <p class="resale-note">車種全体の査定件数を「年式別件数」として扱わないよう、年式別記録には査定件数を入力できません。週次記録には平均走行距離を入力できません。集計期間や年式、動力方式、型式・グレードなどの対象が異なる値は同じ系列として比較しません。</p>
               <div class="resale-actions"><button type="submit" class="button secondary" id="resale-save">原典を確認して端末に記録</button></div>
             </form>
             <p id="resale-status" role="status" aria-live="polite"></p>
