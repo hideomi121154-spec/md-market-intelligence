@@ -14,7 +14,7 @@
   const LINKS=[
     {make:'トヨタ',model:'アルファード',url:'https://resalevalue.jp/article/alphard/'},
     {make:'トヨタ',model:'ハリアー',url:'https://resalevalue.jp/article/harrier/'},
-    {make:'トヨタ',model:'ランドクルーザープラド',url:'https://resalevalue.jp/article/land-cruiser-prado/'}
+    {make:'トヨタ',model:'ランドクルーザープラド',url:'https://resalevalue.jp/article/prado/'}
   ];
   function clean(s,max){return String(s==null?'':s).trim().slice(0,max);}
   function date(v,name,optional){
@@ -180,7 +180,7 @@
       if(!healthy)return;
       try{
         const incoming=parseBundle(by('resale-backup').value),next=merge(rows,incoming);
-        persist(next);render();setStatus('端末へ追加復元しました。'+(next.length-rows.length)+'件の追加を確認してください。');
+        const added=next.length-rows.length;persist(next);render();setStatus('端末へ追加復元しました。追加 '+added+'件。');
       }catch(e){setStatus('復元できません。既存記録は維持しました：'+e.message);}
     });
     if(!healthy)by('resale-backup').placeholder='元データを上書きしないでください';
