@@ -1,0 +1,28 @@
+name: Resale research notes regression
+on:
+  push:
+    paths:
+      - 'resale-research.js'
+      - 'resale-research.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_resale_research.js'
+      - '.github/workflows/resale-research-tests.yml'
+  pull_request:
+    paths:
+      - 'resale-research.js'
+      - 'resale-research.css'
+      - 'index.html'
+      - 'sw.js'
+      - 'tests/test_resale_research.js'
+      - '.github/workflows/resale-research-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check resale-research.js
+      - run: node tests/test_resale_research.js
