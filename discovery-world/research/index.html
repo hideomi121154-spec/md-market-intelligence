@@ -136,7 +136,8 @@
     for(const p of remaining){
       const probs=prediction(p,model,agent.signatureView);
       const information=probs.reduce((v,x)=>v+entropy(x),0);
-      // Break identical scores without a fixed alphabetical bias.      const tie=agent.rand()*1e-6;
+      // Break identical scores without a fixed alphabetical bias.
+      const tie=agent.rand()*1e-6;
       if(information+tie>score){best={pair:p,info:information,reason:information>1e-7?'候補となる法則の予測が最も割れる組合せを選択':'既存の仮説が一致。確認用の未実験条件を選択'};score=information+tie;}
     }
     return best;
