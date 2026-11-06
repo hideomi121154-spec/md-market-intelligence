@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0c1c27" />
+<meta name="description" content="AIが最初の仮説にない法則を合成し、新しい観測軸を要請する過程を測定する研究実験" />
+<title>DISCOVERY WORLD — 未知概念発見 v0.4</title>
+<style>
+:root{color-scheme:dark;--bg:#09151f;--pane:#132936;--pane2:#163441;--line:#37545e;--txt:#e8f7fb;--muted:#a7c4d0;--a:#72e5bf;--b:#e5b776;--c:#84a9ed;--d:#c79cf1}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 15% -15%,#1b5552 0,transparent 40%),radial-gradient(circle at 105% 30%,#1e3554 0,transparent 42%),var(--bg);color:var(--txt);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--a);outline-offset:2px}button:disabled{opacity:.52;cursor:default}a{color:#8edcfa}
+.shell{max-width:1280px;padding:22px 18px 60px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.logo{font-size:26px;color:var(--a)}.brand{display:flex;align-items:center;gap:12px}.kicker{color:var(--a);font-size:10px;letter-spacing:.21em;font-weight:850}.brand h1{font-size:24px;letter-spacing:-.025em;margin:1px 0 3px}.brand p{margin:0;color:var(--muted);font-size:12px}.link{font-size:12px;text-decoration:none;border:1px solid #52717a;border-radius:20px;padding:10px 13px}.intro{font-size:14px;line-height:1.85;color:#d1e5e9;margin:17px 0}.intro strong{color:#adffdf}.design{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,1fr);align-items:start;gap:16px}.card{background:linear-gradient(140deg,#193441,#112733);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 11px 35px #010c1455}.head{padding:16px 17px 10px}.head h2{font-size:16px;margin:0 0 5px}.desc{font-size:11px;color:var(--muted);line-height:1.65;margin:0}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0 15px 14px}.stat{border:1px solid #355963;background:#102a35;padding:11px 9px;border-radius:12px;min-width:0}.stat .val{font-size:23px;letter-spacing:-.03em;font-weight:850;color:#aef4de}.stat .label{font-size:10px;color:#a9c5cd;line-height:1.4;margin-top:2px}.world{border:1px solid #375864;margin:0 15px 12px;height:320px;border-radius:12px;background:#0c2531;position:relative;overflow:hidden}.world canvas{display:block;height:100%;width:100%}.stamp{position:absolute;top:10px;left:10px;border-radius:5px;background:#09202acb;padding:5px 7px;font-size:10px;color:#a9d7d3}.stamp-right{position:absolute;right:10px;top:10px;padding:5px 9px;border-radius:20px;background:#1f4950;border:1px solid #3a7976;color:#b8ffdc;font-size:10px}.actions{padding:0 15px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{min-height:45px;background:#23424c;color:white;border:1px solid #5d8089;border-radius:11px;font-size:13px;font-weight:750;padding:11px 9px}.btn.main{background:linear-gradient(105deg,#74d9b6,#4fb3d5);color:#082731;border:0}.btn.full{grid-column:span 2}.settings{padding:0 15px 15px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.settings label{font-size:12px;color:var(--muted)}.settings input{width:115px;border:1px solid #547580;background:#0c242f;color:white;border-radius:8px;min-height:42px;padding:8px}.bar-status{min-height:25px;padding:0 17px 13px;font-size:12px;color:#afe8d7}.bar-status.error{color:#ffc2ac}.notes{padding:0 16px 15px}.latest{background:#0d2530;border:1px solid #426873;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.85;color:#d6e9ef;min-height:98px}.latest strong{color:#b4f9d5}.right{display:grid;gap:16px}.chartarea{margin:0 13px;height:205px}.chartarea canvas{width:100%;height:100%}.legend{padding:3px 17px 15px;display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--muted)}.swatch{display:inline-block;height:3px;width:18px;border-radius:5px;margin-right:5px;vertical-align:middle}.fourcols{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:0 15px 15px}.metric{background:#102936;border:1px solid #365761;padding:11px;border-radius:10px}.metric span{font-size:11px;color:var(--muted)}.metric strong{display:block;margin-top:4px;font-size:22px}.trace{padding:0 16px 15px;max-height:350px;overflow:auto}.record{border-top:1px solid #35535c;padding:10px 0;font-size:12px;line-height:1.7}.record strong{color:#b7f1db}.record small{color:#9cbac3}.wide{margin-top:16px}.bench{padding:0 16px 15px}.bench button{width:100%}.bench-output{font-size:12px;line-height:1.9;background:#0c2630;border:1px solid #385962;border-radius:10px;padding:12px;margin-top:10px}.formulas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 15px 15px}.formula{background:#0d2832;border:1px solid #416573;border-radius:11px;padding:12px 9px;overflow-wrap:anywhere}.formula b{font-size:11px;color:#9bcfe2}.formula p{font-size:11px;color:#daebeb;margin:6px 0 0;line-height:1.5}.limitations{padding:0 17px 17px;font-size:12px;line-height:1.85;color:#d3e7e7}.limitations strong{color:#fff}.limitations p{margin:0 0 9px}.limitations .warn{color:#ffe3ad}.foot{font-size:11px;color:#91b6be;margin:16px 2px}.hidden-label{font-size:11px;color:#b9e5dd;margin:5px 16px 13px}.controls{display:flex;gap:8px;padding:0 15px 14px}.controls .btn{flex:1}.alert{color:#f3cf86}.sr{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}
+@media(max-width:900px){.design{grid-template-columns:1fr}.right{grid-template-columns:1fr}.shell{padding:14px 10px 38px}.brand h1{font-size:21px}.world{height:285px}.grid4 .val{font-size:21px}}@media(max-width:420px){.grid4{padding:0 9px 10px;gap:5px}.stat{padding:9px 5px}.stat .val{font-size:19px}.stat .label{font-size:9px}.world{margin:0 9px 10px;height:260px}.actions{padding:0 9px 11px}.btn{font-size:12px}.formulas{grid-template-columns:1fr}.brand p{font-size:11px}.intro{font-size:13px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="top"><div class="brand"><span class="logo">◈</span><div><div class="kicker">DISCOVERY WORLD / RESEARCH v0.4</div><h1>未知の法則を、AI自身に作らせる</h1><p>有限仮説 → 矛盾 → 数式合成 → 新しい観測軸</p></div></div><a class="link" href="../research/">← 前回 v0.3</a></header>
+<p class="intro">前回は<b>16個の正解候補から選ぶ</b>実験でした。今回は実際の法則をその16個の<b>外側</b>に配置します。AIが観測と矛盾から<strong>新しい式を合成</strong>し、既存の特徴だけでは説明できない場合に<strong>追加の測定方法を要求</strong>するか検証します。</p>
+<section class="design">
+<div class="card">
+<div class="head"><h2>🌍 未知の世界・実験台</h2><p class="desc">12素材・3現象・66組。50組を学習に使用し、16組は最後まで実験に使わず採点。</p></div>
+<div class="grid4">
+ <div class="stat"><div class="val" id="step-count">0</div><div class="label">素材実験</div></div>
+ <div class="stat"><div class="val" id="state-count">16×3</div><div class="label">残る法則候補</div></div>
+ <div class="stat"><div class="val" id="probe-count">0</div><div class="label">新しい観測軸</div></div>
+ <div class="stat"><div class="val" id="accuracy">--</div><div class="label">未実験での予測精度</div></div>
+</div>
+<div class="world"><canvas id="world" aria-label="AIが選んだ素材の組合せと12素材の探索世界"></canvas><span class="stamp" id="world-tag">WORLD 2026</span><span class="stamp-right" id="phase">有限仮説</span></div>
+<div class="settings"><label for="seed">世界番号</label><input id="seed" type="number" inputmode="numeric" min="1" max="4294967295" value="2026"><button class="btn" id="reset" type="button">↻ 世界を変更</button></div>
+<div class="actions"><button class="btn main" id="step" type="button">🔬 AIを1手進める</button><button class="btn" id="auto" type="button">▶ 24手まで実験</button><button class="btn full" id="copy" type="button">研究記録をコピー</button></div>
+<div class="notes"><div class="latest" id="latest">AIはまず16種類の既存法則で世界を予測します。矛盾が発生したら、別の式を合成する方法へ切り替えます。</div></div>
+<div class="bar-status" role="status" id="status"></div>
+</div>
+<div class="right">
+<div class="card"><div class="head"><h2>📉 未実験条件の予測誤差</h2><p class="desc">ブライアスコア。低いほど良い。すべて同じ世界・同じ予測対象で比較。</p></div><div class="chartarea"><canvas id="chart" aria-label="3種類のAIの予測誤差の推移"></canvas></div><div class="legend"><span><i class="swatch" style="background:var(--a)"></i>拡張＋測定</span><span><i class="swatch" style="background:var(--b)"></i>既存16候補のみ</span><span><i class="swatch" style="background:var(--d)"></i>式生成のみ</span><span><i class="swatch" style="background:var(--c)"></i>無作為探索＋拡張</span></div><div class="fourcols"><div class="metric"><span>拡張＋測定</span><strong style="color:var(--a)" id="metric-expand">--</strong></div><div class="metric"><span>既存16候補のみ</span><strong style="color:var(--b)" id="metric-closed">--</strong></div><div class="metric"><span>式生成のみ</span><strong style="color:var(--d)" id="metric-grammar">--</strong></div><div class="metric"><span>無作為探索＋拡張</span><strong style="color:var(--c)" id="metric-random">--</strong></div></div></div>
+<div class="card"><div class="head"><h2>🧠 AIの発見過程</h2><p class="desc">ただ実験するだけではなく、研究方法が切り替わる瞬間を記録します。</p></div><div class="trace" id="trace"><div class="record">実験開始前。AIに正しい法則は教えていません。</div></div></div>
+<div class="card"><div class="head"><h2>🧪 複数世界で再現性を検証</h2><p class="desc">偶然うまくいった世界だけを見ないための比較です。</p></div><div class="bench"><button class="btn main" id="benchmark" type="button">30世界 × 24手を比較する</button><div class="bench-output" id="benchmark-result">未実行。毎回同じ素材条件と実験予算で、4つの探索方法を比較します。</div></div></div>
+</div>
+</section>
+<section class="card wide"><div class="head"><h2>🔎 AIが残した法則候補</h2><p class="desc">観測に一致する計算式の例です。候補が複数残る場合は結論未確定。</p></div><div class="formulas" id="formulas"></div><p class="hidden-label" id="sensor-note">現在の観測器では、素材の特徴を3種類だけ認識できます。</p></section>
+<section class="card wide"><div class="head"><h2>この実験で分かること・まだ分からないこと</h2></div><div class="limitations">
+<p><strong>測定すること：</strong> 初期の16候補が誤りであると気づき、事前に答えとして与えられていない組合せ式を作り、さらに新しい特徴を測定する必要性に到達できるか。実験に使用しない16組に対する予測を測ります。</p>
+<p class="warn"><strong>重要な制限：</strong> 世界の正解法則は開発者が設定し、AIが生成できる式の文法（AND / OR / XOR / NOT）も開発者が与えています。追加測定器は世界側に予め用意されており、AIが道具そのものを発明したわけではありません。「人類に未知の法則を発見した」とは言えません。</p>
+<p><strong>次の研究：</strong> 観測方法そのものの設計、式の文法を超えた仮説の生成、道具の製作、より複雑な物理空間での再現性評価。</p>
+</div></section>
+<p class="foot">すべてブラウザ内で実行され、外部APIは呼びません。世界番号が同じなら結果を再現可能です。自動テスト・実験ログの検証を優先しています。</p>
+</main>
+<script>
+/* DISCOVERY WORLD v0.4 — hypothesis-space expansion & hidden-feature probe.
+   Original teaching/benchmark engine. All outcomes generated by a sealed world.
+   No ML model/API is used; hypotheses are symbolic programs searched within a fixed grammar. */
+(function(root,factory){const mod=factory();if(typeof module==='object'&&module.exports)module.exports=mod;root.Discovery04=mod;})(typeof window!=='undefined'?window:globalThis,function(){
+'use strict';const MATERIALS=['石','木材','灰','貝','樹脂','粘土','塩','結晶','鉱石','繊維','砂','骨'];
+const CHANNELS=['現象A','現象B','現象C'];
+const propertyLabels=['特徴0','特徴1','特徴2','未知特徴X'];
+function rng(seed){let s=(seed>>>0)||1;return ()=>{s=(s+0x6D2B79F5)>>>0;let t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296;};}
+function shuffle(xs,r){let a=xs.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function allPairs(n=MATERIALS.length){const out=[];for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)out.push([i,j]);return out;}
+function key(pair){return `${pair[0]}:${pair[1]}`;}
+function atoms(sigA,sigB,includeHidden){
+ const count=includeHidden?4:3, val=[];
+ for(let i=0;i<count;i++){
+  const a=sigA[i]===1,b=sigB[i]===1;
+  val.push(Number(a||b),Number(a&&b),Number(a!==b));
+ }
+ return val;
+}
+function baseCandidates(sigs,includeHidden=false){
+ // The historical 16-rule set is intentionally retained as a weak prior.
+ const signatures=sigs;
+ const rules=[
+ (a,b)=>a[0]&&b[0],(a,b)=>a[1]&&b[1],(a,b)=>a[2]&&b[2],
+ (a,b)=>(a[0]&&b[1])||(b[0]&&a[1]),
+ (a,b)=>(a[0]&&b[2])||(b[0]&&a[2]),
+ (a,b)=>(a[1]&&b[2])||(b[1]&&a[2]),
+ (a,b)=>(a[0]||b[0])&&(a[1]||b[1]),
+ (a,b)=>(a[1]||b[1])&&(a[2]||b[2]),
+ (a,b)=>(a[0]||b[0])&&(a[2]||b[2]),
+ (a,b)=>a[0]!==b[0],(a,b)=>a[1]!==b[1],(a,b)=>a[2]!==b[2],
+ (a,b)=>a[0]&&b[0]&&!a[2]&&!b[2],
+ (a,b)=>a[1]&&b[1]&&!a[0]&&!b[0],
+ (a,b)=>(a[0]!==b[0])&&(a[1]||b[1]),
+ (a,b)=>(a[2]&&b[2])||(a[0]&&b[0])];
+ return rules.map((fn,id)=>({id:'old'+id,label:'既存仮説 '+(id+1),predict:p=>Number(Boolean(fn(signatures[p[0]],signatures[p[1]])))}));
+}
+function grammarCandidates(sigs,hasHidden){
+ const pairs=allPairs(),lookup=new Map();
+ const names=[];
+ for(let d=0;d<(hasHidden?4:3);d++)names.push(`${propertyLabels[d]}をどちらかが持つ`,`${propertyLabels[d]}を両方が持つ`,`${propertyLabels[d]}が異なる`);
+ const at=p=>atoms(sigs[p[0]],sigs[p[1]],hasHidden);
+ function add(label,fun){
+  // Deduplicate equivalent rules across all possible material pairs. No outcome labels used.
+  const table=pairs.map(p=>Number(Boolean(fun(at(p)))));
+  const sign=table.join('');
+  if(!lookup.has(sign))lookup.set(sign,{id:`g${lookup.size}`,label,predict:p=>table[allIndex.get(key(p))],complexity:label.length});
+ }
+ const allIndex=new Map(pairs.map((p,i)=>[key(p),i]));
+ for(let a=0;a<names.length;a++){
+  add(names[a],v=>v[a]);
+  add('NOT('+names[a]+')',v=>!v[a]);
+ }
+ for(let a=0;a<names.length;a++)for(let b=a+1;b<names.length;b++){
+  add('('+names[a]+' AND '+names[b]+')',v=>v[a]&&v[b]);
+  add('('+names[a]+' AND NOT '+names[b]+')',v=>v[a]&&!v[b]);
+  add('(NOT '+names[a]+' AND '+names[b]+')',v=>!v[a]&&v[b]);
+  add('('+names[a]+' OR '+names[b]+')',v=>v[a]||v[b]);
+  add('('+names[a]+' XOR '+names[b]+')',v=>Boolean(v[a])!==Boolean(v[b])); }
+ return [...lookup.values()];
+}
+function makeWorld(seed=2026){
+ const random=rng(seed^0xa44b21);
+ // Six visible patterns, each repeated twice with different invisible property X.
+ const visible=shuffle(Array.from({length:8},(_,i)=>[(i>>2)&1,(i>>1)&1,i&1]),random).slice(0,6);
+ const signatures=shuffle(visible.flatMap(v=>[[...v,0],[...v,1]]),random);
+ const ids=shuffle([0,1,2],random);
+ const A=(v,w)=>{const a=atoms(v,w,true);return Number(a[ids[0]*3]&&!a[ids[1]*3+1]);};
+ const B=(v,w)=>{const a=atoms(v,w,true);return Number(Boolean(a[ids[2]*3+2])!==Boolean(a[ids[0]*3+1]));};
+ const C=(v,w)=>{const a=atoms(v,w,true);return Number(a[11]&&a[ids[1]*3]);}; // 11 = hidden X mismatch
+ const rules=[A,B,C];
+ const outcome=p=>rules.map(f=>f(signatures[p[0]],signatures[p[1]]));
+ // Force all feature patterns to be available to either evaluation or training.
+ const pairs=shuffle(allPairs(),random),holdout=pairs.slice(0,16),training=pairs.slice(16);
+ const pub=Object.freeze({seed,materials:MATERIALS.slice(),signatures:signatures.map(x=>x.slice(0,3)),training:training.map(p=>p.slice())});
+ // Internal outcome oracle intentionally inaccessible via public/signatures.
+ return {public:pub,truth:outcome,probe:()=>signatures.map(s=>s[3]),evalPairs:holdout.map(p=>p.slice()),_debugRules:()=>({visibleIndices:ids.slice(),formulas:['A: any'+ids[0]+' AND NOT both'+ids[1],'B: xor'+ids[2]+' XOR both'+ids[0],'C: xorX AND any'+ids[1]]})};
+}
+function filterCandidates(candidates,obs){return candidates.filter(h=>obs.every(o=>h.predict(o.pair)===o.y));}
+function score(probs,actual){let sum=0;for(let i=0;i<actual.length;i++)sum+=(probs[i]-actual[i])**2;return sum/actual.length;}
+function entropy(p){return p<=0||p>=1?0:-(p*Math.log2(p)+(1-p)*Math.log2(1-p));}
+function createAgent(world,mode='expand'){
+ if(!['expand','closed','random-expand','grammar'].includes(mode))throw Error('Unknown agent mode');
+ const random=rng(world.public.seed^(mode==='closed'?0xf08af:mode==='expand'?0xc51ac:0x972aac));
+ const state={mode,observations:[],visited:new Set(),sensorOn:false,views:world.public.signatures.map(x=>x.slice()),phase:'old',trace:[],experiments:0,probes:0,random,modelCache:null,synthCache:null};
+ function candidates(){
+  if(state.modelCache)return state.modelCache;
+  const base=baseCandidates(state.views),groups=CHANNELS.map((_,c)=>filterCandidates(base,state.observations.map(o=>({pair:o.pair,y:o.observed[c]}))));
+  if(state.mode==='closed')return state.modelCache={groups,phase:'old'};
+  // Expand only after any of the original 16 rule sets becomes inconsistent.
+  if(groups.every(g=>g.length))return state.modelCache={groups,phase:'old'};
+  const gen=state.synthCache||(state.synthCache=grammarCandidates(state.views,state.sensorOn));
+  return state.modelCache={groups:CHANNELS.map((_,c)=>filterCandidates(gen,state.observations.map(o=>({pair:o.pair,y:o.observed[c]})))),phase:state.sensorOn?'probe':'synthesis'};
+ }
+ function predict(p,model){return model.groups.map(g=>g.length?g.reduce((s,h)=>s+h.predict(p),0)/g.length:.5);}
+ function status(){const m=candidates();return {phase:m.phase,model:m,remaining:m.groups.map(g=>g.length)};}
+ function choosePair(m){
+  const remaining=world.public.training.filter(p=>!state.visited.has(key(p)));
+  if(!remaining.length)return null;
+  if(state.mode==='random-expand')return {pair:remaining[Math.floor(state.random()*remaining.length)],info:0};
+  let best=null,high=-Infinity;
+  for(const p of remaining){const probs=predict(p,m),inf=probs.reduce((acc,v)=>acc+entropy(v),0),tie=state.random()*1e-7;
+   if(inf+tie>high){high=inf+tie;best={pair:p,info:inf};}}
+  return best;
+ }
+ function next(){
+  if(state.experiments>=50)return {kind:'end',reason:'Maximum experiment budget'};
+  let st=status();
+  const requiresProbe=state.mode!=='closed'&&state.mode!=='grammar'&&!state.sensorOn&&st.phase==='synthesis'&&st.remaining.some(n=>n===0);
+  if(requiresProbe){
+   // One NEW measurement operation is offered by the environment, not invented by AI.
+   const x=world.probe();state.views.forEach((row,i)=>row.push(x[i]));state.sensorOn=true;state.probes++;state.modelCache=null;state.synthCache=null;
+   const after=status();state.phase='probe';   const rec={kind:'probe',reason:'既存の特徴だけではすべての観測結果を説明できないため、追加の測定軸を要請',remaining:after.remaining.slice(),step:state.experiments,probeCount:state.probes};state.trace.push(rec);return rec;
+  }
+  st=status();state.phase=st.phase;
+  const selection=choosePair(st.model);if(!selection)return {kind:'end',reason:'No training pairs left'};
+  const before=st.remaining.slice(),y=world.truth(selection.pair);state.observations.push({pair:selection.pair.slice(),observed:y.slice()});state.modelCache=null;state.visited.add(key(selection.pair));state.experiments++;
+  const after=status(),rec={kind:'experiment',step:state.experiments,pair:selection.pair.slice(),observation:y.slice(),info:selection.info,phaseBefore:st.phase,phaseAfter:after.phase,remainingBefore:before,remainingAfter:after.remaining.slice(),modelFit:after.remaining.every(n=>n>0),reason:selection.info>1e-7?'異なる仮説の予測が最も割れる実験を選択':'情報量を増やす未実験条件を確認'};
+  state.trace.push(rec);return rec;
+ }
+ function measure(){const m=status();let brier=0,correct=0,count=0,exact=0;
+  for(const p of world.evalPairs){const y=world.truth(p),pr=predict(p,m.model);brier+=score(pr,y);exact+=Number(pr.every((v,i)=>(v>=.5?1:0)===y[i]));correct+=pr.filter((v,i)=>(v>=.5?1:0)===y[i]).length;count+=3;}
+  return {brier:brier/world.evalPairs.length,accuracy:correct/count,exact:exact/world.evalPairs.length,phase:m.phase,hypotheses:m.remaining.slice(),experiments:state.experiments,probes:state.probes,sensorOn:state.sensorOn};
+ }
+ function topHypotheses(){const st=status();return st.model.groups.map(g=>g.slice(0,2).map(h=>h.label));}
+ return {state,next,measure,status,topHypotheses};
+}
+function evaluate(seed=2026,actions=24){const w=makeWorld(seed),agents={expand:createAgent(w,'expand'),closed:createAgent(w,'closed'),grammar:createAgent(w,'grammar'),random:createAgent(w,'random-expand')},history=[];
+ for(let tick=0;tick<=actions;tick++){
+  const row={tick};for(const [k,a]of Object.entries(agents))row[k]=a.measure();history.push(row);
+  if(tick<actions)for(const a of Object.values(agents))a.next();
+ }
+ return {seed,actions,agents,history,final:history.at(-1),world:w};
+}
+function sweep(seed=1701,worlds=50,actions=24){let sum={expand:0,closed:0,grammar:0,random:0},acc={expand:0,closed:0,grammar:0,random:0},probe=0,expanded=0,success=0;
+ for(let k=0;k<worlds;k++){const w=makeWorld((seed+k*2654435761)>>>0),agents={expand:createAgent(w,'expand'),closed:createAgent(w,'closed'),grammar:createAgent(w,'grammar'),random:createAgent(w,'random-expand')};
+  for(let t=0;t<actions;t++)for(const a of Object.values(agents))a.next();
+  for(const [name,a]of Object.entries(agents)){const m=a.measure();sum[name]+=m.brier;acc[name]+=m.accuracy;}
+  probe+=agents.expand.state.probes;expanded+=Number(agents.expand.state.phase!=='old');success+=Number(agents.expand.measure().brier<agents.closed.measure().brier-1e-7);
+ }
+ for(const k of Object.keys(sum)){sum[k]/=worlds;acc[k]/=worlds;}
+ return {seed,worlds,actions,meanBrier:sum,meanAccuracy:acc,probeRate:probe/worlds,expandedRate:expanded/worlds,winRate:success/worlds};
+}
+return {MATERIALS,CHANNELS,makeWorld,createAgent,evaluate,sweep};
+});
+
+</script>
+<script>
+(()=>{'use strict';
+ const D=window.Discovery04,el=id=>document.getElementById(id),colors={expand:'#72e5bf',closed:'#e5b776',grammar:'#c79cf1',random:'#84a9ed'};
+ let seed=2026,world,agents,history=[],busy=false,lastPair=null;
+ const fmt=n=>Number(n).toFixed(3);
+ function mean(names){return Object.fromEntries(names.map(k=>[k,agents[k].measure()]));}
+ function refresh(){const rows=mean(['expand','closed','grammar','random']);el('step-count').textContent=rows.expand.experiments;el('state-count').textContent=rows.expand.hypotheses.join(' / ');el('probe-count').textContent=rows.expand.probes;el('accuracy').textContent=(rows.expand.accuracy*100).toFixed(1)+'%';
+  ['expand','closed','grammar','random'].forEach(k=>el('metric-'+k).textContent=fmt(rows[k].brier));
+  const phase=rows.expand.phase;el('phase').textContent=phase==='old'?'既存16仮説':phase==='synthesis'?'未知の式を合成':'新しい観測軸を導入';
+  el('sensor-note').textContent=rows.expand.sensorOn?'AIが既存の特徴だけでは説明できない現象を検出し、未知特徴Xの測定を要請しました。測定器自体は世界が提供しています。':'AIが使える特徴は現在3種類です。まだ追加の測定は行っていません。';
+  const models=agents.expand.topHypotheses();el('formulas').replaceChildren(...models.map((xs,i)=>{const wrap=document.createElement('div');wrap.className='formula';const h=document.createElement('b');h.textContent=D.CHANNELS[i]+'：'+rows.expand.hypotheses[i]+'候補';const p=document.createElement('p');p.textContent=xs.length?xs.join(' または '):'説明できる式が見つかっていません';wrap.append(h,p);return wrap;}));
+  history.push({tick:history.length,...rows});drawWorld();drawChart();}
+ function init(){const raw=Number(el('seed').value);seed=(Number.isFinite(raw)?raw:2026)>>>0;if(seed===0)seed=1;el('seed').value=seed;world=D.makeWorld(seed);agents={expand:D.createAgent(world,'expand'),closed:D.createAgent(world,'closed'),grammar:D.createAgent(world,'grammar'),random:D.createAgent(world,'random-expand')};history=[];lastPair=null;el('trace').innerHTML='<div class="record">準備完了。既存仮説が壊れたら、次のモデルへ切り替えます。</div>';el('latest').textContent='AIは既存の16種類の法則を使って予測を始めました。';el('benchmark-result').textContent='未実行。30世界・各24手で比較できます。';el('world-tag').textContent='WORLD '+seed;status('');refresh();}
+ function status(s,error=false){el('status').textContent=s;el('status').className='bar-status'+(error?' error':'');}
+ function trial(){const before=agents.expand.status().phase,rec=agents.expand.next();agents.closed.next();agents.grammar.next();agents.random.next();if(rec.kind==='end'){status('実験可能な操作が終了しました。');return false;}
+  if(rec.kind==='experiment'){lastPair=rec.pair;let change=rec.phaseAfter!==rec.phaseBefore;let msg='実験 '+rec.step+'：'+rec.pair.map(i=>D.MATERIALS[i]).join(' × ')+' → '+rec.observation.map((v,i)=>D.CHANNELS[i]+':'+v).join(' / ');
+    if(change)msg+='。既存法則と矛盾したため、式を新たに合成';
+    el('latest').textContent=msg;addLog(rec,change);}
+  else {el('latest').textContent='既存の特徴だけでは現象を説明できません。AIが「未知特徴Xを測る」という新しい測定操作を選びました。';addLog(rec,true);}
+  refresh();return true; }
+ function addLog(rec,important){const target=el('trace');if(target.firstElementChild?.textContent.includes('準備完了'))target.replaceChildren();const d=document.createElement('div');d.className='record';const title=document.createElement('strong');title.textContent=rec.kind==='probe'?'🔎 観測軸の拡張（重要）':`#${rec.step} ${rec.pair.map(i=>D.MATERIALS[i]).join(' × ')}`;
+  const t=document.createElement('div');t.textContent=rec.kind==='probe'?rec.reason:rec.reason+` / A,B,C=${rec.observation.join(',')} / 候補 ${rec.remainingAfter.join('/')}`;
+  if(rec.kind==='experiment'&&rec.phaseBefore!==rec.phaseAfter){const e=document.createElement('div');e.textContent='既存16候補に矛盾 → AND/OR/XOR/NOTを使って新しい法則候補を合成';e.className='alert';d.append(e);}
+  d.prepend(title);d.append(t);target.prepend(d);while(target.children.length>14)target.lastChild.remove();}
+ function fit(canvas){const rect=canvas.getBoundingClientRect(),w=Math.max(1,rect.width),h=Math.max(1,rect.height),scale=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.round(w*scale);canvas.height=Math.round(h*scale);const c=canvas.getContext('2d');c.setTransform(scale,0,0,scale,0,0);return {c,w,h};}
+ function drawWorld(){const {c,w,h}=fit(el('world'));c.clearRect(0,0,w,h);c.fillStyle='#10303a';c.fillRect(0,0,w,h);const n=4,margin=25,top=48,bottom=24,cw=(w-2*margin)/n,rh=(h-top-bottom)/3;
+  for(let i=0;i<D.MATERIALS.length;i++){const x=margin+cw*((i%4)+.5),y=top+rh*(Math.floor(i/4)+.5),chosen=lastPair?.includes(i);if(chosen){c.fillStyle='#225e58';c.strokeStyle='#a2ffcf';c.lineWidth=3;}else{c.fillStyle='#1e4550';c.strokeStyle='#497179';c.lineWidth=1;}
+    c.beginPath();c.roundRect(x-28,y-25,56,45,9);c.fill();c.stroke();c.font='bold 12px system-ui';c.fillStyle=chosen?'#dbfff0':'#dbe7ea';c.textAlign='center';c.fillText(D.MATERIALS[i],x,y+2);const b=world.public.signatures[i].join('');c.font='10px system-ui';c.fillStyle='#a1c6d0';c.fillText(b,x,y+16);
+  }
+  if(lastPair){const coords=i=>({x:margin+cw*((i%4)+.5),y:top+rh*(Math.floor(i/4)+.5)-24});const p=coords(lastPair[0]),q=coords(lastPair[1]);c.setLineDash([5,5]);c.beginPath();c.moveTo(p.x,p.y);c.lineTo(q.x,q.y);c.strokeStyle='#a5ffcd';c.lineWidth=2.5;c.stroke();c.setLineDash([]);}
+ }
+ function drawChart(){const {c,w,h}=fit(el('chart')),L=36,R=14,T=8,B=25,iw=w-L-R,ih=h-T-B;const last=history.at(-1).tick,maxX=Math.max(8,last);const vals=history.flatMap(x=>[x.expand.brier,x.closed.brier,x.grammar.brier,x.random.brier]);const maxY=Math.max(.32,...vals)*1.05;
+  c.font='10px system-ui';c.strokeStyle='#3c6066';c.fillStyle='#afc8d0';c.textAlign='right';for(let i=0;i<5;i++){const y=T+ih*i/4;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillText((maxY*(1-i/4)).toFixed(2),L-5,y+3);}c.textAlign='center';for(let t=0;t<=maxX;t+=Math.max(1,Math.floor(maxX/6))){c.fillText(t,L+iw*t/maxX,h-6);}
+  for(const k of Object.keys(colors)){c.beginPath();history.forEach((s,i)=>{const x=L+iw*s.tick/maxX,y=T+ih*(1-s[k].brier/maxY);if(!i)c.moveTo(x,y);else c.lineTo(x,y);});c.strokeStyle=colors[k];c.lineWidth=2.4;c.stroke();}
+ }
+ async function run(){if(busy)return;busy=true;el('step').disabled=true;el('auto').disabled=true;status('AIが実験と仮説修正を進めています…');try{while(history.length<=24){if(!trial())break;await new Promise(r=>setTimeout(r,120));}status('24手の実験・仮説更新が完了しました。');}catch(e){status('実験エラー：'+e.message,true);}finally{busy=false;el('step').disabled=false;el('auto').disabled=false;}}
+ function benchmark(){if(busy)return;busy=true;el('benchmark').disabled=true;status('30世界を計算しています…');setTimeout(()=>{try{const b=D.sweep(seed,30,24);const p=n=>(100*n).toFixed(1)+'%';el('benchmark-result').textContent=`30世界での予測精度：拡張＋測定 ${p(b.meanAccuracy.expand)}、有限16候補 ${p(b.meanAccuracy.closed)}、式生成のみ ${p(b.meanAccuracy.grammar)}、無作為探索＋拡張 ${p(b.meanAccuracy.random)}。平均Brier：拡張＋測定 ${fmt(b.meanBrier.expand)}、有限 ${fmt(b.meanBrier.closed)}、式生成のみ ${fmt(b.meanBrier.grammar)}、無作為＋拡張 ${fmt(b.meanBrier.random)}。追加測定を選択：${p(b.probeRate)}。最初の16候補を超える式へ移行：${p(b.expandedRate)}。`;status('30世界での比較が完了しました。');}catch(e){status('比較に失敗：'+e.message,true);}finally{busy=false;el('benchmark').disabled=false;}},40);}
+ async function copy(){const info={version:'0.4',seed,method:'open hypothesis expansion with symbolic composition and environment-supplied hidden-feature probe',holdoutCount:16,trainingCandidateCount:50,trace:agents.expand.state.trace.map(x=>({...x,pair:x.pair?.map(i=>D.MATERIALS[i])})),history:history.map(x=>({tick:x.tick,expand:x.expand,closed:x.closed,grammar:x.grammar,random:x.random})),knownLimitations:['Grammar and probe are predefined','One feature probe reveals X for all 12 materials','No physical tool invented','World outcomes explicitly built from the same symbolic grammar','Evaluation pairs held out from training']};const txt=JSON.stringify(info,null,2);try{await navigator.clipboard.writeText(txt);status('研究記録をコピーしました。');}catch(e){const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='width:100%;height:170px;color:#123;background:#fff';el('latest').replaceChildren(ta);ta.focus();ta.select();status('コピーできない環境のため、研究記録をテキスト欄に表示しました。');}}
+ el('reset').addEventListener('click',()=>{if(!busy)init();});el('step').addEventListener('click',()=>{if(busy)return;try{trial();status('最新の実験を記録しました。');}catch(e){status('実験エラー：'+e.message,true);}});el('auto').addEventListener('click',run);el('benchmark').addEventListener('click',benchmark);el('copy').addEventListener('click',copy);window.addEventListener('resize',()=>{drawWorld();drawChart();});
+ window.__DISCOVERY04_TEST__={get:()=>({steps:agents.expand.state.experiments,probes:agents.expand.state.probes,phase:agents.expand.status().phase,score:agents.expand.measure(),lastPair,trace:agents.expand.state.trace.slice()}),step:()=>trial(),reset:init,benchmark:()=>D.sweep(seed,5,24)};init();
+})();
+</script>
+</body>
+</html>
