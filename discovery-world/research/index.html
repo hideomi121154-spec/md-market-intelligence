@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071d25">
+<title>DISCOVERY WORLD | AI研究モード v0.3</title>
+<style>
+:root{color-scheme:dark;--bg:#06151b;--panel:#102b31;--border:#31505a;--teal:#6ce4ca;--amber:#f2ae67;--muted:#aec1c9;--white:#edf9fc}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:ui-sans-serif,system-ui,-apple-system,'Hiragino Kaku Gothic ProN',Meiryo,sans-serif;background:radial-gradient(ellipse at 15% 0,#16413f 0,transparent 35%),radial-gradient(ellipse at 92% 45%,#132c43 0,transparent 42%),var(--bg);color:var(--white)}body{overflow-x:hidden}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.45;cursor:default}a{color:var(--teal)}.app{max-width:1280px;margin:0 auto;padding:22px 18px 64px}.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;margin-bottom:17px}.brand{display:flex;align-items:center;gap:12px}.logo{height:44px;width:44px;background:#183e43;border:1px solid #4d8b82;border-radius:13px;display:grid;place-items:center;color:#a0ffde;font-size:23px}.eyebrow{color:#78bbac;letter-spacing:.17em;font-size:10px;font-weight:800}.brand h1{font-size:23px;line-height:1.25;margin:2px 0}.brand p{margin:3px 0 0;color:var(--muted);font-size:11px}.tag{display:inline-flex;align-items:center;gap:6px;background:#21383a;padding:8px 11px;border:1px solid #456460;border-radius:40px;font-size:12px;color:#b9eadf}.intro{font-size:14px;line-height:1.8;color:#d4e7e8;margin-bottom:16px}.intro b{color:#b3ffe6}.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:16px;align-items:start}.card{background:linear-gradient(140deg,#143039,#0b202a);border:1px solid #2d4c55;border-radius:18px;box-shadow:0 9px 38px #03111a35;overflow:hidden}.card-head{padding:15px 17px 10px;display:flex;justify-content:space-between;align-items:start;gap:10px}.card h2{font-size:15px;margin:0 0 4px;letter-spacing:.02em}.sub{font-size:11px;color:var(--muted);margin:0;line-height:1.55}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 17px 14px}.stat{border:1px solid #33545b;border-radius:12px;padding:10px;background:#102932;min-width:0}.stat .val{font-size:24px;font-weight:800;letter-spacing:-.04em;color:#b6ffe5}.stat .caption{font-size:10px;color:#b6cdd4;line-height:1.3;margin-top:2px}.world-wrap{margin:0 15px 12px;border:1px solid #2c4c54;border-radius:13px;overflow:hidden;position:relative;background:linear-gradient(#143840,#102b34);height:305px}.world-wrap canvas{display:block;width:100%;height:100%}.world-note{position:absolute;left:10px;bottom:10px;font-size:10px;background:#031b22bf;color:#c3eff0;padding:7px 9px;border-radius:8px}.world-title{position:absolute;left:12px;top:10px;font-size:10px;letter-spacing:.1em;color:#b5ffef;text-shadow:0 2px 7px #041b20}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 15px 15px}.btn{border-radius:11px;border:1px solid #4a777d;padding:12px 9px;background:#1b3e45;color:white;font-size:13px;font-weight:700;min-height:44px}.btn.primary{background:linear-gradient(135deg,#68d4b9,#3aabbe);color:#06242c;border:0}.btn.secondary{background:#122f37}.btn:hover{filter:brightness(1.08)}.full{grid-column:span 2}.right{display:grid;gap:16px}.chartbox{height:205px;margin:0 14px 10px}.chartbox canvas{width:100%;height:100%;display:block}.legend{display:flex;gap:15px;padding:0 16px 13px;font-size:11px;color:var(--muted)}.line{width:15px;height:3px;border-radius:4px;display:inline-block;vertical-align:middle;margin-right:4px}.line.a{background:var(--teal)}.line.b{background:var(--amber)}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 16px 16px}.compare{background:#112c34;border:1px solid #355760;border-radius:12px;padding:12px}.compare b{display:block;font-size:22px;margin-top:6px}.compare small{font-size:11px;color:var(--muted)}.compare .teal{color:var(--teal)}.compare .amber{color:var(--amber)}.logs{padding:0 17px 12px}.log{padding:10px 0;border-top:1px solid #2a4951;font-size:12px;line-height:1.65}.log strong{color:#a6f6dc}.log small{color:#abbecb;font-size:11px;display:block}.details{border-top:1px solid #254955;padding:11px 17px 16px;font-size:12px;line-height:1.65;color:#c4d8dc}.details strong{color:white}.setting{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:0 15px 14px}.setting label{font-size:12px;color:var(--muted)}.setting input{width:110px;background:#061e25;color:#d5ffee;padding:10px;border:1px solid #43616b;border-radius:8px;min-height:42px}.pill{border-radius:40px;border:1px solid #477571;color:#b5e3d8;background:#1d3e41;padding:6px 8px;font-size:10px}.benchbox{padding:0 16px 13px}.bench{background:#0c252e;border:1px solid #35515a;border-radius:10px;padding:12px;font-size:12px;line-height:1.75;color:#d3e3ea}.bench b{color:#a6ffdd}.outcomes{display:flex;gap:6px;margin-top:4px}.outcomes span{font-size:11px;border:1px solid #4f666c;border-radius:8px;padding:4px 8px;color:#b8ccd4}.outcomes span.yes{background:#1f574d;color:#a9ffe8;border-color:#4e8c7d}.footer{margin-top:17px;font-size:12px;line-height:1.8;color:#a7c1c9}.footer p{margin:8px 0}.sweep{padding:0 16px 16px}.sweep-result{margin-top:10px;border:1px solid #3d5a58;background:#102f36;padding:13px;border-radius:11px;font-size:12px;line-height:1.85;color:#d0e4e5}.sweep-result strong{color:#a7f9e3}.note{color:#ebc799}.link-back{font-size:12px;white-space:nowrap}#status{color:#b4e5d3;font-size:11px;margin-top:7px;min-height:15px}.fail{color:#ffc0ae!important}.helper{color:#a6c8d2;font-size:11px;line-height:1.8}.mini{font-size:10px;color:#83aaa8}
+@media(max-width:870px){.grid{grid-template-columns:1fr}.right{grid-template-columns:1fr}.app{padding:14px 10px 40px}.brand h1{font-size:19px}.world-wrap{height:270px}.stats .val{font-size:21px}}@media(max-width:400px){.stats{gap:5px;padding:0 10px 10px}.stat{padding:9px 6px}.stat .val{font-size:20px}.card-head{padding:13px}.world-wrap{margin:0 10px 10px;height:242px}.intro{font-size:13px}.actions{padding:0 10px 10px}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top"><div class="brand"><div class="logo">◈</div><div><div class="eyebrow">DISCOVERY WORLD / SCIENCE MODE</div><h1>AIの「発見能力」を測る世界</h1><p>v0.3 ─ 仮説形成・実験選択・未知条件への予測</p></div></div><a class="link-back" href="../">← 原始世界ゲームに戻る</a></header>
+  <p class="intro">今回のAIは、法則を知らない世界で<b>「次にどの実験をするか」</b>を自分で選びます。世界の答えを見ずに残した10組の実験結果を予測させ、<b>無作為に実験する比較対象</b>と公平に比べます。</p>
+  <section class="grid">
+    <div class="card">
+      <div class="card-head"><div><h2>🌍 実験世界・観測台</h2><p class="sub">10素材／3つの未知反応／45組から35組を実験候補、10組は採点専用に隠す</p></div><span id="world-id" class="pill">WORLD #2026</span></div>
+      <div class="stats">
+        <div class="stat"><div class="val" id="trial-num">0</div><div class="caption">実験回数</div></div>
+        <div class="stat"><div class="val" id="hyp-num">16×3</div><div class="caption">残る仮説候補</div></div>
+        <div class="stat"><div class="val" id="disc-num">0/3</div><div class="caption">観測した反応種類</div></div>
+        <div class="stat"><div class="val" id="acc-num">--</div><div class="caption">未実験条件の予測的中率</div></div>
+      </div>
+      <div class="world-wrap"><canvas id="world" aria-label="素材が配置された実験世界とAIの選択対象を表す図"></canvas><div class="world-title">AIの次の観測対象を可視化</div><div class="world-note">緑の線＝今回AIが選んだ素材の組合せ</div></div>
+      <div class="setting"><label for="seed">世界の番号</label><input id="seed" type="number" value="2026" min="1" max="4294967295" step="1" inputmode="numeric"><button id="reset" class="btn secondary" type="button">世界を再生成</button></div>
+      <div class="actions"><button class="btn primary" id="step" type="button">🔬 AIに1回実験させる</button><button class="btn" id="auto" type="button">▶ 8回まで自動実験</button><button class="btn secondary full" id="copy" type="button">研究記録をコピー</button></div>
+      <div class="benchbox"><div id="last" class="bench">最初の実験を待っています。AIが最も情報を得られそうな素材の組合せを選びます。</div><div id="status" role="status"></div></div>
+    </div>
+    <div class="right">
+      <div class="card"><div class="card-head"><div><h2>📈 予測誤差を比較</h2><p class="sub">実験に使っていない10組×3現象だけで採点。低いほど良い。</p></div></div><div class="chartbox"><canvas id="chart" aria-label="AIとランダム探索のブライアスコア推移"></canvas></div><div class="legend"><span><i class="line a"></i>探索AI</span><span><i class="line b"></i>ランダム探索（8回平均）</span></div><div class="comparison"><div class="compare"><small>探索AIの予測誤差</small><b class="teal" id="brier-a">--</b></div><div class="compare"><small>無作為探索の予測誤差</small><b class="amber" id="brier-r">--</b></div></div></div>
+      <div class="card"><div class="card-head"><div><h2>🧠 AIの判断記録</h2><p class="sub">事前に予測を比べ、情報が増えそうな条件を選びます。</p></div></div><div id="logs" class="logs"><div class="helper">ここにAIの実験選択と観測結果が表示されます。</div></div><div class="details"><strong>残る候補数</strong>：<span id="hyp-details">A:16 / B:16 / C:16</span><div class="helper">残る法則候補が少ないほど、世界の反応を絞り込めています。ただし候補の集合自体は人間が設定したものです。</div></div></div>
+      <div class="card"><div class="card-head"><div><h2>🧪 100種類の世界で検証</h2><p class="sub">一つの世界で偶然うまくいっただけかを調べます。</p></div></div><div class="sweep"><button id="bench" class="btn primary" style="width:100%" type="button">100世界で8回ずつ比較する</button><div id="sweep-result" class="sweep-result" aria-live="polite">未実行。各世界では同じ条件・同じ実験回数で両方を比較します。</div></div></div>
+    </div>
+  </section>
+  <div class="footer"><p><strong>これは何を測っている？</strong> 人間が答えを指定せずに、AIが実験を選び、未知条件の反応を予測できるようになる速度です。まだ「新しい物理法則の発明」ではありません。</p><p class="note"><strong>限界：</strong> 環境・素材の特徴量・候補となる16種類の数式は開発者が設計済みで、探索AIは候補の絞り込みを行います。現在の実装は大規模言語モデルでも自己進化AIでもありません。次の研究では未知の数式自体を合成する能力と、道具を製作して観測範囲を広げる能力を追加する必要があります。</p><p class="mini">開発・実験用。シード番号を固定すれば再現可能。すべてブラウザ内で計算され、外部APIや秘密情報は使用しません。</p></div>
+</main>
+<script>
+/* DISCOVERY RESEARCH v0.3 — tiny active-learning benchmark; independent of LLMs. MIT-style illustrative research code. */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.DiscoveryResearch = api;
+})(typeof window !== 'undefined' ? window : globalThis, function () {
+  'use strict';
+  const MATERIALS = [
+    {id:'wood', name:'木材', icon:'🪵', color:'#b67b50'},
+    {id:'stone', name:'石', icon:'🪨', color:'#9aa8af'},
+    {id:'clay', name:'粘土', icon:'🧱', color:'#d28b64'},
+    {id:'ore', name:'鉱石', icon:'⛏', color:'#ddbe7a'},
+    {id:'crystal', name:'結晶', icon:'💎', color:'#82d5e7'},
+    {id:'fiber', name:'繊維', icon:'🌿', color:'#7bc993'},
+    {id:'ash', name:'灰', icon:'🌫', color:'#c1bec3'},
+    {id:'resin', name:'樹脂', icon:'🍯', color:'#ebba64'},
+    {id:'shell', name:'貝', icon:'🐚', color:'#d6b0aa'},
+    {id:'salt', name:'塩', icon:'🧂', color:'#e2e8f1'}
+  ];
+  const N = MATERIALS.length;
+  const CHANNELS = ['現象A', '現象B', '現象C'];
+  const RULE_NAMES = ['同じ特徴0','同じ特徴1','同じ特徴2','特徴0×1','特徴0×2','特徴1×2','特徴0または特徴1','特徴1または特徴2','特徴0または特徴2','特徴0の相違','特徴1の相違','特徴2の相違','特徴0同時かつ特徴2なし','特徴1同時かつ特徴0なし','特徴0相違かつ特徴1あり','特徴2同時または特徴0同時'];
+  const RULES = [
+    (a,b)=>a[0]&&b[0],
+    (a,b)=>a[1]&&b[1],
+    (a,b)=>a[2]&&b[2],
+    (a,b)=>(a[0]&&b[1])||(b[0]&&a[1]),
+    (a,b)=>(a[0]&&b[2])||(b[0]&&a[2]),
+    (a,b)=>(a[1]&&b[2])||(b[1]&&a[2]),
+    (a,b)=>(a[0]||b[0])&&(a[1]||b[1]),    (a,b)=>(a[1]||b[1])&&(a[2]||b[2]),
+    (a,b)=>(a[0]||b[0])&&(a[2]||b[2]),
+    (a,b)=>a[0]!==b[0],
+    (a,b)=>a[1]!==b[1],
+    (a,b)=>a[2]!==b[2],
+    (a,b)=>a[0]&&b[0]&&!a[2]&&!b[2],
+    (a,b)=>a[1]&&b[1]&&!a[0]&&!b[0],
+    (a,b)=>(a[0]!==b[0])&&(a[1]||b[1]),
+    (a,b)=>(a[2]&&b[2])||(a[0]&&b[0])
+  ];
+  function rng(seed) { let s=seed>>>0; return ()=>{s=(s+0x6D2B79F5)>>>0; let t=s; t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296;}; }
+  function shuffled(items, rand){const a=items.slice();for(let i=a.length-1;i>0;i--){let j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function allPairs(){const a=[];for(let i=0;i<N;i++)for(let j=i+1;j<N;j++)a.push([i,j]);return a;}
+  function pairKey(p){return p[0]+'-'+p[1];}
+  function mkWorld(seed){
+    seed=seed>>>0;
+    const rand=rng(seed^0x13579bdf);
+    const signatures=Array.from({length:N},()=>Array.from({length:3},()=>rand()<0.5?0:1));
+    // Balanced signals reduce trivial all-positive/all-negative worlds.
+    for(let c=0;c<3;c++){
+      const ids=shuffled([...Array(N).keys()],rand);
+      for(let i=0;i<N;i++)signatures[ids[i]][c]=i<(N/2)?0:1;
+    }
+    const rules=shuffled([...Array(RULES.length).keys()],rand).slice(0,3);
+    const pairs=shuffled(allPairs(),rand);
+    const holdout=pairs.slice(0,10).sort((a,b)=>pairKey(a).localeCompare(pairKey(b)));
+    const training=pairs.slice(10).sort((a,b)=>pairKey(a).localeCompare(pairKey(b)));
+    const outcome=p=>rules.map(id=>Number(Boolean(RULES[id](signatures[p[0]],signatures[p[1]]))));
+    return Object.freeze({seed,signatures:signatures.map(x=>Object.freeze(x)),training,holdout, outcome, _debugRuleIds:()=>rules.slice()});
+  }
+  function predict(ruleId,p,signatures){return Number(Boolean(RULES[ruleId](signatures[p[0]],signatures[p[1]])));}
+  function posterior(observations,signatures){
+    return CHANNELS.map((_,c)=>RULES.map((__,id)=>id).filter(id=>observations.every(ob=>predict(id,ob.pair,signatures)===ob.observed[c])));
+  }
+  function prediction(pair,model,signatures){return model.map(h=>h.length?h.reduce((s,id)=>s+predict(id,pair,signatures),0)/h.length:0.5);}
+  function entropy(p){return p<=0||p>=1?0:-p*Math.log2(p)-(1-p)*Math.log2(1-p);}
+  function createAgent(world,mode,seedSalt=0){
+    if(!['curiosity','random'].includes(mode))throw Error('Unknown policy');
+    // Both policies are given the same signatures. Only experiment selection differs.
+    const signatureView=world.signatures.map(x=>x.slice());
+    const allowed=world.training.map(x=>x.slice());
+    const test=world.holdout.map(x=>x.slice());
+    const rand=rng(world.seed^(mode==='curiosity'?0x7f74c58e:0xbc12f711)^seedSalt);
+    return {mode,signatureView,allowed,test,rand,observations:[],record:[],positive:new Set(),visited:new Set(),lastChoice:null};
+  }
+  function measure(world,agent){
+    const model=posterior(agent.observations,agent.signatureView);
+    let brier=0,accuracy=0,exact=0,total=0;
+    for(const p of agent.test){
+      const probs=prediction(p,model,agent.signatureView), actual=world.outcome(p);
+      let all=true;
+      for(let c=0;c<3;c++){
+        const diff=probs[c]-actual[c];brier+=diff*diff;
+        const pred=probs[c]>=0.5?1:0;const ok=pred===actual[c];accuracy+=Number(ok);all=all&&ok;total++;
+      }
+      exact+=Number(all);
+    }
+    return {brier:brier/total,accuracy:accuracy/total,exact:exact/agent.test.length,hypotheses:model.map(x=>x.length),discovered:agent.positive.size,trainTrials:agent.observations.length};
+  }
+  function choose(agent){
+    const model=posterior(agent.observations,agent.signatureView);
+    const tried=agent.visited;
+    const remaining=agent.allowed.filter(p=>!tried.has(pairKey(p)));
+    if(!remaining.length)return null;
+    if(agent.mode==='random')return {pair:remaining[Math.floor(agent.rand()*remaining.length)],info:0,reason:'未実験の組合せから無作為に選択'};
+    let best=null,score=-1;
+    for(const p of remaining){
+      const probs=prediction(p,model,agent.signatureView);
+      const information=probs.reduce((v,x)=>v+entropy(x),0);
+      // Break identical scores without a fixed alphabetical bias.      const tie=agent.rand()*1e-6;
+      if(information+tie>score){best={pair:p,info:information,reason:information>1e-7?'候補となる法則の予測が最も割れる組合せを選択':'既存の仮説が一致。確認用の未実験条件を選択'};score=information+tie;}
+    }
+    return best;
+  }
+  function step(world,agent){
+    const choice=choose(agent);if(!choice)return null;
+    const before=measure(world,agent);
+    const observed=world.outcome(choice.pair);
+    agent.observations.push({pair:choice.pair.slice(),observed:observed.slice()});
+    agent.visited.add(pairKey(choice.pair));
+    observed.forEach((v,c)=>{if(v)agent.positive.add(c);});
+    const after=measure(world,agent);
+    const rec={index:agent.record.length+1,pair:choice.pair.slice(),observed:observed.slice(),before,after,informationScore:choice.info,reason:choice.reason};
+    agent.record.push(rec);agent.lastChoice=rec;return rec;
+  }
+  function pairedBenchmark(seed,budget=14,randomReplicates=8){
+    const world=mkWorld(seed), active=createAgent(world,'curiosity');
+    const randoms=Array.from({length:randomReplicates},(_,i)=>createAgent(world,'random',i*109+7));
+    const history=[];
+    for(let n=0;n<=budget;n++){
+      const ma=measure(world,active), baselines=randoms.map(a=>measure(world,a));
+      const mean=key=>baselines.reduce((s,x)=>s+x[key],0)/baselines.length;
+      history.push({n,activeBrier:ma.brier,baselineBrier:mean('brier'),activeAccuracy:ma.accuracy,baselineAccuracy:mean('accuracy'),activeExact:ma.exact,baselineExact:mean('exact'),activeHyp:ma.hypotheses,activeDiscovered:ma.discovered,baselineDiscovered:mean('discovered')});
+      if(n<budget){step(world,active);randoms.forEach(a=>step(world,a));}
+    }
+    return {world,active,randoms,history,final:history.at(-1)};
+  }
+  function multiBenchmark(seed=1000,worlds=100,budget=14){
+    let aB=0,rB=0,aA=0,rA=0,wins=0,ties=0,aD=0,rD=0;
+    let first={}, samples=[];
+    for(let i=0;i<worlds;i++){
+      const s=(seed+i*2654435761)>>>0;
+      const b=pairedBenchmark(s,budget,3);
+      const f=b.final;aB+=f.activeBrier;rB+=f.baselineBrier;aA+=f.activeAccuracy;rA+=f.baselineAccuracy;aD+=f.activeDiscovered;rD+=f.baselineDiscovered;
+      wins+=Number(f.activeBrier<f.baselineBrier-1e-9);ties+=Number(Math.abs(f.activeBrier-f.baselineBrier)<=1e-9);
+      if(i<5)samples.push({seed:s,activeBrier:f.activeBrier,randomBrier:f.baselineBrier});
+    }
+    return {seed,worlds,budget,activeBrier:aB/worlds,baselineBrier:rB/worlds,activeAccuracy:aA/worlds,baselineAccuracy:rA/worlds,wins,ties,activeDiscovered:aD/worlds,baselineDiscovered:rD/worlds,samples};
+  }
+  return {MATERIALS,CHANNELS,RULE_NAMES,RULE_COUNT:RULES.length,allPairs,mkWorld,createAgent,measure,posterior,prediction,entropy,choose,step,pairedBenchmark,multiBenchmark};
+});
+
+</script>
+<script>
+(()=>{'use strict';
+const R=window.DiscoveryResearch, byId=id=>document.getElementById(id);let seed=2026,world,active,baseline,history=[],moving=false,worldCanvas=byId('world'),chartCanvas=byId('chart'),lastPair=null;
+const pairName=pair=>pair.map(i=>R.MATERIALS[i].icon+' '+R.MATERIALS[i].name).join(' × ');
+function mean(a,key){return a.reduce((s,x)=>s+x[key],0)/a.length;}
+function snap(){const a=R.measure(world,active),r=baseline.map(x=>R.measure(world,x));return {n:a.trainTrials,activeBrier:a.brier,baselineBrier:mean(r,'brier'),activeAccuracy:a.accuracy,baselineAccuracy:mean(r,'accuracy'),activeExact:a.exact,baselineExact:mean(r,'exact'),activeHyp:a.hypotheses,activeDiscovered:a.discovered,baselineDiscovered:mean(r,'discovered')};}
+function init(){seed=(Number(byId('seed').value)||2026)>>>0;if(seed===0)seed=1;byId('seed').value=seed;world=R.mkWorld(seed);active=R.createAgent(world,'curiosity');baseline=Array.from({length:8},(_,i)=>R.createAgent(world,'random',i*109+7));history=[snap()];lastPair=null;byId('last').textContent='まだ実験していません。AIが候補となる法則の予測が最も割れる素材を調べます。';byId('logs').innerHTML='<div class="helper">実験の記録はここに表示されます。</div>';byId('world-id').textContent='WORLD #'+seed;byId('sweep-result').textContent='未実行。世界を100種類生成して同じ条件で比較します。';refresh();}
+function act(){if(active.record.length>=35){status('これ以上の実験候補はありません。');return false;}const rec=R.step(world,active);if(!rec)return false;baseline.forEach(agent=>R.step(world,agent));lastPair=rec.pair;history.push(snap());const box=byId('logs');if(active.record.length===1)box.innerHTML='';const row=document.createElement('div');row.className='log';let title=document.createElement('strong');title.textContent='#'+rec.index+' '+pairName(rec.pair);let small=document.createElement('small');small.textContent='選択理由：'+rec.reason+'（選択時の不一致 '+rec.informationScore.toFixed(2)+' bit）';let result=document.createElement('div');result.textContent='観測：'+rec.observed.map((v,i)=>R.CHANNELS[i]+(v?' 反応あり':' 反応なし')).join(' ／ ');row.append(title,small,result);box.prepend(row);while(box.children.length>7)box.lastChild.remove();const last=byId('last');last.textContent='AIは '+pairName(rec.pair)+' を検証。'+rec.reason+'。';const outcome=document.createElement('div');outcome.className='outcomes';rec.observed.forEach((v,i)=>{const s=document.createElement('span');s.textContent=R.CHANNELS[i]+(v?' ●':' ○');if(v)s.className='yes';outcome.append(s);});last.append(outcome);refresh();return true;}
+function refresh(){const s=history.at(-1);byId('trial-num').textContent=s.n;byId('hyp-num').textContent=s.activeHyp.join(' / ');byId('hyp-details').textContent=s.activeHyp.map((n,i)=>R.CHANNELS[i]+': '+n).join(' ／ ');byId('disc-num').textContent=s.activeDiscovered+'/3';byId('acc-num').textContent=(s.activeAccuracy*100).toFixed(0)+'%';byId('brier-a').textContent=s.activeBrier.toFixed(3);byId('brier-r').textContent=s.baselineBrier.toFixed(3);drawWorld();drawChart();}
+function status(message,failed=false){byId('status').textContent=message;byId('status').className=failed?'fail':'';}
+function fit(canvas){const rect=canvas.getBoundingClientRect();const w=Math.max(1,rect.width),h=Math.max(1,rect.height),dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);return {c,w,h};}
+function iso(x,y,w,h){const scale=Math.min(w/640,h/370)*1.12;return {x:w*.50+(x-y)*42*scale, y:h*.45+(x+y)*20*scale};}
+function drawWorld(){const {c,w,h}=fit(worldCanvas);c.clearRect(0,0,w,h);c.fillStyle='#102b35';c.fillRect(0,0,w,h);for(let y=0;y<8;y++)for(let x=0;x<9;x++){const p=iso(x-2,y-2,w,h),tw=Math.min(w/640,h/370)*48,th=tw*.48;c.beginPath();c.moveTo(p.x,p.y-th/2);c.lineTo(p.x+tw/2,p.y);c.lineTo(p.x,p.y+th/2);c.lineTo(p.x-tw/2,p.y);c.closePath();c.fillStyle=(x+y)%2?'#234a49':'#29544c';c.fill();c.strokeStyle='#45665c';c.lineWidth=.8;c.stroke();}
+const points=R.MATERIALS.map((_,i)=>iso((i%5)+.2,Math.floor(i/5)*2.2,w,h));const chosen=lastPair;if(chosen){const a=points[chosen[0]],b=points[chosen[1]];c.beginPath();c.moveTo(a.x,a.y-15);c.lineTo(b.x,b.y-15);c.strokeStyle='#77ffe1';c.lineWidth=3;c.setLineDash([6,6]);c.stroke();c.setLineDash([]);}
+for(let i=0;i<points.length;i++){const p=points[i],m=R.MATERIALS[i],sel=chosen?.includes(i);c.fillStyle='#031c24b0';c.beginPath();c.ellipse(p.x,p.y+8,22,7,0,0,Math.PI*2);c.fill();c.fillStyle=sel?'#143f40':'#1b313a';c.strokeStyle=sel?'#85ffe3':'#50726e';c.lineWidth=sel?3:1.3;c.beginPath();c.roundRect(p.x-22,p.y-35,44,44,8);c.fill();c.stroke();c.font=Math.max(18,Math.min(25,w/25))+'px sans-serif';c.textAlign='center';c.fillStyle=m.color;c.fillText(m.icon,p.x,p.y-7);c.font=Math.max(9,Math.min(11,w/50))+'px sans-serif';c.fillStyle='#f5f8fa';c.fillText(m.name,p.x,p.y+24);}
+const p=chosen?points[chosen[1]]:iso(2,4.2,w,h);c.fillStyle='#d1fffa';c.beginPath();c.arc(p.x+19,p.y-36,9,0,Math.PI*2);c.fill();c.fillStyle='#0b4a49';c.fillRect(p.x+13,p.y-37,12,3);c.fillStyle='#73f8da';c.beginPath();c.arc(p.x+16,p.y-36,1.4,0,Math.PI*2);c.arc(p.x+22,p.y-36,1.4,0,Math.PI*2);c.fill();}
+function drawChart(){const {c,w,h}=fit(chartCanvas);c.clearRect(0,0,w,h);const L=38,R=12,T=12,B=26,innerW=w-L-R,innerH=h-T-B;const maxN=Math.max(8,history.at(-1).n),maxVal=Math.max(.25,...history.flatMap(x=>[x.activeBrier,x.baselineBrier]))*1.04;function Y(n){return T+innerH*(1-n/maxVal);}function X(n){return L+innerW*n/maxN;}c.strokeStyle='#3a5862';c.lineWidth=1;c.font='10px sans-serif';c.fillStyle='#a9bfca';c.textAlign='right';for(let i=0;i<=4;i++){const val=maxVal*(1-i/4);const y=T+i*innerH;c.beginPath();c.moveTo(L,y);c.lineTo(w-R,y);c.stroke();c.fillText(val.toFixed(2),L-5,y+3);}c.textAlign='center';c.fillText('実験回数',L+innerW*.5,h-3);for(let n=0;n<=maxN;n+=Math.max(1,Math.floor(maxN/5))){c.fillText(String(n),X(n),h-16);}for(const [key,color] of [['baselineBrier','#f2ae67'],['activeBrier','#6ce4ca']]){c.beginPath();history.forEach((p,i)=>{const x=X(p.n),y=Y(p[key]);if(i===0)c.moveTo(x,y);else c.lineTo(x,y);});c.strokeStyle=color;c.lineWidth=2.6;c.stroke();const end=history.at(-1);c.beginPath();c.arc(X(end.n),Y(end[key]),4,0,Math.PI*2);c.fillStyle=color;c.fill();}}
+async function auto(){if(moving)return;moving=true;byId('auto').disabled=true;byId('step').disabled=true;status('実験を進めています。');try{while(active.record.length<8){act();await new Promise(resolve=>setTimeout(resolve,310));}status('8回の実験が完了しました。結果を比較してください。');}catch(e){status('実験中にエラー: '+e.message,true);}finally{moving=false;byId('auto').disabled=false;byId('step').disabled=false;}}
+function benchmark(){try{status('100世界の比較を計算しています。');const b=R.multiBenchmark(seed,100,8);byId('sweep-result').innerHTML='<strong>100世界・各8実験の結果</strong><div>未知条件の予測的中率：探索AI <b>'+Math.round(b.activeAccuracy*1000)/10+'%</b> ／ ランダム <b>'+Math.round(b.baselineAccuracy*1000)/10+'%</b></div><div>予測誤差：探索AI <b>'+b.activeBrier.toFixed(3)+'</b> ／ ランダム <b>'+b.baselineBrier.toFixed(3)+'</b></div><div>探索AIの誤差がより小さい世界：<b>'+b.wins+'/100</b>（同点 '+b.ties+'）</div><div class="helper">毎回同じ観測済み素材特徴と実験予算を使用。ランダムは各世界3回の平均です。世界の法則は同じ16候補から選択されています。</div>';status('100世界の比較を完了しました。');}catch(e){status('比較に失敗: '+e.message,true);}}
+async function copy(){const payload={version:'0.3',seed,method:'finite Boolean-rule version space with maximum predictive disagreement',holdoutCount:10,trainingCandidateCount:35,trace:active.record.map(x=>({index:x.index,pair:x.pair.map(i=>R.MATERIALS[i].name),reason:x.reason,infoScore:x.informationScore,observation:x.observed,holdoutBrierAfter:x.after.brier,holdoutAccuracyAfter:x.after.accuracy,hypothesesAfter:x.after.hypotheses})),history};const txt=JSON.stringify(payload,null,2);try{await navigator.clipboard.writeText(txt);status('研究記録をコピーしました。');}catch(e){const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='width:100%;height:180px';const target=byId('last');target.replaceChildren(ta);ta.select();status('研究記録を表示しました。テキストを長押ししてコピーしてください。');}}
+byId('step').addEventListener('click',()=>{if(!moving){act();status('実験#'+active.record.length+'を記録しました。');}});byId('auto').addEventListener('click',auto);byId('reset').addEventListener('click',()=>{if(!moving){init();status('新しい世界に再設定しました。');}});byId('bench').addEventListener('click',benchmark);byId('copy').addEventListener('click',copy);window.addEventListener('resize',()=>{drawWorld();drawChart();});window.__RESEARCH_TEST__={get:()=>({seed,run:active.record.length,history:history.slice(),lastPair}),step:act,reset:init,benchmark:()=>R.multiBenchmark(seed,20,8)};init();
+})();
+</script>
+</body>
+</html>
