@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0a1823" />
+<title>DISCOVERY WORLD v0.5｜AIは何を測るべきか発見できる？</title>
+<meta name="description" content="世界に隠れた性質の名前を教えず、AIに測定方法を自分で組み立てさせる科学的発見の仮想実験。" />
+<style>
+:root{--bg:#091722;--panel:#122a36;--edge:#30515a;--ink:#eef8f9;--muted:#b8cbd1;--green:#59d8b5;--orange:#efb575;--blue:#83b3ed;--purple:#c6a9e3;color-scheme:dark}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at top right,#194148 0%,transparent 45%),var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.6}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}.wrap{max-width:1100px;margin:0 auto;padding:20px 18px 70px}.head{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--edge);padding:8px 0 18px}.logo{font-weight:900;letter-spacing:.04em}.logo span{color:var(--green)}.little{font-size:12px;color:var(--muted)}h1{font-size:clamp(24px,4vw,39px);line-height:1.4;margin:18px 0 10px}h2{font-size:20px;margin:0 0 14px}h3{font-size:16px;margin:0 0 9px}.lead{max-width:760px;color:#cfe2e4}.tag{display:inline-block;color:#a9fff0;border:1px solid #3c827b;background:#173a42;padding:4px 10px;border-radius:40px;font-size:12px;font-weight:700}.panel{background:linear-gradient(145deg,#163540,#102630);border:1px solid var(--edge);padding:20px;border-radius:21px;margin-top:18px;box-shadow:0 12px 45px #04121825}.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.chip{border:1px solid #38646d;background:#0d2932;border-radius:14px;padding:13px}.chip strong{display:block;font-size:26px;line-height:1.4;font-variant-numeric:tabular-nums}.chip small{color:var(--muted);font-size:12px}.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.btn{background:linear-gradient(105deg,#56cfb4,#4abedb);color:#06232c;border:0;padding:13px 18px;border-radius:12px;font-size:15px;font-weight:800;min-height:46px}.btn.other{background:#193944;border:1px solid #4e7680;color:#eaf8f7}.btn:disabled{opacity:.6;cursor:not-allowed}input[type=number]{color:var(--ink);background:#0e2832;border:1px solid #48717a;border-radius:10px;padding:12px;max-width:135px;width:100%}.note{color:var(--muted);font-size:13px}.warn{border-left:3px solid var(--orange);padding:11px 14px;background:#553e2828;color:#e8d5b9;font-size:13px}.why{font-size:14px;color:#d9e9e7}#chart{width:100%;height:auto;display:block;max-height:310px}.bar-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #35515a}.bar-line:last-child{border:none}.bar-line .value{font-weight:800;font-variant-numeric:tabular-nums}.recipe{border:1px solid #44726e;background:#103238;padding:12px;border-radius:12px;margin-top:9px}.recipe small{color:var(--muted)}.recipe b{font-size:14px}table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}th,td{padding:9px 6px;border-bottom:1px solid #34505a;text-align:left}th{color:var(--muted);font-weight:600}.scroller{overflow:auto}.status{color:#a8ece1;min-height:22px;font-size:13px}.secondary-link{color:#9cf1d9;text-decoration:underline;text-underline-offset:3px}footer{font-size:12px;color:var(--muted);padding-top:25px}.pill{display:inline-flex;gap:8px;align-items:center}.dot{width:9px;height:9px;display:inline-block;border-radius:50%}.flex-end{justify-content:flex-end}.split{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.count{font-size:11px;color:var(--muted)}@media(max-width:720px){.wrap{padding:12px 12px 50px}.panel{padding:16px 13px}.cols,.three{grid-template-columns:1fr}.head{align-items:flex-start}.actions{flex-direction:column;align-items:stretch}.actions label{width:100%}.actions input{max-width:none}.btn{width:100%}h2{font-size:18px}.split{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <header class="head"><div class="logo">🧠 DISCOVERY <span>WORLD</span><div class="little">未知の観測方法をつくる実験｜v0.5</div></div><div class="tag">RESEARCH / TOY MODEL</div></header>
+ <h1>AIは「何を測ればよいか」を<br>自分で発見できるか？</h1>
+ <p class="lead">人間が「湿度計を作れ」と指示する代わりに、AIは素材と加工方法を組み合わせて測定手順を設計します。その手順が<b>まだ実験していない環境</b>の予測に役立つかを比較します。</p>
+ <div class="panel">
+  <h2>① 実験を開始する</h2>
+  <p class="note">AIに渡すのは「変化A・B・C」の実測値と、素材を操作したときの測定値だけ。隠された原因の名前・数値は教えません。</p>
+  <div class="actions">
+   <label>世界番号 <input id="seed" type="number" value="2026" min="1" max="999999999" /></label>
+   <button class="btn" id="run">🔬 AIに測定方法を発見させる</button>
+   <button class="btn other" id="benchmark">📊 30世界で検証</button>
+  </div><p class="status" id="status" aria-live="polite">実験前です。「AIに測定方法を発見させる」を押してください。</p>
+ </div>
+ <div class="panel" id="results" hidden>
+  <div class="split"><h2>② 実験結果</h2><div class="count" id="split-info"></div></div>
+  <div class="three" id="metrics"></div>
+  <p class="note">数値は平均二乗誤差（MSE）。<b>0が完全一致で、小さいほど正確</b>です。比較に使う未知環境の結果は、測定方法の選定には使いません。</p>
+  <svg id="chart" viewBox="0 0 680 280" role="img" aria-label="測定方法を追加するごとの予測誤差" xmlns="http://www.w3.org/2000/svg"></svg>
+  <p class="note" id="chart-caption"></p>
+ </div>
+ <div class="panel" id="procedures" hidden><h2>③ AIが組み立てた測定方法</h2><p class="note">素材×前処理×置き方×時間×読み取り方法を組み替え、予測の改善が大きい順に選んでいます。</p><div id="recipes"></div><div id="cost" class="warn" style="margin-top:14px"></div></div>
+ <div class="panel" id="blind" hidden><h2>④ 本当に予測できた？</h2><p class="note">測定方法を決めた後で、初めて見る部屋の「変化A」を予測。正解は、その後で照合します。</p><div class="scroller"><table><thead><tr><th>未知環境</th><th>AIの予測</th><th>実際の結果</th><th>差の大きさ</th></tr></thead><tbody id="predictions"></tbody></table></div></div>
+ <div class="panel" id="bench-panel" hidden><h2>⑤ 30世界での再現性</h2><div class="three" id="bench-metrics"></div><p class="note" id="bench-caption"></p></div>
+ <div class="panel"><h2>この実験で分かること／まだ分からないこと</h2>
+  <p class="why"><b>分かること：</b>観測対象を教えられなくても、AIが複数の測定手順を組み合わせ、保留した環境での予測誤差を減らせるか。</p>
+  <p class="why"><b>まだ分からないこと：</b>人間が想像できない原理を発見したか、観測器を物理的に作れるか、何を研究するべきか自発的に選べるか。今回は、変化A〜Cという研究対象と、使える操作の部品は人間が与えています。</p>
+  <div class="warn"><b>重要：</b>これは人間が作った簡易的な物理モデルです。観測手順の候補を探す際には、多くの校正実験を使っています。無作為に3手順だけ選ぶ比較群とは実験コストが等しくないため、「より少ない実験で発見した」という結論は出せません。また、知らない世界は同じ法則のもとで条件だけ変えた世界です。</div>
+ </div>
+ <footer>DISCOVERY WORLD v0.5 — 研究用デモ。外部通信・AI API呼び出しなし。計算はこの端末内で完結します。<p><a class="secondary-link" href="../v04/">← 前のv0.4研究版へ</a></p></footer>
+</div>
+<script>
+/* DISCOVERY WORLD v0.5 — self-directed measurement protocol discovery experiment
+ * Synthetic environment, non-physical toy physics. Designed for transparent benchmark.
+ * This module exports deterministic browser/Node functions with no hidden model access by the learner.
+ */
+(function(root,factory){
+  const api=factory();  if(typeof module==='object'&&module.exports)module.exports=api;
+  root.DiscoveryLabV05=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ 'use strict';
+ const MATERIALS=['木片','石片','粘土片','樹脂片','結晶片','繊維片'];
+ const PREP=['水を含ませる','表面を削る','加温する'];
+ const EXPOSURE=['開放','覆う'];
+ const TIME=[1,3];
+ const READOUT=['重さの変化','色の変化'];
+ const CHANNELS=['変化 A','変化 B','変化 C'];
+ const OPTIONS=[];
+ for(let m=0;m<MATERIALS.length;m++)for(let p=0;p<PREP.length;p++)for(let e=0;e<EXPOSURE.length;e++)for(let t=0;t<TIME.length;t++)for(let r=0;r<READOUT.length;r++)OPTIONS.push({m,p,e,t,r,id:[m,p,e,t,r].join('')});
+ function rng(seed){let x=(seed>>>0)||1;return ()=>{x=(x+0x6d2b79f5)>>>0;let t=x;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296;};}
+ function hash(...xs){let h=2166136261;for(const x of xs){const s=String(x);for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),16777619);}}return h>>>0;}
+ function room(seed,id){
+   const r=rng(hash('room',seed,id));
+   const latent=[r(),r(),r()];
+   const noise=k=>(rng(hash('noise',seed,id,k))()-.5);
+   const results=[
+     .14+.67*(1-latent[0])+.07*latent[1]+.024*noise('A'),
+     .13+.61*latent[1]+.05*latent[2]+.024*noise('B'),
+     .16+.62*latent[2]+.08*latent[0]+.024*noise('C')
+   ];
+   return {id,latent,results};
+ }
+ function sample(seed,mode){
+   // Note: the learner never gets the latent field.
+   const count=mode==='quick'?{train:28,validation:16,test:32}:{train:36,validation:22,test:42};
+   const make=(set,n)=>Array.from({length:n},(_,i)=>room(seed,`${set}-${i}`));
+   return {train:make('cal',count.train),validation:make('val',count.validation),test:make('blind',count.test)};
+ }
+ // Simulation physics for a constructed measuring procedure. No direct latent sensor is available.
+ function reading(world,op,seed){
+   const signature=[[.85,.05,.04],[.05,.82,.04],[.08,.05,.90],[.43,.34,.05],[.10,.35,.44],[.06,.05,.05]][op.m];
+   const prep=[[1.18,.62,.26],[.27,.86,1.19],[.86,1.15,.63]][op.p];
+   const exposure=op.e===0?[1,1,1]:[.11,.15,.73];
+   const readout=op.r===0?[1,.26,.45]:[.32,1,1.04];
+   const time=op.t===0?0.83:1.21;
+   let y=0.12+op.m*.013+op.p*.016;
+   for(let i=0;i<3;i++)y+=signature[i]*prep[i]*exposure[i]*readout[i]*time*world.latent[i];
+   const noise=(rng(hash('probe',seed,world.id,op.id))()-.5)*.018;
+   return y+noise;
+ }
+ function mae(v){return v.reduce((a,b)=>a+Math.abs(b),0)/v.length;}
+ function mse(pred,truth){let e=0,n=0;for(let i=0;i<truth.length;i++)for(let c=0;c<3;c++){e+=(pred[i][c]-truth[i][c])**2;n++;}return e/n;}
+ function predictModel(rows,selected,seed,params){
+   // ridge regression: X beta = Y, features are only readings of constructed probes.
+   // No field containing the world's latent variables is referenced by the learner here.
+   const makeX=rows.map(w=>[1,...selected.map(op=>reading(w,op,seed))]);
+   const Y=rows.map(w=>w.results);   const m=selected.length+1;
+   const xtx=Array.from({length:m},()=>Array(m).fill(0));
+   const xty=Array.from({length:m},()=>Array(3).fill(0));
+   for(let r=0;r<makeX.length;r++){
+     for(let i=0;i<m;i++){
+       for(let j=0;j<m;j++)xtx[i][j]+=makeX[r][i]*makeX[r][j];
+       for(let c=0;c<3;c++)xty[i][c]+=makeX[r][i]*Y[r][c];
+     }
+   }
+   for(let i=1;i<m;i++)xtx[i][i]+=.0004;
+   // Solve 3 RHS by Gauss-Jordan elimination.
+   const augmented=xtx.map((r,i)=>[...r,...xty[i]]);
+   for(let i=0;i<m;i++){
+     let p=i;for(let j=i+1;j<m;j++)if(Math.abs(augmented[j][i])>Math.abs(augmented[p][i]))p=j;
+     [augmented[i],augmented[p]]=[augmented[p],augmented[i]];
+     const denom=augmented[i][i]||1e-12;
+     for(let k=i;k<m+3;k++)augmented[i][k]/=denom;
+     for(let j=0;j<m;j++)if(j!==i){const scale=augmented[j][i];for(let k=i;k<m+3;k++)augmented[j][k]-=scale*augmented[i][k];}
+   }
+   const coeff=augmented.map(r=>r.slice(m));
+   return targets=>targets.map(w=>{
+     const features=[1,...selected.map(op=>reading(w,op,seed))];
+     return Array.from({length:3},(_,c)=>features.reduce((v,x,i)=>v+x*coeff[i][c],0));
+   });
+ }
+ function validationLoss(split,selected,seed){
+   const pred=predictModel(split.train,selected,seed);
+   return mse(pred(split.validation),split.validation.map(w=>w.results));
+ }
+ function blindLoss(split,selected,seed){
+   const pred=predictModel(split.train,selected,seed);
+   return mse(pred(split.test),split.test.map(w=>w.results));
+ }
+ function describe(op){return `${MATERIALS[op.m]} → ${PREP[op.p]} → ${EXPOSURE[op.e]} → ${TIME[op.t]}単位時間 → ${READOUT[op.r]}を読む`;}
+ function shuffled(arr,r){const v=arr.slice();for(let i=v.length-1;i>0;i--){let j=Math.floor(r()*(i+1));[v[i],v[j]]=[v[j],v[i]];}return v;}
+ function discovery(seed=2026,opts={}){
+   const split=sample(seed,'quick');
+   const baseValidation=validationLoss(split,[],seed);
+   let selected=[],history=[{step:0,validation:baseValidation,op:null}],evalCount=0;
+   for(let step=0;step<3;step++){
+     let champion=null,championLoss=Infinity;
+     for(const op of OPTIONS){
+       if(selected.some(x=>x.id===op.id))continue;
+       const score=validationLoss(split,[...selected,op],seed);
+       evalCount++;
+       if(score<championLoss-1e-12){championLoss=score;champion=op;}
+     }
+     if(!champion)break;
+     selected.push(champion);
+     const validation=validationLoss(split,selected,seed);     history.push({step:step+1,validation,op:champion,recipe:describe(champion)});
+   }
+   // Only after the recipes are frozen is the blind partition inspected.
+   for(let i=0;i<history.length;i++)history[i].test=blindLoss(split,selected.slice(0,i),seed);
+   const rand=rng(hash('random-policy',seed));
+   let randomLoss=0,randomRuns=[];
+   for(let i=0;i<24;i++){
+     const picks=shuffled(OPTIONS,rand).slice(0,selected.length);
+     let score=blindLoss(split,picks,seed);
+     randomLoss+=score;
+     randomRuns.push(score);
+   }
+   randomLoss/=24;
+   return {
+     seed,rooms:{calibration:split.train.length,validation:split.validation.length,blind:split.test.length},
+     totalRecipes:OPTIONS.length,attemptedRecipeEvaluations:evalCount,
+     baseline:history[0].test,selected,history,selectedTest:history.at(-1).test,
+     randomMean:randomLoss,randomRuns,
+     // For visualization of prediction results on the unseen test partition.
+     predictionExample:(()=>{
+       const predict=predictModel(split.train,selected,seed);
+       const predicted=predict(split.test);
+       return split.test.slice(0,8).map((w,i)=>({room:`未知環境 ${i+1}`,actual:w.results.map(x=>+x.toFixed(3)),predicted:predicted[i].map(x=>+x.toFixed(3))}));
+     })()
+   };
+ }
+ function benchmark(seed=2026,n=30){
+   let data=[];
+   for(let i=0;i<n;i++){
+     const a=discovery(hash('benchmark',seed,i));
+     data.push({baseline:a.baseline,chosen:a.selectedTest,random:a.randomMean,betterThanRandom:a.selectedTest<a.randomMean});
+   }
+   const avg=k=>data.reduce((s,x)=>s+x[k],0)/n;
+   return {n,seed,avgBaseline:avg('baseline'),avgChosen:avg('chosen'),avgRandom:avg('random'),winRate:data.filter(x=>x.betterThanRandom).length/n,data};
+ }
+ return {MATERIALS,PREP,EXPOSURE,TIME,READOUT,CHANNELS,OPTIONS,room,reading,discovery,benchmark,sample,describe};
+});
+
+</script>
+<script>
+(()=>{'use strict';
+ const L=window.DiscoveryLabV05,el=id=>document.getElementById(id);let result=null;
+ const fmt=x=>Number(x).toFixed(4);
+ const metric=(label,val,color)=>`<div class="chip"><small>${label}</small><strong style="color:${color}">${fmt(val)}</strong></div>`;
+ function drawChart(history,base){
+   const svg=el('chart'),padL=65,padR=20,padT=24,padB=50,W=680,H=280;
+   const max=Math.max(base,...history.map(x=>x.test)) *1.14||.01;
+   const x=i=>padL+(W-padL-padR)*i/3;
+   const y=v=>padT+(H-padT-padB)*(1-v/max);
+   let lines=[];   for(let n=0;n<=4;n++){
+     let v=max*n/4,yy=y(v);
+     lines.push(`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#365761" opacity=".8"/><text x="${padL-12}" y="${yy+4}" text-anchor="end" fill="#bdd0d4" font-size="12">${v.toFixed(3)}</text>`);
+   }
+   const points=history.map((h,i)=>`${x(i).toFixed(1)},${y(h.test).toFixed(1)}`).join(' ');
+   lines.push(`<polyline points="${points}" stroke="#59d8b5" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`);
+   for(let i=0;i<history.length;i++){
+     lines.push(`<circle cx="${x(i)}" cy="${y(history[i].test)}" r="5" fill="#59d8b5" stroke="#0a2832" stroke-width="2"/><text x="${x(i)}" y="${H-18}" fill="#dde9e9" text-anchor="middle" font-size="13">${i}</text>`);
+   }
+   lines.push(`<text x="${(padL+W-padR)/2}" y="${H-1}" text-anchor="middle" fill="#cfe1e1" font-size="12">考案した測定方法の数</text>`);
+   svg.innerHTML=lines.join('');
+ }
+ function show(r){
+  result=r;
+  for(const id of ['results','procedures','blind'])el(id).hidden=false;
+  el('split-info').textContent=`校正 ${r.rooms.calibration} / 選択用検証 ${r.rooms.validation} / 未知環境 ${r.rooms.blind} 件`;
+  el('metrics').innerHTML=metric('測定なし',r.baseline,'#efb575')+metric('AIが設計した3手順',r.selectedTest,'#59d8b5')+metric('無作為に3手順（24回平均）',r.randomMean,'#83b3ed');
+  drawChart(r.history,r.baseline);
+  el('chart-caption').textContent=`世界 ${r.seed} の結果。測定方法を0個から3個に増やしたとき、未知環境の誤差がどう変化したかを表示。`;
+  el('recipes').innerHTML=r.history.slice(1).map((h,i)=>`<div class="recipe"><small>第${i+1}手順・選択時の検証誤差 ${fmt(h.validation)}</small><div><b>${h.recipe}</b></div></div>`).join('');
+  el('cost').textContent=`測定器を設計する候補は全${r.totalRecipes}通り。AIは各段階で候補を比較し、合計${r.attemptedRecipeEvaluations}回の候補評価を行いました。候補の検証に使った校正環境・検証環境の観測コストは、無作為な3手順選択より多くなります。`;
+  el('predictions').innerHTML=r.predictionExample.map(x=>`<tr><td>${x.room}</td><td>${x.predicted[0].toFixed(3)}</td><td>${x.actual[0].toFixed(3)}</td><td>${Math.abs(x.predicted[0]-x.actual[0]).toFixed(3)}</td></tr>`).join('');
+  el('status').textContent='測定手順の設計と、別の未知環境での検証が完了しました。';
+ }
+ function getSeed(){let n=Number(el('seed').value);if(!Number.isSafeInteger(n)||n<1||n>999999999){el('status').textContent='世界番号は1〜999999999の整数にしてください。';return null;}return n;}
+ el('run').onclick=()=>{
+   let n=getSeed();if(n===null)return;
+   el('status').textContent='実験中：校正 → 測定手順の合成 → 未知環境での照合';
+   el('run').disabled=true;
+   setTimeout(()=>{
+     try{show(L.discovery(n));}
+     catch(e){el('status').textContent='実験でエラーが起きました: '+e.message;console.error(e);}
+     finally{el('run').disabled=false;}
+   },40);
+ };
+ el('benchmark').onclick=()=>{
+  let n=getSeed();if(n===null)return;
+  el('benchmark').disabled=true;el('status').textContent='30世界の再現性を計測しています…';
+  setTimeout(()=>{
+   try{
+    const b=L.benchmark(n,30);el('bench-panel').hidden=false;
+    el('bench-metrics').innerHTML=metric('AIの3手順',b.avgChosen,'#59d8b5')+metric('無作為の3手順',b.avgRandom,'#83b3ed')+metric('測定なし',b.avgBaseline,'#efb575');
+    el('bench-caption').textContent=`30種類の独立したデータ分割で平均。同じ規則を持つ世界です。AIの方が無作為3手順より誤差が小さかった世界：${Math.round(100*b.winRate)}%。ただし測定手順の探索コストは同一ではありません。`;
+    el('status').textContent='30世界の比較が完了しました。';
+   }catch(e){el('status').textContent='比較実験でエラーが起きました: '+e.message;console.error(e);}
+   finally{el('benchmark').disabled=false;}
+  },60);
+ };
+ // Test harness for local browser regressions.
+ window.__LAB_V05_TEST__={discovery:L.discovery,benchmark:L.benchmark,show};})();
+</script>
+</body>
+</html>
