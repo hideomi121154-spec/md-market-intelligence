@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#071c23" />
+<title>DISCOVERY WORLD v0.6｜未知の法則が変わる世界</title>
+<meta name="description" content="AIが世界の法則の変化を検知し、観測方法を再設計できるかを検証。結果はJSON・CSVで保存・共有可能。" />
+<style>
+:root{color-scheme:dark;--bg:#07141b;--panel:#102832;--panel2:#143642;--border:#315461;--text:#edf9fc;--muted:#bed4dc;--mint:#6de7cc;--orange:#f6bd75;--blue:#85b9f3;--pink:#d8aae9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 95% -10%,#1c4948,transparent 42%),linear-gradient(#081b25,#07141b);color:var(--text);font:-apple-system-body;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.55}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,input:focus-visible{outline:2px solid var(--mint);outline-offset:2px}button:disabled{opacity:.5;cursor:wait}a{color:#a3f7df}.wrap{max-width:1070px;margin:auto;padding:16px 15px 76px}.head{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--border);padding:10px 0 18px;gap:16px}.brand{font-weight:900;letter-spacing:.045em}.brand strong{color:var(--mint)}.subtitle{font-size:11px;color:var(--muted);font-weight:500}.tag{font-size:11px;border:1px solid #4f8b83;border-radius:999px;background:#14373b;padding:5px 10px;color:#b4fce3;white-space:nowrap}h1{font-size:clamp(23px,4vw,38px);line-height:1.35;margin:22px 0 11px;letter-spacing:-.03em}h2{font-size:19px;margin:0 0 13px}h3{font-size:15px;margin:0 0 8px}.intro{color:#cce0e4;max-width:850px;margin:0 0 16px}.panel{border:1px solid var(--border);background:linear-gradient(155deg,#173742,#0e2632);padding:20px 19px;border-radius:20px;margin:17px 0;box-shadow:0 13px 36px #0002}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.mini{border:1px solid #38616e;border-radius:14px;padding:13px;background:#0c2a35}.mini small{display:block;font-size:11px;color:var(--muted)}.mini strong{display:block;font-size:clamp(19px,3vw,28px);font-variant-numeric:tabular-nums;margin:5px 0 0}.mini span{display:block;font-size:11px;color:#bed2d8}.green{color:var(--mint)}.orange{color:var(--orange)}.blue{color:var(--blue)}.pink{color:var(--pink)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.btn{background:linear-gradient(105deg,#5ad3b6,#51bed7);color:#08232b;border:0;border-radius:12px;font-size:14px;font-weight:850;padding:12px 17px;min-height:46px}.btn.alt{background:#1b414a;color:#eaf8f7;border:1px solid #55818c}.btn.ghost{background:#132f3a;color:#d4e9eb;border:1px solid #456b76}.input{border:1px solid #54808b;border-radius:9px;padding:11px;color:white;background:#102b35;max-width:150px;width:100%}.note{color:var(--muted);font-size:12px}.hint{padding:12px 14px;margin:12px 0 0;border-left:3px solid var(--orange);background:#6d542e28;font-size:12px;color:#f1d9b9}.state{font-size:13px;color:#a5f6da;min-height:24px;margin:14px 0 0}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}.step{border:1px solid #3b6470;background:#0d2b35;border-radius:12px;padding:13px}.step b{font-size:14px}.step small{font-size:12px;color:var(--muted);display:block;margin-top:7px}.rule{border-top:1px solid #375864;margin:16px 0}svg{max-width:100%;height:auto;display:block}.bar{display:grid;grid-template-columns:170px 1fr 76px;gap:12px;align-items:center;margin:11px 0}.bar label{font-size:12px}.track{height:13px;background:#072029;border-radius:99px;overflow:hidden;border:1px solid #365561}.fill{height:100%;display:block;border-radius:99px;min-width:1px}.bar .number{text-align:right;font-size:13px;font-variant-numeric:tabular-nums}.table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12px;min-width:460px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #355461}th{font-size:11px;color:var(--muted)}td{font-variant-numeric:tabular-nums}.protocol{border:1px solid #3c7073;background:#0e3138;border-radius:12px;padding:12px;margin:9px 0}.protocol strong{font-size:13px}.protocol .small{font-size:11px;color:var(--muted);margin-top:5px}.export-actions{display:flex;flex-wrap:wrap;gap:9px}.drop{border:2px dashed #527d89;border-radius:15px;background:#102832;padding:18px;text-align:center;color:#c7e4e6;margin-top:13px;min-height:73px}.drop.drag{border-color:var(--mint);background:#15554c}.drop input{display:none}.drop label{cursor:pointer;text-decoration:underline;text-underline-offset:3px}.raw{width:100%;background:#051b24;border:1px solid #446875;border-radius:12px;color:#d1f5eb;min-height:130px;padding:13px;font:11px/1.5 ui-monospace,SFMono-Regular,monospace;resize:vertical;margin-top:8px}details{margin-top:10px}summary{cursor:pointer;font-weight:700}.footer{font-size:12px;color:var(--muted);margin:25px 0}#results[hidden],#benchmark-panel[hidden],#export-panel[hidden],#import-panel[hidden]{display:none}
+@media(max-width:760px){.wrap{padding:12px 12px 60px}.panel{padding:16px 13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:1fr}.row.control{align-items:stretch;flex-direction:column}.row.control label,.row.control input,.row.control button{width:100%;max-width:none}.export-actions{flex-direction:column}.export-actions button{width:100%}.bar{grid-template-columns:118px 1fr 64px;gap:7px}.bar label,.bar .number{font-size:11px}h2{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="head"><div class="brand">🧠 DISCOVERY <strong>WORLD</strong><div class="subtitle">AI自律研究・法則変更検知 v0.6</div></div><span class="tag">検証用の仮想世界</span></header>
+<h1>世界の法則が変わったら、<br>AIは自分で気づけるか？</h1>
+<p class="intro">最初の世界でAIが観測方法を学びます。ところが途中で世界の仕組みを変更。AIには新しい仕組みを教えず、<b>異変の検出→測定方法の選び直し→初めて見る環境で再検証</b>を実行します。</p>
+<section class="panel">
+<h2>① 実験の条件</h2>
+<div class="steps"><div class="step"><b>1. 学習する</b><small>初期世界の32環境で測定方法を獲得</small></div><div class="step"><b>2. 世界が変化</b><small>同じ測定手順で予測が外れるか確認</small></div><div class="step"><b>3. 再発見</b><small>測り方を変え、保留した32環境で評価</small></div></div>
+<div class="row control"><label>世界番号　<input id="seed" class="input" type="number" value="2026" min="1" max="999999999" /></label><button id="run" class="btn">🔬 1世界で実験</button><button id="run-bench" class="btn alt">📊 30世界で再現性を検証</button></div>
+<p class="state" id="status" aria-live="polite">準備完了。「1世界で実験」を押してください。</p>
+</section>
+<section id="results" class="panel" hidden>
+<h2>② AIは法則の変化に気づいた？</h2>
+<div class="grid" id="detector-cards"></div>
+<p id="detection-interpretation" class="note"></p>
+<div class="rule"></div>
+<h2>③ 変化後の世界で予測できた？</h2>
+<p class="note">初めて見る32環境での平均二乗誤差（MSE）。<b>小さいほど正確</b>。各方法で同じ環境を採点しています。</p>
+<div id="bars"></div>
+<p id="finding" class="hint"></p>
+<div class="rule"></div>
+<h2>④ AIは測定方法をどう変えた？</h2>
+<div class="steps"><div><h3>変更前に選んだ3手順</h3><div id="prior-protocols"></div></div><div><h3>変更後に選んだ4手順</h3><div id="after-protocols"></div></div><div><h3>選択の理由</h3><p class="note">校正用の環境と、測定手順の選択用の環境で誤差を比較して選んでいます。<br><b>人間が手順を直接指定していません。</b></p><p id="cost" class="hint"></p></div></div>
+<div class="rule"></div>
+<h2>⑤ まだ見せていない環境で答え合わせ</h2>
+<div class="table-scroll"><table><thead><tr><th>環境</th><th>AI予測A</th><th>実測A</th><th>誤差</th></tr></thead><tbody id="examples"></tbody></table></div>
+</section>
+<section id="benchmark-panel" class="panel" hidden><h2>⑥ 30世界の再現性</h2><p class="note">独立した30個の仮想世界の平均で比較。これは単一世界での成功を一般化し過ぎないための検証です。</p><div id="benchmark-metrics" class="grid"></div><p class="note" id="benchmark-notice"></p></section>
+<section id="export-panel" class="panel" hidden>
+<h2>⑦ 結果をChatGPTに渡す</h2>
+<p class="note"><b>結果のJSONファイルをiPhoneの「ファイル」に保存</b>すれば、このチャットの添付ボタンから渡せます。PCではファイルをドラッグ＆ドロップできます。直接貼り付ける場合は「全文をコピー」を使ってください。</p>
+<div class="export-actions"><button class="btn" id="share">📤 JSONファイルを共有・保存</button><button class="btn alt" id="download">⬇️ JSONをダウンロード</button><button class="btn alt" id="copy">📋 結果全文をコピー</button><button class="btn ghost" id="csv">🧾 比較結果CSVを保存</button></div>
+<p class="state" id="export-status" aria-live="polite"></p>
+<details><summary>JSONを表示（保存できない場合の予備）</summary><textarea id="raw" class="raw" readonly spellcheck="false" aria-label="実験結果のJSON"></textarea></details>
+<div class="drop" id="drop"><label for="import-file">以前のJSON結果を読み込む</label>、またはPCでここにファイルをドロップ<br><span class="note">アップロード先はありません。端末内で内容を確認するだけです。</span><input type="file" id="import-file" accept=".json,application/json"></div>
+<div class="note" id="import-panel" hidden></div>
+</section>
+<section class="panel"><h2>この結果が示すこと／示さないこと</h2>
+<p class="note"><b>確認したいこと：</b>変化を知らない予測モデルが、観測との食い違いから変化を検出し、その後に測定手順を選び直すことで、予測誤差を減らせるか。</p>
+<div class="hint"><b>限界：</b>人間が作った合成物理です。世界が変化する仕組み、144種類の候補手順、観測できる出力A〜Cは開発者が設計済みです。AIが新しい物理法則や測定器の原理をゼロから発明したわけではありません。また、大量の候補実験を行う探索AIと、手順を無作為に選ぶAIでは観測コストが等しくありません。</div>
+</section>
+<footer class="footer">DISCOVERY WORLD v0.6 — 外部AI API・データ送信なし。仮想実験とレポート生成はこの端末内で動作します。<p><a href="../v05/">← 前のv0.5に戻る</a>　·　<a href="https://github.com/hideomi121154-spec/md-market-intelligence/tree/main/discovery-world/v06" target="_blank" rel="noopener">ソースを見る</a></p></footer>
+</div>
+<script>
+/* DISCOVERY WORLD v0.6 — distribution-shift and autonomous re-observation lab
+ * Synthetic data, deterministic, zero external APIs. Learner never receives the
+ * hidden environmental state; it only sees outcomes and readings from protocols.
+ */
+(function(root,factory){
+  const api=factory();
+  if(typeof module==='object'&&module.exports)module.exports=api;
+  if(root)root.DiscoveryV06=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(){
+'use strict';
+const VERSION='0.6.0';
+const MATERIALS=['木片','石片','粘土片','樹脂片','結晶片','繊維片'];
+const PREPS=['水を含ませる','表面を削る','加温する'];
+const EXPOSURES=['開放','覆う'];
+const TIMES=[1,3];
+const READOUTS=['質量の変化','色の変化'];
+const CHANNELS=['変化A','変化B','変化C'];
+const OPTIONS=[];
+for(let m=0;m<6;m++)for(let p=0;p<3;p++)for(let e=0;e<2;e++)for(let t=0;t<2;t++)for(let r=0;r<2;r++)OPTIONS.push(Object.freeze({m,p,e,t,r,id:[m,p,e,t,r].join('')}));
+function rng(seed){let s=(seed>>>0)||1;return ()=>{s=(s+0x6D2B79F5)>>>0;let z=s;z=Math.imul(z^(z>>>15),z|1);z^=z+Math.imul(z^(z>>>7),z|61);return ((z^(z>>>14))>>>0)/4294967296;};}
+function hash(...parts){let h=2166136261;for(const x of parts){for(const c of String(x)){h=Math.imul(h^c.charCodeAt(0),16777619);}}return h>>>0;}
+const SIGNATURES=[[.96,.012,.01,0],[.02,.93,.01,0],[.02,.018,.96,0],[.20,.12,.08,.86],[.12,.18,.13,1.00],[.11,.08,.13,.69]];
+const PREP_SIG=[[1.2,.5,.4,1.1],[.45,1.22,.95,.75],[.8,.9,1.24,1.3]];
+const EXP_SIG=[[1,1,1,1],[.16,.22,.64,.57]];
+const READ_SIG=[[1,.3,.31,.84],[.3,1.07,.92,1.15]];
+function label(op){return `${MATERIALS[op.m]}→${PREPS[op.p]}→${EXPOSURES[op.e]}→${TIMES[op.t]}時間→${READOUTS[op.r]}`;}
+function template(seed,stage,id){
+  // The physical simulator can inspect these latent values. The learner cannot.
+  const rand=rng(hash('room',seed,stage,id));
+  const z=[rand(),rand(),rand(),rand()];
+  const eps=(channel)=>(rng(hash('outcome-noise',seed,stage,id,channel))()-.5)*.014;
+  const y=stage==='before'?
+    [.14+.66*(1-z[0])+.05*z[1]+eps('A'),.13+.62*z[1]+.05*z[2]+eps('B'),.15+.64*z[2]+.06*z[0]+eps('C')]:
+    [.12+.16*(1-z[0])+.64*z[3]+.03*z[1]+eps('A'),.12+.19*z[1]+.57*(1-z[3])+.05*z[2]+eps('B'),.15+.11*z[2]+.62*z[3]+.035*z[0]+eps('C')];
+  return {z,y};
+}
+function simulator(seed){
+  let measurementCount=0,outcomeCount=0;
+  const spaces=new Map();
+  function internal(stage,id){const key=stage+'|'+id; if(!spaces.has(key))spaces.set(key,template(seed,stage,id));return spaces.get(key);}
+  function outcome(stage,id){outcomeCount++;return internal(stage,id).y.slice();}
+  function probe(stage,id,op){
+    measurementCount++;
+    const {z}=internal(stage,id);
+    const prep=PREP_SIG[op.p],exposure=EXP_SIG[op.e],read=READ_SIG[op.r],signature=SIGNATURES[op.m];
+    let val=.11+op.m*.014+op.p*.011;
+    for(let d=0;d<4;d++)val+=z[d]*signature[d]*prep[d]*exposure[d]*read[d]*(op.t===0?.84:1.2);
+    val+=(rng(hash('read-noise',seed,stage,id,op.id))()-.5)*.011;
+    return val;
+  }
+  return Object.freeze({outcome,probe,getCounts:()=>({measurements:measurementCount,outcomes:outcomeCount})});
+}
+function makeRows(sim,stage,prefix,count){return Array.from({length:count},(_,i)=>({id:prefix+'-'+i,stage,y:sim.outcome(stage,prefix+'-'+i)}));}
+function mse(a,b){let s=0,n=0;for(let i=0;i<a.length;i++)for(let c=0;c<3;c++){s+=(a[i][c]-b[i][c])**2;n++;}return s/n;}
+function solve(A,B){
+ const m=A.length,aug=A.map((row,i)=>[...row,...B[i]]);
+ for(let k=0;k<m;k++){
+   let pivot=k;for(let j=k+1;j<m;j++)if(Math.abs(aug[j][k])>Math.abs(aug[pivot][k]))pivot=j;
+   [aug[k],aug[pivot]]=[aug[pivot],aug[k]];
+   const den=aug[k][k];if(Math.abs(den)<1e-10)throw Error('Regression singular matrix');
+   for(let j=k;j<m+3;j++)aug[k][j]/=den;
+   for(let i=0;i<m;i++)if(i!==k){const factor=aug[i][k];for(let j=k;j<m+3;j++)aug[i][j]-=factor*aug[k][j];}
+ }
+ return aug.map(row=>row.slice(m));
+}
+function train(sim,rows,selected){
+ const k=selected.length+1,xtx=Array.from({length:k},()=>Array(k).fill(0)),xty=Array.from({length:k},()=>Array(3).fill(0));
+ for(const row of rows){
+   const x=[1,...selected.map(op=>sim.probe(row.stage,row.id,op))];
+   for(let i=0;i<k;i++){for(let j=0;j<k;j++)xtx[i][j]+=x[i]*x[j];for(let c=0;c<3;c++)xty[i][c]+=x[i]*row.y[c];}
+ }
+ for(let i=1;i<k;i++)xtx[i][i]+=.0002;
+ const coefficients=solve(xtx,xty);
+ return Object.freeze({selected:selected.slice(),coefficients});
+}
+function predict(sim,rows,model){return rows.map(row=>{
+ const x=[1,...model.selected.map(op=>sim.probe(row.stage,row.id,op))];
+ return Array.from({length:3},(_,c)=>x.reduce((s,v,j)=>s+v*model.coefficients[j][c],0));
+});}
+function evaluate(sim,rows,model){return mse(predict(sim,rows,model),rows.map(r=>r.y));}
+function select(sim,training,validation,budget,initial=[]){
+ let selected=initial.slice(),events=[],candidateEvaluations=0,validationReads=0;
+ for(let step=0;step<budget;step++){
+   let best=null,bestLoss=Infinity;
+   for(const op of OPTIONS){
+     if(selected.some(s=>s.id===op.id))continue;
+     const candidate=[...selected,op];
+     const mdl=train(sim,training,candidate);
+     const err=evaluate(sim,validation,mdl);
+     candidateEvaluations++;
+     if(err<bestLoss-1e-12 || Math.abs(err-bestLoss)<=1e-12 && op.id<(best?.id||'z')){best=op;bestLoss=err;}
+   }
+   if(!best)break;
+   selected.push(best);
+   events.push({step:step+1,procedure:label(best),procedureId:best.id,validationMSE:bestLoss});
+ }
+ return {selected,events,model:train(sim,training,selected),candidateEvaluations};
+}
+function shuffled(items,rand){const r=items.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+function shortRows(rows,yp,n=8){return rows.slice(0,n).map((row,i)=>({environment:row.id,actual:row.y.map(x=>+x.toFixed(5)),predicted:yp[i].map(x=>+x.toFixed(5)),absoluteError:yp[i].map((x,c)=>+Math.abs(x-row.y[c]).toFixed(5))}));}
+function experiment(seed=2026, opts={}){
+ if(!Number.isInteger(seed)||seed<1||seed>999999999)throw Error('World seed must be 1..999999999');
+ const sim=simulator(seed),preTrain=makeRows(sim,'before','pre-train',32),preVal=makeRows(sim,'before','pre-validation',16);
+ const preControl=makeRows(sim,'before','control',10);
+ const shiftedDetection=makeRows(sim,'after','shift-detector',10);
+ const afterTrain=makeRows(sim,'after','after-train',32),afterVal=makeRows(sim,'after','after-validation',18);
+ const afterBlind=makeRows(sim,'after','blind-untouched',32);
+ // Learn old sensors from independent validation rows. Blind rows remain untouched during selection.
+ const pre=select(sim,preTrain,preVal,3);
+ const preValMSE=evaluate(sim,preVal,pre.model);
+ const noChangeError=evaluate(sim,preControl,pre.model);
+ const changedError=evaluate(sim,shiftedDetection,pre.model);
+ // A conservative minimum floors the detector against small-noise false alarms.
+ const threshold=Math.max(.006,preValMSE*6);
+ const falseAlarm=noChangeError>threshold;
+ const changed=changedError>threshold;
+ // Post-change evaluation: frozen model, same probes but new coefficients, then redesigned probes.
+ // For scientific comparability, display both sensor redesign and same-sensor recalibration.
+ const fixedPostMSE=evaluate(sim,afterBlind,pre.model);
+ const recalibrated=train(sim,afterTrain,pre.selected);
+ const recalibratedBlindMSE=evaluate(sim,afterBlind,recalibrated);
+ const post=select(sim,afterTrain,afterVal,4);
+ // If detector is silent, the deployed system does not adapt (evaluated anyway for diagnosis).
+ const deployed=changed?post.model:pre.model;
+ const adaptedBlindMSE=evaluate(sim,afterBlind,deployed);
+ const beforeBlind=makeRows(sim,'before','pre-blind',24);
+ const preBlindMSE=evaluate(sim,beforeBlind,pre.model);
+ const rand=rng(hash('random-baseline',seed));
+ const randomScores=[];const randomExamples=[];
+ for(let i=0;i<12;i++){
+  const chosen=shuffled(OPTIONS,rand).slice(0,4);
+  const randomModel=train(sim,afterTrain,chosen);
+  randomScores.push(evaluate(sim,afterBlind,randomModel));
+  if(i<3)randomExamples.push(chosen.map(label));
+ }
+ const randomMean=randomScores.reduce((a,b)=>a+b,0)/randomScores.length;
+ const oldIds=new Set(pre.selected.map(op=>op.id));
+ const added=post.selected.filter(op=>!oldIds.has(op.id));
+ const predictions=predict(sim,afterBlind,deployed);
+ const counts=sim.getCounts();
+ return {
+  version:VERSION,generatedAt:new Date().toISOString(),seed,
+  design:{worldType:'synthetic four-factor simulator',observation:'3 output channels',protocolOptions:OPTIONS.length,preSensors:3,adaptedSensors:4,thresholdPolicy:'max(0.006, 6 * pre-validation MSE)',detectionSamples:10,calibrationCounts:{pre:32,preValidation:16,post:32,postValidation:18},blindCount:32,randomReplicates:12},
+  detection:{threshold,preValidationMSE:preValMSE,noShiftControlMSE:noChangeError,shiftedMSE:changedError,falseAlarm,driftDetected:changed,detectionRatio:changedError/Math.max(noChangeError,1e-10)},
+  metrics:{preBlindMSE,postFrozenMSE:fixedPostMSE,postRecalibratedSameSensorsMSE:recalibratedBlindMSE,postAdaptedMSE:adaptedBlindMSE,postRandomFourSensorsMeanMSE:randomMean,randomSamples:randomScores},
+  protocols:{before:pre.selected.map(label),after:post.selected.map(label),newAfter:added.map(label)},
+  trace:[
+   {stage:'initial-learning',reason:'まず従来環境の予測に役立つ測定手順を選ぶ',steps:pre.events},
+   {stage:'shift-detection',reason:changed?'既存モデルが新しい環境で許容誤差を超えた':'変化を検出できなかった',threshold,noShiftControlMSE:noChangeError,shiftedMSE:changedError},
+   {stage:'re-observation',reason:'新環境で予測に役立つ測定手順を再選択する',steps:post.events},
+   {stage:'held-out-test',reason:'測定選択に使っていない32環境で初めて各モデルを比較する',metrics:{postFrozenMSE:fixedPostMSE,postRecalibratedSameSensorsMSE:recalibratedBlindMSE,postAdaptedMSE:adaptedBlindMSE}}
+  ],
+  examples:shortRows(afterBlind,predictions),counts,
+  limits:['人間が合成した4つの隠れた要因のうち、途中から第4要因が支配的になる設計','AIは144通りの既存操作部品から手順を選択し、測定器をゼロから発明していない','世界の変更は環境シミュレーターで事前に設定されている','多くの候補を比較するためランダム4手順との観測コストは同等ではない','変更を検知しても、それだけで新しい法則の一般的発見を意味しない','保留テスト結果は選択に使わず、レポート作成時にのみ集計']
+ };
+}
+function benchmark(seed=2026,n=20){
+ if(!Number.isInteger(n)||n<1||n>60)throw Error('benchmark world count out of range');
+ const runs=[];
+ for(let i=0;i<n;i++){
+  const seedI=(hash('world-benchmark',seed,i)%999999999)+1;
+  const r=experiment(seedI);
+  runs.push({seed:seedI,detected:r.detection.driftDetected,falseAlarm:r.detection.falseAlarm,...r.metrics});
+ }
+ const avg=k=>runs.reduce((s,x)=>s+x[k],0)/n;
+ return {version:VERSION,seed,n,detectedRate:runs.filter(r=>r.detected).length/n,falseAlarmRate:runs.filter(r=>r.falseAlarm).length/n,
+  avgFrozen:avg('postFrozenMSE'),avgRecalibrated:avg('postRecalibratedSameSensorsMSE'),avgAdapted:avg('postAdaptedMSE'),avgRandom:avg('postRandomFourSensorsMeanMSE'),
+  adaptedWinsAgainstRecalibration:runs.filter(r=>r.postAdaptedMSE<r.postRecalibratedSameSensorsMSE).length/n,
+  runs};
+}
+return {VERSION,OPTIONS,MATERIALS,PREPS,EXPOSURES,TIMES,READOUTS,experiment,benchmark,hash,simulator};
+});
+
+</script>
+<script>
+(function(){'use strict';
+const E=window.DiscoveryV06;
+const $=id=>document.getElementById(id);
+let result=null,bench=null,busy=false;
+function fmt(x,dec=4){return Number(x).toFixed(dec);}
+function card(k,v,c='green',sub=''){return `<div class="mini"><small>${k}</small><strong class="${c}">${v}</strong><span>${sub}</span></div>`;}
+function escapeHtml(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function getSeed(){const n=Number($('seed').value);if(!Number.isSafeInteger(n)||n<1||n>999999999){$('status').textContent='世界番号は1〜999999999の整数です。';return null;}return n;}
+function setBusy(v){busy=v;$('run').disabled=v;$('run-bench').disabled=v;}
+function render(r){
+ result=r;
+ $('results').hidden=false;$('export-panel').hidden=false;
+ const d=r.detection,m=r.metrics;
+ $('detector-cards').innerHTML=card('変化を検出',d.driftDetected?'検出した':'未検出',d.driftDetected?'green':'orange','新しい世界')+card('変化なしの誤差',fmt(d.noShiftControlMSE),'blue','正常時の比較')+card('変化後の誤差',fmt(d.shiftedMSE),'orange','従来AIで予測')+card('異変と判断する基準',fmt(d.threshold),'pink','これより大きいと警告');
+ $('detection-interpretation').textContent=d.driftDetected?`変化なしの環境では誤差 ${fmt(d.noShiftControlMSE)}。法則が変わった環境では ${fmt(d.shiftedMSE)} となり、判定基準 ${fmt(d.threshold)} を超えたため、観測方法の再設計が開始されました。`:'判定基準を超えませんでした。研究プログラムは再設計を採用していません。';
+ const barData=[['変更前のAIのまま',m.postFrozenMSE,'#f6bd75'],['同じ測定器を再学習',m.postRecalibratedSameSensorsMSE,'#85b9f3'],['AIが測定方法を再設計',m.postAdaptedMSE,'#6de7cc'],['無作為な4手順（平均）',m.postRandomFourSensorsMeanMSE,'#d8aae9']];
+ const max=Math.max(...barData.map(a=>a[1]))||1;
+ $('bars').innerHTML=barData.map(x=>`<div class="bar"><label>${x[0]}</label><span class="track"><span class="fill" style="background:${x[2]};width:${Math.max(.5,100*x[1]/max)}%"></span></span><span class="number">${fmt(x[1])}</span></div>`).join('');
+ const improvement=m.postFrozenMSE>0?Math.max(0,(1-m.postAdaptedMSE/m.postFrozenMSE)*100):0;
+ $('finding').textContent=`今回の世界では、変更前モデルの誤差 ${fmt(m.postFrozenMSE)} に対し、再設計後は ${fmt(m.postAdaptedMSE)}（約${fmt(improvement,1)}%減）。新しい環境の回答を用いて再学習しています。`;
+ $('prior-protocols').innerHTML=r.protocols.before.map((x,i)=>`<div class="protocol"><strong>${i+1}. ${escapeHtml(x)}</strong></div>`).join('');
+ $('after-protocols').innerHTML=r.protocols.after.map((x,i)=>`<div class="protocol"><strong>${i+1}. ${escapeHtml(x)}</strong></div>`).join('');
+ $('cost').textContent=`AIは測定器の候補144通りを繰り返し評価。今回は合計${r.counts.measurements.toLocaleString()}回のセンサー読取りを行っています。無作為4手順との実験費用は揃っていません。`;
+ $('examples').innerHTML=r.examples.map(x=>`<tr><td>${escapeHtml(x.environment)}</td><td>${fmt(x.predicted[0])}</td><td>${fmt(x.actual[0])}</td><td>${fmt(x.absoluteError[0])}</td></tr>`).join('');
+ $('raw').value=JSON.stringify(packageReport(),null,2);
+ $('status').textContent='実験完了。結果を画面下部からJSONで共有・保存できます。';
+}
+function renderBenchmark(b){bench=b;$('benchmark-panel').hidden=false; $('export-panel').hidden=false;
+ $('benchmark-metrics').innerHTML=card('変化の検出率',fmt(b.detectedRate*100,0)+'%','green','30世界で測定')+card('変化なしの誤検出',fmt(b.falseAlarmRate*100,0)+'%','blue','低いほど良い')+card('再設計後の平均誤差',fmt(b.avgAdapted),'green','小さいほど良い')+card('変更前AIの平均誤差',fmt(b.avgFrozen),'orange','比較対象');
+ $('benchmark-notice').textContent=`同じ測定器を再学習した場合 ${fmt(b.avgRecalibrated)}、ランダムな4手順では ${fmt(b.avgRandom)}。センサー探索の観測コストは一致しません。`;
+ $('raw').value=JSON.stringify(packageReport(),null,2);
+}
+function packageReport(){return {reportType:'discovery-world-v06-experiment',schemaVersion:1,exportedAt:new Date().toISOString(),experiment:result,benchmark:bench,readme:'これは仮想世界のレポートです。AIが現実世界の未知の物理法則を発見した証拠ではありません。',noPersonalData:true};}
+function jsonText(){return JSON.stringify(packageReport(),null,2);}
+function filename(ext){const s=result?.seed??bench?.seed??'report';return `discovery-world-v06-seed-${s}.${ext}`;}
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.hidden=true;document.body.append(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url);},4000);}
+$('run').addEventListener('click',()=>{
+ if(busy)return;const seed=getSeed();if(seed===null)return;setBusy(true);$('status').textContent='仮想世界を作成し、変化と再設計を検証しています…';
+ setTimeout(()=>{try{bench=null;$('benchmark-panel').hidden=true;render(E.experiment(seed));}catch(err){$('status').textContent='実験エラー: '+err.message;console.error(err);}finally{setBusy(false);}},45);
+});
+$('run-bench').addEventListener('click',()=>{
+ if(busy)return;const seed=getSeed();if(seed===null)return;setBusy(true);$('status').textContent='30個の独立した世界を比較中…';
+ setTimeout(()=>{try{renderBenchmark(E.benchmark(seed,30));$('status').textContent='30世界の比較が完了しました。JSONで結果を渡せます。';}catch(err){$('status').textContent='検証エラー: '+err.message;console.error(err);}finally{setBusy(false);}},45);
+});
+$('share').addEventListener('click',async()=>{
+ const txt=jsonText();const name=filename('json');const file=new File([txt],name,{type:'application/json'});
+ try{
+  if(navigator.share&&navigator.canShare?.({files:[file]})){
+   await navigator.share({files:[file],title:'DISCOVERY WORLD v0.6 実験結果',text:'実験ログ・予測誤差・測定回数をまとめたJSON'});
+   $('export-status').textContent='共有メニューを開きました。保存または送信先を確認してください。';
+  }else{downloadBlob(file,name);$('export-status').textContent='JSONのダウンロードを開始しました。iPhoneで保存できない場合は「結果全文をコピー」を使ってください。';}
+ }catch(err){$('export-status').textContent=err.name==='AbortError'?'共有をキャンセルしました。':'共有できませんでした。ダウンロードまたはコピーを利用してください。';}
+});
+$('download').addEventListener('click',()=>{downloadBlob(new Blob([jsonText()],{type:'application/json'}),filename('json'));$('export-status').textContent='ダウンロードを開始しました。「ファイル」アプリに保存されたか確認してください。';});
+$('copy').addEventListener('click',async()=>{
+ const value=jsonText();try{await navigator.clipboard.writeText(value);$('export-status').textContent='結果をコピーしました。このチャットに貼り付けられます。';}catch(err){$('raw').value=value;$('raw').focus();$('raw').select();const ok=document.execCommand?.('copy');$('export-status').textContent=ok?'結果をコピーしました。':'下の「JSONを表示」から全文選択してコピーしてください。';}
+});
+$('csv').addEventListener('click',()=>{
+ const rows=[['metric','value']];
+ if(result){for(const [k,v] of Object.entries(result.metrics))if(typeof v==='number')rows.push([k,v]);for(const [k,v] of Object.entries(result.detection))if(typeof v==='number'||typeof v==='boolean')rows.push(['detection.'+k,v]);rows.push(['counts.measurements',result.counts.measurements]);}
+ if(bench){for(const [k,v] of Object.entries(bench))if(typeof v==='number')rows.push(['benchmark.'+k,v]);}
+ const txt='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ downloadBlob(new Blob([txt],{type:'text/csv;charset=utf-8'}),filename('csv'));$('export-status').textContent='CSV保存を開始しました。';
+});
+async function loadFile(file){if(!file)return;
+ if(file.size>2e6){$('import-panel').hidden=false;$('import-panel').textContent='2MBを超えるファイルは読み込めません。';return;}
+ try{const doc=JSON.parse(await file.text());if(doc.reportType!=='discovery-world-v06-experiment'||doc.schemaVersion!==1)throw Error('この研究版のJSONではありません');
+ const lines=['読み取り成功：'+file.name];
+ if(doc.experiment)lines.push(`世界 ${doc.experiment.seed}／変化を検出：${doc.experiment.detection.driftDetected?'はい':'いいえ'}／再設計後の誤差 ${fmt(doc.experiment.metrics.postAdaptedMSE)}`);
+ if(doc.benchmark)lines.push(`${doc.benchmark.n}世界／検出率 ${fmt(doc.benchmark.detectedRate*100,0)}%／平均誤差 ${fmt(doc.benchmark.avgAdapted)}`);
+ $('import-panel').hidden=false;$('import-panel').textContent=lines.join('　|　');
+ }catch(e){$('import-panel').hidden=false;$('import-panel').textContent='JSONを確認できませんでした：'+e.message;}
+}
+$('import-file').addEventListener('change',e=>loadFile(e.target.files?.[0]));
+const drop=$('drop');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');loadFile(e.dataTransfer?.files?.[0]);});
+window.__DISCOVERY_V06_TEST__={run:seed=>{const r=E.experiment(seed);render(r);return r;},bench:seed=>{const b=E.benchmark(seed,4);renderBenchmark(b);return b;},report:packageReport};
+})();
+</script>
+</body>
+</html>
