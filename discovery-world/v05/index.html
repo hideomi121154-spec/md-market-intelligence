@@ -47,7 +47,8 @@
  * This module exports deterministic browser/Node functions with no hidden model access by the learner.
  */
 (function(root,factory){
-  const api=factory();  if(typeof module==='object'&&module.exports)module.exports=api;
+  const api=factory();
+  if(typeof module==='object'&&module.exports)module.exports=api;
   root.DiscoveryLabV05=api;
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
  'use strict';
@@ -96,7 +97,8 @@
    // ridge regression: X beta = Y, features are only readings of constructed probes.
    // No field containing the world's latent variables is referenced by the learner here.
    const makeX=rows.map(w=>[1,...selected.map(op=>reading(w,op,seed))]);
-   const Y=rows.map(w=>w.results);   const m=selected.length+1;
+   const Y=rows.map(w=>w.results);
+   const m=selected.length+1;
    const xtx=Array.from({length:m},()=>Array(m).fill(0));
    const xty=Array.from({length:m},()=>Array(3).fill(0));
    for(let r=0;r<makeX.length;r++){
@@ -145,7 +147,8 @@
      }
      if(!champion)break;
      selected.push(champion);
-     const validation=validationLoss(split,selected,seed);     history.push({step:step+1,validation,op:champion,recipe:describe(champion)});
+     const validation=validationLoss(split,selected,seed);
+     history.push({step:step+1,validation,op:champion,recipe:describe(champion)});
    }
    // Only after the recipes are frozen is the blind partition inspected.
    for(let i=0;i<history.length;i++)history[i].test=blindLoss(split,selected.slice(0,i),seed);
@@ -194,7 +197,8 @@
    const max=Math.max(base,...history.map(x=>x.test)) *1.14||.01;
    const x=i=>padL+(W-padL-padR)*i/3;
    const y=v=>padT+(H-padT-padB)*(1-v/max);
-   let lines=[];   for(let n=0;n<=4;n++){
+   let lines=[];
+   for(let n=0;n<=4;n++){
      let v=max*n/4,yy=y(v);
      lines.push(`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#365761" opacity=".8"/><text x="${padL-12}" y="${yy+4}" text-anchor="end" fill="#bdd0d4" font-size="12">${v.toFixed(3)}</text>`);
    }
@@ -243,7 +247,8 @@
   },60);
  };
  // Test harness for local browser regressions.
- window.__LAB_V05_TEST__={discovery:L.discovery,benchmark:L.benchmark,show};})();
+ window.__LAB_V05_TEST__={discovery:L.discovery,benchmark:L.benchmark,show};
+})();
 </script>
 </body>
 </html>
