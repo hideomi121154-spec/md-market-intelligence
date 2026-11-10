@@ -153,7 +153,11 @@ def run_source(sid, filename, command):
                 target.unlink(missing_ok=True)
             else:
                 target.write_bytes(before)
-        message = str(exc).replace("\n", " ")\n        secret = os.environ.get("ESTAT_APP_ID")\n        if secret:\n            message = message.replace(secret, "[REDACTED]")\n        return {"result": "failed", "message": message[:240]}
+        message = str(exc).replace("\n", " ")
+        secret = os.environ.get("ESTAT_APP_ID")
+        if secret:
+            message = message.replace(secret, "[REDACTED]")
+        return {"result": "failed", "message": message[:240]}
 
 
 def refresh(force=False, status_only=False, now=None):
