@@ -1,0 +1,66 @@
+name: Unified public data refresh and health monitoring
+
+on:
+  workflow_dispatch:
+    inputs:
+      full_refresh:
+        description: 'Also run the weekly and monthly sources now'
+        type: boolean
+        default: true
+  schedule:
+    - cron: '43 4 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh_all_public_data.py'
+      - 'tests/test_refresh_all_public_data.py'
+      - '.github/workflows/public-data-refresh.yml'
+
+permissions:
+  contents: write
+concurrency:
+  group: unified-public-data-refresh
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF reader
+        run: pip install --disable-pip-version-check pymupdf==1.26.5
+      - name: Test code without source calls
+        run: |
+          python -m unittest discover -s tests -p 'test_refresh_all_public_data.py' -v
+          python -m unittest discover -s tests -p 'test_uss_monthly.py' -v
+      - name: Validate the market status display syntax
+        run: node --check data-refresh.js
+      - name: Check due official sources independently
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+          FORCE_ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.full_refresh && 'yes' || 'no' }}
+        run: |
+          if [ "$FORCE_ALL" = yes ]; then
+            python scripts/refresh_all_public_data.py --force
+          else
+            python scripts/refresh_all_public_data.py
+          fi
+      - name: Publish validated updates and status
+        run: |
+          git add data/
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: refresh public statistics and source statuses"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main || { git rebase --abort || true; exit 1; }
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          exit 1

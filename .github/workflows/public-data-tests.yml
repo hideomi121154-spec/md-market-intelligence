@@ -1,0 +1,30 @@
+name: Public data coordinator regression tests
+on:
+  pull_request:
+    paths:
+      - 'scripts/refresh_all_public_data.py'
+      - 'data-refresh.js'
+      - 'data/refresh_status.json'
+      - 'tests/test_refresh_all_public_data.py'
+      - '.github/workflows/public-data-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh_all_public_data.py'
+      - 'data-refresh.js'
+      - '.github/workflows/public-data-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m unittest discover -s tests -p 'test_refresh_all_public_data.py' -v
+      - run: python -m unittest discover -s tests -p 'test_uss_monthly.py' -v
+      - run: node --check data-refresh.js
