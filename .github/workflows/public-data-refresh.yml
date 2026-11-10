@@ -39,6 +39,8 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_refresh_all_public_data.py' -v
           python -m unittest discover -s tests -p 'test_uss_monthly.py' -v
+      - name: Validate the market status display syntax
+        run: node --check data-refresh.js
       - name: Check due official sources independently
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
