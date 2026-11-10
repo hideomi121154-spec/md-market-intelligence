@@ -12,6 +12,7 @@
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./style.css?v=1.2">
+  <link rel="stylesheet" href="./data-refresh.css?v=1.0.0">
   <link rel="stylesheet" href="./model-sales.css?v=1.4">
   <link rel="stylesheet" href="./valuation.css?v=1.5">
   <link rel="stylesheet" href="./md-risk.css?v=2.2.0">
@@ -61,7 +62,7 @@
     <main>
       <header class="topbar">
         <div><div class="eyebrow">YOUR CAR · YOUR DECISION</div><h1 id="page-title">マイカーの売却相場を比較</h1><p id="page-subtitle">無料査定サイトを確認し、価格を自分の端末に整理</p></div>
-        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v3.2.0</b></span></div>
+        <div class="status"><span class="live-dot"></span><span>iPhone単独版 <b>v3.3.0</b></span></div>
       </header>
       <div class="notice" role="note">マイカーの買取参考額は無料査定サイトでご自身が確認してください。アプリはその金額を自動取得せず、記録と比較を支援します。表示額は買取を保証しません。従来の市場統計・車両データは「市場」「車両」「データ」「計画」から引き続き利用できます。</div>
       <section class="screen" id="mycar">
@@ -161,6 +162,15 @@
         </div>
       </section>
       <section class="screen" id="overview">
+        <article class="panel public-refresh-panel" id="public-refresh" aria-label="公開データの自動更新状況">
+          <div class="public-refresh-head">
+            <div><h2>公開データの自動更新状況</h2><p>公式データを定期確認し、更新遅れ・取得失敗・未設定を分けて表示します。</p></div>
+            <button class="button secondary" type="button" id="public-refresh-check">公開データを再確認</button>
+          </div>
+          <p id="public-refresh-summary" class="public-refresh-summary" aria-live="polite">更新状況を確認しています…</p>
+          <div id="public-refresh-list" class="public-refresh-list" role="list"></div>
+          <p class="public-refresh-limits">公式統計は元サイトの公表後に反映されます。「再確認」はサーバーに保存済みの公開データを再読み込みする操作です。個別落札価格、許可のない掲載サイトの情報、端末内の車両記録・手入力データは自動取得・変更しません。</p>
+        </article>
         <div class="section-heading"><h2>市場サマリー</h2><span>端末内の保存データ</span></div>
         <div class="stat-grid">
           <div class="stat"><small>登録レコード</small><strong id="count-all">0</strong><span>件</span></div>
@@ -1169,6 +1179,7 @@
   <script src="./fault-risk.js?v=2.6.0" defer></script>
   <script src="./fault-research.js?v=2.8.0" defer></script>
   <script src="./offline-data.js?v=2.0.3" defer></script>
+  <script src="./data-refresh.js?v=1.0.0" defer></script>
   <script src="./market-warning.js?v=2.9.0" defer></script>
   <script src="./uss.js?v=2.0.3" defer></script>
   <script src="./regional-jobs.js?v=3.0.0" defer></script>
