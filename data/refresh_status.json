@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at_utc": null,
-  "description": "統合監視は初回の自動実行待ち。公表済みファイルの保存値を表示。手入力・端末内の記録は編集しない。",
+  "generated_at_utc": "2026-11-10T21:18:04.447916+00:00",
+  "description": "公開許諾のあるデータのみ定期確認。手入力や端末内個人データは自動編集しない。",
   "sources": [
     {
       "id": "uss",
@@ -9,11 +9,12 @@
       "file": "data/uss_monthly.json",
       "mode": "automatic",
       "cadence": "daily",
-      "state": "delayed",
-      "latest_month": "2026-09",
-      "source_checked_at_utc": "2026-10-29T12:54:25.821660+00:00",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "state": "ok",
+      "latest_month": "2026-10",
+      "source_checked_at_utc": "2026-11-10T21:18:05.428048+00:00",
+      "age_days": 0,
+      "run": "updated",
+      "message": "",
       "source_url": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
       "requires_setup": false
     },
@@ -23,11 +24,12 @@
       "file": "data/model_sales.json",
       "mode": "automatic",
       "cadence": "daily",
-      "state": "delayed",
+      "state": "ok",
       "latest_month": "2026-09",
-      "source_checked_at_utc": "2026-10-29T13:28:08.874138+00:00",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "source_checked_at_utc": "2026-11-10T21:18:12.142990+00:00",
+      "age_days": 0,
+      "run": "updated",
+      "message": "",
       "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-14172",
       "requires_setup": false
     },
@@ -37,11 +39,12 @@
       "file": "data/registered_sales.json",
       "mode": "automatic",
       "cadence": "daily",
-      "state": "available",
+      "state": "ok",
       "latest_month": "2026-10",
-      "source_checked_at_utc": "2026-11-10T08:51:38.795095+00:00",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "source_checked_at_utc": "2026-11-10T21:18:19.391638+00:00",
+      "age_days": 0,
+      "run": "updated",
+      "message": "",
       "source_url": "https://www.jada.or.jp/files/libs/7852/202611051104453786.pdf",
       "requires_setup": false
     },
@@ -53,9 +56,10 @@
       "cadence": "weekly",
       "state": "available",
       "latest_month": "2026-09",
-      "source_checked_at_utc": "2026-10-30",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "source_checked_at_utc": "2026-10-30T00:00:00+00:00",
+      "age_days": 11,
+      "run": "not_due",
+      "message": "",
       "source_url": "https://www.e-stat.go.jp/stat-search/files?cycle=1&layout=dataset&page=1&toukei=00450222&tstat=000001020327",
       "requires_setup": false
     },
@@ -67,9 +71,10 @@
       "cadence": "weekly",
       "state": "available",
       "latest_month": "2026-09",
-      "source_checked_at_utc": "2026-10-27",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "source_checked_at_utc": "2026-10-27T00:00:00+00:00",
+      "age_days": 14,
+      "run": "not_due",
+      "message": "",
       "source_url": "https://www.stat.go.jp/data/idou/sokuhou/tsuki/",
       "requires_setup": false
     },
@@ -79,11 +84,12 @@
       "file": "data/registered_annual_history.json",
       "mode": "automatic",
       "cadence": "monthly",
-      "state": "available",
+      "state": "ok",
       "latest_month": null,
-      "source_checked_at_utc": "2026-10-30T12:18:24.561575+00:00",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "source_checked_at_utc": "2026-11-10T21:18:25.071661+00:00",
+      "age_days": 0,
+      "run": "updated",
+      "message": "",
       "source_url": null,
       "requires_setup": false
     },
@@ -93,11 +99,12 @@
       "file": "data/kei_annual_history.json",
       "mode": "automatic",
       "cadence": "monthly",
-      "state": "available",
+      "state": "ok",
       "latest_month": null,
-      "source_checked_at_utc": "2026-10-30T11:21:55.181520+00:00",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "source_checked_at_utc": "2026-11-10T21:18:29.796612+00:00",
+      "age_days": 0,
+      "run": "updated",
+      "message": "",
       "source_url": null,
       "requires_setup": false
     },
@@ -110,8 +117,9 @@
       "state": "available",
       "latest_month": null,
       "source_checked_at_utc": "2026-11-09T09:47:15+00:00",
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "age_days": 1,
+      "run": "not_due",
+      "message": "",
       "source_url": null,
       "requires_setup": false
     },
@@ -124,8 +132,9 @@
       "state": "setup_required",
       "latest_month": null,
       "source_checked_at_utc": null,
-      "run": "not_run",
-      "message": "初回の統合更新待ち",
+      "age_days": null,
+      "run": "setup_required",
+      "message": "ESTAT_APP_ID secret 未設定",
       "source_url": "https://www.e-stat.go.jp/stat-search/database?layout=dataset&result_page=1&toukei=00350300",
       "requires_setup": true
     },
@@ -139,7 +148,7 @@
       "latest_month": null,
       "source_checked_at_utc": null,
       "run": "not_automated",
-      "message": "正式な取得手段が未設定・参照用データ"
+      "message": "転載許諾を含む取得元契約が未設定"
     },
     {
       "id": "regional_job_ads",
@@ -148,10 +157,10 @@
       "mode": "manual",
       "cadence": "manual",
       "state": "manual",
-      "latest_month": null,
-      "source_checked_at_utc": null,
+      "latest_month": "2026-09",
+      "source_checked_at_utc": "2026-10-23T00:00:00+00:00",
       "run": "not_automated",
-      "message": "正式な取得手段が未設定・参照用データ"
+      "message": "公表資料の自動取得と検証が未実装"
     },
     {
       "id": "overseas_snapshot",
@@ -161,9 +170,9 @@
       "cadence": "manual",
       "state": "manual",
       "latest_month": null,
-      "source_checked_at_utc": null,
+      "source_checked_at_utc": "2026-10-29T00:00:00+00:00",
       "run": "not_automated",
-      "message": "正式な取得手段が未設定・参照用データ"
+      "message": "公開資料の保存版・自動取得未実装"
     },
     {
       "id": "export_model_catalog",
@@ -175,7 +184,7 @@
       "latest_month": null,
       "source_checked_at_utc": null,
       "run": "not_automated",
-      "message": "正式な取得手段が未設定・参照用データ"
+      "message": "参照用カタログでありライブ統計ではない"
     },
     {
       "id": "russia_yaris",
@@ -187,7 +196,7 @@
       "latest_month": null,
       "source_checked_at_utc": null,
       "run": "not_automated",
-      "message": "正式な取得手段が未設定・参照用データ"
+      "message": "調査用の出典一覧・自動同期未実装"
     },
     {
       "id": "registered_2021",
@@ -199,7 +208,7 @@
       "latest_month": null,
       "source_checked_at_utc": null,
       "run": "not_automated",
-      "message": "正式な取得手段が未設定・参照用データ"
+      "message": "過去の固定参考資料であり自動補正しない"
     }
   ]
 }

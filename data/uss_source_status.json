@@ -1,10 +1,10 @@
 {
   "source": "USS official investor relations monthly data",
   "source_url": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
-  "checked_at_utc": "2026-10-29T12:54:25.821660+00:00",
-  "source_sha256": "84ab1801dc8ae68c68a8b2e41e73569e239490e981c3a8cb2aedd1539d28085b",
+  "checked_at_utc": "2026-11-10T21:18:05.428048+00:00",
+  "source_sha256": "2292101c30678898b49ece36b286fd1cbb365b53a02e9b6df09710d2ba37ebbb",
   "status": "monthly_aggregates_parsed",
-  "rows": 6,
-  "latest_month": "2026-09",
+  "rows": 7,
+  "latest_month": "2026-10",
   "warning": "Aggregate USS statistics; never mix with individual vehicle or retail listing prices."
 }

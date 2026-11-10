@@ -3,7 +3,7 @@
   "dataset": "USS auction aggregate monthly statistics",
   "fiscal_year_end": "2027-03",
   "source_url": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
-  "checked_at_utc": "2026-10-29T12:54:25.821660+00:00",
+  "checked_at_utc": "2026-11-10T21:18:05.428048+00:00",
   "verified_source": "USS official investor-relations page",
   "notes": "Aggregated USS auction results, NOT model-specific transactions. Price is a monthly average of sold vehicles (unit: 1,000 JPY). Historical values may be revised by USS.",
   "months": [
@@ -90,6 +90,20 @@
       "avg_sold_price_thousand_jpy": 1275,
       "avg_sold_price_prev_thousand_jpy": 1303,
       "avg_sold_price_yoy_pct": 97.8
+    },
+    {
+      "month": "2026-10",
+      "offered": 364701,
+      "offered_prev": 314395,
+      "offered_yoy_pct": 116.0,
+      "sold": 227517,
+      "sold_prev": 216185,
+      "sold_yoy_pct": 105.2,
+      "sale_rate_pct": 62.4,
+      "sale_rate_prev_pct": 68.8,
+      "avg_sold_price_thousand_jpy": 1326,
+      "avg_sold_price_prev_thousand_jpy": 1305,
+      "avg_sold_price_yoy_pct": 101.6
     }
   ]
 }
