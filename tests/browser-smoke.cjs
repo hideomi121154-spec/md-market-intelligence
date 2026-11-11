@@ -82,6 +82,24 @@ async function run(){
   assert.match(await page.locator('#mycar-status').innerText(),/上書きしません/);
   assert.equal(JSON.parse(await page.evaluate(()=>localStorage.getItem('md-market-consumer-price-v1'))).quotes[0].price,700000);
   await page.locator('a[data-tab="overview"]').click();
+  // Five-stage market cockpit should work on a touch-sized screen.
+  assert.equal(await page.locator('#mi-panel').evaluate(el=>el.open),false);
+  await page.locator('#mi-panel > summary').click();
+  await page.waitForFunction(()=>document.querySelector('#mi-status')?.textContent.includes('系統を読み込みました'));
+  assert.match(await page.locator('#mi-radar-result').innerText(),/132.6万円/);
+  assert.match(await page.locator('#mi-radar-result').innerText(),/成約率/);
+  await page.locator('[data-mi-stage="supply"]').click();
+  assert.match(await page.locator('#mi-supply-result').innerText(),/2023年/);
+  assert.match(await page.locator('#mi-supply-result').innerText(),/231,385台/);
+  await page.locator('#mi-supply-share').evaluate(el=>{el.value='25';el.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.match(await page.locator('#mi-supply-share-label').innerText(),/25%/);
+  await page.locator('[data-mi-stage="regional"]').click();
+  assert.match(await page.locator('#mi-region-result').innerText(),/47/);
+  await page.locator('[data-mi-stage="hypotheses"]').click();
+  assert.match(await page.locator('#mi-hypothesis-result').innerText(),/反証・確認する方法/);
+  await page.locator('[data-mi-stage="backtest"]').click();
+  assert.match(await page.locator('#mi-backtest-result').innerText(),/事後比較/);
+  await page.locator('#mi-panel > summary').click();
   const marketFolds=['demand-signals-panel','uss-aggregate','registered-sales-panel','model-sales-panel',
     'inventory-panel','observation-watch-panel','model-price-panel','md-evidence-panel',
     'regional-jobs-panel','prefecture-jobs-panel','rm-panel','rr-panel',

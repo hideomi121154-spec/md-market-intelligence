@@ -13,6 +13,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./style.css?v=1.2">
   <link rel="stylesheet" href="./data-refresh.css?v=1.0.0">
+  <link rel="stylesheet" href="./market-intelligence.css?v=1.0.0">
   <link rel="stylesheet" href="./model-sales.css?v=1.4">
   <link rel="stylesheet" href="./valuation.css?v=1.5">
   <link rel="stylesheet" href="./md-risk.css?v=2.2.0">
@@ -171,6 +172,65 @@
           <div id="public-refresh-list" class="public-refresh-list" role="list"></div>
           <p class="public-refresh-limits">公式統計は元サイトの公表後に反映されます。「再確認」はサーバーに保存済みの公開データを再読み込みする操作です。個別落札価格、許可のない掲載サイトの情報、端末内の車両記録・手入力データは自動取得・変更しません。</p>
         </article>
+        <details class="panel history-fold mi-panel" id="mi-panel">
+          <summary class="history-fold-summary"><span class="history-fold-title"><strong>市場インテリジェンス｜5段階分析</strong><small>異変検知 → 将来供給 → 地域比較 → 仮説探索 → 過去検証</small></span></summary>
+          <div class="history-fold-body">
+            <div class="mi-header">
+              <div>
+                <h2>市場の変化を見つけ、根拠から検証する</h2>
+                <p class="mi-intro">公式・出典付きデータだけを照合します。車種別の中古車落札価格、販売日数、仕入れ推奨額を作り出す機能ではありません。</p>
+              </div>
+              <button class="button secondary" id="mi-reload" type="button">公開データを再確認</button>
+            </div>
+            <p class="mi-intro" id="mi-status" role="status" aria-live="polite">データ確認中…</p>
+            <div class="mi-source-strip" id="mi-sources" aria-label="照合資料の取得状況"></div>
+            <div class="mi-stages" aria-label="市場分析ステップ">
+              <button type="button" data-mi-stage="radar" aria-pressed="true">01 異変レーダー</button>
+              <button type="button" data-mi-stage="supply" aria-pressed="false">02 供給シナリオ</button>
+              <button type="button" data-mi-stage="regional" aria-pressed="false">03 地域比較</button>
+              <button type="button" data-mi-stage="hypotheses" aria-pressed="false">04 仮説探索</button>
+              <button type="button" data-mi-stage="backtest" aria-pressed="false">05 過去検証</button>
+            </div>
+            <section class="mi-stage" data-mi-content="radar">
+              <h3>① 中古車市場の異変レーダー</h3>
+              <p class="mi-intro">USS全車種平均。前月との動きの食い違いを探します。既存の「USS市場全体の早期警戒」と同じ公開元を使用します。</p>
+              <div class="mi-controls"><label for="mi-month">検証する月<select id="mi-month"><option value="">読み込み中</option></select></label></div>
+              <div id="mi-radar-result" aria-live="polite"></div>
+            </section>
+            <section class="mi-stage" data-mi-content="supply" hidden>
+              <h3>② 将来の中古車供給候補・シナリオ</h3>
+              <p class="mi-intro">ある年に販売された新車が、3・5・7年経過した時点の母集団を確認します。表示は上位車種の一部だけで、中古車の実際の放出台数ではありません。</p>
+              <div class="mi-controls">
+                <label for="mi-supply-year">経過する年<select id="mi-supply-year"><option value="2027">2027年</option><option value="2028" selected>2028年</option><option value="2029">2029年</option><option value="2030">2030年</option><option value="2031">2031年</option><option value="2032">2032年</option></select></label>
+                <label for="mi-supply-age">経過年数<select id="mi-supply-age"><option value="3">3年経過</option><option value="5" selected>5年経過</option><option value="7">7年経過</option></select></label>
+                <label for="mi-supply-share">流通する比率（仮定）<input id="mi-supply-share" type="range" min="0" max="100" step="5" value="20"><span id="mi-supply-share-label" class="mi-caption">20%（仮定）</span></label>
+              </div>
+              <div id="mi-supply-result" aria-live="polite"></div>
+              <button class="button secondary" id="mi-advanced" type="button">残クレ満了・AA流通の詳細試算を開く</button>
+            </section>
+            <section class="mi-stage" data-mi-content="regional" hidden>
+              <h3>③ 求人と人口移動から地域の変化を比較</h3>
+              <p class="mi-intro">47都道府県の求人増減と国内他県間の人口移動を合わせて表示します。自動車需要の増減とは断定しません。</p>
+              <div class="mi-controls">
+                <label for="mi-region-month">資料が揃った月<select id="mi-region-month"><option value="">読み込み中</option></select></label>
+                <label for="mi-region-basis">求人の比較期間<select id="mi-region-basis"><option value="yoy" selected>前年同月比</option><option value="mom">前月比</option></select></label>
+                <label for="mi-region-order">並び順<select id="mi-region-order"><option value="jobPct">求人の増加率順</option><option value="netChange">純移動の前年差順</option><option value="net">純移動人数順</option></select></label>
+              </div>
+              <div id="mi-region-result" aria-live="polite"></div>
+            </section>
+            <section class="mi-stage" data-mi-content="hypotheses" hidden>
+              <h3>④ 自動仮説探索・反証の設計</h3>
+              <p class="mi-intro">現時点は根拠を追跡できるルールベースの仮説生成です。外部のAI APIを呼んで独自に資料調査した結果ではありません。</p>
+              <div id="mi-hypothesis-result" aria-live="polite"></div>
+            </section>
+            <section class="mi-stage" data-mi-content="backtest" hidden>
+              <h3>⑤ 過去の警戒判定と翌月実績を事後検証</h3>
+              <p class="mi-intro">後から判定を改ざんせず、当月に入手できる情報だけで警戒を作り、翌月の公式平均単価と比較します。車種別相場予測ではありません。</p>
+              <div id="mi-backtest-result" aria-live="polite"></div>
+            </section>
+            <p class="mi-caption">未許諾のサイト巡回は行わず、iPhoneの車両記録や手入力した価格を変更しません。公開月が異なる統計を無理に同期せず、欠測は欠測として扱います。</p>
+          </div>
+        </details>
         <div class="section-heading"><h2>市場サマリー</h2><span>端末内の保存データ</span></div>
         <div class="stat-grid">
           <div class="stat"><small>登録レコード</small><strong id="count-all">0</strong><span>件</span></div>
@@ -1208,5 +1268,7 @@
   <script src="./md-evidence.js?v=3.6.0" defer></script>
   <script src="./model-price-report.js?v=2.3.0" defer></script>
   <script src="./export-evidence-desk.js?v=4.4.0" defer></script>
+  <script src="./market-intelligence-core.js?v=1.0.0" defer></script>
+  <script src="./market-intelligence.js?v=1.0.0" defer></script>
 </body>
 </html>

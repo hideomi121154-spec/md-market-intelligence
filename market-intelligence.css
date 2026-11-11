@@ -1,0 +1,42 @@
+.mi-panel{margin:15px 0 26px;border:1px solid #2d5d63}
+.mi-intro,.mi-caption{font-size:12px;line-height:1.8;color:var(--muted)}
+.mi-header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.mi-header h2{font-size:21px;margin:2px 0 6px}
+.mi-header .button{flex-shrink:0}
+.mi-source-strip{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.mi-source{padding:5px 8px;border:1px solid #354966;border-radius:9px;background:#12253c;color:#b7c8d9;font-size:11px}
+.mi-ok{border-color:#286659;color:#9ef0d6}.mi-missing{border-color:#74503c;color:#efc49f}
+.mi-stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:14px 0}
+.mi-stages button{font-size:12px;font-weight:750;line-height:1.5;color:#c8daeb;background:#10233c;border:1px solid #36516e;border-radius:9px;min-height:50px;padding:7px 5px;cursor:pointer}
+.mi-stages button.mi-active{color:#062e2f;background:#78e5d6;border-color:#78e5d6}
+.mi-stage{background:#0d1c31;border:1px solid #2d4560;border-radius:12px;padding:16px}
+.mi-stage h3{font-size:17px;margin:0 0 10px}.mi-stage h4{font-size:13px;margin:12px 0 6px}
+.mi-controls{display:flex;align-items:flex-end;flex-wrap:wrap;gap:10px;margin:12px 0}
+.mi-controls label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#b8cddd;min-width:120px;flex:1}
+.mi-controls select,.mi-controls input{min-height:41px;width:100%;font-size:16px;border:1px solid #3e5e78;background:#0b1729;color:#f0f6ff;border-radius:8px;padding:8px}
+.mi-metrics,.mi-supply-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
+.mi-metric{min-width:0;background:#142941;border:1px solid #314963;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.mi-metric small{font-size:11px;color:#afc3db;line-height:1.5}.mi-metric strong{font-size:17px;overflow-wrap:anywhere}
+.mi-verdict{padding:10px 12px;border-radius:9px;background:#1c3447;color:#cef5ec;font-weight:750;font-size:13px;line-height:1.7;margin:14px 0}
+.mi-verdict[data-level="high"]{background:#4d2d2b;color:#ffdad4}
+.mi-verdict[data-level="watch"]{background:#49401f;color:#ffeab3}
+.mi-bullets{padding-left:22px;color:#e1e9f2;line-height:1.7;font-size:13px}
+.mi-empty{border-left:3px solid #7891a7;padding:8px 12px;font-size:12px;line-height:1.7;color:#c4d1df}
+.mi-warning{font-size:12px;color:#f3c39a;line-height:1.6}
+.mi-ranked{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mi-rank-row{border:1px solid #304860;border-radius:9px;padding:11px;min-width:0}
+.mi-rank-head{display:flex;gap:9px;justify-content:space-between;font-size:12px;line-height:1.5;align-items:flex-start}
+.mi-rank-head strong{white-space:nowrap;font-size:13px}
+.mi-rail{height:6px;margin:9px 0 5px;background:#20344a;border-radius:10px;overflow:hidden}
+.mi-fill{display:block;height:100%;background:#67d8cc;border-radius:10px}
+.mi-region-table{max-width:100%;overflow-x:auto;border:1px solid #30455f;border-radius:10px}
+.mi-region-grid,.mi-test-grid{display:grid;grid-template-columns:1.2fr repeat(3,minmax(0,.95fr));gap:5px;align-items:center;padding:11px 9px;border-bottom:1px solid #253a54;min-width:520px;font-size:12px}
+.mi-region-grid:last-child,.mi-test-grid:last-child{border-bottom:none}
+.mi-region-th{background:#1c3550;color:#bdd4e5;font-weight:750}
+.mi-hyp-list{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.mi-hyp-list .button{white-space:normal;text-align:left;font-size:12px;max-width:100%}
+.mi-hyp-list .mi-selected{border-color:#82e7d8;background:#1d5659;color:#e9fffc}
+.mi-hyp-detail{background:#11263d;border:1px solid #3a5369;border-radius:12px;padding:14px}
+.mi-hyp-detail h4{color:#a2e4db}.mi-hyp-detail p{font-size:13px;line-height:1.75;margin:0 0 11px;color:#d9e5ee}
+@media(max-width:780px){.mi-stages{grid-template-columns:repeat(3,minmax(0,1fr))}.mi-metrics,.mi-supply-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.mi-ranked{grid-template-columns:1fr}}
+@media(max-width:500px){.mi-stages{grid-template-columns:repeat(2,minmax(0,1fr))}.mi-header .button{width:100%}.mi-controls label{min-width:100%}.mi-stage{padding:12px}.mi-metric strong{font-size:15px}}
