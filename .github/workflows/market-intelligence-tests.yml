@@ -1,0 +1,36 @@
+name: Five-stage market intelligence regression
+on:
+  pull_request:
+    paths:
+      - 'market-intelligence-core.js'
+      - 'market-intelligence.js'
+      - 'market-intelligence.css'
+      - 'tests/test_market_intelligence.cjs'
+      - 'index.html'
+      - 'sw.js'
+      - '.github/workflows/market-intelligence-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'market-intelligence-core.js'
+      - 'market-intelligence.js'
+      - 'market-intelligence.css'
+      - 'tests/test_market_intelligence.cjs'
+      - '.github/workflows/market-intelligence-tests.yml'
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node --check market-intelligence-core.js
+          node --check market-intelligence.js
+          node --check tests/test_market_intelligence.cjs
+      - run: node tests/test_market_intelligence.cjs
+      - run: node tests/test_market_warning.cjs
+      - run: node tests/test_residual_maturity.cjs
+      - run: node tests/test_population_migration.cjs
