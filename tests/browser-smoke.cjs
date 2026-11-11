@@ -91,7 +91,7 @@ async function run(){
   await page.locator('[data-mi-stage="supply"]').click();
   assert.match(await page.locator('#mi-supply-result').innerText(),/2023年/);
   assert.match(await page.locator('#mi-supply-result').innerText(),/231,385台/);
-  await page.locator('#mi-supply-share').fill('25');
+  await page.locator('#mi-supply-share').evaluate(el=>{el.value='25';el.dispatchEvent(new Event('input',{bubbles:true}));});
   assert.match(await page.locator('#mi-supply-share-label').innerText(),/25%/);
   await page.locator('[data-mi-stage="regional"]').click();
   assert.match(await page.locator('#mi-region-result').innerText(),/47/);
