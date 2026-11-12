@@ -1,6 +1,12 @@
 name: Official kei model sales monthly update
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/fetch_model_sales.py'
+      - 'tests/test_model_sales.py'
+      - 'data/model_sales.json'
+      - '.github/workflows/model-sales.yml'
   schedule:
     - cron: '38 1 * * *'
   push:
@@ -24,10 +30,12 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify model-sales parser
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -p 'test_model_sales.py' -v
       - name: Fetch official latest passenger nameplate ranking
+        if: github.event_name != 'pull_request'
         run: python scripts/fetch_model_sales.py
       - name: Commit official published data only
+        if: github.event_name != 'pull_request'
         run: |
           git add data/model_sales.json
           if git diff --cached --quiet; then exit 0; fi
