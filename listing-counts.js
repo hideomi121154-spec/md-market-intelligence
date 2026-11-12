@@ -12,8 +12,24 @@
   // Exact vehicle search URLs have been individually checked. Other vehicles start at official search.
   const VERIFIED_LINKS=Object.freeze({
     'carsensor|ホンダ|NBOX':'https://www.carsensor.net/usedcar/bHO/s094/index.html',
+    'carsensor|日産|セレナ':'https://www.carsensor.net/usedcar/bNI/s012/index.html',
     'carsensor|トヨタ|プリウス':'https://www.carsensor.net/usedcar/bTO/s122/index.html',
-    'goonet|トヨタ|プリウス':'https://www.goo-net.com/usedcar/brand-TOYOTA/car-PRIUS/'
+    'carsensor|トヨタ|アルファード':'https://www.carsensor.net/usedcar/bTO/s009/index.html',
+    'carsensor|ダイハツ|タント':'https://www.carsensor.net/usedcar/bDA/s006/index.html',
+    'carsensor|スズキ|スペーシア':'https://www.carsensor.net/usedcar/bSZ/s049/index.html',
+    'carsensor|スズキ|ハスラー':'https://www.carsensor.net/usedcar/bSZ/s050/index.html',
+    'carsensor|トヨタ|ヴォクシー':'https://www.carsensor.net/usedcar/bTO/s021/index.html',
+    'carsensor|ホンダ|フリード':'https://www.carsensor.net/usedcar/bHO/s083/index.html',
+    'carsensor|トヨタ|ハイエースバン':'https://www.carsensor.net/usedcar/bTO/s185/index.html',
+    'goonet|トヨタ|プリウス':'https://www.goo-net.com/usedcar/brand-TOYOTA/car-PRIUS/',
+    'goonet|トヨタ|アルファード':'https://www.goo-net.com/usedcar/brand-TOYOTA/car-ALPHARD/',
+    'goonet|ダイハツ|タント':'https://www.goo-net.com/usedcar/brand-DAIHATSU/car-TANTO/',
+    'goonet|トヨタ|ハイエースバン':'https://www.goo-net.com/usedcar/brand-TOYOTA/car-HIACE_VAN/',
+    'goonet|トヨタ|ヴォクシー':'https://www.goo-net.com/usedcar/brand-TOYOTA/car-VOXY/',
+    'goonet|スズキ|ジムニー':'https://www.goo-net.com/usedcar/brand-SUZUKI/car-JIMNY/',
+    'goonet|ホンダ|NBOXカスタム':'https://www.goo-net.com/usedcar/brand-HONDA/car-N-BOX_CUSTOM/',
+    'goonet|日産|セレナ':'https://www.goo-net.com/usedcar/brand-NISSAN/car-SERENA/',
+    'goonet|MINI|MINI':'https://www.goo-net.com/usedcar/brand-MINI/car-MINI/'
   });
   const canon=x=>String(x||'').normalize('NFKC').trim().toUpperCase()
     .replace(/[\s\u3000\u2010-\u2015\u2212\u30fc\-_]/g,'');
