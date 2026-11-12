@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '38 1 * * *'
   push:
+    branches: [main]
     paths:
       - 'scripts/fetch_model_sales.py'
       - 'tests/test_model_sales.py'
