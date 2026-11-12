@@ -97,7 +97,7 @@
   "schema_version": 1,
   "dataset": "Japan mini vehicle NEW-CAR passenger nameplate ranking",
   "source_name": "Japan Mini Vehicles Association (Zenkeijikyo)",
-  "checked_at_utc": "2026-11-12T02:29:44.704546+00:00",
+  "checked_at_utc": "2026-11-12T08:48:30.125117+00:00",
   "scope": "top 15 light passenger nameplates; excludes other vehicle classes",
   "caution": "NEW registrations, not used car sales, auction prices, model years or grades. Not a direct demand or price proxy."
 }
