@@ -1,12 +1,13 @@
 {
   "month": "2026-10",
+  "release_type": "preliminary",
   "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushosoku",
   "models": [
     {
       "make": "ホンダ",
       "model": "Ｎ-ＢＯＸ",
       "units": 14832,
-      "yoy_pct": 116
+      "yoy_pct": 116.0
     },
     {
       "make": "スズキ",
@@ -48,7 +49,7 @@
       "make": "ダイハツ",
       "model": "タフト",
       "units": 4322,
-      "yoy_pct": 88
+      "yoy_pct": 88.0
     },
     {
       "make": "スズキ",
@@ -72,7 +73,7 @@
       "make": "スズキ",
       "model": "ジムニー",
       "units": 2824,
-      "yoy_pct": 76
+      "yoy_pct": 76.0
     },
     {
       "make": "日産",
@@ -90,14 +91,13 @@
       "make": "ホンダ",
       "model": "Ｎ-ＯＮＥ",
       "units": 1435,
-      "yoy_pct": 51
+      "yoy_pct": 51.0
     }
   ],
   "schema_version": 1,
   "dataset": "Japan mini vehicle NEW-CAR passenger nameplate ranking",
   "source_name": "Japan Mini Vehicles Association (Zenkeijikyo)",
-  "checked_at_utc": "2026-11-12T02:20:34.500Z",
+  "checked_at_utc": "2026-11-12T02:29:29.143226+00:00",
   "scope": "top 15 light passenger nameplates; excludes other vehicle classes",
-  "caution": "NEW registrations, not used car sales, auction prices, model years or grades. Not a direct demand or price proxy.",
-  "release_type": "preliminary"
+  "caution": "NEW registrations, not used car sales, auction prices, model years or grades. Not a direct demand or price proxy."
 }
