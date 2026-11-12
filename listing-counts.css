@@ -1,0 +1,18 @@
+
+/* Inline, opt-in, first-person observations; nothing is fetched from third-party sites. */
+.demand-top10-row{flex-wrap:wrap;align-items:center}
+.listing-count-tools{flex:1 0 100%;min-width:0;margin:3px 0 0 0;padding-left:35px}
+.listing-count-display{font-size:12px;color:#bdede6;line-height:1.55;overflow-wrap:anywhere}
+.listing-count-actions{display:flex;align-items:center;gap:12px;margin:6px 0 2px;flex-wrap:wrap}
+.listing-count-link{color:#7ae4d6;font-size:12px;text-decoration:underline;min-height:32px;display:inline-flex;align-items:center}
+.listing-count-edit{font-size:12px!important;padding:5px 12px!important;min-height:36px}
+.listing-count-form{padding:12px;margin:9px 0;border:1px solid #334967;border-radius:10px;background:#132841;display:flex;flex-direction:column;gap:9px}
+.listing-count-form[hidden]{display:none}
+.listing-count-help{margin:0;font-size:12px;line-height:1.6;color:#b7c7db}
+.listing-count-form label{font-size:12px;color:#d9e7f3;display:flex;flex-direction:column;gap:4px}
+.listing-count-form input,.listing-count-backup-panel textarea{box-sizing:border-box;background:#09172a;border:1px solid #46617d;color:#fff;border-radius:8px;padding:10px;min-width:0;width:100%;font:inherit;font-size:14px}
+.listing-count-form .listing-count-save{font-size:12px;min-height:38px}
+.listing-count-feedback{color:#ffd8bd;font-size:12px;line-height:1.5;min-height:0;margin:0}
+.listing-count-backup-panel textarea{display:block;margin:12px 0 6px;min-height:100px;font-size:12px}
+.listing-count-backup-panel .button{font-size:12px}
+@media(max-width:570px){.listing-count-tools{padding-left:0}.listing-count-form{padding:10px}.listing-count-display{font-size:12px}}

@@ -1,12 +1,23 @@
 name: Demand signal ranking validation
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'demand-signals.js'
+      - 'listing-counts.js'
+      - 'listing-counts.css'
+      - 'tests/test_listing_counts.js'
+      - 'index.html'
+      - '.github/workflows/demand-signals-tests.yml'
   push:
     paths:
       - 'demand-signals.js'
+      - 'listing-counts.js'
+      - 'listing-counts.css'
       - 'demand-signals.css'
       - 'data/demand_rankings.json'
       - 'tests/test_demand_signals.js'
+      - 'tests/test_listing_counts.js'
       - 'index.html'
       - '.github/workflows/demand-signals-tests.yml'
 permissions:
@@ -21,9 +32,9 @@ jobs:
         with:
           node-version: '22'
       - name: Check browser JS syntax
-        run: node --check demand-signals.js
-      - name: Check September ranking provenance and matching
-        run: node tests/test_demand_signals.js
+        run: node --check demand-signals.js && node --check listing-counts.js
+      - name: Validate demand ranking and model listing-count notebook
+        run: node tests/test_demand_signals.js && node tests/test_listing_counts.js
       - name: Verify demand screen controls
         run: |
           python - <<'PY'
@@ -39,7 +50,7 @@ jobs:
           ]
           missing=[i for i in ids if f'id="{i}"' not in html]
           assert not missing, f'Missing UI controls: {missing}'
-          assert 'demand-signals.js?v=2.0.4' in html
+          assert 'demand-signals.js?v=2.0.5' in html
           assert 'demand-signals.css?v=1.7.1' in html
           data=json.loads(Path('data/demand_rankings.json').read_text(encoding='utf-8'))
           assert data['snapshots'][0]['month']==data['snapshots'][1]['month']=='2026-09'

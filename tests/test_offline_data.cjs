@@ -36,7 +36,7 @@ async function testReader(){
 }
 (async()=>{
  await testReader();
- const versions={'uss.js':'2.0.3','model-sales.js':'2.0.4','registered-sales.js':'2.0.3','demand-signals.js':'2.0.4'};
+ const versions={'uss.js':'2.0.3','model-sales.js':'2.0.4','registered-sales.js':'2.0.3','demand-signals.js':'2.0.5'};
  const scripts=Object.keys(versions);
  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');

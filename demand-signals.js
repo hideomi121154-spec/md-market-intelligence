@@ -103,6 +103,7 @@
       }
       for(const car of snap.models.filter(x=>x.rank<=10).sort((a,b)=>a.rank-b.rank)){
         const li=document.createElement('li');li.className='demand-top10-row';
+        li.dataset.platform=source;li.dataset.make=car.make;li.dataset.model=car.model;
         textNode(li,'span',car.rank+'位','demand-top10-rank');
         textNode(li,'span',car.make+' '+car.model,'demand-top10-name');
         board.appendChild(li);
@@ -135,6 +136,7 @@
     }
     if(!visible.length)textNode(list,'p','該当する車種がありません。両方のサイトで記録した順位を確認してください。','demand-interpretation');
     status.textContent='公開ページを照合して選んだ一部の順位と、この端末で追記した観測記録です。自動収集・購買転換率の計算はしていません。';
+    root.dispatchEvent(new Event('md-demand-rendered'));
   }
   async function start(){
     if(busy)return;busy=true;

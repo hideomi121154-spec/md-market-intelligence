@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="./estat-exports.css?v=4.2.0">
   <link rel="stylesheet" href="./audit.css?v=1.6">
   <link rel="stylesheet" href="./demand-signals.css?v=1.7.1">
+  <link rel="stylesheet" href="./listing-counts.css?v=1.0.0">
   <link rel="stylesheet" href="./kei-history.css?v=1.8">
   <link rel="stylesheet" href="./registered-history.css?v=1.9">
   <link rel="stylesheet" href="./history-fold.css?v=3.4.0">
@@ -511,6 +512,15 @@
               <ol id="demand-top10-goonet" class="demand-top10-list"></ol>
             </section>
           </div>
+          <p class="demand-scope">掲載台数は各サイトの<strong>車種別・全国の中古車検索</strong>で表示された件数を、確認日・参照URLとともにiPhone内へ記録します。ランキングの対象月と台数の観測日は別です。自動巡回・無断スクレイピングはしません。</p>
+          <p class="demand-scope" id="listing-count-status" role="status" aria-live="polite">各車種の「公式検索」から実際の掲載件数を確認し、「台数を記録」を押してください。検索URLが未設定の車種は公式検索画面で車種を選んでください。</p>
+          <details class="demand-entry listing-count-backup-panel">
+            <summary>掲載台数の履歴をバックアップ／復元</summary>
+            <p class="hint">掲載台数の記録はこのiPhone内だけに保存されます。Safariのデータ整理に備え、定期的にJSONを別の場所へコピーしてください。端末に保存された車両価格データとは別です。</p>
+            <button id="listing-count-export" class="button secondary" type="button">バックアップJSONを表示</button>
+            <textarea id="listing-count-backup" rows="5" spellcheck="false" aria-label="掲載台数のバックアップJSON" placeholder="ここにバックアップJSONを貼り付けて復元できます"></textarea>
+            <button id="listing-count-restore" class="button ghost" type="button">JSONから追加復元</button>
+          </details>
           <div class="demand-controls">
             <label for="demand-month">比較対象月
               <select id="demand-month" aria-label="比較対象月"></select>
@@ -1255,7 +1265,8 @@
   <script src="./overseas-market.js?v=3.8.0" defer></script>
   <script src="./country-export-mix.js?v=4.1.0" defer></script>
   <script src="./estat-exports.js?v=4.2.0" defer></script>
-  <script src="./demand-signals.js?v=2.0.4" defer></script>
+  <script src="./demand-signals.js?v=2.0.5" defer></script>
+  <script src="./listing-counts.js?v=1.0.0" defer></script>
   <script src="./history-trend.js?v=3.4.0" defer></script>
   <script src="./kei-history.js?v=3.4.0" defer></script>
   <script src="./registered-history.js?v=3.4.0" defer></script>
