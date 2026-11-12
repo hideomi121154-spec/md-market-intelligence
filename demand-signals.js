@@ -142,7 +142,7 @@
     try{
       const response=await MDOffline.read('./data/demand_rankings.json',{cache:'no-store'});
       if(!response.ok)throw Error('HTTP '+response.status);
-      snapshots=validateData(await response.json());locals=loadLocal();updateMonths();render();if(navigator.onLine===false)status.textContent+='（保存済みの情報をオフライン表示中）';
+      snapshots=validateData(await response.json());locals=loadLocal();updateMonths();if(monthSelect.value)$('demand-entry-month').value=monthSelect.value;render();if(navigator.onLine===false)status.textContent+='（保存済みの情報をオフライン表示中）';
     }catch(err){
       status.textContent='初期ランキングを読み込めません。接続を確認して再読み込みしてください（'+err.message+'）。';
     }finally{busy=false}
