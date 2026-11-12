@@ -1,7 +1,7 @@
 {
   "source": "USS official investor relations monthly data",
   "source_url": "https://www.ussnet.co.jp/ir/library/monthly/index.html",
-  "checked_at_utc": "2026-11-12T02:29:35.525110+00:00",
+  "checked_at_utc": "2026-11-12T13:16:56.330240+00:00",
   "source_sha256": "2292101c30678898b49ece36b286fd1cbb365b53a02e9b6df09710d2ba37ebbb",
   "status": "monthly_aggregates_parsed",
   "rows": 7,

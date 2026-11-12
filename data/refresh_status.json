@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-11-12T02:29:34.486248+00:00",
+  "generated_at_utc": "2026-11-12T13:16:55.510705+00:00",
   "description": "公開許諾のあるデータのみ定期確認。手入力や端末内個人データは自動編集しない。",
   "sources": [
     {
@@ -11,7 +11,7 @@
       "cadence": "daily",
       "state": "ok",
       "latest_month": "2026-10",
-      "source_checked_at_utc": "2026-11-12T02:29:35.525110+00:00",
+      "source_checked_at_utc": "2026-11-12T13:16:56.330240+00:00",
       "age_days": 0,
       "run": "updated",
       "message": "",
@@ -26,7 +26,7 @@
       "cadence": "daily",
       "state": "ok",
       "latest_month": "2026-10",
-      "source_checked_at_utc": "2026-11-12T02:29:44.704546+00:00",
+      "source_checked_at_utc": "2026-11-12T13:17:02.990623+00:00",
       "age_days": 0,
       "run": "updated",
       "message": "",
@@ -41,7 +41,7 @@
       "cadence": "daily",
       "state": "ok",
       "latest_month": "2026-10",
-      "source_checked_at_utc": "2026-11-12T02:29:52.635913+00:00",
+      "source_checked_at_utc": "2026-11-12T13:17:09.147907+00:00",
       "age_days": 0,
       "run": "updated",
       "message": "",
@@ -117,7 +117,7 @@
       "state": "available",
       "latest_month": null,
       "source_checked_at_utc": "2026-11-09T09:47:15+00:00",
-      "age_days": 2,
+      "age_days": 3,
       "run": "not_due",
       "message": "",
       "source_url": null,
