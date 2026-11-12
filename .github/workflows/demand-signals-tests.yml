@@ -1,6 +1,14 @@
 name: Demand signal ranking validation
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'demand-signals.js'
+      - 'listing-counts.js'
+      - 'listing-counts.css'
+      - 'tests/test_listing_counts.js'
+      - 'index.html'
+      - '.github/workflows/demand-signals-tests.yml'
   push:
     paths:
       - 'demand-signals.js'
