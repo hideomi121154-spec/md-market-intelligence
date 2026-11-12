@@ -36,7 +36,8 @@ async function testReader(){
 }
 (async()=>{
  await testReader();
- const scripts=['uss.js','model-sales.js','registered-sales.js','demand-signals.js'];
+ const versions={'uss.js':'2.0.3','model-sales.js':'2.0.4','registered-sales.js':'2.0.3','demand-signals.js':'2.0.4'};
+ const scripts=Object.keys(versions);
  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
  assert.ok(index.indexOf('offline-data.js?v=2.0.3')<index.indexOf('uss.js?v=2.0.3'),'offline helper must execute before statistics');
@@ -47,8 +48,8 @@ async function testReader(){
   const code=fs.readFileSync(path.join(root,script),'utf8');
   assert.ok(code.includes('await MDOffline.read('),'cached read must be used for '+script);
   assert.ok(!code.includes('await fetch('),'network-only read remains in '+script);
-  assert.ok(index.includes('./'+script+'?v=2.0.3'),'script version must be updated: '+script);
-  assert.ok(sw.includes("'./"+script+"?v=2.0.3'"),'script cache version mismatch: '+script);
+  assert.ok(index.includes('./'+script+'?v='+versions[script]),'script version must be updated: '+script);
+  assert.ok(sw.includes("'./"+script+"?v="+versions[script]+"'"),'script cache version mismatch: '+script);
  }
  for(const script of ['kei-history.js','registered-history.js']){
   const source=fs.readFileSync(path.join(root,script),'utf8');
