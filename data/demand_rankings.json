@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "dataset": "Used-car national demand indicators: manually checked top-10 rankings per platform",
-  "entered_on": "2026-10-30",
+  "dataset": "Used-car national demand indicators: checked top-10 monthly rankings per platform (September–October 2026)",
+  "entered_on": "2026-11-12",
   "automation": "No automated harvesting of source rankings; this is a limited manually transcribed public snapshot",
   "snapshots": [
     {
@@ -131,6 +131,134 @@
       ],
       "checked_on": "2026-10-30",
       "verification_note": "Published September 2026 monthly-access ranking (ranks 1-10). Rank 9 Skyline, 10 Serena."
+    },
+    {
+      "platform": "carsensor",
+      "metric": "inquiry_ranking",
+      "scope": "national",
+      "month": "2026-10",
+      "source_url": "https://www.carsensor.net/ranking/index.html",
+      "source_period": "2026-10-01/2026-10-31",
+      "coverage": "complete_top_10_checked",
+      "definition": "Ranking based on inquiries received by Carsensor; not sales or inquiry counts",
+      "models": [
+        {
+          "rank": 1,
+          "make": "ホンダ",
+          "model": "N-BOX"
+        },
+        {
+          "rank": 2,
+          "make": "日産",
+          "model": "セレナ"
+        },
+        {
+          "rank": 3,
+          "make": "トヨタ",
+          "model": "プリウス"
+        },
+        {
+          "rank": 4,
+          "make": "トヨタ",
+          "model": "アルファード"
+        },
+        {
+          "rank": 5,
+          "make": "ダイハツ",
+          "model": "タント"
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "スペーシア"
+        },
+        {
+          "rank": 7,
+          "make": "スズキ",
+          "model": "ハスラー"
+        },
+        {
+          "rank": 8,
+          "make": "トヨタ",
+          "model": "ヴォクシー"
+        },
+        {
+          "rank": 9,
+          "make": "ホンダ",
+          "model": "フリード"
+        },
+        {
+          "rank": 10,
+          "make": "トヨタ",
+          "model": "ハイエースバン"
+        }
+      ],
+      "checked_on": "2026-11-12",
+      "verification_note": "Public monthly ranking top 10 verified against the original October 2026 source page on 2026-11-12. Limited to published names and ordinal positions; not per-model sales, full listing prices, or listing-level data."
+    },
+    {
+      "platform": "goonet",
+      "metric": "access_ranking",
+      "scope": "national",
+      "month": "2026-10",
+      "source_url": "https://www.goo-net.com/ranking/",
+      "source_period": "2026-10-01/2026-10-31",
+      "coverage": "complete_top_10_checked",
+      "definition": "Ranking based on monthly Goo-net page accesses; not sales or access counts",
+      "models": [
+        {
+          "rank": 1,
+          "make": "トヨタ",
+          "model": "プリウス"
+        },
+        {
+          "rank": 2,
+          "make": "トヨタ",
+          "model": "アルファード"
+        },
+        {
+          "rank": 3,
+          "make": "ダイハツ",
+          "model": "タント"
+        },
+        {
+          "rank": 4,
+          "make": "トヨタ",
+          "model": "ハイエースバン"
+        },
+        {
+          "rank": 5,
+          "make": "トヨタ",
+          "model": "ヴォクシー"
+        },
+        {
+          "rank": 6,
+          "make": "スズキ",
+          "model": "ジムニー"
+        },
+        {
+          "rank": 7,
+          "make": "ホンダ",
+          "model": "N-BOXカスタム"
+        },
+        {
+          "rank": 8,
+          "make": "日産",
+          "model": "セレナ"
+        },
+        {
+          "rank": 9,
+          "make": "トヨタ",
+          "model": "クラウンハイブリッド"
+        },
+        {
+          "rank": 10,
+          "make": "MINI",
+          "model": "MINI"
+        }
+      ],
+      "checked_on": "2026-11-12",
+      "verification_note": "Public monthly ranking top 10 verified against the original October 2026 source page on 2026-11-12. Limited to published names and ordinal positions; not per-model sales, full listing prices, or listing-level data."
     }
   ]
 }
