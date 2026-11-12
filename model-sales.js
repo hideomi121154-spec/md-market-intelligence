@@ -16,7 +16,7 @@
     if(!/^20\d\d-(0[1-9]|1[0-2])$/.test(data.month)||!Array.isArray(data.models)||data.models.length<12||data.models.length>15||
        data.models.some(x=>!x.make||!x.model||!Number.isInteger(x.units)||x.units<1))throw Error('車種別の統計形式を検証できません');
     modelGrid.replaceChildren();
-    freshness.textContent=`${data.month.replace('-','年')}月 ・ 軽乗用車の新車販売台数 上位${data.models.length}車種`;
+    freshness.textContent=`${data.month.replace('-','年')}月 ・ ${data.release_type==='preliminary'?'速報':data.release_type==='final'?'確報':'公表値'} ・ 軽乗用車の新車販売台数 上位${data.models.length}車種`;
     status.textContent=stale?'通信できないため、以前に読み込んだ統計を表示しています。':'全軽自協が公開した新車販売台数です（中古車の成約件数・売れ行きではありません）。';
     let local=[];
     try {local=await MDStore.all()}catch(e){console.warn('Local price data read:',e)}
