@@ -13,7 +13,12 @@ assert.equal(L.verifiedLink('carsensor','ホンダ','Ｎ－ＢＯＸ'),
  'https://www.carsensor.net/usedcar/bHO/s094/index.html');
 assert.equal(L.verifiedLink('goonet','トヨタ','プリウス'),
  'https://www.goo-net.com/usedcar/brand-TOYOTA/car-PRIUS/');
-assert.equal(L.verifiedLink('goonet','ホンダ','N-BOXカスタム'),null);
+assert.equal(L.verifiedLink('goonet','ホンダ','N-BOXカスタム'),
+ 'https://www.goo-net.com/usedcar/brand-HONDA/car-N-BOX_CUSTOM/');
+assert.equal(L.verifiedLink('goonet','トヨタ','クラウンハイブリッド'),null,
+ 'Crown Hybrid must not silently redirect to the broader Crown results');
+assert.equal(L.verifiedLink('carsensor','トヨタ','ハイエースバン'),
+ 'https://www.carsensor.net/usedcar/bTO/s185/index.html');
 assert.equal(L.verifiedLink('carsensor','トヨタ','セレナ'),null);
 assert.equal(L.officialUrl('carsensor','https://www.carsensor.net/usedcar/bTO/s122/index.html'),true);
 assert.equal(L.officialUrl('carsensor','https://www.goo-net.com/usedcar/brand-TOYOTA/car-PRIUS/'),false);
