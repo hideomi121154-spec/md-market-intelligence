@@ -10,7 +10,10 @@
     goonet:{name:'グーネット',host:'www.goo-net.com',home:'https://www.goo-net.com/usedcar/'}
   });
   // Exact vehicle search URLs have been individually checked. Other vehicles start at official search.
-  const VERIFIED_LINKS=Object.freeze({
+  const canon=x=>String(x||'').normalize('NFKC').trim().toUpperCase()
+    .replace(/[\s\u3000\u2010-\u2015\u2212\u30fc\-_]/g,'');
+  const carKey=x=>canon(x.make)+'|'+canon(x.model);
+  const VERIFIED_LINKS=Object.freeze(Object.fromEntries(Object.entries({
     'carsensor|ホンダ|NBOX':'https://www.carsensor.net/usedcar/bHO/s094/index.html',
     'carsensor|日産|セレナ':'https://www.carsensor.net/usedcar/bNI/s012/index.html',
     'carsensor|トヨタ|プリウス':'https://www.carsensor.net/usedcar/bTO/s122/index.html',
@@ -30,10 +33,10 @@
     'goonet|ホンダ|NBOXカスタム':'https://www.goo-net.com/usedcar/brand-HONDA/car-N-BOX_CUSTOM/',
     'goonet|日産|セレナ':'https://www.goo-net.com/usedcar/brand-NISSAN/car-SERENA/',
     'goonet|MINI|MINI':'https://www.goo-net.com/usedcar/brand-MINI/car-MINI/'
-  });
-  const canon=x=>String(x||'').normalize('NFKC').trim().toUpperCase()
-    .replace(/[\s\u3000\u2010-\u2015\u2212\u30fc\-_]/g,'');
-  const carKey=x=>canon(x.make)+'|'+canon(x.model);
+  }).map(([raw,url])=>{
+    const [platform,make,model]=raw.split('|');
+    return [platform+'|'+carKey({make,model}),url];
+  })));
   const recKey=x=>x.platform+'|'+carKey(x)+'|'+x.date+'|'+x.source_url;
   const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());};
   function validDate(value){
