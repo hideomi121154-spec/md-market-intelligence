@@ -21,6 +21,17 @@ class ModelSalesTest(unittest.TestCase):
         self.assertEqual(d['month'], '2026-09')
         self.assertEqual(d['models'][0]['units'], 19105)
         self.assertEqual(d['models'][-1]['model'],'Ｎ-ＯＮＥ')
+    def test_preliminary_report_is_accepted_and_labeled(self):
+        page = sample().replace('2026年9月', '2026年10月').replace('新車販売確報', '新車販売速報')
+        result = parse_monthly(page, 'https://www.zenkeijikyo.or.jp/statistics/tushosoku')
+        self.assertEqual(result['month'], '2026-10')
+        self.assertEqual(result['release_type'], 'preliminary')
+        self.assertEqual(len(result['models']), 15)
+
+    def test_final_report_is_labeled(self):
+        result = parse_monthly(sample(), 'https://www.zenkeijikyo.or.jp/statistics/tushokaku-14172')
+        self.assertEqual(result['release_type'], 'final')
+
     def test_reject_broken_table(self):
         with self.assertRaises(ValueError):parse_monthly('<title>2026年9月 軽四輪車 通称名別 新車販売確報</title>', 'x')
     def test_reject_nonmonthly(self):
