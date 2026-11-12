@@ -55,7 +55,7 @@ def newest_month(payload):
     direct = payload.get("month")
     if isinstance(direct, str) and re.fullmatch(r"20\d\d-(0[1-9]|1[0-2])", direct):
         return direct
-    items = payload.get("months") or []
+    items = payload.get("months") or payload.get("snapshots") or []
     if not isinstance(items, list):
         return None
     values = []
