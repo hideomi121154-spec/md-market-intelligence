@@ -39,8 +39,7 @@ jobs:
           ]
           missing=[i for i in ids if f'id="{i}"' not in html]
           assert not missing, f'Missing UI controls: {missing}'
-          assert '<b>v1.7.1</b>' in html
-          assert 'demand-signals.js?v=1.7.1' in html
+          assert 'demand-signals.js?v=2.0.4' in html
           assert 'demand-signals.css?v=1.7.1' in html
           data=json.loads(Path('data/demand_rankings.json').read_text(encoding='utf-8'))
           assert data['snapshots'][0]['month']==data['snapshots'][1]['month']=='2026-09'

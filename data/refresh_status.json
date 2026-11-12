@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-11-11T12:11:37.946813+00:00",
+  "generated_at_utc": "2026-11-12T02:23:54.080Z",
   "description": "公開許諾のあるデータのみ定期確認。手入力や端末内個人データは自動編集しない。",
   "sources": [
     {
@@ -24,13 +24,13 @@
       "file": "data/model_sales.json",
       "mode": "automatic",
       "cadence": "daily",
-      "state": "delayed",
-      "latest_month": "2026-09",
-      "source_checked_at_utc": "2026-11-11T12:11:45.379917+00:00",
+      "state": "available",
+      "latest_month": "2026-10",
+      "source_checked_at_utc": "2026-11-12T02:20:34.500Z",
       "age_days": 0,
-      "run": "updated",
-      "message": "",
-      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushokaku-14172",
+      "run": "manual_seed",
+      "message": "2026年10月の公式速報を確認済み。毎日の自動巡回で確報へ更新します。",
+      "source_url": "https://www.zenkeijikyo.or.jp/statistics/tushosoku",
       "requires_setup": false
     },
     {
@@ -145,10 +145,10 @@
       "mode": "manual",
       "cadence": "manual",
       "state": "manual",
-      "latest_month": null,
+      "latest_month": "2026-10",
       "source_checked_at_utc": null,
       "run": "not_automated",
-      "message": "転載許諾を含む取得元契約が未設定"
+      "message": "2026年10月の両サイト全国TOP10を原典確認。自動取得はデータ利用許諾・提供手段の確認待ち。"
     },
     {
       "id": "regional_job_ads",

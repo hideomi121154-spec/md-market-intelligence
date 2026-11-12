@@ -15,6 +15,7 @@ from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 INDEX_URL = "https://www.zenkeijikyo.or.jp/statistics/tushokaku"
+PRELIM_URL = "https://www.zenkeijikyo.or.jp/statistics/tushosoku"  # current-month速報 until確報 published
 BOOTSTRAP_URL = "https://www.zenkeijikyo.or.jp/statistics/tushokaku-14172"  # 2026-09
 DEST = Path("data/model_sales.json")
 MAKERS = {"スズキ", "ホンダ", "ダイハツ", "日産", "三菱", "トヨタ", "マツダ", "スバル", "SUBARU", "レクサス", "いすゞ"}
@@ -95,10 +96,11 @@ def candidate_urls(index_html):
 
 
 def parse_monthly(html, source_url):
-    title = re.search(r"(20\d{2})年\s*(1[0-2]|[1-9])月\s*軽四輪車\s*通称名別\s*新車販売確報", html)
+    title = re.search(r"(20\d{2})年\s*(1[0-2]|[1-9])月\s*軽四輪車\s*通称名別\s*新車販売(確報|速報)", html)
     if not title:
-        raise ValueError("Not a single-month final official model report")
+        raise ValueError("Not a single-month official model report (preliminary or final)")
     year, month = int(title.group(1)), int(title.group(2))
+    release_type = "final" if title.group(3) == "確報" else "preliminary"
     if not 2020 <= year <= datetime.now(timezone.utc).year + 1:
         raise ValueError("Unexpected year")
     page = Page()
@@ -125,7 +127,7 @@ def parse_monthly(html, source_url):
         raise ValueError(f"Expected 12-15 unique passenger ranking entries, got {len(results)}")
     if results != sorted(results, key=lambda r: -r["units"]):
         raise ValueError("Passenger ranking is not descending")
-    return {"month": f"{year}-{month:02d}", "source_url": source_url, "models": results}
+    return {"month": f"{year}-{month:02d}", "release_type": release_type, "source_url": source_url, "models": results}
 
 
 def main():
@@ -136,14 +138,19 @@ def main():
         except (json.JSONDecodeError, UnicodeError):
             existing = None
     previous_month = existing.get("month") if isinstance(existing, dict) else None
-    urls = candidate_urls(fetch(INDEX_URL))
+    # Official速報 is posted before it appears in the archive of finalized monthly reports.
+    urls = [PRELIM_URL]
+    try:
+        urls.extend(candidate_urls(fetch(INDEX_URL)))
+    except (OSError, ValueError) as error:
+        print(f"Final-report archive unavailable: {error}")
     if BOOTSTRAP_URL not in urls:
         urls.append(BOOTSTRAP_URL)
     selected = None
-    for url in urls[:7]:
+    for url in urls[:8]:
         try:
             row = parse_monthly(fetch(url), url)
-            if selected is None or row["month"] > selected["month"]:
+            if selected is None or (row["month"], row["release_type"] == "final") > (selected["month"], selected["release_type"] == "final"):
                 selected = row
         except (OSError, ValueError) as error:
             print(f"Skip candidate {url}: {error}")
@@ -151,6 +158,9 @@ def main():
         raise RuntimeError("No verifiable official passenger model-ranking data; keeping prior file")
     if previous_month and selected["month"] < previous_month:
         raise RuntimeError("Source went backwards in time; keeping prior file")
+    # Never downgrade an already published final report to a preliminary one.
+    if existing and selected["month"] == previous_month and existing.get("release_type") == "final" and selected["release_type"] == "preliminary":
+        raise RuntimeError("Existing final report is newer than the candidate preliminary release")
     selected.update({
         "schema_version": 1,
         "dataset": "Japan mini vehicle NEW-CAR passenger nameplate ranking",

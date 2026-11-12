@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
 const D=require('../demand-signals.js');
 const json=JSON.parse(fs.readFileSync(__dirname+'/../data/demand_rankings.json','utf8'));
 const snaps=D.validateData(json);
-assert.equal(snaps.length,2);
+assert.equal(snaps.length,4);
 assert.equal(snaps[0].models.length,10);
 assert.equal(snaps[1].models.length,10);
 const list=D.compare(snaps,'2026-09');
@@ -36,4 +36,18 @@ assert.equal(find('トヨタ','ヴォクシー').goonet.rank,8);
 assert.equal(find('日産','スカイライン').goonet.rank,9);
 assert.equal(find('日産','セレナ').goonet.rank,10);
 assert.equal(find('日産','セレナ').carsensor.rank,2);
-console.log('PASS: both 2026-09 top-10 rankings, 6 common models, no category conflation');
+
+// The newly released October 2026 pair is available without overwriting September history.
+const oct=D.compare(snaps,'2026-10');
+const octFind=(make,model)=>oct.find(x=>D.key(x)===D.key({make,model}));
+assert.equal(octFind('ホンダ','N-BOX').carsensor.rank,1);
+assert.equal(octFind('トヨタ','プリウス').carsensor.rank,3);
+assert.equal(octFind('トヨタ','プリウス').goonet.rank,1);
+assert.equal(octFind('トヨタ','アルファード').carsensor.rank,4);
+assert.equal(octFind('トヨタ','アルファード').goonet.rank,2);
+assert.equal(octFind('日産','セレナ').goonet.rank,8);
+assert.equal(octFind('ホンダ','N-BOX').goonet,null);
+assert.equal(octFind('ホンダ','N-BOXカスタム').goonet.rank,7);
+for(const snap of snaps){assert.equal(snap.models.length,10);}
+
+console.log('PASS: both 2026-09 and 2026-10 top-10 rankings; original months retained');

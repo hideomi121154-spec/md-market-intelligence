@@ -14,6 +14,7 @@ class PublicRefreshTest(unittest.TestCase):
     def test_month_and_timestamp_are_based_on_actual_provenance(self):
         self.assertEqual(sync.newest_month({"months": [{"month": "2026-09"}, {"month": "2026-10"}]}), "2026-10")
         self.assertIsNone(sync.newest_month({"months": []}))
+        self.assertEqual(sync.newest_month({"snapshots": [{"month":"2026-09"},{"month":"2026-10"}]}), "2026-10")
         self.assertIsNone(sync.newest_timestamp({"updated_at": {"unknown": True}}))
         self.assertEqual(sync.newest_timestamp({"checked_at_utc": "2026-11-10T00:00:00Z"}), "2026-11-10T00:00:00+00:00")
 
