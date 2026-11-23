@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-09T09:47:15+00:00",
+  "updated_at": "2026-11-23T10:43:59+00:00",
   "data_period": "国交省申告を加工した公開集計（原典リンク参照）。対象期間・分類方法は各出典による。オンライン見出しは別指標。",
   "vehicles": [
     {
@@ -56,6 +56,13 @@
         {
           "category": "その他",
           "title": "日産 E12ノート ドラレコ、テレビナビキャンセラー取り付け 持ち込み取付 滋賀県 近江八幡市 野洲市 スタッドレスタイヤ交換、組み替え大歓迎です！！ - goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9FTWNlc0tzY1hSWTlPM0JoR0wwR0pIeUZJYlBBOFJVS2FnMngyVEtqc3VfM0dFMEZFZzNFTTRxUmxwQjFkSzhGODlFRGdBdm15UERyVnhIUlZXMkN2RzBtZFZR?oc=5",
+          "kind": "news_rss",
+          "published_at": "2023-12-22"
+        },
+        {
+          "category": "その他",
+          "title": "日産 E12ノート ドラレコ、テレビナビキャンセラー取り付け 持ち込み取付 滋賀県 近江八幡市 野洲市 スタッドレスタイヤ交換、組み替え大歓迎です！！ - www.goo-net.com",
           "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9FTWNlc0tzY1hSWTlPM0JoR0wwR0pIeUZJYlBBOFJVS2FnMngyVEtqc3VfM0dFMEZFZzNFTTRxUmxwQjFkSzhGODlFRGdBdm15UERyVnhIUlZXMkN2RzBtZFZR?oc=5",
           "kind": "news_rss",
           "published_at": "2023-12-22"
@@ -200,6 +207,13 @@
         },
         {
           "category": "その他",
+          "title": "トヨタ ZVW30 プリウス 左フロントドアのキズ・へこみ修理塗装 - www.goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE04RFh3TW03ajhBME5KUFZrRTdwUkFVeHJ4aU9sSkZSRlpGQ1A0ZjEwUHNablV1VnFxcEw3OTA1aks5T0ZBWHh1S3BZdjVXSG9HU01CZXA4bGJON0pSRy1CcTln?oc=5",
+          "kind": "news_rss",
+          "published_at": "2019-02-28"
+        },
+        {
+          "category": "その他",
           "title": "トヨタ、「プリウス（ZVW30）」約99万7000台をリコール - Car Watch",
           "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE5xODAzQnpRR3U0elQ1dDZpMTg3b3cxWk9WdnhNUzAtcWR4LWc2eFItcHNidTkzMHFZeTZOUzVIM0tkeXhfTXpISjIwZ0JwWUQ3VW40UVMyZl9CTkE2Q2FuaFNTbw?oc=5",
           "kind": "news_rss",
@@ -229,6 +243,24 @@
           "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFA2WXdSbmhIQ2N5endkVTlIR0lGREZPQzUyYVd3b0tPeXE2U3VmT1c2SWFxMGFLWUxCczk3TEZkQ3o4d0lKUmVEcmRGQzh4dzhYQ3d4VGtNMkhzdHNoVThxdDB3?oc=5",
           "kind": "news_rss",
           "published_at": "2023-11-24"
+        }
+      ],
+      "source_note": "ニュースRSS見出しの収録のみ。国交省報告の順位ではありません。"
+    },
+    {
+      "make": "トヨタ",
+      "model": "アクア",
+      "code": "NHP10",
+      "label": "NHP10",
+      "report_groups": [],
+      "supplemental": [],
+      "web_mentions": [
+        {
+          "category": "その他",
+          "title": "トヨタ アクア G's NHP10 タイヤ 交換 摩耗 広島市 安佐南区 安佐北区 八木 梅林 緑井 中島 可部 高陽 口田 落合 - goo-net.com",
+          "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5KLUpZV2pOY2pPVlJzNXZZS25jMUdVX2VrSFpoN3RNQ2wwT19VdG90U1ZnVFVONnc0em1JU0lqNnhkRHZDeThQYzd4cktNS0hLVUhuZHZTdHFRSWVGVG5tU3l3?oc=5",
+          "kind": "news_rss",
+          "published_at": "2018-10-07"
         }
       ],
       "source_note": "ニュースRSS見出しの収録のみ。国交省報告の順位ではありません。"
